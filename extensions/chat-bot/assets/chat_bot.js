@@ -107,7 +107,7 @@ function sendMessageOnEnter(event) {
 }
 
 function sendMessageHelper(msg) {
-  var socket = io('https://c3b8-2607-fa49-d945-5300-7c48-9181-4414-4fef.ngrok-free.app', { transports: ['websocket'], autoConnect: false });
+  var socket = io('http://34.125.95.96:8003', { transports: ['websocket'], autoConnect: false });
   var user_message = {
     message: msg,
     shop_id: window.shopId
