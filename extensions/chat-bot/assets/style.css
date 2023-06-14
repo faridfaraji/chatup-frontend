@@ -37,7 +37,6 @@
     border-radius: 24%;
     cursor: pointer;
     border-style: outset solid solid;
-    aspect-ratio: 1;
     font-weight: bold;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
     opacity: 1;
@@ -54,8 +53,7 @@
 
 #chatbubble-button.deactive {
     opacity: 0;
-    transform: translateY(10em);
-    transform: scale(0.01);
+    transform: translateY(10em) scale(0.01);
 }
 
 #chatbubble-window {
@@ -63,7 +61,6 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 300px;
     background-color: var(--chatbubble-window-backround);
     opacity: 0;
     border-radius: 20px;
@@ -71,23 +68,45 @@
     transition: opacity 0.2s ease-in-out, transform 0.7s ease;
     animation: fade-in 1s ease-in-out;
     -webkit-animation: fade-in 1s ease-in-out;
-    /* Safari and Chrome */
     -moz-animation: fade-in 1s ease-in-out;
-    /* Firefox */
     -o-animation: fade-in 1s ease-in-out;
-    /* Opera */
     overflow-y: hidden;
     scroll-behavior: smooth;
     max-height: 45vh;
     box-shadow: 0 0 12px -3px rgba(0, 0, 0, 0.3);
     transform: scale(1);
     transform-origin: right bottom;
+    width: calc((1/5)*(100vw));
+    min-width: 300px;
+    height: calc((2/3)*(100vh));
+    min-height: 300px;
+}
+
+@media screen and (max-width:468px) {
+    #chatbubble-window {
+        width: 90vw;
+        min-width: 80vw;
+        height: 85vh;
+        min-height: 300px;
+    }
 }
 
 #chatbubble-window.active {
     display: flex;
     flex-direction: column;
     opacity: 1;
+}
+
+@-webkit-keyframes fade-in {
+    from {
+        opacity: 0;
+        bottom: 80px;
+    }
+
+    to {
+        opacity: 1;
+        bottom: 20px;
+    }
 }
 
 @keyframes fade-in {
@@ -186,11 +205,12 @@
 
 #chatbubble-messages {
     padding: 10px;
-    height: 45vh;
+    /* height: 45vh; */
     overflow-y: scroll;
     border-bottom: 1px solid #848484;
     display: flex;
     flex-direction: column;
+    height: inherit;
 }
 
 .chatbubble-message {
@@ -214,6 +234,7 @@
     max-width: 80%;
     word-wrap: break-word;
     align-self: flex-start;
+
 }
 
 input {
