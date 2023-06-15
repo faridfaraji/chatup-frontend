@@ -9,6 +9,7 @@ function adjustInputHeight(element) {
 }
 
 var isFirstTimeOpen = true;
+var socket = io('https://5af9-34-125-95-96.ngrok-free.app', { transports: ['websocket'], autoConnect: false });
 
 function toggleChat() {
   var chatbubble = document.getElementById('chatbubble-window');
@@ -107,7 +108,7 @@ function sendMessageOnEnter(event) {
 }
 
 function sendMessageHelper(msg) {
-  var socket = io('https://5af9-34-125-95-96.ngrok-free.app', { transports: ['websocket'], autoConnect: false });
+
   var user_message = {
     message: msg,
     shop_id: window.shopId
