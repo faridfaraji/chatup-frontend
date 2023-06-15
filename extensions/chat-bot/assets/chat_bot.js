@@ -20,6 +20,7 @@ function adjustInputHeight(element) {
 
 // Storing a value
 
+var socket = io('https://5af9-34-125-95-96.ngrok-free.app', { transports: ['websocket'], autoConnect: false });
 
 // Retrieving a value
 var cachedOpen = sessionStorage.getItem('opened');
@@ -259,7 +260,6 @@ function sendMessageHelper(msg) {
 
   isSendingMessage = true;
 
-  var socket = io('https://5af9-34-125-95-96.ngrok-free.app', { transports: ['websocket'], autoConnect: false });
   var user_message = {
     message: msg,
     shop_id: window.shopId
