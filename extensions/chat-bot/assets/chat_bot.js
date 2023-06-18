@@ -4,6 +4,7 @@ function adjustScrollPosition() {
   var messagesContainer = document.getElementById('chatbubble-messages');
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
+
 // Scroll to the latest message
 function scrollToLatestMessage() {
   var messagesContainer = document.getElementById('chatbubble-messages');
