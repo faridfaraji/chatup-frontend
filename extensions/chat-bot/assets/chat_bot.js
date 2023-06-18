@@ -29,46 +29,51 @@ console.log(cachedOpen)
 console.log(isFirstTimeOpen)
 
 function toggleChat() {
-  var inputField = document.getElementById('chatbubble-input-field');
-  var chatbubble = document.getElementById('chatbubble-window');
-  var chatbubble_button = document.getElementById('chatbubble-button');
+  const chatbubbleWindow = document.getElementById('chatbubble-window');
+  const messageContainer = document.getElementById('message-container');
+  const inputField = document.getElementById('chatbubble-input-field');
+  const chatbubbleButton = document.getElementById('chatbubble-button');
 
-  var isFirstTimeOpen = sessionStorage.getItem('opened') !== 'true';
+  let isFirstTimeOpen = sessionStorage.getItem('opened') !== 'true';
 
-  if (chatbubble.className.indexOf('active') > -1) {
+  if (isFirstTimeOpen) {
+    sessionStorage.setItem('opened', 'true');
+    sessionStorage.removeItem('placeholderShown');
+    sessionStorage.removeItem('messageShown');
+  }
+
+  if (chatbubbleWindow.classList.contains('active')) {
     // Reset input field placeholder
     inputField.placeholder = '';
-    chatbubble.className = chatbubble.className.replace(/\bactive\b/g, "");
-    chatbubble_button.className = chatbubble_button.className.replace(/\bdeactive\b/g, "");
+    chatbubbleWindow.classList.remove('active');
+    chatbubbleButton.classList.remove('deactive');
   } else {
-    chatbubble.className += ' active';
+    chatbubbleWindow.classList.add('active');
     // Set focus back to the input field
     inputField.focus();
-    chatbubble_button.className += ' deactive';
-    if (isFirstTimeOpen) {
-      sessionStorage.setItem('opened', 'true');
+    chatbubbleButton.classList.add('deactive');
 
-      var index = 0;
-      var placeholderText = '"Hi" starts the chat!';
-      inputField.placeholder = '';  // Start with an empty placeholder
-
-      var placeholderInterval = setInterval(function () {
-        if (index === placeholderText.length) {
-          clearInterval(placeholderInterval);
-          return;
-        }
-        inputField.placeholder += placeholderText.charAt(index);
-        index++;
-      }, 100);
+    if (!sessionStorage.getItem('placeholderShown')) {
+      inputField.placeholder = 'Type here';
+      sessionStorage.setItem('placeholderShown', 'true');
     }
 
-    // After chat is opened, load the chat history and scroll to the latest message
-    if (chatbubble.className.indexOf('active') > -1) {
-      loadChatHistory();
-      scrollToLatestMessage();
+    if (!messageContainer.classList.contains('visible') && !sessionStorage.getItem('messageShown')) {
+      typeMessage("Ask Anything!");
+      sessionStorage.setItem('messageShown', 'true');
     }
+
+    loadChatHistory();
+    scrollToLatestMessage();
   }
 }
+
+
+
+
+
+
+
 
 
 document.addEventListener('click', function (event) {
@@ -86,13 +91,13 @@ document.addEventListener('click', function (event) {
   }
 });
 
-var isSendingMessage = false;
-var isSocketResponsePending = false;
+// var isSendingMessage = false;
+// var isSocketResponsePending = false;
 
 function sendMessage() {
-  if (isSendingMessage || isSocketResponsePending) {
-    return;
-  }
+  // if (isSendingMessage || isSocketResponsePending) {
+  //   return;
+  // }
 
   var inputField = document.getElementById('chatbubble-input-field');
   var message = inputField.value.trim();
@@ -218,24 +223,24 @@ function typeMessage(message) {
   }, 100);
 }
 
-function startTypingWhenActive() {
-  const chatbubbleWindow = document.getElementById('chatbubble-window');
-  const messageContainer = document.getElementById('message-container');
+// function startTypingWhenActive() {
+//   const chatbubbleWindow = document.getElementById('chatbubble-window');
+//   const messageContainer = document.getElementById('message-container');
 
-  const observer = new MutationObserver(function (mutationsList) {
-    for (let mutation of mutationsList) {
-      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-        var isFirstTimeOpen = sessionStorage.getItem('opened') !== 'true';
-        if (chatbubbleWindow.classList.contains('active') && !messageContainer.classList.contains('visible') && isFirstTimeOpen) {
-          typeMessage("Ask Anything!");
-          sessionStorage.setItem('opened', 'true');
-        }
-      }
-    }
-  });
+//   const observer = new MutationObserver(function (mutationsList) {
+//     for (let mutation of mutationsList) {
+//       if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+//         var isFirstTimeOpen = sessionStorage.getItem('opened') !== 'true';
+//         if (chatbubbleWindow.classList.contains('active') && !messageContainer.classList.contains('visible') && isFirstTimeOpen) {
+//           typeMessage("Ask Anything!");
+//           sessionStorage.setItem('opened', 'true');
+//         }
+//       }
+//     }
+//   });
 
-  observer.observe(chatbubbleWindow, { attributes: true });
-}
+//   observer.observe(chatbubbleWindow, { attributes: true });
+// }
 
 function sendMessageOnEnter(event) {
   if (event.keyCode === 13) {
@@ -246,11 +251,11 @@ function sendMessageOnEnter(event) {
 }
 
 function sendMessageHelper(msg) {
-  if (isSendingMessage || isSocketResponsePending) {
-    return;
-  }
+  // if (isSendingMessage || isSocketResponsePending) {
+  //   return;
+  // }
 
-  isSendingMessage = true;
+  // isSendingMessage = true;
 
   var user_message = {
     message: msg,
@@ -260,7 +265,7 @@ function sendMessageHelper(msg) {
   if (!socket.connected) socket.connect();
   socket.emit("user_message", user_message);
 
-  isSocketResponsePending = true;
+  // isSocketResponsePending = true;
 
   var currentMessage = '';
   var chunkTimeout;
@@ -302,8 +307,8 @@ function sendMessageHelper(msg) {
       inputField.disabled = false;
       var sendButton = document.getElementById('chatbubble-send');
       sendButton.disabled = false;
-      isSendingMessage = false;
-      isSocketResponsePending = false;
+      // isSendingMessage = false;
+      // isSocketResponsePending = false;
       // Store the updated chat history after a new chatbot message has been appended
       storeChatHistory();
       scrollToLatestMessage();
@@ -416,14 +421,14 @@ textarea.addEventListener('click', function (event) {
   }, 300); // Adjust the delay time (in milliseconds) as needed
 });
 
-// window.addEventListener('touchend', function (e) {
-//   var inputField = document.getElementById('chatbubble-input-field');
-//   if (e.target === inputField) {
-//     e.preventDefault();
-//   }
-// }, false);
+window.addEventListener('touchend', function (e) {
+  var inputField = document.getElementById('chatbubble-input-field');
+  if (e.target === inputField) {
+    e.preventDefault();
+  }
+}, false);
 
-let textArea = document.getElementById("chatbubble-input-field");
+let textArea = document.getElementById("input-round-box");
 
 textArea.addEventListener("input", autoResize, false);
 
