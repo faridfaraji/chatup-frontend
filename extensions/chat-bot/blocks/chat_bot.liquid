@@ -7,6 +7,8 @@
     <title>ChatUp Assistant</title>
     <link rel="stylesheet" href="{{ 'style.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'extensions/chat-bot/assets/style.css' | asset_url }}">
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js" defer></script>
+    <script src="{{ 'chat_bot.js' | asset_url }}" defer></script>
   </head>
 
   <body>
@@ -35,7 +37,7 @@
               height="50"
               loading="lazy">
             <div id="message-container">
-              <div id="message"></div>
+              <div id="message">How can I help?</div>
             </div>
           </div>
           <button
@@ -58,7 +60,7 @@
           <div id="chatbubble-input">
             <textarea
               id="chatbubble-input-field"
-              placeholder=""
+              placeholder="Type messages here..."
               oninput="autoResize.call(this)"
               onkeydown="sendMessageOnEnter(event)"
               rows="1"></textarea>
@@ -82,7 +84,7 @@
         <div class="dot-pulse"></div>
       </div>
     </div>
-    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js" async></script>
+    <!-- script src="https://cdn.socket.io/4.0.0/socket.io.min.js" async></script-->
     {% schema %}
       {
         "name": "App Embed",
@@ -93,7 +95,7 @@
     <script>
       window.shopId = "{{ shop.id }}";
     </script>
-    <script src="{{ 'chat_bot.js' | asset_url }}" async></script>
+    <!-- script src="{{ 'chat_bot.js' | asset_url }}" async></script -->
 
 
   </body>

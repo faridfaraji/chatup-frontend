@@ -1,7 +1,7 @@
 :root {
     --primary-heading-color: white;
     --Primary-chatbot-text-color: #080808;
-    --primary-font: "Comic Sans MS";
+    --primary-font: "Roboto" sans-serif;
     --custom-font-size: 1em;
     --chatbubble-button-backgound-color: #183d57;
     --chat-window-header-color: #2c3c4c;
@@ -67,7 +67,7 @@
     right: 20px;
     background-color: var(--chatbubble-window-backround);
     opacity: 0;
-    border-radius: 20px;
+    border-radius: 7px;
     transform: translateY(0);
     transition: opacity 0.2s ease-in-out, transform 0.7s ease;
     animation: fade-in 1s ease-in-out;
@@ -148,7 +148,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 20px 20px 0 0;
+    border-radius: 7px 7px 0 0;
     width: 100%;
     z-index: 1;
 }
@@ -187,10 +187,10 @@
 #chatbubble-input-field {
     flex: 1;
     padding: 5px;
-    border-radius: 3px;
     margin-right: 5px;
     overflow: hidden;
     transition: height 0.2s;
+    transition: .3s ease;
 }
 
 #chatbubble-input-field:hover,
@@ -227,6 +227,7 @@
     flex-direction: column;
     height: 100%;
     box-sizing: border-box;
+    transition: .3s ease-in;
 }
 
 
@@ -245,23 +246,25 @@
     background-color: var(--chatbubble-message-background-color);
     padding: 7px 10px;
     margin-bottom: 5px;
-    border-radius: 3px;
+    border-radius: 15px;
     display: inline-block;
     max-width: 80%;
     word-wrap: break-word;
     align-self: flex-end;
     font-style: italic;
+    transition: .3s ease-in;
 }
 
 .chatbubble-gpt-message {
     background-color: var(--chatbubble-gpt-message-background-color);
     padding: 7px 10px;
     margin-bottom: 5px;
-    border-radius: 3px;
+    border-radius: 15px;
     display: inline-block;
     max-width: 80%;
     word-wrap: break-word;
     align-self: flex-start;
+    transition: .7s ease-in;
 
 }
 
@@ -273,17 +276,15 @@ input {
 }
 
 #message-container {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
 
-#message-container.visible {
+    transition: opacity 0.3s ease;
     opacity: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-left: 0.6em;
 }
+
 
 textarea {
     transition: .3s ease;
@@ -312,7 +313,7 @@ textarea {
     margin: 1em;
     position: fixed;
     border-radius: 30px;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, .3);
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, .19);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -323,6 +324,11 @@ textarea {
     z-index: 25;
     bottom: 0;
     background: white;
+    transition: .3s ease;
+}
+
+#chatbubble-input-field:focus+#input-round-box {
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, .3);
 }
 
 #input-round-box,

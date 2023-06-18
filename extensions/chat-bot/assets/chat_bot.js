@@ -6,74 +6,54 @@ function adjustScrollPosition() {
 }
 // Scroll to the latest message
 function scrollToLatestMessage() {
-  // Add a small delay to allow the DOM update to complete
-  setTimeout(() => {
-    var messagesContainer = document.getElementById('chatbubble-messages');
-    var latestMessage = messagesContainer.lastElementChild;
+  var messagesContainer = document.getElementById('chatbubble-messages');
+  var latestMessage = messagesContainer.lastElementChild;
 
-    if (latestMessage) {
-      latestMessage.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, 100); // Adjust the delay time (in milliseconds) as needed
+  if (latestMessage) {
+    var currentHeight = messagesContainer.scrollHeight;
+
+    // Scroll to the latest message
+    latestMessage.scrollIntoView({ behavior: 'smooth' });
+
+    // Check if the height changes after a short delay
+    setTimeout(() => {
+      var newHeight = messagesContainer.scrollHeight;
+
+      // If the height has changed, scroll again
+      if (currentHeight !== newHeight) {
+        scrollToLatestMessage();
+      }
+    }, 100); // Adjust the delay time (in milliseconds) as needed
+  }
 }
+
 
 // Retrieving a value
 var cachedOpen = sessionStorage.getItem('opened');
-if (cachedOpen === null) {
-  var isFirstTimeOpen = true
-} else {
-  var isFirstTimeOpen = cachedOpen
-}
 
-console.log(cachedOpen)
-console.log(isFirstTimeOpen)
+console.log(cachedOpen);
 
 function toggleChat() {
   const chatbubbleWindow = document.getElementById('chatbubble-window');
-  const messageContainer = document.getElementById('message-container');
-  const inputField = document.getElementById('chatbubble-input-field');
   const chatbubbleButton = document.getElementById('chatbubble-button');
+  const inputField = document.getElementById('chatbubble-input-field');
 
-  let isFirstTimeOpen = sessionStorage.getItem('opened') !== 'true';
-
-  if (isFirstTimeOpen) {
+  if (!cachedOpen) {
     sessionStorage.setItem('opened', 'true');
-    sessionStorage.removeItem('placeholderShown');
-    sessionStorage.removeItem('messageShown');
+    cachedOpen = 'true';
   }
 
   if (chatbubbleWindow.classList.contains('active')) {
-    // Reset input field placeholder
-    inputField.placeholder = '';
     chatbubbleWindow.classList.remove('active');
     chatbubbleButton.classList.remove('deactive');
   } else {
     chatbubbleWindow.classList.add('active');
-    // Set focus back to the input field
     inputField.focus();
     chatbubbleButton.classList.add('deactive');
-
-    if (!sessionStorage.getItem('placeholderShown')) {
-      inputField.placeholder = 'Type here';
-      sessionStorage.setItem('placeholderShown', 'true');
-    }
-
-    if (!messageContainer.classList.contains('visible') && !sessionStorage.getItem('messageShown')) {
-      typeMessage("Ask Anything!");
-      sessionStorage.setItem('messageShown', 'true');
-    }
-
     loadChatHistory();
     scrollToLatestMessage();
   }
 }
-
-
-
-
-
-
-
 
 
 document.addEventListener('click', function (event) {
@@ -157,17 +137,18 @@ function handleIncomingMessage(message) {
   chatbubbleGptMessage.appendChild(messageText);
   chatbubbleGptMessage.appendChild(timestamp);
 
-  var chatbubbleWindow = document.getElementById('chatbubble-window');
-  chatbubbleWindow.appendChild(chatbubbleGptMessage);
+  var messagesContainer = document.getElementById('chatbubble-messages'); // changed to 'chatbubble-messages'
+  messagesContainer.appendChild(chatbubbleGptMessage);
 
   // Use setTimeout to trigger the fade-in effect after a short delay
   setTimeout(function () {
     chatbubbleGptMessage.style.opacity = '1'; // Set opacity to 1 for fade-in
-  }, 100);
+  }, 400);
   // After message is added
   storeChatHistory();
   scrollToLatestMessage();
 }
+
 
 // Function to get the current timestamp
 function getCurrentTimestamp() {
@@ -210,8 +191,6 @@ function processMessageQueue() {
 function typeMessage(message) {
   const messageContainer = document.getElementById('message');
   const container = document.getElementById('message-container');
-  container.classList.add('visible');
-
   let index = 0;
   const typeInterval = setInterval(function () {
     if (index === message.length) {
