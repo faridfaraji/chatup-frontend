@@ -34,7 +34,7 @@ const proxyOptionsLauch = {
   secure: true,
   ws: false,
   rewrite: (path) => { 
-    return path.replace('/', '/v1/auth-shopify/launch')
+    return path.replace('/', `/v1/shopify/${process.env.APP_NAME}`)
   },
 };
 
