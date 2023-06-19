@@ -427,3 +427,14 @@ var message = {
 chatHistory.push(message);
 
 
+function removeFocusAfterDelay() {
+  var chatBubble = document.querySelector('#chatbubble-send');
+
+  // Add a focus event listener to the chat bubble
+  chatBubble.addEventListener('focus', function () {
+    // Remove the focus class after 400ms
+    setTimeout(function () {
+      chatBubble.classList.remove('focus');
+    }, 400);
+  });
+}
