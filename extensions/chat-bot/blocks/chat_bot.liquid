@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +15,7 @@
     <div id="chatbubble">
       <button
         id="chatbubble-button"
+        label="Chatbubble Button"
         onclick="toggleChat()"
         alt="I Answer Questions!">
         <svg
@@ -30,17 +30,48 @@
       </button>
       <div id="chatbubble-window">
         <div id="chatbubble-header">
-          <div class="chat-up-logo">
-            <img
-              src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
-              alt="chatup-logo"
-              width="50"
-              height="50"
-              loading="lazy">
-            <div id="message-container">
-              <div id="message">How can I help?</div>
-            </div>
+
+          <div class="chat-up-logo" id="logo_image">
+ 
+{{ section.settings.logo_image | image_url: width: 50 | image_tag }}
+
+          <!--            {% assign logoImage = section.settings.logo_image | image_url: width: 50 | image_tag %}
+          {% if logoImage %}
+          {% assign imageWidth = '50px' %}
+          {% assign imageUrl = section.settings.logo_image | image_url: width: 50 | image_tag %}
+          {% if imageUrl %}
+          <img
+          src="{{ imageUrl }}"
+          alt="Logo"
+          id="logo_image"
+          class=""
+          loading="lazy"
+          width="{{ imageWidth }}"
+          height="{{ imageWidth }}">
+          {% else %}
+          <img
+          src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
+          alt="Default Logo"
+          class=""
+          loading="lazy"
+          width="{{ imageWidth }}"
+          height="{{ imageWidth }}">
+          {% endif %}
+          {% else %}
+          <img
+          src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
+          alt="Default Logo"
+          class=""
+          loading="lazy"
+          width="{{ imageWidth }}"
+          height="{{ imageWidth }}">
+          {% endif %} -->
           </div>
+
+          <div id="message-container">
+            <div id="message">Ask Me Anything?</div>
+          </div>
+
           <button
             id="chatbubble_close"
             class="close_button"
@@ -67,7 +98,7 @@
               rows="1"></textarea>
             <button
               id="chatbubble-send"
-              style="    height: 10%; width: 10%;"
+              style="height: 90%; width: 16%;"
               onclick="sendMessage()">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -90,11 +121,20 @@
       {
         "name": "App Embed",
         "target": "body",
-        "settings": []
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "logo_image",
+            "label": "Logo Image"
+          }
+        ]
       }
     {% endschema %}
+
     <script>
       window.shopId = "{{ shop.id }}";
+
+      console.log(testing) + {{ section.settings.logo_image | image_url: width: 50 | image_tag }})
     </script>
     <!-- script src="{{ 'chat_bot.js' | asset_url }}" async></script -->
 
