@@ -17,7 +17,7 @@
         id="chatbubble-button"
         label="Chatbubble Button"
         onclick="toggleChat()"
-        alt="I Answer Questions!">
+        alt="I Answer Questions! Your number is {{ section.settings.test_number }}">
         <svg
           style="fill: #ffffff;"
           xmlns="http://www.w3.org/2000/svg"
@@ -126,6 +126,12 @@
             "type": "image_picker",
             "id": "logo_image",
             "label": "Logo Image"
+          },
+          {
+            "type": "number",
+            "id": "test_number",
+            "label": "Tester",
+            "default": 20
           }
         ]
       }
