@@ -29,7 +29,7 @@ const proxyOptions = {
 
 
 const proxyOptionsLauch = {
-  target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
+  target: `${process.env.BACKEND_URL}`,
   changeOrigin: false,
   secure: true,
   ws: false,
