@@ -10,14 +10,12 @@
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js" defer></script>
     <script src="{{ 'chat_bot.js' | asset_url }}" defer></script>
   </head>
-
   <body>
     <div id="chatbubble">
       <button
         id="chatbubble-button"
-        label="Chatbubble Button"
         onclick="toggleChat()"
-        alt="I Answer Questions! Your number is {{ section.settings.test_number }}">
+        alt="I Answer Questions!">
         <svg
           style="fill: #ffffff;"
           xmlns="http://www.w3.org/2000/svg"
@@ -30,48 +28,17 @@
       </button>
       <div id="chatbubble-window">
         <div id="chatbubble-header">
-
-          <div class="chat-up-logo" id="logo_image">
- 
-{{ section.settings.logo_image | image_url: width: 50 | image_tag }}
-
-          <!--            {% assign logoImage = section.settings.logo_image | image_url: width: 50 | image_tag %}
-          {% if logoImage %}
-          {% assign imageWidth = '50px' %}
-          {% assign imageUrl = section.settings.logo_image | image_url: width: 50 | image_tag %}
-          {% if imageUrl %}
-          <img
-          src="{{ imageUrl }}"
-          alt="Logo"
-          id="logo_image"
-          class=""
-          loading="lazy"
-          width="{{ imageWidth }}"
-          height="{{ imageWidth }}">
-          {% else %}
-          <img
-          src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
-          alt="Default Logo"
-          class=""
-          loading="lazy"
-          width="{{ imageWidth }}"
-          height="{{ imageWidth }}">
-          {% endif %}
-          {% else %}
-          <img
-          src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
-          alt="Default Logo"
-          class=""
-          loading="lazy"
-          width="{{ imageWidth }}"
-          height="{{ imageWidth }}">
-          {% endif %} -->
+          <div class="chat-up-logo">
+            <img
+              src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
+              alt="chatup-logo"
+              width="50"
+              height="50"
+              loading="lazy">
+            <div id="message-container">
+              <div id="message">How can I help?</div>
+            </div>
           </div>
-
-          <div id="message-container">
-            <div id="message">Ask Me Anything?</div>
-          </div>
-
           <button
             id="chatbubble_close"
             class="close_button"
@@ -82,8 +49,21 @@
             <div class="dot-pulse"></div>
           </div>
         </div>
+        <div id="initial_prompts">
+          <div class="initial-message-boxes">
+            Shipping Info
+          </div>
+          <div class="initial-message-boxes">
+            After-sales Support
+          </div>
+          <div class="initial-message-boxes">
+            Current Promotions
+          </div>
+          <div class="initial-message-boxes">
+            Sales Questions
+          </div>
+        </div>
         <div id="chatbubble-messages"><!-- Chat messages will be dynamically added here -->
-
         </div>
         <!-- <button id="stop-generating-button" onclick="stopGenerating()">Stop Generating</button> -->
         <div id="input-round-box">
@@ -121,29 +101,12 @@
       {
         "name": "App Embed",
         "target": "body",
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "logo_image",
-            "label": "Logo Image"
-          },
-          {
-            "type": "number",
-            "id": "test_number",
-            "label": "Tester",
-            "default": 20
-          }
-        ]
+        "settings": []
       }
     {% endschema %}
-
     <script>
       window.shopId = "{{ shop.id }}";
-
-      console.log(testing) + {{ section.settings.logo_image | image_url: width: 50 | image_tag }})
     </script>
     <!-- script src="{{ 'chat_bot.js' | asset_url }}" async></script -->
-
-
   </body>
 </html>

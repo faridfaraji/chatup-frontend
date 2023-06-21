@@ -1,32 +1,93 @@
 var socket = io('https://5af9-34-125-95-96.ngrok-free.app', { transports: ['websocket'], autoConnect: false });
-// how come nothing is being hyperlinked as my messages arrive? here is my full js for reference. 
+
+window.addEventListener('DOMContentLoaded', (event) => {
+  // Check if opacity was set to 0 in a previous session
+  if (sessionStorage.getItem('opacitySet') === 'true') {
+    document.querySelector('#initial_prompts').style.opacity = '0';
+    document.querySelector('#chatbubble-messages').style.visibility = 'visible';
+  }
+  // Check if display was set to none in a previous session
+  if (sessionStorage.getItem('displaySet') === 'true') {
+    document.querySelector('#initial_prompts').style.display = 'none';
+    document.querySelector('#chatbubble-messages').style.visibility = 'visible';
+  }
+  // Add event listeners to all .initial-message-boxes
+  document.querySelectorAll('.initial-message-boxes').forEach(item => {
+    item.addEventListener('click', event => {
+      setTimeout(() => {
+        // Set the opacity of #initial_prompts to 0
+        document.querySelector('#initial_prompts').style.opacity = '0';
+        document.querySelector('#chatbubble-messages').style.visibility = 'visible';
+      }, 150);
+      document.querySelector('#initial_prompts').style.display = 'none';
+
+      // Save in sessionStorage that opacity was set to 0
+      sessionStorage.setItem('opacitySet', 'true');
+      sessionStorage.setItem('displaySet', 'true');
+
+      // Get the text content of the clicked div
+      const messageText = event.target.textContent.trim();
+
+      // Emit the message text as if the user sent it via the text area
+      sendMessage(messageText);
+    });
+  });
+});
+
 function adjustScrollPosition() {
   var messagesContainer = document.getElementById('chatbubble-messages');
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
-
-// Scroll to the latest message
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction() {
+    const context = this;
+    const args = arguments;
+    const later = function () {
+      timeout = null;
+      func.apply(context, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+function throttle(func, limit) {
+  let inThrottle;
+  return function () {
+    const context = this;
+    const args = arguments;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(function () {
+        inThrottle = false;
+      }, limit);
+    }
+  };
+}
 function scrollToLatestMessage() {
   var messagesContainer = document.getElementById('chatbubble-messages');
   var latestMessage = messagesContainer.lastElementChild;
 
-  if (latestMessage) {
-    var currentHeight = messagesContainer.scrollHeight;
+  // Function to perform smooth scroll to the latest message
+  var scrollSmoothly = function () {
+    if (latestMessage) {
+      latestMessage.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-    // Scroll to the latest message
-    latestMessage.scrollIntoView({ behavior: 'smooth' });
+  // Create a new MutationObserver instance
+  var observer = new MutationObserver(
+    throttle(debounce(scrollSmoothly, 100), 300)
+  );
 
-    // Check if the height changes after a short delay
-    setTimeout(() => {
-      var newHeight = messagesContainer.scrollHeight;
+  // Start observing the container for configured mutations
+  observer.observe(messagesContainer, { childList: true });
 
-      // If the height has changed, scroll again
-      if (currentHeight !== newHeight) {
-        scrollToLatestMessage();
-      }
-    }, 100); // Adjust the delay time (in milliseconds) as needed
-  }
+  // Initially call the function to scroll to the latest message
+  scrollSmoothly();
 }
+
 
 
 // Retrieving a value
@@ -72,23 +133,24 @@ document.addEventListener('click', function (event) {
   }
 });
 
-// var isSendingMessage = false;
-// var isSocketResponsePending = false;
 
-function sendMessage() {
-  // if (isSendingMessage || isSocketResponsePending) {
-  //   return;
-  // }
 
+function sendMessage(messageText) {
   var inputField = document.getElementById('chatbubble-input-field');
-  var message = inputField.value.trim();
 
-  // Check if the message is not empty
-  if (message !== '') {
+  if (!messageText) {
+    messageText = inputField.value.trim();
+  }
+
+
+  if (messageText !== '') {
     var messagesContainer = document.getElementById('chatbubble-messages');
     var newMessage = document.createElement('div');
     newMessage.classList.add('chatbubble-message');
-    newMessage.textContent = message;
+    newMessage.textContent = messageText;
+
+    // Add timestamp to the message
+    newMessage.setAttribute('data-timestamp', Date.now());
 
     // Set initial opacity to 0 for fade-in effect
     newMessage.style.opacity = '0';
@@ -99,17 +161,25 @@ function sendMessage() {
     setTimeout(function () {
       newMessage.style.opacity = '1'; // Set opacity to 1 for fade-in
     }, 100);
+
     // Reset input field placeholder
     inputField.placeholder = '';
-    // adjustScrollPosition();
+
     scrollToLatestMessage();
-    sendMessageHelper(message);
+    sendMessageHelper(messageText);
+    // Clear the input field
+    inputField.value = '';
   }
+
   // After message is added
   storeChatHistory();
-  scrollToLatestMessage();
-  // Clear the input field
 
+  // Remove messages older than one hour
+  removeOldMessages();
+
+  scrollToLatestMessage();
+
+  // Clear the input field
   inputField.value = '';
 
   // Reset the height of the input field
@@ -117,6 +187,22 @@ function sendMessage() {
 
   // Set focus back to the input field
   inputField.focus();
+}
+
+
+
+function removeOldMessages() {
+  var currentTime = Date.now();
+  var messagesContainer = document.getElementById('chatbubble-messages');
+  var messages = messagesContainer.querySelectorAll('.chatbubble-message, .chatbubble-gpt-message');
+
+  messages.forEach(function (messageElement) {
+    var messageTime = messageElement.getAttribute('data-timestamp');
+    // Remove the message if it's older than one hour
+    if (currentTime - messageTime > 60 * 60 * 1000) {
+      messageElement.remove();
+    }
+  });
 }
 
 var messageQueue = []; // Array to store incoming messages
@@ -159,35 +245,7 @@ function getCurrentTimestamp() {
   return hours + ':' + minutes;
 }
 
-function processMessageQueue() {
-  if (messageQueue.length === 0) {
-    return; // No more messages in the queue
-  }
 
-  var message = messageQueue.shift(); // Retrieve the next message from the queue
-
-  var chatbubbleGptMessage = document.createElement('div');
-  chatbubbleGptMessage.className = 'chatbubble-gpt-message';
-  chatbubbleGptMessage.style.opacity = '0'; // Set initial opacity to 0
-
-  var messageText = document.createElement('p');
-  messageText.innerText = message;
-
-  chatbubbleGptMessage.appendChild(messageText);
-  var chatbubbleWindow = document.getElementById('chatbubble-window');
-  chatbubbleWindow.appendChild(chatbubbleGptMessage);
-
-  // Use setTimeout to trigger the fade-in effect after a short delay
-  setTimeout(function () {
-    chatbubbleGptMessage.style.opacity = '1'; // Set opacity to 1 for fade-in
-
-    // Continue processing the message queue after the fade-in effect is complete
-    setTimeout(function () {
-      processMessageQueue();
-      scrollToLatestMessage();
-    }, 500); // Delay between each message (500 milliseconds in this example)
-  }, 100); // Delay before the fade-in effect starts (100 milliseconds in this example)
-}
 
 function typeMessage(message) {
   const messageContainer = document.getElementById('message');
@@ -203,24 +261,7 @@ function typeMessage(message) {
   }, 100);
 }
 
-// function startTypingWhenActive() {
-//   const chatbubbleWindow = document.getElementById('chatbubble-window');
-//   const messageContainer = document.getElementById('message-container');
 
-//   const observer = new MutationObserver(function (mutationsList) {
-//     for (let mutation of mutationsList) {
-//       if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-//         var isFirstTimeOpen = sessionStorage.getItem('opened') !== 'true';
-//         if (chatbubbleWindow.classList.contains('active') && !messageContainer.classList.contains('visible') && isFirstTimeOpen) {
-//           typeMessage("Ask Anything!");
-//           sessionStorage.setItem('opened', 'true');
-//         }
-//       }
-//     }
-//   });
-
-//   observer.observe(chatbubbleWindow, { attributes: true });
-// }
 
 function sendMessageOnEnter(event) {
   if (event.keyCode === 13) {
@@ -231,12 +272,6 @@ function sendMessageOnEnter(event) {
 }
 
 function sendMessageHelper(msg) {
-  // if (isSendingMessage || isSocketResponsePending) {
-  //   return;
-  // }
-
-  // isSendingMessage = true;
-
   var user_message = {
     message: msg,
     shop_id: window.shopId
@@ -245,23 +280,21 @@ function sendMessageHelper(msg) {
   if (!socket.connected) socket.connect();
   socket.emit("user_message", user_message);
 
-  // isSocketResponsePending = true;
-
   var currentMessage = '';
   var chunkTimeout;
   var messageElement;
 
   var messageContainer = document.getElementById('chatbubble-messages');
 
-  // Initialize the MutationObserver
-  var observer = new MutationObserver(scrollToLatestMessage);
-  var config = { childList: true }; // Configuration of the observer: in this case, looking for the addition of new child nodes
+  var observer = new MutationObserver(function () {
+    scrollToLatestMessage();
+    storeChatHistory(); // Store chat history whenever a new message is added
+  });
+  var config = { childList: true };
   observer.observe(messageContainer, config);
 
-  // Remove any existing 'ai_response' listeners
   socket.off('ai_response');
 
-  // Now we can add the listener again
   socket.on('ai_response', function (data) {
     console.log('Received data:', data);
 
@@ -277,24 +310,23 @@ function sendMessageHelper(msg) {
       messageElement = document.createElement('div');
       messageElement.classList.add('chatbubble-gpt-message');
       messageElement.innerHTML = decodedData;
+      messageElement.setAttribute('data-timestamp', Date.now()); // set the timestamp attribute
       messageContainer.appendChild(messageElement);
     }
 
     clearTimeout(chunkTimeout);
     chunkTimeout = setTimeout(function () {
-      // Enable the input field and send button
+
       var inputField = document.getElementById('chatbubble-input-field');
       inputField.disabled = false;
       var sendButton = document.getElementById('chatbubble-send');
       sendButton.disabled = false;
-      // isSendingMessage = false;
-      // isSocketResponsePending = false;
-      // Store the updated chat history after a new chatbot message has been appended
+
       storeChatHistory();
       scrollToLatestMessage();
-      // Stop observing after message has fully arrived
+
       observer.disconnect();
-    }, 300); // Here 300ms is the delay, adjust it according to your network conditions
+    }, 1000); // Increased delay to 1 second
   });
 }
 
@@ -303,7 +335,8 @@ function sendMessageHelper(msg) {
 
 
 
-// Helper function to decode HTML-encoded special characters
+
+
 function decodeHTML(html) {
   var txt = document.createElement('textarea');
   txt.innerHTML = html;
@@ -312,34 +345,30 @@ function decodeHTML(html) {
 
 document.addEventListener('DOMContentLoaded', startTypingWhenActive);
 
-// Store chat history
+
 function storeChatHistory() {
   var chatHistory = [];
   var messages = document.querySelectorAll('.chatbubble-message, .chatbubble-gpt-message');
 
   messages.forEach(function (messageElement) {
     var message = {
-      text: messageElement.textContent,
+      text: messageElement.innerHTML, // change textContent to innerHTML
       className: messageElement.className,
-
+      timestamp: messageElement.getAttribute('data-timestamp'),
     };
     chatHistory.push(message);
   });
 
-  var chatHistoryData = {
-    timestamp: Date.now(),
-    messages: chatHistory
-  };
-
-  localStorage.setItem('chatHistory', JSON.stringify(chatHistoryData));
+  localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
 }
 
 
-// Load chat history
-// Load chat history
+
+
+
 function loadChatHistory() {
   var chatHistory = JSON.parse(localStorage.getItem('chatHistory'));
-  var currentTime = new Date().getTime();
+  var currentTime = Date.now();
 
   // Clear existing messages
   var messagesContainer = document.getElementById('chatbubble-messages');
@@ -347,21 +376,27 @@ function loadChatHistory() {
     messagesContainer.firstChild.remove();
   }
 
-  // Load chat history if it's not null and not expired
-  if (chatHistory && currentTime - chatHistory.timestamp <= 24 * 60 * 60 * 1000) {
+  // Load chat history if it's not null
+  if (chatHistory) {
     var chatbubbleMessage;
-    for (var i = 0; i < chatHistory.messages.length; i++) {
-      var message = chatHistory.messages[i];
+    for (var i = 0; i < chatHistory.length; i++) {
+      var message = chatHistory[i];
+      // Skip this message if it's older than one hour
+      if (currentTime - message.timestamp > 60 * 60 * 1000) {
+        continue;
+      }
       var chatbubbleMessage;
 
       if (message.className === 'chatbubble-message') {
         chatbubbleMessage = document.createElement('div');
         chatbubbleMessage.className = 'chatbubble-message';
         chatbubbleMessage.textContent = message.text;
+        chatbubbleMessage.setAttribute('data-timestamp', message.timestamp);
       } else if (message.className === 'chatbubble-gpt-message') {
         chatbubbleMessage = document.createElement('div');
         chatbubbleMessage.className = 'chatbubble-gpt-message';
-        chatbubbleMessage.textContent = message.text; // Added this line
+        chatbubbleMessage.textContent = message.text;
+        chatbubbleMessage.setAttribute('data-timestamp', message.timestamp);
       }
 
       if (chatbubbleMessage) {
@@ -373,32 +408,28 @@ function loadChatHistory() {
   }
 }
 
-// Get the textarea element
+
 const textarea = document.getElementById('chatbubble-input-field');
 
-// Flag to keep track of touch events
 let touchMoved = false;
 
-// Add an event listener to the textarea for the touchstart event
 textarea.addEventListener('touchstart', function () {
   touchMoved = false;
 });
 
-// Add an event listener to the textarea for the touchmove event
+
 textarea.addEventListener('touchmove', function () {
   touchMoved = true;
 });
 
-// Add an event listener to the textarea for the click event
+
 textarea.addEventListener('click', function (event) {
-  // Delay execution to allow slight zooming to occur
   setTimeout(function () {
-    // Prevent zooming if touch events were detected
     if (touchMoved) {
       event.preventDefault();
-      touchMoved = false; // Reset the touchMoved flag
+      touchMoved = false;
     }
-  }, 300); // Adjust the delay time (in milliseconds) as needed
+  }, 300);
 });
 
 window.addEventListener('touchend', function (e) {
@@ -418,23 +449,44 @@ function autoResize() {
 }
 
 
-var message = {
-  text: messageElement.textContent,
-  className: messageElement.className,
-
-};
-
 chatHistory.push(message);
 
 
 function removeFocusAfterDelay() {
   var chatBubble = document.querySelector('#chatbubble-send');
-
-  // Add a focus event listener to the chat bubble
   chatBubble.addEventListener('focus', function () {
-    // Remove the focus class after 400ms
     setTimeout(function () {
       chatBubble.classList.remove('focus');
     }, 400);
   });
+}
+
+function storageAvailable(type) {
+  var storage;
+  try {
+    storage = window[type];
+    var x = '__storage_test__';
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  }
+  catch (e) {
+    return e instanceof DOMException && (
+
+      e.code === 22 ||
+
+      e.code === 1014 ||
+
+      e.name === 'QuotaExceededError' ||
+
+      e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+
+      (storage && storage.length !== 0);
+  }
+}
+
+if (storageAvailable('localStorage')) {
+  // localStorage is available
+} else {
+  // localStorage is not available
 }
