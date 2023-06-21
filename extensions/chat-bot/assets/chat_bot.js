@@ -1,15 +1,19 @@
-var socket = io('https://5af9-34-125-95-96.ngrok-free.app', { transports: ['websocket'], autoConnect: false });
+var socket = io('https://5af9-34-125-95-96.ngrok-free.app', {
+  transports: ['websocket', 'polling', 'xhr-polling'],
+  autoConnect: false
+});
+
 
 window.addEventListener('DOMContentLoaded', (event) => {
   // Check if opacity was set to 0 in a previous session
   if (sessionStorage.getItem('opacitySet') === 'true') {
     document.querySelector('#initial_prompts').style.opacity = '0';
-    document.querySelector('#chatbubble-messages').style.visibility = 'visible';
+    document.querySelector('#chatbubble-messages').style.display = 'flex';
   }
   // Check if display was set to none in a previous session
   if (sessionStorage.getItem('displaySet') === 'true') {
     document.querySelector('#initial_prompts').style.display = 'none';
-    document.querySelector('#chatbubble-messages').style.visibility = 'visible';
+    document.querySelector('#chatbubble-messages').style.display = 'flex';
   }
   // Add event listeners to all .initial-message-boxes
   document.querySelectorAll('.initial-message-boxes').forEach(item => {
@@ -17,9 +21,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
       setTimeout(() => {
         // Set the opacity of #initial_prompts to 0
         document.querySelector('#initial_prompts').style.opacity = '0';
-        document.querySelector('#chatbubble-messages').style.visibility = 'visible';
-      }, 150);
-      document.querySelector('#initial_prompts').style.display = 'none';
+      }, 600);
+      // setTimeout(() => {
+      //   // Set the opacity of #initial_prompts to 0
+      //   document.querySelector('#initial_prompts').style.height = '0';
+      // }, 300);
+      setTimeout(() => {
+        // Set the opacity of #initial_prompts to 0
+        document.querySelector('#initial_prompts').style.display = 'none';
+      }, 200);
+      document.querySelector('#chatbubble-messages').style.display = 'flex';
 
       // Save in sessionStorage that opacity was set to 0
       sessionStorage.setItem('opacitySet', 'true');
@@ -106,11 +117,15 @@ function toggleChat() {
   }
 
   if (chatbubbleWindow.classList.contains('active')) {
-    chatbubbleWindow.classList.remove('active');
+    chatbubbleWindow.classList.add('deactive');
+    setTimeout(function () {
+      chatbubbleWindow.classList.remove('active');
+      chatbubbleWindow.classList.remove('deactive');
+    }, 2000);
     chatbubbleButton.classList.remove('deactive');
   } else {
     chatbubbleWindow.classList.add('active');
-    inputField.focus();
+    // inputField.focus();
     chatbubbleButton.classList.add('deactive');
     loadChatHistory();
     scrollToLatestMessage();
@@ -121,7 +136,7 @@ function toggleChat() {
 document.addEventListener('click', function (event) {
   var chatbubble = document.getElementById('chatbubble');
   var chatbubble_window = document.getElementById('chatbubble-window');
-  var chatbubble_closeButton = doocument.getElementByClassName('close_button');
+  var chatbubble_closeButton = document.getElementByClassName('close_button');
 
   if (!chatbubble.contains(event.target) && chatbubble_window.classList.contains('active')) {
     chatbubble_window.classList.remove('active');
@@ -142,7 +157,6 @@ function sendMessage(messageText) {
     messageText = inputField.value.trim();
   }
 
-
   if (messageText !== '') {
     var messagesContainer = document.getElementById('chatbubble-messages');
     var newMessage = document.createElement('div');
@@ -155,6 +169,11 @@ function sendMessage(messageText) {
     // Set initial opacity to 0 for fade-in effect
     newMessage.style.opacity = '0';
 
+    var timestamp = document.createElement('div');
+    timestamp.classList.add('chatbubble-message-time');
+    timestamp.innerText = getCurrentTimestamp();
+
+    newMessage.appendChild(timestamp);
     messagesContainer.appendChild(newMessage);
 
     // Use setTimeout to trigger the fade-in effect after a short delay
@@ -167,20 +186,15 @@ function sendMessage(messageText) {
 
     scrollToLatestMessage();
     sendMessageHelper(messageText);
+
     // Clear the input field
     inputField.value = '';
   }
 
   // After message is added
   storeChatHistory();
-
-  // Remove messages older than one hour
   removeOldMessages();
-
   scrollToLatestMessage();
-
-  // Clear the input field
-  inputField.value = '';
 
   // Reset the height of the input field
   inputField.style.height = 'auto';
@@ -216,21 +230,21 @@ function handleIncomingMessage(message) {
   messageText.innerHTML = hyperlinkUrlsInData(message); // Apply hyperlinking to the message
 
   // Create a timestamp element
-  var timestamp = document.createElement('span');
-  timestamp.className = 'message-timestamp';
+  var timestamp = document.createElement('div');
+  timestamp.classList.add('chatbubble-gpt-message-time');
   timestamp.innerText = getCurrentTimestamp();
 
-  // Append the message and timestamp to the message container
   chatbubbleGptMessage.appendChild(messageText);
   chatbubbleGptMessage.appendChild(timestamp);
 
-  var messagesContainer = document.getElementById('chatbubble-messages'); // changed to 'chatbubble-messages'
+  var messagesContainer = document.getElementById('chatbubble-messages');
   messagesContainer.appendChild(chatbubbleGptMessage);
 
   // Use setTimeout to trigger the fade-in effect after a short delay
   setTimeout(function () {
     chatbubbleGptMessage.style.opacity = '1'; // Set opacity to 1 for fade-in
   }, 400);
+
   // After message is added
   storeChatHistory();
   scrollToLatestMessage();
@@ -271,6 +285,7 @@ function sendMessageOnEnter(event) {
   }
 }
 
+
 function sendMessageHelper(msg) {
   var user_message = {
     message: msg,
@@ -283,6 +298,7 @@ function sendMessageHelper(msg) {
   var currentMessage = '';
   var chunkTimeout;
   var messageElement;
+  var scrollTimeout;
 
   var messageContainer = document.getElementById('chatbubble-messages');
 
@@ -310,13 +326,18 @@ function sendMessageHelper(msg) {
       messageElement = document.createElement('div');
       messageElement.classList.add('chatbubble-gpt-message');
       messageElement.innerHTML = decodedData;
+
+      var timestamp = document.createElement('div');
+      timestamp.classList.add('chatbubble-gpt-message-time');
+      timestamp.innerText = getCurrentTimestamp();
+
+      messageElement.appendChild(timestamp);
       messageElement.setAttribute('data-timestamp', Date.now()); // set the timestamp attribute
       messageContainer.appendChild(messageElement);
     }
 
     clearTimeout(chunkTimeout);
     chunkTimeout = setTimeout(function () {
-
       var inputField = document.getElementById('chatbubble-input-field');
       inputField.disabled = false;
       var sendButton = document.getElementById('chatbubble-send');
@@ -327,14 +348,14 @@ function sendMessageHelper(msg) {
 
       observer.disconnect();
     }, 1000); // Increased delay to 1 second
+
+    // Scroll to the latest message after the incoming message is complete
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function () {
+      scrollToLatestMessage();
+    }, 500); // Delay scrolling to give time for the message to render
   });
 }
-
-
-
-
-
-
 
 
 function decodeHTML(html) {
@@ -352,7 +373,7 @@ function storeChatHistory() {
 
   messages.forEach(function (messageElement) {
     var message = {
-      text: messageElement.innerHTML, // change textContent to innerHTML
+      html: messageElement.innerHTML, // Store innerHTML instead of textContent
       className: messageElement.className,
       timestamp: messageElement.getAttribute('data-timestamp'),
     };
@@ -361,6 +382,7 @@ function storeChatHistory() {
 
   localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
 }
+
 
 
 
@@ -378,24 +400,24 @@ function loadChatHistory() {
 
   // Load chat history if it's not null
   if (chatHistory) {
-    var chatbubbleMessage;
     for (var i = 0; i < chatHistory.length; i++) {
       var message = chatHistory[i];
       // Skip this message if it's older than one hour
       if (currentTime - message.timestamp > 60 * 60 * 1000) {
         continue;
       }
+
       var chatbubbleMessage;
 
       if (message.className === 'chatbubble-message') {
         chatbubbleMessage = document.createElement('div');
         chatbubbleMessage.className = 'chatbubble-message';
-        chatbubbleMessage.textContent = message.text;
+        chatbubbleMessage.innerHTML = message.html; // Use the stored HTML
         chatbubbleMessage.setAttribute('data-timestamp', message.timestamp);
       } else if (message.className === 'chatbubble-gpt-message') {
         chatbubbleMessage = document.createElement('div');
         chatbubbleMessage.className = 'chatbubble-gpt-message';
-        chatbubbleMessage.textContent = message.text;
+        chatbubbleMessage.innerHTML = message.html; // Use the stored HTML
         chatbubbleMessage.setAttribute('data-timestamp', message.timestamp);
       }
 
@@ -403,10 +425,12 @@ function loadChatHistory() {
         messagesContainer.appendChild(chatbubbleMessage);
       }
     }
+
     // Scroll to the latest message after loading the chat history
     scrollToLatestMessage();
   }
 }
+
 
 
 const textarea = document.getElementById('chatbubble-input-field');

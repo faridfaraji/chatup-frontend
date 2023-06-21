@@ -71,7 +71,6 @@
     background-color: var(--chatbubble-window-backround);
     opacity: 0;
     border-radius: 7px;
-    transform: translateY(0);
     transition: opacity 0.2s ease-in-out, transform 0.7s ease;
     animation: fade-in 1s ease-in-out;
     -webkit-animation: fade-in 1s ease-in-out;
@@ -81,7 +80,7 @@
     scroll-behavior: smooth;
     max-height: 65vh;
     box-shadow: 0 0 12px -3px rgba(0, 0, 0, 0.3);
-    transform: scale(1);
+    transform: scale(1) translateY(0);
     transform-origin: right bottom;
     width: calc((1/5)*(100vw));
     min-width: 300px;
@@ -114,6 +113,37 @@
     flex-direction: column;
     opacity: 1;
     overflow: hidden;
+}
+
+#chatbubble-window.active.deactive {
+    animation: fade-out .7s ease-in-out;
+    opacity: 0;
+}
+
+
+
+@-webkit-keyframes fade-out {
+    from {
+        opacity: 1;
+        bottom: 20px;
+    }
+
+    to {
+        opacity: 0;
+        bottom: 80px;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+        bottom: 20px;
+    }
+
+    to {
+        opacity: 0;
+        bottom: 80px;
+    }
 }
 
 @-webkit-keyframes fade-in {
@@ -230,12 +260,11 @@
     padding: 10px 10px 5.5em 10px;
     position: relative;
     overflow-y: auto;
-    display: flex;
-    visibility: collapse;
+    display: none;
     flex-direction: column;
     height: 100%;
     box-sizing: border-box;
-    transition: .3s ease-in;
+    transition: .3s ease-in-out;
 }
 
 
@@ -260,7 +289,7 @@
     word-wrap: break-word;
     align-self: flex-end;
     font-style: italic;
-    transition: .7s ease-in;
+    transition: .7s ease-in-out;
 }
 
 .chatbubble-gpt-message {
@@ -272,7 +301,7 @@
     max-width: 80%;
     word-wrap: break-word;
     align-self: flex-start;
-    transition: .7s ease-in;
+    transition: .7s ease-in-out;
 
 }
 
@@ -280,7 +309,7 @@ input {
     max-width: 80%;
     padding: 5px;
     overflow-y: auto;
-    transition: .7s ease-in;
+    transition: .7s ease-in-out;
 }
 
 #message-container {
@@ -291,13 +320,11 @@ input {
     justify-content: center;
     align-items: center;
     padding-left: 0.6em;
-    transition: .7s ease-in;
+    transition: .7s ease-in-out;
 }
 
 
 textarea {
-    scrollbar-width: thin;
-    scrollbar-color: transparent transparent;
     align-self: center;
     position: relative;
     resize: none !important;
@@ -310,11 +337,11 @@ textarea {
     width: 75%;
     display: flex;
     flex-direction: column-reverse;
-    overflow-y: scroll;
+    overflow-y: auto !important;
     scroll-behavior: smooth;
     max-height: 150px;
     transform-origin: 0 0;
-    transition: .7s ease-in;
+    transition: .7s ease-in-out;
 }
 
 #input-round-box {
@@ -335,7 +362,7 @@ textarea {
     bottom: 0;
     background: white;
     animation: resizeInputBox 0.3s ease;
-    transition: .7s ease-in;
+    transition: .7s ease-in-out;
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
 
@@ -358,7 +385,7 @@ textarea {
 #input-round-box,
 #chatbubble-input-field {
     box-sizing: content-box;
-    transition: .7s ease-in;
+    transition: .7s ease-in-out;
 }
 
 
@@ -481,16 +508,27 @@ textarea {
     padding: 5% 5%;
     margin-inline: 0.25em;
     height: 100%;
-    transition: .3s ease-in;
+    transition: .5s ease-in-out;
     overflow-y: auto;
     flex-direction: column;
+}
+
+#initial_prompts::before {
+    content: "";
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    bottom: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0) 84%, white, white);
+    pointer-events: none;
+    z-index: 22;
 }
 
 .initial-message-boxes {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: .3s ease-in;
+    transition: .3s ease-in-out;
     height: 3em;
     width: fit-content;
     padding: 1em 1.2em;
@@ -502,6 +540,8 @@ textarea {
 .initial-message-boxes:hover {
     box-shadow: var(--general-initial-prompt-box-shadow-onHover);
     color: var(--Primary-chatbot-text-color-onHover);
+    transform: translateX(-2px);
+    scale: 1.01;
 }
 
 /**
@@ -515,3 +555,10 @@ textarea {
   }
 
 } */
+
+.chatbubble-message-time,
+.chatbubble-gpt-message-time {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+}
