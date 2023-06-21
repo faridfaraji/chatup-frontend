@@ -29,9 +29,10 @@ const proxyOptions = {
 
 
 const proxyOptionsLauch = {
-  target: `${process.env.BACKEND_URL}`,
-  changeOrigin: false,
-  secure: true,
+  target: "http://34.125.95.96:8000", 
+  // `${process.env.BACKEND_URL}`,
+  changeOrigin: true,
+  secure: false,
   ws: false,
   rewrite: (path) => { 
     return path.replace('/', `/v1/shopify/${process.env.APP_NAME}`)
@@ -77,8 +78,8 @@ export default defineConfig({
     preserveSymlinks: true,
   },
   server: {
-    host: "localhost",
-    port: process.env.FRONTEND_PORT,
+    // host: "localhost",
+    // port: process.env.FRONTEND_PORT,
     hmr: hmrConfig,
     proxy: {
       "^/(\\?.*)?$": proxyOptionsLauch,
