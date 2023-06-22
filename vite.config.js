@@ -32,8 +32,8 @@ const proxyOptions = {
 
 const proxyOptionsLauch = {
   target: `${process.env.BACKEND_URL}`,
-  changeOrigin: true, // false if frontend and gateway are on the same server, true otherwise
-  secure: false, // true if BACKEND_URL is https, false if http
+  changeOrigin: false, // false if frontend and gateway are on the same server, true otherwise
+  secure: true, // true if BACKEND_URL is https, false if http
   ws: false,
   rewrite: (path) => { 
     return path.replace('/', `/v1/shopify/${process.env.APP_NAME}`)
