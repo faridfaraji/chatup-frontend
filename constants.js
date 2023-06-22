@@ -5,5 +5,6 @@ export default {
     headers: {
         "ngrok-skip-browser-warning": "true"
     },
-    credentials: "same-origin"
+    credentials: "same-origin",
+    shop_id: -1
 }

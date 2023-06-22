@@ -10,11 +10,14 @@ export async function getNegativeKeywords() {
             credentials: constants.credentials,
             headers: constants.headers
         })
-        const data = await response.json()
-        return data
+        if(response.ok) {
+            const data = await response.json()
+            return data
+        } else {
+            return []
+        }
     } catch (error) {
         console.error('Error fetching negative keywords:', error)
-        return []
     }
 }
 

@@ -10,8 +10,10 @@ export async function getShopId() {
             credentials: constants.credentials,
             headers: constants.headers
         })
-        const data = await response.json()
-        constants.shop_id = data.shop_id
+        if(response.ok) {
+            const data = await response.json()
+            constants.shop_id = data.shop_id
+        }
     } catch (error) {
         console.error('Error fetching shop id:', error)
     }
