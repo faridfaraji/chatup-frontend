@@ -25,7 +25,7 @@ const requestLogger = (req, res, next) => {
 const proxyOptionsLauch = {
   target: `${process.env.BACKEND_URL}`,
   // set changeOrigin to false if frontend and gateway are on the same server, true otherwise
-  changeOrigin: false,
+  changeOrigin: true,
    // set secure to true if BACKEND_URL is https, false if http
   secure: true,
   ws: false,
