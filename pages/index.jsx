@@ -11,8 +11,6 @@ import {
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation, Trans } from "react-i18next";
 
-import { trophyImage } from "../assets";
-
 import { ChatPrompt, NegativeKeywords, SaveBar, PermissionCheckbox } from "../components";
 
 export default function HomePage() {

@@ -1,6 +1,7 @@
 import { Tag, LegacyStack, AlphaCard, Form, FormLayout, TextField, Button } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
 import { useAuthenticatedFetch } from '../hooks';
+import { getNegativeKeywords, changeNegativeKeywords } from '../utils/negativeKeywords';
 
 export const NegativeKeywords = () => {
   let afetch = useAuthenticatedFetch()
@@ -20,46 +21,25 @@ export const NegativeKeywords = () => {
   // if there is an issue with contacting the database, but assure them that their negative keywords
   // are still being used to generate their chatbot's responses even though we cannot fetch them
   useEffect(() => {
-    fetchNegativeKeywords();
+    getNegativeKeywords()
+      .then((fetched) => setSelectedTags(fetched))
+    console.log(selectedTags)
   }, []);
-
-  const fetchNegativeKeywords = async () => {
-    afetch(
-      'https://695c-34-125-95-96.ngrok-free.app/database/v1/shops/72856895765/negative-keywords', {
-      method: 'GET',
-      credentials: 'same-origin',
-      headers: {
-        accept: 'application/json',
-        "ngrok-skip-browser-warning": "true"
-      }
-    }).then((response) => {
-      if (response.ok) {
-        return response.json()
-      }
-    }).then((data) => {
-      setSelectedTags(data)
-    }).catch((error) => console.error('Failed to fetch negative keywords:', error));
-  };
 
   // If we get a successful response from the server we will delete the keyword that the
   // user wanted to remove. If we don't get a successful response from the server, we 
   // should inform the user that their keyword was not necessarily deleted.
   const removeTag = useCallback((tag) => async () => {
-    afetch(`https://695c-34-125-95-96.ngrok-free.app/database/v1/shops/72856895765/negative-keywords/${tag}`, {
-      method: 'DELETE',
-      credentials: 'same-origin',
-      headers: {
-        accept: 'application/json',
-        "ngrok-skip-browser-warning": "true"
-      }
-    }).then((response) => {
-      if (response.ok) {
-        setSelectedTags((previousTags) =>
-          previousTags.filter((previousTag) => previousTag !== tag)
-        )
-      }
-    }).catch((error) => console.error('Failed to delete negative keyword:', error));
-  }, []);
+    changeNegativeKeywords("DELETE", tag)
+      .then((response) => {
+        if (response.ok) {
+          setSelectedTags((previousTags) =>
+            previousTags.filter((previousTag) => previousTag !== tag)
+          )
+        }
+      })
+      .catch((error) => console.error('Error deleting negative keyword:', error));
+  })
 
   // Tags are well defined in Polaris so we only need to specify a small number of parameters
   const tagMarkup = selectedTags.map((option) => (
@@ -73,20 +53,14 @@ export const NegativeKeywords = () => {
   // keyword can't be confirmed but wasn't necessarily not added and that a refresh should
   // refresh their displayed list of keywords
   const addTag = async (tag) => {
-    afetch(
-      `https://695c-34-125-95-96.ngrok-free.app/database/v1/shops/72856895765/negative-keywords/${tag}`, {
-      method: 'PUT',
-      credentials: 'same-origin',
-      headers: {
-        accept: 'application/json',
-        "ngrok-skip-browser-warning": "true"
-      }
-    }).then((response) => {
-      if (response.ok) {
-        setSelectedTags((previousTags) => [...previousTags, tag])
-        setValue('')
-      }
-    }).catch((error) => console.error('Failed to add negative keyword:', error));
+    changeNegativeKeywords("PUT", tag)
+      .then((response) => {
+        if (response.ok) {
+          setSelectedTags((previousTags) => [...previousTags, tag])
+          setValue('')
+        }
+      })
+      .catch((error) => console.error('Failed to add negative keyword:', error));
   };
 
   // We only want to execute a server request if the tag to be added is valid
