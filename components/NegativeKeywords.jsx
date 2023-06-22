@@ -23,7 +23,6 @@ export const NegativeKeywords = () => {
   useEffect(() => {
     getNegativeKeywords()
       .then((fetched) => setSelectedTags(fetched))
-    console.log(selectedTags)
   }, []);
 
   // If we get a successful response from the server we will delete the keyword that the

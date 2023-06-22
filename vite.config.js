@@ -3,6 +3,8 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import https from "https";
 import react from "@vitejs/plugin-react";
+import dotenv from 'dotenv'
+dotenv.config()
 // import { createProxyMiddleware } from 'http-proxy-middleware';
 
 if (
@@ -29,8 +31,7 @@ const proxyOptions = {
 
 
 const proxyOptionsLauch = {
-  target: "http://34.125.95.96:8000", 
-  // `${process.env.BACKEND_URL}`,
+  target: `${process.env.BACKEND_URL}`,
   changeOrigin: true,
   secure: false,
   ws: false,
@@ -78,8 +79,8 @@ export default defineConfig({
     preserveSymlinks: true,
   },
   server: {
-    // host: "localhost",
-    // port: process.env.FRONTEND_PORT,
+    host: "localhost",
+    port: process.env.FRONTEND_PORT,
     hmr: hmrConfig,
     proxy: {
       "^/(\\?.*)?$": proxyOptionsLauch,
