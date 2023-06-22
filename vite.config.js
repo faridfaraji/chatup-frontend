@@ -22,14 +22,6 @@ const requestLogger = (req, res, next) => {
   next();
 };
 
-const proxyOptions = {
-  target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
-  changeOrigin: false,
-  secure: true,
-  ws: false,
-};
-
-
 const proxyOptionsLauch = {
   target: `${process.env.BACKEND_URL}`,
   // set changeOrigin to false if frontend and gateway are on the same server, true otherwise
@@ -38,10 +30,9 @@ const proxyOptionsLauch = {
   secure: true,
   ws: false,
   rewrite: (path) => { 
-    return path.replace('/', `/v1/shopify/${process.env.APP_NAME}`)
+    return path.replace('/', `/v1/shopify/${process.env.VITE_APP_NAME}`)
   },
 };
-
 
 const host = process.env.HOST
   ? process.env.HOST.replace(/https?:\/\//, "")
@@ -85,8 +76,7 @@ export default defineConfig({
     port: process.env.FRONTEND_PORT,
     hmr: hmrConfig,
     proxy: {
-      "^/(\\?.*)?$": proxyOptionsLauch,
-      "^/api(/|(\\?.*)?$)": proxyOptions,
+      "^/(\\?.*)?$": proxyOptionsLauch
     },
   },
 });

@@ -1,7 +1,12 @@
+const {
+    VITE_APP_NAME,
+    VITE_BACKEND_URL
+} = import.meta.env
+
 export default {
-    gateway_url: "https://695c-34-125-95-96.ngrok-free.app",
+    gateway_url: VITE_BACKEND_URL,
     api_version: "v1",
-    app_name: "chat-up-admin-testing",
+    app_name: VITE_APP_NAME,
     headers: {
         "ngrok-skip-browser-warning": "true"
     },
