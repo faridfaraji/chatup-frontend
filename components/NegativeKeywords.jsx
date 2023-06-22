@@ -6,13 +6,7 @@ export const NegativeKeywords = () => {
   let afetch = useAuthenticatedFetch()
 
   // Initialize values
-  const [selectedTags, setSelectedTags] = useState([
-    //todo GET(...)
-    'Rustic',
-    'Antique',
-    'Vinyl',
-    'Refurbished'
-  ]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [value, setValue] = useState('');
 
   // As user types, update value accordingly
