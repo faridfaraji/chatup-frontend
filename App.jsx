@@ -9,7 +9,15 @@ import {
   PolarisProvider,
 } from "./components";
 
+import { getShopId } from "./utils/shopInfo";
+import { useEffect } from "react";
+
 export default function App() {
+  // Set constants
+  useEffect(() => {
+    getShopId();
+  }, []);
+
   // Any .tsx or .jsx files in /pages will become a route
   // See documentation for <Routes /> for more info
   const pages = import.meta.globEager("./pages/**/!(*.test.[jt]sx)*.([jt]sx)");

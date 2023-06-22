@@ -3,6 +3,8 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import https from "https";
 import react from "@vitejs/plugin-react";
+import dotenv from 'dotenv'
+dotenv.config()
 // import { createProxyMiddleware } from 'http-proxy-middleware';
 
 if (
@@ -20,24 +22,17 @@ const requestLogger = (req, res, next) => {
   next();
 };
 
-const proxyOptions = {
-  target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
-  changeOrigin: false,
-  secure: true,
-  ws: false,
-};
-
-
 const proxyOptionsLauch = {
   target: `${process.env.BACKEND_URL}`,
+  // set changeOrigin to false if frontend and gateway are on the same server, true otherwise
   changeOrigin: false,
+   // set secure to true if BACKEND_URL is https, false if http
   secure: true,
   ws: false,
   rewrite: (path) => { 
-    return path.replace('/', `/v1/shopify/${process.env.APP_NAME}`)
+    return path.replace('/', `/v1/shopify/${process.env.VITE_APP_NAME}`)
   },
 };
-
 
 const host = process.env.HOST
   ? process.env.HOST.replace(/https?:\/\//, "")
@@ -81,8 +76,7 @@ export default defineConfig({
     port: process.env.FRONTEND_PORT,
     hmr: hmrConfig,
     proxy: {
-      "^/(\\?.*)?$": proxyOptionsLauch,
-      "^/api(/|(\\?.*)?$)": proxyOptions,
+      "^/(\\?.*)?$": proxyOptionsLauch
     },
   },
 });
