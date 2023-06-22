@@ -2,7 +2,7 @@
     --primary-heading-color: white;
     --Primary-chatbot-text-color: #080808;
     --Primary-chatbot-text-color-onHover: rgba(8, 8, 8, .7);
-    --primary-font: "Roboto" sans-serif;
+    --primary-font: "Roboto", sans-serif;
     --custom-font-size: 1em;
     --chatbubble-button-backgound-color: #183d57;
     --chat-window-header-color: #2c3c4c;
@@ -48,6 +48,7 @@
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
     opacity: 1;
     transform: translateY(0);
+    transform-origin: center;
     transition: 0.4s ease-in-out;
     width: auto;
     height: auto;
@@ -60,7 +61,7 @@
 
 #chatbubble-button.deactive {
     opacity: 0;
-    transform: translateY(10em) scale(0.01);
+    transform: translateY(5em) scale(.1);
 }
 
 #chatbubble-window {
@@ -71,7 +72,7 @@
     background-color: var(--chatbubble-window-backround);
     opacity: 0;
     border-radius: 7px;
-    transition: opacity 0.2s ease-in-out, transform 0.7s ease;
+    transition: opacity 0.2s ease-in-out, transform 0.4s ease;
     animation: fade-in 1s ease-in-out;
     -webkit-animation: fade-in 1s ease-in-out;
     -moz-animation: fade-in 1s ease-in-out;
@@ -116,7 +117,7 @@
 }
 
 #chatbubble-window.active.deactive {
-    animation: fade-out .7s ease-in-out;
+    animation: fade-out .4s ease-in-out;
     opacity: 0;
 }
 
@@ -124,24 +125,24 @@
 
 @-webkit-keyframes fade-out {
     from {
-        opacity: 1;
+
         bottom: 20px;
     }
 
     to {
-        opacity: 0;
+
         bottom: 80px;
     }
 }
 
 @keyframes fade-out {
     from {
-        opacity: 1;
+
         bottom: 20px;
     }
 
     to {
-        opacity: 0;
+
         bottom: 80px;
     }
 }
@@ -180,10 +181,11 @@
     border-bottom: 1px solid #ddd;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
     border-radius: 7px 7px 0 0;
     width: 100%;
     z-index: 1;
+    align-items: center;
+    gap: .7em;
 
 }
 
@@ -207,6 +209,15 @@
 .chat-up-logo {
     display: flex;
     height: 55px;
+    display: flex;
+    height: 55px;
+    align-items: center;
+    padding-left: 0.6em;
+
+}
+
+.chat-up-logo img {
+    border-radius: 50% !important;
 }
 
 #chatbubble-input {
@@ -297,12 +308,12 @@
     padding: 7px 10px;
     margin-bottom: 8.5px;
     border-radius: 15px;
-    display: inline-block;
     max-width: 80%;
     word-wrap: break-word;
     align-self: flex-start;
     transition: .7s ease-in-out;
-
+    display: flex;
+    flex-direction: column;
 }
 
 input {
@@ -556,9 +567,26 @@ textarea {
 
 } */
 
-.chatbubble-message-time,
-.chatbubble-gpt-message-time {
-    font-size: 12px;
+.chatbubble-message-time {
+    font-size: 8px;
     color: #888;
-    margin-top: 4px;
+    margin-top: 3px;
+    position: relative;
+    left: -45%;
+    height: 0px;
+    bottom: 9px;
+
+}
+
+
+
+.chatbubble-gpt-message-time {
+    font-size: 8px;
+    color: #888;
+    margin-top: 3px;
+    order: 2;
+    position: relative;
+    left: 107%;
+    height: 0px;
+    bottom: 9px;
 }

@@ -9,8 +9,14 @@
     <link rel="stylesheet" href="{{ 'extensions/chat-bot/assets/style.css' | asset_url }}">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js" defer></script>
     <script src="{{ 'chat_bot.js' | asset_url }}" defer></script>
+    <style>
+      #chatbubble {
+        font-family: {{ block.settings.body_font }}
+      }
+    </style>
   </head>
   <body>
+    <p>{{ block.settings.body_font }}</p>
     <div id="chatbubble">
       <button
         id="chatbubble-button"
@@ -28,17 +34,41 @@
       </button>
       <div id="chatbubble-window">
         <div id="chatbubble-header">
-          <div class="chat-up-logo">
-            <img
-              src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
-              alt="chatup-logo"
-              width="50"
-              height="50"
-              loading="lazy">
-            <div id="message-container">
-              <div id="message">How can I help?</div>
-            </div>
+
+          <div class="chat-up-logo" id="logo_image">
+
+            {% assign logoImage = block.settings.image_with_text_image | image_url: width: 50 | image_tag %}
+            {% if logoImage %}
+              {% assign imageWidth = '50px' %}
+              {% assign imageUrl = block.settings.image_with_text_image | image_url: width: 50 | image_tag %}
+              {% if imageUrl %}
+                {{ block.settings.image_with_text_image | image_url: width: 50 | image_tag }}
+              {% else %}
+                <img
+                  src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
+                  alt="Default Logo"
+                  class=""
+                  loading="lazy"
+                  width="{{ imageWidth }}"
+                  height="{{ imageWidth }}">
+              {% endif %}
+            {% else %}
+              <img
+                src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
+                alt="Default Logo"
+                class=""
+                loading="lazy"
+                width="{{ imageWidth }}"
+                height="{{ imageWidth }}">
+            {% endif %}
           </div>
+
+
+
+          <div id="message-container">
+            <div id="message">How can I help?</div>
+          </div>
+
           <button
             id="chatbubble_close"
             class="close_button"
@@ -101,9 +131,23 @@
       {
         "name": "App Embed",
         "target": "body",
-        "settings": []
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image_with_text_image",
+            "label": "Image"
+          }, {
+            "type": "font_picker",
+            "id": "body_font",
+            "label": "ChatUp Font",
+            "default": "helvetica_n4"
+          }
+        ]
       }
     {% endschema %}
+
+
+
     <script>
       window.shopId = "{{ shop.id }}";
     </script>
