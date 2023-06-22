@@ -569,6 +569,7 @@ textarea {
 
 .chatbubble-message-time {
     font-size: 8px;
+    display: none;
     color: #888;
     margin-top: 3px;
     position: relative;
