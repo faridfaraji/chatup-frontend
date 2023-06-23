@@ -4,28 +4,39 @@ const emailRegex = /(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/ig;
 const phoneRegex = /(\b(?:\+?1\s*\(?[2-9][0-8][0-9]\)?\s*|0?[2-9][0-8][0-9]\s*)(?:[.-]\s*)?(?:[2-9][0-9]{2}\s*)(?:[.-]\s*)?[0-9]{4}\b)/ig;
 
 // This function hyperlinks URLs, emails, and phone numbers
-function hyperlinkText(text) {
-  text = text.replace(urlRegex, '<a href="$1">$1</a>');
-  text = text.replace(emailRegex, '<a href="mailto:$1">$1</a>');
-  text = text.replace(phoneRegex, '<a href="tel:$1">$1</a>');
-  return text;
+function hyperlinkText(element) {
+  const messageText = element.querySelector('p');
+  const originalText = messageText.innerHTML;
+  let modifiedText = originalText.replace(urlRegex, '<a href="$1">$1</a>');
+  modifiedText = modifiedText.replace(emailRegex, '<a href="mailto:$1">$1</a>');
+  modifiedText = modifiedText.replace(phoneRegex, '<a href="tel:$1">$1</a>');
+  if (modifiedText !== originalText) {
+    messageText.innerHTML = modifiedText;
+  }
+}
+
+// Function to check if an element has the .chatbubble-gpt-message class
+function hasChatBubbleGptMessageClass(element) {
+  return element.classList.contains('chatbubble-gpt-message');
+}
+
+// Function to process a single element and its descendants
+function processElement(element) {
+  if (element.nodeType === 1 && hasChatBubbleGptMessageClass(element)) {
+    if (!element.dataset.hyperlinked) {
+      hyperlinkText(element);
+      element.dataset.hyperlinked = true;
+    }
+  }
+  element.childNodes.forEach(childNode => processElement(childNode));
 }
 
 // Initialize a mutation observer
-const observer = new MutationObserver((mutationsList, observer) => {
+const observer = new MutationObserver(mutationsList => {
   for (let mutation of mutationsList) {
     if (mutation.type === 'childList') {
       mutation.addedNodes.forEach(node => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          let elements = node.getElementsByClassName('chatbubble-gpt-message');
-          for (let element of elements) {
-            if (!element.dataset.hyperlinked) {
-              const messageText = element.querySelector('p');
-              messageText.innerHTML = hyperlinkText(messageText.innerHTML);
-              element.dataset.hyperlinked = true;
-            }
-          }
-        }
+        processElement(node);
       });
     }
   }
@@ -33,6 +44,8 @@ const observer = new MutationObserver((mutationsList, observer) => {
 
 // Start observing the document with the configured parameters
 observer.observe(document.body, { childList: true, subtree: true });
+
+
 // Function to generate a UUID
 function generateUUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -77,7 +90,6 @@ if (!uniqueId || isExpired(uniqueId)) {
   console.log("Unique Id =", uniqueId);
 }
 
-// Create the socket connection
 var socket = io('https://5af9-34-125-95-96.ngrok-free.app', {
   transports: ['websocket', 'polling', 'xhr-polling'],
   autoConnect: false
@@ -88,7 +100,28 @@ socket.on('connect', function () {
   console.log('Connected to the server with ' + uniqueId);
 });
 
-socket.connect();
+socket.on('connect_error', function (err) {
+  console.log('Connection Error: ' + err);
+});
+
+socket.on('connect_timeout', function () {
+  console.log('Connection Timeout');
+});
+
+socket.on('error', function (err) {
+  console.log('Error: ' + err);
+});
+
+socket.on('disconnect', function (reason) {
+  console.log('Disconnected: ' + reason);
+});
+
+try {
+  socket.connect();
+} catch (err) {
+  console.log('Error occurred while trying to connect: ' + err);
+}
+
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -164,7 +197,9 @@ function throttle(func, limit) {
   };
 }
 function scrollToLatestMessage() {
-  var messagesContainer = document.getElementById('chatbubble-messages');
+
+  var messagesContainer = document.querySelector('#chatbubble-messages');
+
   var latestMessage = messagesContainer.lastElementChild;
 
   // Function to perform smooth scroll to the latest message
@@ -310,33 +345,39 @@ function removeOldMessages() {
 var messageQueue = []; // Array to store incoming messages
 var chatbubbleGptMessage; // Declare the variable outside the function
 function handleIncomingMessage(message) {
-  var chatbubbleGptMessage = document.createElement('div');
-  chatbubbleGptMessage.className = 'chatbubble-gpt-message';
-  chatbubbleGptMessage.style.opacity = '0'; // Set initial opacity to 0
+  var messagesContainer = document.querySelector('#chatbubble-messages');
+  var lastMessageElement = messageContainer.lastElementChild;
+
+  var chatbubbleGptMessage;
+  if (lastMessageElement && lastMessageElement.classList.contains('chatbubble-gpt-message')) {
+    chatbubbleGptMessage = lastMessageElement;
+  } else {
+    chatbubbleGptMessage = document.createElement('div');
+    chatbubbleGptMessage.className = 'chatbubble-gpt-message';
+    messagesContainer.insertAdjacentElement('beforeend', chatbubbleGptMessage);
+
+  }
 
   var messageText = document.createElement('p');
-  messageText.innerHTML = hyperlinkUrlsInData(message); // Apply hyperlinking to the message
+  messageText.innerHTML = hyperlinkText(message); // Apply hyperlinking to the message
 
-
-
-  var messagesContainer = document.getElementById('chatbubble-messages');
-  messagesContainer.appendChild(chatbubbleGptMessage);
-
-  // Use setTimeout to trigger the fade-in effect after a short delay
-  setTimeout(function () {
-    chatbubbleGptMessage.style.opacity = '1'; // Set opacity to 1 for fade-in
-  }, 400);
-  // Create a timestamp element
   var timestamp = document.createElement('div');
   timestamp.classList.add('chatbubble-gpt-message-time');
   timestamp.innerText = getCurrentTimestamp();
 
   chatbubbleGptMessage.appendChild(messageText);
   chatbubbleGptMessage.appendChild(timestamp);
-  // After message is added
-  storeChatHistory();
-  scrollToLatestMessage();
+
+  setTimeout(function () {
+    chatbubbleGptMessage.style.opacity = '1'; // Set opacity to 1 for fade-in
+  }, 400);
+
+  // Scroll to the latest message after the incoming message is complete
+  setTimeout(function () {
+    scrollToLatestMessage();
+  }, 500);
 }
+
 
 
 // Function to get the current timestamp
@@ -437,7 +478,7 @@ function sendMessageHelper(msg) {
       observer.disconnect();
     }, 1000); // Increased delay to 1 second
     var messagesContainer = document.getElementById('chatbubble-messages');
-    messagesContainer.appendChild(chatbubbleGptMessage);
+
     // Scroll to the latest message after the incoming message is complete
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(function () {
@@ -453,7 +494,6 @@ function decodeHTML(html) {
   return txt.value;
 }
 
-document.addEventListener('DOMContentLoaded', startTypingWhenActive);
 
 
 function storeChatHistory() {
