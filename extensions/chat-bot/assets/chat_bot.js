@@ -3,15 +3,21 @@ const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&
 const emailRegex = /(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/ig;
 const phoneRegex = /(\b(?:\+?1\s*\(?[2-9][0-8][0-9]\)?\s*|0?[2-9][0-8][0-9]\s*)(?:[.-]\s*)?(?:[2-9][0-9]{2}\s*)(?:[.-]\s*)?[0-9]{4}\b)/ig;
 
-// This function hyperlinks URLs, emails, and phone numbers
+// This function hyperlinks URLs, emails, and phone numbers and removes dots after hyperlinks
 function hyperlinkText(element) {
-  const messageText = element.querySelector('p');
-  const originalText = messageText.innerHTML;
-  let modifiedText = originalText.replace(urlRegex, '<a href="$1">$1</a>');
-  modifiedText = modifiedText.replace(emailRegex, '<a href="mailto:$1">$1</a>');
-  modifiedText = modifiedText.replace(phoneRegex, '<a href="tel:$1">$1</a>');
-  if (modifiedText !== originalText) {
-    messageText.innerHTML = modifiedText;
+  const messageText = element.textContent;
+  if (messageText !== null) {
+    const originalText = messageText;
+    let modifiedText = originalText.replace(urlRegex, '<a href="$1">$1</a>');
+    modifiedText = modifiedText.replace(emailRegex, '<a href="mailto:$1">$1</a>');
+    modifiedText = modifiedText.replace(phoneRegex, '<a href="tel:$1">$1</a>');
+
+    // Remove dots after hyperlinks
+    modifiedText = modifiedText.replace(/(<a[^>]+>)\.(<\/a>)/ig, '$1$2');
+
+    if (modifiedText !== originalText) {
+      element.innerHTML = modifiedText;
+    }
   }
 }
 
@@ -44,7 +50,6 @@ const observer = new MutationObserver(mutationsList => {
 
 // Start observing the document with the configured parameters
 observer.observe(document.body, { childList: true, subtree: true });
-
 
 // Function to generate a UUID
 function generateUUID() {
@@ -344,9 +349,10 @@ function removeOldMessages() {
 
 var messageQueue = []; // Array to store incoming messages
 var chatbubbleGptMessage; // Declare the variable outside the function
+
 function handleIncomingMessage(message) {
   var messagesContainer = document.querySelector('#chatbubble-messages');
-  var lastMessageElement = messageContainer.lastElementChild;
+  var lastMessageElement = messagesContainer.lastElementChild;
 
   var chatbubbleGptMessage;
   if (lastMessageElement && lastMessageElement.classList.contains('chatbubble-gpt-message')) {
@@ -355,17 +361,18 @@ function handleIncomingMessage(message) {
     chatbubbleGptMessage = document.createElement('div');
     chatbubbleGptMessage.className = 'chatbubble-gpt-message';
     messagesContainer.insertAdjacentElement('beforeend', chatbubbleGptMessage);
-
   }
 
   var messageText = document.createElement('p');
-  messageText.innerHTML = hyperlinkText(message); // Apply hyperlinking to the message
+  messageText.textContent = message; // Add the plain message text
+  chatbubbleGptMessage.appendChild(messageText); // Append messageText to chatbubbleGptMessage before hyperlinking
+
+  hyperlinkText(messageText); // Apply hyperlinking to the message
 
   var timestamp = document.createElement('div');
   timestamp.classList.add('chatbubble-gpt-message-time');
   timestamp.innerText = getCurrentTimestamp();
 
-  chatbubbleGptMessage.appendChild(messageText);
   chatbubbleGptMessage.appendChild(timestamp);
 
   setTimeout(function () {
@@ -377,6 +384,8 @@ function handleIncomingMessage(message) {
     scrollToLatestMessage();
   }, 500);
 }
+
+
 
 
 
@@ -449,12 +458,10 @@ function sendMessageHelper(msg) {
     var lastMessageElement = messageContainer.lastElementChild;
 
     if (lastMessageElement && lastMessageElement.classList.contains('chatbubble-gpt-message')) {
-      lastMessageElement.innerHTML += decodedData;
       messageElement = lastMessageElement;
     } else {
       messageElement = document.createElement('div');
       messageElement.classList.add('chatbubble-gpt-message');
-      messageElement.innerHTML = decodedData;
 
       var timestamp = document.createElement('div');
       timestamp.classList.add('chatbubble-gpt-message-time');
@@ -464,6 +471,15 @@ function sendMessageHelper(msg) {
       messageElement.setAttribute('data-timestamp', Date.now()); // set the timestamp attribute
       messageContainer.appendChild(messageElement);
     }
+
+    // Create a temporary element to apply hyperlinking
+    var tempElement = document.createElement('div');
+    tempElement.textContent = currentMessage;
+    hyperlinkText(tempElement);
+    // Replace the HTML of the messageElement with the hyperlinked version
+    var timestampElement = messageElement.querySelector('.chatbubble-gpt-message-time');
+    messageElement.innerHTML = tempElement.innerHTML;
+    messageElement.appendChild(timestampElement);
 
     clearTimeout(chunkTimeout);
     chunkTimeout = setTimeout(function () {
@@ -477,7 +493,6 @@ function sendMessageHelper(msg) {
 
       observer.disconnect();
     }, 1000); // Increased delay to 1 second
-    var messagesContainer = document.getElementById('chatbubble-messages');
 
     // Scroll to the latest message after the incoming message is complete
     clearTimeout(scrollTimeout);
@@ -486,6 +501,9 @@ function sendMessageHelper(msg) {
     }, 500); // Delay scrolling to give time for the message to render
   });
 }
+
+
+
 
 
 function decodeHTML(html) {
