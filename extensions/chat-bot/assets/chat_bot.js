@@ -425,11 +425,6 @@ function sendMessageHelper(msg) {
 
     clearTimeout(chunkTimeout);
     chunkTimeout = setTimeout(function () {
-      var hyperlinkedData = hyperlinkText(currentMessage);
-      currentMessage = '';  // Clear currentMessage for next chunks
-
-      messageElement.innerHTML = messageElement.innerHTML.replace(decodedData, hyperlinkedData);
-
       var inputField = document.getElementById('chatbubble-input-field');
       inputField.disabled = false;
       var sendButton = document.getElementById('chatbubble-send');
@@ -439,7 +434,7 @@ function sendMessageHelper(msg) {
       scrollToLatestMessage();
 
       observer.disconnect();
-    }, 500); // Process chunks after 500ms delay
+    }, 1000); // Increased delay to 1 second
 
     // Scroll to the latest message after the incoming message is complete
     clearTimeout(scrollTimeout);
@@ -448,8 +443,6 @@ function sendMessageHelper(msg) {
     }, 500); // Delay scrolling to give time for the message to render
   });
 }
-
-
 
 
 function decodeHTML(html) {
