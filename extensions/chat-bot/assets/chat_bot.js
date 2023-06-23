@@ -1,3 +1,37 @@
+// Define regular expressions to match URLs, emails, and phone numbers
+const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+const emailRegex = /(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/ig;
+const phoneRegex = /(\b(?:\+?1\s*\(?[2-9][0-8][0-9]\)?\s*|0?[2-9][0-8][0-9]\s*)(?:[.-]\s*)?(?:[2-9][0-9]{2}\s*)(?:[.-]\s*)?[0-9]{4}\b)/ig;
+
+// This function hyperlinks URLs, emails, and phone numbers
+function hyperlinkText(text) {
+  text = text.replace(urlRegex, '<a href="$1">$1</a>');
+  text = text.replace(emailRegex, '<a href="mailto:$1">$1</a>');
+  text = text.replace(phoneRegex, '<a href="tel:$1">$1</a>');
+  return text;
+}
+
+// Initialize a mutation observer
+const observer = new MutationObserver((mutationsList, observer) => {
+  for (let mutation of mutationsList) {
+    if (mutation.type === 'childList') {
+      mutation.addedNodes.forEach(node => {
+        if (node.nodeType === Node.ELEMENT_NODE) {  // To avoid text nodes
+          let elements = node.getElementsByClassName('chatbubble-gpt-message');
+          for (let element of elements) {
+            if (!element.dataset.hyperlinked) {
+              element.innerHTML = hyperlinkText(element.innerHTML);
+              element.dataset.hyperlinked = true;
+            }
+          }
+        }
+      });
+    }
+  }
+});
+
+// Start observing the document with the configured parameters
+observer.observe(document.body, { childList: true, subtree: true });
 // Function to generate a UUID
 function generateUUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -391,6 +425,11 @@ function sendMessageHelper(msg) {
 
     clearTimeout(chunkTimeout);
     chunkTimeout = setTimeout(function () {
+      var hyperlinkedData = hyperlinkText(currentMessage);
+      currentMessage = '';  // Clear currentMessage for next chunks
+
+      messageElement.innerHTML = messageElement.innerHTML.replace(decodedData, hyperlinkedData);
+
       var inputField = document.getElementById('chatbubble-input-field');
       inputField.disabled = false;
       var sendButton = document.getElementById('chatbubble-send');
@@ -400,7 +439,7 @@ function sendMessageHelper(msg) {
       scrollToLatestMessage();
 
       observer.disconnect();
-    }, 1000); // Increased delay to 1 second
+    }, 500); // Process chunks after 500ms delay
 
     // Scroll to the latest message after the incoming message is complete
     clearTimeout(scrollTimeout);
@@ -409,6 +448,8 @@ function sendMessageHelper(msg) {
     }, 500); // Delay scrolling to give time for the message to render
   });
 }
+
+
 
 
 function decodeHTML(html) {
