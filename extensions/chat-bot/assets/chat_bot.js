@@ -16,11 +16,12 @@ const observer = new MutationObserver((mutationsList, observer) => {
   for (let mutation of mutationsList) {
     if (mutation.type === 'childList') {
       mutation.addedNodes.forEach(node => {
-        if (node.nodeType === Node.ELEMENT_NODE) {  // To avoid text nodes
+        if (node.nodeType === Node.ELEMENT_NODE) {
           let elements = node.getElementsByClassName('chatbubble-gpt-message');
           for (let element of elements) {
             if (!element.dataset.hyperlinked) {
-              element.innerHTML = hyperlinkText(element.innerHTML);
+              const messageText = element.querySelector('p');
+              messageText.innerHTML = hyperlinkText(messageText.innerHTML);
               element.dataset.hyperlinked = true;
             }
           }
@@ -307,7 +308,7 @@ function removeOldMessages() {
 }
 
 var messageQueue = []; // Array to store incoming messages
-
+var chatbubbleGptMessage; // Declare the variable outside the function
 function handleIncomingMessage(message) {
   var chatbubbleGptMessage = document.createElement('div');
   chatbubbleGptMessage.className = 'chatbubble-gpt-message';
@@ -435,7 +436,8 @@ function sendMessageHelper(msg) {
 
       observer.disconnect();
     }, 1000); // Increased delay to 1 second
-
+    var messagesContainer = document.getElementById('chatbubble-messages');
+    messagesContainer.appendChild(chatbubbleGptMessage);
     // Scroll to the latest message after the incoming message is complete
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(function () {
