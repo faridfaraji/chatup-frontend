@@ -7,7 +7,7 @@ export const Title = () => {
         <Layout>
             <Layout.Section oneThird>
                     <HorizontalStack align="start">
-                        <Text fill variant="heading2xl" as="h3">
+                        <Text variant="heading2xl" as="h3">
                             Chat Up
                         </Text>
                     </HorizontalStack>

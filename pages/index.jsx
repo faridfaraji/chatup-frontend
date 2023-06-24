@@ -20,6 +20,7 @@ import {
   SaveBar,
   PermissionCheckbox,
   Title,
+  ChatBot,
 } from "../components";
 
 export default function HomePage() {
@@ -34,7 +35,8 @@ export default function HomePage() {
         </Layout.Section>
         <Layout.Section >
           {/* <SaveBar /> */}
-          <PermissionCheckbox />
+          {/* <PermissionCheckbox /> */}
+          <ChatBot />
           {/* <br /> */}
           {/* <NegativeKeywords /> */}
           {/* <ChatPrompt /> */}
