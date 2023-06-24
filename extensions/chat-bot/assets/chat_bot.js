@@ -246,10 +246,10 @@ function toggleChat() {
   if (chatbubbleWindow.classList.contains('active')) {
     chatbubbleWindow.classList.add('deactive');
     setTimeout(function () {
-      chatbubbleWindow.classList.remove('active');
       chatbubbleWindow.classList.remove('deactive');
-    }, 900);
-    chatbubbleButton.classList.remove('deactive');
+      chatbubbleWindow.classList.remove('active');
+      chatbubbleButton.classList.remove('deactive');
+    }, 300);
   } else {
     chatbubbleWindow.classList.add('active');
     // inputField.focus();
@@ -260,7 +260,7 @@ function toggleChat() {
 }
 
 
-document.addEventListener('click', function (event) {
+document.addEventListener('touchstart', function (event) {
   var chatbubble = document.getElementById('chatbubble');
   var chatbubble_window = document.getElementById('chatbubble-window');
   var chatbubble_closeButton = document.getElementByClassName('close_button');
@@ -603,12 +603,6 @@ textarea.addEventListener('click', function (event) {
   }, 300);
 });
 
-window.addEventListener('touchend', function (e) {
-  var inputField = document.getElementById('chatbubble-input-field');
-  if (e.target === inputField) {
-    e.preventDefault();
-  }
-}, false);
 
 let textArea = document.getElementById("input-round-box");
 
