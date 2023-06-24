@@ -14,8 +14,5 @@ export default {
         "ngrok-skip-browser-warning": "true"
     },
     credentials: "same-origin",
-    shop_id: -1,
     api_key: VITE_SHOPIFY_API_KEY,
-    host: url_params.get("host"),
-    shop_url: url_params.get("shop")
-}
+ }

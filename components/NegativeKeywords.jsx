@@ -1,13 +1,18 @@
-import { Tag, LegacyStack, AlphaCard, Form, FormLayout, TextField, Button } from '@shopify/polaris';
+import { Tag, Form, FormLayout, TextField, Button, VerticalStack, HorizontalStack } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
 import { getNegativeKeywords, changeNegativeKeywords } from '../utils/negativeKeywords';
-import constants from '../constants';
+import cache from '../cache';
 
 export const NegativeKeywords = () => {
 
   // Initialize values
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState(cache.negative_keywords);
   const [value, setValue] = useState('');
+
+  
+  // cache the keywords for popover/reload whenever they change
+  const cacheKeywords = () => {cache.negative_keywords = selectedTags}
+  useEffect(() => cacheKeywords(), [selectedTags])
 
   // As user types, update value accordingly
   const handleChange = (newValue) => {
@@ -21,12 +26,13 @@ export const NegativeKeywords = () => {
   // are still being used to generate their chatbot's responses even though we cannot fetch them
   useEffect(() => getSetNegativeKeywords(), []);
 
-  const getSetNegativeKeywords = function() {
-    if(constants.shop_id === -1) {
+
+  const getSetNegativeKeywords = function () {
+    if (cache.shop_id === -1) {
       setTimeout(getSetNegativeKeywords, 50)
     } else {
       getNegativeKeywords()
-      .then((fetched) => setSelectedTags(fetched))
+        .then((fetched) => setSelectedTags(fetched))
     }
   }
 
@@ -68,33 +74,21 @@ export const NegativeKeywords = () => {
     }
   };
 
-
   return (
-    <AlphaCard>
+    <VerticalStack>
       <Form onSubmit={handleSubmit}>
         <FormLayout>
-          {/* We want the text field and button on the same line */}
-          <div style={{ display: 'flex', 'align-items': 'center' }}>
-            <div style={{ 'flex-grow': '1', 'margin-right': '1rem' }}>
-              <TextField
-                value={value}
-                onChange={handleChange}
-                label="Negative Keywords"
-                helpText={
-                  <span>
-                    We'll ensure ChatUp avoids these keywords
-                  </span>
-                }
-              />
-            </div>
-            <div style={{}}>
-              <Button submit>Submit</Button>
-            </div>
-          </div>
+          <TextField
+            value={value}
+            onChange={handleChange}
+            label="Negative Keywords"
+            helpText={<span>ChatUp will avoid these topics</span>}
+            connectedRight={<Button submit>Submit</Button>}
+          />
         </FormLayout>
       </Form>
-      <br /><br />
-      <LegacyStack spacing="tight">{tagMarkup}</LegacyStack>
-    </AlphaCard>
+      <br />
+      <HorizontalStack gap="1">{tagMarkup}</HorizontalStack>
+    </VerticalStack>
   )
 }

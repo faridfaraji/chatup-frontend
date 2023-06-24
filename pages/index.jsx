@@ -5,25 +5,38 @@ import {
   TextContainer,
   Image,
   Stack,
+  HorizontalStack,
   Link,
   Text,
+  Button,
+  Divider,
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation, Trans } from "react-i18next";
 
-import { ChatPrompt, NegativeKeywords, SaveBar, PermissionCheckbox } from "../components";
+import {
+  ChatPrompt,
+  NegativeKeywords,
+  SaveBar,
+  PermissionCheckbox,
+  Title,
+} from "../components";
 
 export default function HomePage() {
   const { t } = useTranslation();
+
   return (
-    <Page narrowWidth>
-      <TitleBar title={t("HomePage.title")} primaryAction={null} />
+    <Page fullWidth>
+      {/* <TitleBar /> */}
       <Layout>
         <Layout.Section>
-          <SaveBar />
+          <Title />
+        </Layout.Section>
+        <Layout.Section >
+          {/* <SaveBar /> */}
           <PermissionCheckbox />
-          <br />
-          <NegativeKeywords />
+          {/* <br /> */}
+          {/* <NegativeKeywords /> */}
           {/* <ChatPrompt /> */}
         </Layout.Section>
       </Layout>
