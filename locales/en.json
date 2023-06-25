@@ -5,7 +5,8 @@
     "startPopulatingYourApp": "Ready to go? Start populating your app with some sample products to view and test in your store.",
     "title": "Chat Bot",
     "trophyAltText": "Nice work on building a Shopify app",
-    "yourAppIsReadyToExplore": "Your app is ready to explore! It contains everything you need to get started including the <PolarisLink>Polaris design system</PolarisLink>, <AdminApiLink>Shopify Admin API</AdminApiLink>, and <AppBridgeLink>App Bridge</AppBridgeLink> UI library and components."
+    "yourAppIsReadyToExplore": "Your app is ready to explore! It contains everything you need to get started including the <PolarisLink>Polaris design system</PolarisLink>, <AdminApiLink>Shopify Admin API</AdminApiLink>, and <AppBridgeLink>App Bridge</AppBridgeLink> UI library and components.",
+    "scanInfo": "Product names, inventory, price, policies and everything that is needed for your cutsomer to have their instant questions anaswered. if a user can not be helped with this information, they will be automatically pointed towards you given your specific contact method such as a Contact Us page, email and/or phone number."
   },
   "NavigationMenu": {
     "pageName": "Page name"

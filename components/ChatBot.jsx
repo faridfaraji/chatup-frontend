@@ -1,7 +1,7 @@
-import { AlphaCard, Form, Layout, Text, TextField, VerticalStack, Button } from "@shopify/polaris"
+import { AlphaCard, Form, Layout, Text, TextField, VerticalStack, Button, Box } from "@shopify/polaris"
 import { useState } from "react";
 
-export const ChatBot = () => {
+export const ChatBot = (props) => {
     const [value, setValue] = useState('');
 
     // As user types, update value accordingly
@@ -15,27 +15,24 @@ export const ChatBot = () => {
     };
 
     return (
-        <AlphaCard>
-            <Layout.Section>
-                <Text variant="headingXl">
-                    Chat Bot Preview
-                </Text>
-            </Layout.Section>
-            <Layout.Section>
+        <Box padding={props.padding}>
+            <VerticalStack>
                 <AlphaCard>
-                    <VerticalStack align="end">
-                        <Form onSubmit={handleSubmit}>
-                            <TextField
-                                value={value}
-                                onChange={handleChange}
-                                label=""
-                                helpText=""
-                                connectedRight={<Button>Submit</Button>}
-                            />
-                        </Form>
-                    </VerticalStack>
+                    <Box minHeight={props.minHeight}>
+                        <VerticalStack>
+                            <Form onSubmit={handleSubmit}>
+                                <TextField
+                                    value={value}
+                                    onChange={handleChange}
+                                    label=""
+                                    helpText=""
+                                    connectedRight={<Button>Submit</Button>}
+                                />
+                            </Form>
+                        </VerticalStack>
+                    </Box>
                 </AlphaCard>
-            </Layout.Section>
-        </AlphaCard>
+            </VerticalStack>
+        </Box>
     )
 }

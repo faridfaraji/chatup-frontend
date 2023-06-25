@@ -1,17 +1,17 @@
-import { Tag, Form, FormLayout, TextField, Button, VerticalStack, HorizontalStack } from '@shopify/polaris';
+import { Tag, Form, FormLayout, TextField, Button, VerticalStack, HorizontalStack, Box } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
 import { getNegativeKeywords, changeNegativeKeywords } from '../utils/negativeKeywords';
 import cache from '../cache';
 
-export const NegativeKeywords = () => {
+export const NegativeKeywords = (props) => {
 
   // Initialize values
   const [selectedTags, setSelectedTags] = useState(cache.negative_keywords);
   const [value, setValue] = useState('');
 
-  
+
   // cache the keywords for popover/reload whenever they change
-  const cacheKeywords = () => {cache.negative_keywords = selectedTags}
+  const cacheKeywords = () => { cache.negative_keywords = selectedTags }
   useEffect(() => cacheKeywords(), [selectedTags])
 
   // As user types, update value accordingly
@@ -75,20 +75,22 @@ export const NegativeKeywords = () => {
   };
 
   return (
-    <VerticalStack>
-      <Form onSubmit={handleSubmit}>
-        <FormLayout>
-          <TextField
-            value={value}
-            onChange={handleChange}
-            label="Negative Keywords"
-            helpText={<span>ChatUp will avoid these topics</span>}
-            connectedRight={<Button submit>Submit</Button>}
-          />
-        </FormLayout>
-      </Form>
-      <br />
-      <HorizontalStack gap="1">{tagMarkup}</HorizontalStack>
-    </VerticalStack>
+    <Box padding={props.padding}>
+      <VerticalStack>
+        <Form onSubmit={handleSubmit}>
+          <FormLayout>
+            <TextField
+              value={value}
+              onChange={handleChange}
+              label="Negative Keywords"
+              helpText={<span>ChatUp will avoid these topics</span>}
+              connectedRight={<Button submit>Submit</Button>}
+            />
+          </FormLayout>
+        </Form>
+        <br />
+        <HorizontalStack gap="1">{tagMarkup}</HorizontalStack>
+      </VerticalStack>
+    </Box>
   )
 }

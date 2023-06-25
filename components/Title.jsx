@@ -1,6 +1,6 @@
 import { HorizontalStack, Layout, Text } from '@shopify/polaris';
 import { SettingsPopover } from './SettingsPopover';
-import { AnalyzeButton } from './AnalyzeButton';
+import { ScanButton } from './ScanButton';
 
 export const Title = () => {
     return (
@@ -15,7 +15,7 @@ export const Title = () => {
             <Layout.Section>
                 <HorizontalStack align="end" gap="1">
                     <SettingsPopover />
-                    <AnalyzeButton />
+                    <ScanButton />
                 </HorizontalStack >
             </Layout.Section>
         </Layout >

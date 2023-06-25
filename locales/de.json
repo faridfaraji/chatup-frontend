@@ -5,7 +5,8 @@
     "startPopulatingYourApp": "Bist du bereit? Stelle in deiner App einige Beispielprodukte bereit, um sie in deinem Shop anzuzeigen und zu testen.",
     "title": "App-Name",
     "trophyAltText": "Gute Arbeit beim Erstellen einer Shopify-App",
-    "yourAppIsReadyToExplore": "Deine App kann nun erkundet werden! Sie enthält alles, was du brauchst, um loszulegen: das <PolarisLink>Polaris Designsystem</PolarisLink>, die <AdminApiLink>Shopify Admin API</AdminApiLink> und die <AppBridgeLink>App Bridge</AppBridgeLink>-UI-Bibliothek sowie entsprechende Komponenten."
+    "yourAppIsReadyToExplore": "Deine App kann nun erkundet werden! Sie enthält alles, was du brauchst, um loszulegen: das <PolarisLink>Polaris Designsystem</PolarisLink>, die <AdminApiLink>Shopify Admin API</AdminApiLink> und die <AppBridgeLink>App Bridge</AppBridgeLink>-UI-Bibliothek sowie entsprechende Komponenten.",
+    "scanInfo": ""
   },
   "NavigationMenu": {
     "pageName": "Seitenname"

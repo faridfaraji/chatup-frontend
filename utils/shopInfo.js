@@ -15,6 +15,7 @@ export async function getShopId() {
         if(response.ok) {
             const data = await response.json()
             cache.shop_id = data.shop_id
+            cache.shop_scanning = data.shop_scanning
         }
     } catch (error) {
         console.error('Error fetching shop id:', error)
