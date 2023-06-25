@@ -4,7 +4,8 @@ export async function getShopId() {
     try {
         const fetch_url = constants.gateway_url + "/" +
             constants.api_version + "/shopify/" +
-            constants.app_name + "/shop-info"
+            constants.app_name + "/shop-info?shop=" +
+            constants.shop_url
         const response = await fetch(fetch_url, {
             method: 'GET',
             credentials: constants.credentials,
