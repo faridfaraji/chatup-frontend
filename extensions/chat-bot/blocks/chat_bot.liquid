@@ -16,7 +16,6 @@
     </style>
   </head>
   <body>
-    <p>{{ block.settings.body_font }}</p>
     <div id="chatbubble">
       <button
         id="chatbubble-button"
@@ -37,12 +36,12 @@
 
           <div class="chat-up-logo" id="logo_image">
 
-            {% assign logoImage = block.settings.image_with_text_image | image_url: width: 50 | image_tag %}
+            {% assign logoImage = block.settings.image_with_text_image | image_url: width: 1080 | image_tag %}
             {% if logoImage %}
-              {% assign imageWidth = '50px' %}
-              {% assign imageUrl = block.settings.image_with_text_image | image_url: width: 50 | image_tag %}
+              {% assign imageWidth = '1080px' %}
+              {% assign imageUrl = block.settings.image_with_text_image | image_url: width: 1080 | image_tag %}
               {% if imageUrl %}
-                {{ block.settings.image_with_text_image | image_url: width: 50 | image_tag }}
+                {{ block.settings.image_with_text_image | image_url: width: 1080 | image_tag }}
               {% else %}
                 <img
                   src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
@@ -72,7 +71,7 @@
           <button
             id="chatbubble_close"
             class="close_button"
-            onclick="toggleChat()">X</button>
+            onclick="toggleChat()"></button>
         </div>
         <div class="snippet" data-title="dot-pulse">
           <div class="stage">
