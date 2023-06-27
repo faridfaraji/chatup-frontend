@@ -7,22 +7,45 @@
     <title>ChatUp Assistant</title>
     <link rel="stylesheet" href="{{ 'style.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'extensions/chat-bot/assets/style.css' | asset_url }}">
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One|Anton|Archivo+Black|Arial|Arial+Black|Arial+Narrow|Avenir|Avenir+Next|Avenir+Next+Condensed|Bangers|Cabin|Cabin+Condensed|Cabin+Sketch|Calibri|Century+Gothic|Courier+New|Crimson+Text|Dancing+Script|Georgia|Gill+Sans|Helvetica|Helvetica+Neue|Impact|Inconsolata|Lato|Lobster|Merriweather|Montserrat|Noto+Sans|Noto+Serif|Open+Sans|Oswald|Playfair+Display|Poppins|PT+Sans|PT+Serif|Quicksand|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Raleway|Source+Sans+Pro|Tangerine|Times+New+Roman|Titillium+Web|Ubuntu|Verdana|Work+Sans&display=swap" rel="stylesheet">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js" defer></script>
     <script src="{{ 'chat_bot.js' | asset_url }}" defer></script>
-    <style>
+
+    {% style %}
       #chatbubble {
-        font-family: {{ block.settings.body_font }}
+        font-family: {{ block.settings.heading_font.family }}
+        , Roboto;
       }
-    </style>
+      #chatbubble-header {
+        color: {{ block.settings.header_color }}
+        ;
+        background: {{ block.settings.header_background_color }}
+        ;
+        font-family: {{ block.settings.heading_font.family }}
+        ;
+      }
+      .close_button {
+        color: {{ block.settings.header_color }}
+        ;
+      }
+      #chatbubble-button {
+        background: {{ block.settings.icon_background_color }}
+        ;
+      }
+      #chatbubble-button svg {
+        fill: {{ block.settings.icon_fill }}
+        ;
+      }
+    {% endstyle %}
   </head>
   <body>
+    {{ block.settings.heading_font.family }}
     <div id="chatbubble">
       <button
         id="chatbubble-button"
         onclick="toggleChat()"
         alt="I Answer Questions!">
         <svg
-          style="fill: #ffffff;"
           xmlns="http://www.w3.org/2000/svg"
           height="1em"
           viewBox="0 0 640 512">
@@ -61,17 +84,14 @@
                 height="{{ imageWidth }}">
             {% endif %}
           </div>
-
-
-
           <div id="message-container">
-            <div id="message">How can I help?</div>
+            <div id="message">{{ block.settings.inline }}</div>
           </div>
 
           <button
             id="chatbubble_close"
             class="close_button"
-            onclick="toggleChat()"></button>
+            onclick="toggleChat()">X</button>
         </div>
         <div class="snippet" data-title="dot-pulse">
           <div class="stage">
@@ -80,16 +100,16 @@
         </div>
         <div id="initial_prompts">
           <div class="initial-message-boxes">
-            Shipping Info
+            {{ block.settings.inline_box_1 }}
           </div>
           <div class="initial-message-boxes">
-            After-sales Support
+            {{ block.settings.inline_box_2 }}
           </div>
           <div class="initial-message-boxes">
-            Current Promotions
+            {{ block.settings.inline_box_3 }}
           </div>
           <div class="initial-message-boxes">
-            Sales Questions
+            {{ block.settings.inline_box_4 }}
           </div>
         </div>
         <div id="chatbubble-messages"><!-- Chat messages will be dynamically added here -->
@@ -132,14 +152,62 @@
         "target": "body",
         "settings": [
           {
+            "type": "color",
+            "id": "icon_background_color",
+            "label": "ChatUp Button Background Color",
+            "default": "#2c3c4c"
+          },
+          {
+            "type": "color",
+            "id": "icon_fill",
+            "label": "ChatUp Icon Fill",
+            "default": "#ffffff"
+          },
+          {
             "type": "image_picker",
             "id": "image_with_text_image",
             "label": "Image"
-          }, {
+          },
+          {
             "type": "font_picker",
-            "id": "body_font",
-            "label": "ChatUp Font",
+            "id": "heading_font",
+            "label": "Heading font",
             "default": "helvetica_n4"
+          }, {
+            "type": "inline_richtext",
+            "id": "inline",
+            "default": "How may I help you?",
+            "label": "ChatUp Header Text"
+          }, {
+            "type": "color",
+            "id": "header_color",
+            "label": "Heading & Close Button Color",
+            "default": "#ffffff"
+          }, {
+            "type": "color_background",
+            "id": "header_background_color",
+            "label": "Header's Background Color",
+            "default": "linear-gradient(#183d57, #000000)"
+          }, {
+            "type": "inline_richtext",
+            "id": "inline_box_1",
+            "default": "Returns & Refund",
+            "label": "Pre-loaded Messages Box 1"
+          }, {
+            "type": "inline_richtext",
+            "id": "inline_box_2",
+            "default": "Current Promotions",
+            "label": "Pre-loaded Messages Box 2"
+          }, {
+            "type": "inline_richtext",
+            "id": "inline_box_3",
+            "default": "Our Phone Number",
+            "label": "Pre-loaded Messages Box 3"
+          }, {
+            "type": "inline_richtext",
+            "id": "inline_box_4",
+            "default": "Our Email Address",
+            "label": "Pre-loaded Messages Box 4"
           }
         ]
       }

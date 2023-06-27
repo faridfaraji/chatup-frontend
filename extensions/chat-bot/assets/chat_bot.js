@@ -15,9 +15,13 @@ function hyperlinkText(element) {
     // Remove dots after hyperlinks
     modifiedText = modifiedText.replace(/(<a[^>]+>)\.(<\/a>)/ig, '$1$2');
 
-    if (modifiedText !== originalText) {
-      element.innerHTML = modifiedText;
-    }
+    // Replace only the message content, excluding the timestamp div
+    element.childNodes.forEach(childNode => {
+      if (!childNode.classList || !childNode.classList.contains('chatbubble-message-time')) {
+        element.removeChild(childNode);
+      }
+    });
+    element.innerHTML = modifiedText;
   }
 }
 
