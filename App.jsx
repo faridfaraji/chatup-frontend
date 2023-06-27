@@ -9,13 +9,13 @@ import {
   PolarisProvider,
 } from "./components";
 
-import { getShopId } from "./utils/shopInfo";
+import { getShopInfo } from "./utils/shopInfo";
 import { useEffect } from "react";
 
 export default function App() {
   // Set constants
   useEffect(() => {
-    getShopId();
+    getShopInfo();
   }, []);
 
   // Any .tsx or .jsx files in /pages will become a route

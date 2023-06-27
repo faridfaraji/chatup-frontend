@@ -28,7 +28,7 @@ export const NegativeKeywords = (props) => {
 
 
   const getSetNegativeKeywords = function () {
-    if (cache.shop_id === -1) {
+    if (cache.shop_identifier === -1) {
       setTimeout(getSetNegativeKeywords, 50)
     } else {
       getNegativeKeywords()
