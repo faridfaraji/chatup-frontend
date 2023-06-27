@@ -171,27 +171,29 @@
 
 
 #chatbubble-header {
-    position: sticky;
+    position: absolute;
     top: 0;
     padding: 10px;
-    border-bottom: 1px solid #ddd;
     display: flex;
     justify-content: flex-start;
     border-radius: 7px 7px 0 0;
     width: 100%;
     z-index: 1;
     align-items: center;
-    gap: .7em;
-
+    gap: 0.7em;
+    border-bottom-right-radius: 695% 1250%;
+    height: 6em;
+    box-shadow: 0.5px 2px 5px rgba(0, 0, 0, 0.5);
 }
+
 
 .close_button {
     background: transparent;
     border: none;
     transition: 0.3s ease;
     position: absolute;
-    right: 0;
-    top: 5px;
+    right: -11px;
+    top: -6px;
     width: 15%;
     height: 48%;
 }
@@ -225,6 +227,9 @@
     padding-left: 0.6em;
     flex-direction: row;
     width: 50px;
+    align-self: center;
+    position: relative;
+    top: 0px;
 
 }
 
@@ -232,6 +237,7 @@
     border-radius: 50% !important;
     aspect-ratio: 1;
     height: 100%;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
 }
 
 #chatbubble-input {
@@ -254,6 +260,14 @@
     transition: .3s ease;
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+#chatbubble-input-field::-webkit-scrollbar {
+    display: none;
 }
 
 #chatbubble-input-field:hover,
@@ -282,7 +296,7 @@
 }
 
 #chatbubble-messages {
-    padding: 10px 10px 5.5em 10px;
+    padding: 100px 10px 5.5em 10px;
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
@@ -317,6 +331,7 @@
     align-self: flex-end;
     font-style: italic;
     transition: .7s ease-in-out;
+    position: relative;
 }
 
 .chatbubble-gpt-message {
@@ -339,14 +354,13 @@ input {
 }
 
 #message-container {
-
-    transition: opacity 0.3s ease;
     opacity: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-left: 0.6em;
     transition: .7s ease-in-out;
+    position: relative;
 }
 
 
@@ -364,6 +378,7 @@ textarea {
     display: flex;
     flex-direction: column-reverse;
     overflow-y: auto !important;
+    overflow-x: hidden;
     scroll-behavior: smooth;
     max-height: 150px;
     transform-origin: 0 0;
@@ -392,7 +407,15 @@ textarea {
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
     padding: 0.1em;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 
+}
+
+#input-round-box::-webkit-scrollbar {
+    display: none;
 }
 
 @keyframes resizeInputBox {
@@ -538,6 +561,8 @@ textarea {
     transition: .5s ease-in-out;
     overflow-y: auto;
     flex-direction: column;
+    position: relative;
+    top: 15%;
 }
 
 #initial_prompts::before {
@@ -549,6 +574,8 @@ textarea {
     background-image: linear-gradient(rgba(255, 255, 255, 0) 84%, white, white);
     pointer-events: none;
     z-index: 22;
+    right: 0;
+    border-radius: 7px;
 }
 
 .initial-message-boxes {
@@ -585,13 +612,12 @@ textarea {
 
 .chatbubble-message-time {
     font-size: 8px;
-    display: none;
+    display: flex;
     color: #888;
-    margin-top: 3px;
-    position: relative;
-    left: -45%;
+    position: absolute;
+    left: -30px;
     height: 0px;
-    bottom: 9px;
+    bottom: 15px;
 
 }
 

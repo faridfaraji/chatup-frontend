@@ -470,10 +470,9 @@ function sendMessageHelper(msg) {
       var timestamp = document.createElement('div');
       timestamp.classList.add('chatbubble-gpt-message-time');
       timestamp.innerText = getCurrentTimestamp();
-
-      messageElement.appendChild(timestamp);
       messageElement.setAttribute('data-timestamp', Date.now()); // set the timestamp attribute
       messageContainer.appendChild(messageElement);
+      messageElement.appendChild(timestamp); // Append timestamp here before manipulating innerHTML
     }
 
     // Create a temporary element to apply hyperlinking
@@ -481,9 +480,7 @@ function sendMessageHelper(msg) {
     tempElement.textContent = currentMessage;
     hyperlinkText(tempElement);
     // Replace the HTML of the messageElement with the hyperlinked version
-    var timestampElement = messageElement.querySelector('.chatbubble-gpt-message-time');
     messageElement.innerHTML = tempElement.innerHTML;
-    messageElement.appendChild(timestampElement);
 
     clearTimeout(chunkTimeout);
     chunkTimeout = setTimeout(function () {
