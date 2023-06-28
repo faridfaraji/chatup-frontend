@@ -5,6 +5,7 @@ import { scanShop } from '../utils/scanShop';
 import cache from '../cache';
 import { getShopInfo } from '../utils/shopInfo';
 import { getScanInfo } from '../utils/scanInfo';
+import { createBrowserHistory } from 'history';
 
 export const ScanButton = (props) => {
     const [active, setActive] = useState(false);
@@ -15,12 +16,22 @@ export const ScanButton = (props) => {
         <Text>{`Scan trigger: ${cache.latest_scan.trigger_type}`}</Text>
     </VerticalStack>
 
+    const isScannable = (scanStatus) => {
+        console.log(scanStatus)
+        console.log(["PENDING", "IN PROGRESS"].includes(scanStatus))
+        console.log(!(["PENDING", "IN PROGRESS"].includes(scanStatus)))
+
+        return !(["PENDING", "IN PROGRESS"].includes(scanStatus))
+    }
 
     // TODO:
     //  check shop info, 
     //  update modal content depending on scanned status incl. last date scanned and notify re changes
     const handleChange = useCallback(() => {
         getScanInfo()
+        if(isScannable(cache.latest_scan.status)) {
+            setScanDisabled(false)
+        }
         setActive(!active), [active]
     });
 
@@ -28,8 +39,7 @@ export const ScanButton = (props) => {
         // Uncomment this when we want to start scanning again
         scanShop()
         setActive(!active)
-        // setScanDisabled(true)
-        // handleScanStatus()
+        setScanDisabled(true)
     }, [active])
 
     const activator = <Button primary fullWidth={props.fullWidth} onClick={handleChange}>Scan Shop</Button>;

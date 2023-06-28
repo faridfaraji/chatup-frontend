@@ -40,10 +40,10 @@ export default function HomePage() {
           <div id="scan" />
           <AlphaCard >
             <Text variant={cardTitle}>
-              1. Scan your shop with Chat Up
+              {t("HomePage.scanTitle")}
             </Text>
             <VerticalStack>
-              <LoremIpsum padding={commonPadding} content={t("HomePage.scanInfo")}/>
+              <LoremIpsum padding={commonPadding} content={t("HomePage.scanCopy")}/>
               <ScanButton fullWidth={true} />
             </VerticalStack>
           </AlphaCard>
@@ -51,33 +51,25 @@ export default function HomePage() {
         <Layout.Section>
           <AlphaCard>
             <Text variant={cardTitle}>
-              2. Define hard boundaries
+              {t("HomePage.negKeysTitle")}
             </Text>
-            <NegativeKeywords padding={commonPadding} />
+            <NegativeKeywords padding={commonPadding} content={t("HomePage.negKeysCopy")} />
           </AlphaCard>
         </Layout.Section>
         <Layout.Section>
           <AlphaCard>
             <Text variant={cardTitle}>
-              3. Set a personality
+              {t("HomePage.tempTitle")}
             </Text>
-            <LoremIpsum padding={commonPadding} />
+            <LoremIpsum padding={commonPadding} content={t("HomePage.tempCopy")}/>
           </AlphaCard>
         </Layout.Section>
         <Layout.Section>
           <AlphaCard>
             <Text variant={cardTitle}>
-              4. Enable your new customer service agent
+              {t("HomePage.embedTitle")}
             </Text>
-            <LoremIpsum padding={commonPadding} />
-          </AlphaCard>
-        </Layout.Section>
-        <Layout.Section>
-          <AlphaCard>
-            <Text variant={cardTitle}>
-              5. Try them out!
-            </Text>
-            <LoremIpsum padding={commonPadding} />
+            <LoremIpsum padding={commonPadding} content={t("HomePage.embedCopy")} />
           </AlphaCard>
         </Layout.Section>
       </Layout>
