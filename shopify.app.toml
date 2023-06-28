@@ -1,4 +1,6 @@
 # This file stores configurations for your Shopify app.
 
-scopes = "write_products,read_products"
+scopes = "write_script_tags, read_legal_policies, read_products, read_product_listings,
+          read_fulfillments, write_fulfillments, read_merchant_managed_fulfillment_orders,
+          read_payment_terms, write_payment_terms, read_orders, write_orders"
 
