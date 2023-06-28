@@ -7,39 +7,39 @@
     <title>ChatUp Assistant</title>
     <link rel="stylesheet" href="{{ 'style.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'extensions/chat-bot/assets/style.css' | asset_url }}">
-    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One|Anton|Archivo+Black|Arial|Arial+Black|Arial+Narrow|Avenir|Avenir+Next|Avenir+Next+Condensed|Bangers|Cabin|Cabin+Condensed|Cabin+Sketch|Calibri|Century+Gothic|Courier+New|Crimson+Text|Dancing+Script|Georgia|Gill+Sans|Helvetica|Helvetica+Neue|Impact|Inconsolata|Lato|Lobster|Merriweather|Montserrat|Noto+Sans|Noto+Serif|Open+Sans|Oswald|Playfair+Display|Poppins|PT+Sans|PT+Serif|Quicksand|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Raleway|Source+Sans+Pro|Tangerine|Times+New+Roman|Titillium+Web|Ubuntu|Verdana|Work+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alfa" rel="stylesheet">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js" defer></script>
     <script src="{{ 'chat_bot.js' | asset_url }}" defer></script>
 
     {% style %}
+    {{ block.settings.heading_font | font_face }}
+      #chatbubble-window {
+        border-radius: {{ block.settings.border_radius_range }}px;
+      }
       #chatbubble {
-        font-family: {{ block.settings.heading_font.family }}
-        , Roboto;
+        font-family: {{ block.settings.heading_font.family }}, sans serif;
       }
       #chatbubble-header {
-        color: {{ block.settings.header_color }}
-        ;
-        background: {{ block.settings.header_background_color }}
-        ;
-        font-family: {{ block.settings.heading_font.family }}
-        ;
+        color: {{ block.settings.header_color }};
+        background: {{ block.settings.icon_background_color }};
+
       }
       .close_button {
-        color: {{ block.settings.header_color }}
-        ;
+        color: {{ block.settings.header_color }};
       }
       #chatbubble-button {
-        background: {{ block.settings.icon_background_color }}
-        ;
+        background: {{ block.settings.icon_background_color }};
+        border-radius: {{ block.settings.border_radius_range }}px;
       }
       #chatbubble-button svg {
-        fill: {{ block.settings.icon_fill }}
-        ;
+        fill: {{ block.settings.icon_fill }};
       }
     {% endstyle %}
   </head>
   <body>
-    {{ block.settings.heading_font.family }}
+    {{ block.settings.border_radius_range }}px
+
+
     <div id="chatbubble">
       <button
         id="chatbubble-button"
@@ -160,18 +160,27 @@
           {
             "type": "color",
             "id": "icon_fill",
-            "label": "ChatUp Icon Fill",
+            "label": "ChatUp Icon Color",
             "default": "#ffffff"
+          },{
+            "type": "range",
+            "id": "border_radius_range",
+            "min": 0,
+            "max": 40,
+            "step": 1,
+            "unit": "px",
+            "label": "Sharp or Round Corners?",
+            "default": 16
           },
           {
             "type": "image_picker",
             "id": "image_with_text_image",
-            "label": "Image"
-          },
+            "label": "Chat Operator's Image"
+          }, 
           {
             "type": "font_picker",
             "id": "heading_font",
-            "label": "Heading font",
+            "label": "ChatUp's Font",
             "default": "helvetica_n4"
           }, {
             "type": "inline_richtext",
@@ -183,11 +192,6 @@
             "id": "header_color",
             "label": "Heading & Close Button Color",
             "default": "#ffffff"
-          }, {
-            "type": "color_background",
-            "id": "header_background_color",
-            "label": "Header's Background Color",
-            "default": "linear-gradient(#183d57, #000000)"
           }, {
             "type": "inline_richtext",
             "id": "inline_box_1",
@@ -220,3 +224,5 @@
     </script>
   </body>
 </html>
+
+

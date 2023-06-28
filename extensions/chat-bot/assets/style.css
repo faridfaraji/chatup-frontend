@@ -37,13 +37,11 @@
 
 #chatbubble-button {
 
-    border: 2px rgba(0, 0, 0, 0.2);
     padding: 0.25em;
-    border-radius: 24%;
     cursor: pointer;
     border-style: outset solid solid;
     font-weight: bold;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+    box-shadow: 1 1 4px rgba(0, 0, 0, 0.6);
     opacity: 1;
     transform: translateY(0);
     transform-origin: center;
@@ -69,7 +67,6 @@
     right: 20px;
     background-color: var(--chatbubble-window-backround);
     opacity: 0;
-    border-radius: 7px;
     transition: opacity 0.2s ease-in-out;
     animation: fade-in 1s ease-in-out;
     -webkit-animation: fade-in 1s ease-in-out;
@@ -176,7 +173,6 @@
     padding: 10px;
     display: flex;
     justify-content: flex-start;
-    border-radius: 7px 7px 0 0;
     width: 100%;
     z-index: 1;
     align-items: center;
@@ -296,7 +292,7 @@
 }
 
 #chatbubble-messages {
-    padding: 100px 10px 5.5em 10px;
+    padding: 110px 10px 5.5em 10px;
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
@@ -386,7 +382,7 @@ textarea {
 }
 
 #input-round-box {
-    width: 85%;
+    width: 90%;
     color: black;
     margin: 1em 2.5em;
     position: fixed;

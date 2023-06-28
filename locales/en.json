@@ -1,6 +1,27 @@
 {
   "HomePage": {
     "title": "Chat Bot",
+    "scanTitle": "Scan your shop's data (This is done automatically every 24 hours after this manual scan)",
+    "scanCopy": "ChatUp will get to know your store by pressing the 'Scan My Shop' button below. ChatUp will read your policies, page content as well as your contact method(s) & contact information such as email, phone number and/or address(es).",
+    "scanModalCopy_unscanned": "",
+    "scanModalCopy_scanned": "",
+    "negKeysTitle": "Negative Keywords",
+    "negKeysCopy": "ChatUp's artifical intelligence is designed for your needs. The words you choose below are negative keywords. Negative keywords will alert ChatUp to refrain from engaging in irrelevant conversations. In the event of any of these negative keywords presense in a message sent by your site visitors, ChatUp will reply with: 'I am designed to be helpful to you, or connect you to our support team regarding our website's information. What you just mentioned falls outside of my expertise. Is there something else I can help you with?'",
+    "tempTitle": "Choose ChatUp's Personality",
+    "tempCopy": "",
+    "embedTitle": "Here is how you can add ChatUp to your theme and customize it!",
+    "embedCopy": "ChatUp can be customized in so many different ways. Please check the video and instructions below to learn how."
+  },
+  "NavigationMenu": {
+    "pageName": "Page name"
+  },
+  "NotFound": {
+    "description": "Check the URL and try again, or use the search bar to find what you need.",
+    "heading": "There is no page at this address"
+  }
+}{
+  "HomePage": {
+    "title": "Chat Bot",
     "scanTitle": "1. Scan your shop with Chat Up",
     "scanCopy": "Product names, inventory, price, policies and everything that is needed for your cutsomer to have their instant questions anaswered. if a user can not be helped with this information, they will be automatically pointed towards you given your specific contact method such as a Contact Us page, email and/or phone number.",
     "scanModalCopy_unscanned": "",
@@ -12,7 +33,6 @@
     "embedTitle": "4. Enable your new customer service agent",
     "embedCopy": ""
   },
-
   "NavigationMenu": {
     "pageName": "Page name"
   },
