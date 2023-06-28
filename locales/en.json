@@ -3,6 +3,8 @@
     "title": "Chat Bot",
     "scanTitle": "1. Scan your shop with Chat Up",
     "scanCopy": "Product names, inventory, price, policies and everything that is needed for your cutsomer to have their instant questions anaswered. if a user can not be helped with this information, they will be automatically pointed towards you given your specific contact method such as a Contact Us page, email and/or phone number.",
+    "scanModalCopy_unscanned": "",
+    "scanModalCopy_scanned": "",
     "negKeysTitle": "2. Define hard boundaries",
     "negKeysCopy": "",
     "tempTitle": "3. Set a personality",
@@ -10,8 +12,26 @@
     "embedTitle": "4. Enable your new customer service agent",
     "embedCopy": ""
   },
+  "Analytics": {
+    "title": "",
+    "body": "Body",
+    "heading": "Heading",
+    "primaryAction": "Primary action",
+    "secondaryAction": "Secondary action"
+  },
+  "ConversationLibrary": {
+    "title": "",
+    "body": "Body",
+    "heading": "Heading",
+    "primaryAction": "Primary action",
+    "secondaryAction": "Secondary action"
+  },
+
+
 
   "NavigationMenu": {
+    "analytics": "Analytics",
+    "conversationLibrary": "Conversation Library",
     "pageName": "Page name"
   },
   "NotFound": {
