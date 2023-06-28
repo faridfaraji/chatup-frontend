@@ -7,8 +7,6 @@ import { BarChart, DonutChart, FunnelChart, LineChart, SparkBarChart } from "@sh
 export default function Analytics() {
   const { t } = useTranslation();
 
-  const theme = "Light"
-
   const data_timeSeries = [
     {
       "name": "Apr 1 – Apr 14, 2020",
@@ -371,24 +369,24 @@ export default function Analytics() {
       <Layout>
         <Layout.Section>
           <AlphaCard>
-            <LineChart data={data_timeSeries} theme={theme} />
+            <LineChart data={data_timeSeries}/>
           </AlphaCard>
         </Layout.Section>
         <Layout.Section>
           <HorizontalStack align="space-between">
             <Box width="32%">
               <AlphaCard>
-                <FunnelChart data={data_funnel} theme={theme} />
+                <FunnelChart data={data_funnel}/>
               </AlphaCard>
             </Box>
             <Box width="32%">
               <AlphaCard>
-                <DonutChart data={data_donut} theme={theme} />
+                <DonutChart data={data_donut}/>
               </AlphaCard>
             </Box>
             <Box width="32%">
               <AlphaCard>
-                <BarChart data={data_bar} theme={theme} />
+                <BarChart data={data_bar}/>
               </AlphaCard>
             </Box>
           </HorizontalStack>
