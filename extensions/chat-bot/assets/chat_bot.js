@@ -504,6 +504,7 @@ function sendMessageHelper(msg) {
       scrollToLatestMessage();
 
       observer.disconnect();
+      hideLoader(); // Hide the loader
     }, 1000); // Increased delay to 1 second
 
     // Scroll to the latest message after the incoming message is complete
