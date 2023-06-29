@@ -350,43 +350,32 @@ export default function Analytics() {
     }
   ]
 
+  const vizTheme = "Light"
+
   return (
     <Page>
       <TitleBar />
-      {/* <TitleBar
-        title={t("Analytics.title")}
-        primaryAction={{
-          content: t("Analytics.primaryAction"),
-          onAction: () => console.log("Primary action"),
-        }}
-        secondaryActions={[
-          {
-            content: t("Analytics.secondaryAction"),
-            onAction: () => console.log("Secondary action"),
-          },
-        ]}
-      /> */}
       <Layout>
         <Layout.Section>
           <AlphaCard>
-            <LineChart data={data_timeSeries}/>
+            <LineChart data={data_timeSeries} theme={vizTheme} />
           </AlphaCard>
         </Layout.Section>
         <Layout.Section>
           <HorizontalStack align="space-between">
             <Box width="32%">
               <AlphaCard>
-                <FunnelChart data={data_funnel}/>
+                <FunnelChart data={data_funnel} theme={vizTheme} />
               </AlphaCard>
             </Box>
             <Box width="32%">
               <AlphaCard>
-                <DonutChart data={data_donut}/>
+                <DonutChart data={data_donut} theme={vizTheme} />
               </AlphaCard>
             </Box>
             <Box width="32%">
               <AlphaCard>
-                <BarChart data={data_bar}/>
+                <BarChart data={data_bar} theme={vizTheme} />
               </AlphaCard>
             </Box>
           </HorizontalStack>

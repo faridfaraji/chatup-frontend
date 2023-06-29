@@ -1,24 +1,24 @@
-import { AlphaCard, Page, Layout, TextContainer, Text } from "@shopify/polaris";
+import { AlphaCard, Page, Layout, TextContainer, Text, Popover, DatePicker } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
+import { useState, useCallback } from "react";
 
-export default function PageName() {
+export default function ConversationLibrary() {
+  const [popoverActive, setPopoverActive] = useState(false)
+  const togglePopoverActive = useCallback(
+    () => setPopoverActive((popoverActive) => !popoverActive),
+    [],
+  );
+  const activator = (
+    <Button onClick={togglePopoverActive} disclosure>
+      Date Range
+    </Button>
+  );
+
   const { t } = useTranslation();
   return (
     <Page>
-      <TitleBar
-        title={t("PageName.title")}
-        primaryAction={{
-          content: t("PageName.primaryAction"),
-          onAction: () => console.log("Primary action"),
-        }}
-        secondaryActions={[
-          {
-            content: t("PageName.secondaryAction"),
-            onAction: () => console.log("Secondary action"),
-          },
-        ]}
-      />
+      <TitleBar />
       <Layout>
         <Layout.Section>
           <AlphaCard sectioned>
