@@ -39,7 +39,7 @@
 
     padding: 0.25em;
     cursor: pointer;
-    border-style: outset solid solid;
+    border-style: outset solid;
     font-weight: bold;
     box-shadow: 1 1 4px rgba(0, 0, 0, 0.6);
     opacity: 1;
@@ -194,25 +194,9 @@
     height: 48%;
 }
 
-/* .close_button::before {
-    transform: scale(0.9);
-    border-radius: 9px;
-    content: "X";
-    transition: .2s ease-in-out;
-    scale: 0;
-} */
 
 .close_button:hover {
-    /* content: "Close Chat";
-    width: 100%;
-    display: flex;
-    font-size: 10px;
-    background-color: #579dff81;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    padding: 3px;
-    border-radius: 2px; */
+
     scale: .95;
 }
 
