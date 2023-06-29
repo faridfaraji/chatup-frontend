@@ -37,8 +37,6 @@
     {% endstyle %}
   </head>
   <body>
-    {{ block.settings.border_radius_range }}px
-
 
     <div id="chatbubble">
       <button
@@ -60,20 +58,10 @@
           <div class="chat-up-logo" id="logo_image">
 
             {% assign logoImage = block.settings.image_with_text_image | image_url: width: 1080 | image_tag %}
+            {% assign imageWidth = '1080px' %}
+
             {% if logoImage %}
-              {% assign imageWidth = '1080px' %}
-              {% assign imageUrl = block.settings.image_with_text_image | image_url: width: 1080 | image_tag %}
-              {% if imageUrl %}
-                {{ block.settings.image_with_text_image | image_url: width: 1080 | image_tag }}
-              {% else %}
-                <img
-                  src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
-                  alt="Default Logo"
-                  class=""
-                  loading="lazy"
-                  width="{{ imageWidth }}"
-                  height="{{ imageWidth }}">
-              {% endif %}
+              {{ logoImage }}
             {% else %}
               <img
                 src="https://awesoon.tech/wp-content/uploads/2023/04/cropped-awesoon-technologies-50.png"
