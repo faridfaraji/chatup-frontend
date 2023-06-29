@@ -9,13 +9,13 @@ import {
   PolarisProvider,
 } from "./components";
 
-import { getShopInfo } from "./utils/shopInfo";
+import { getShopId } from "./utils/shopInfo";
 import { useEffect } from "react";
 
 export default function App() {
   // Set constants
   useEffect(() => {
-    getShopInfo();
+    getShopId();
   }, []);
 
   // Any .tsx or .jsx files in /pages will become a route
@@ -31,9 +31,13 @@ export default function App() {
             <NavigationMenu
               navigationLinks={[
                 {
-                  label: t("NavigationMenu.pageName"),
-                  destination: "/pagename",
+                  label: t("NavigationMenu.analytics"),
+                  destination: "/Analytics",
                 },
+                {
+                  label: t("NavigationMenu.chatHistory"),
+                  destination: "/ChatHistory",
+                }
               ]}
             />
             <Routes pages={pages} />

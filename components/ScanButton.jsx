@@ -3,9 +3,7 @@ import { useState, useCallback } from 'react';
 import { LoremIpsum } from './LoremIpsum';
 import { scanShop } from '../utils/scanShop';
 import cache from '../cache';
-import { getShopInfo } from '../utils/shopInfo';
-import { getScanInfo } from '../utils/scanInfo';
-import { createBrowserHistory } from 'history';
+import { getScanInfo } from '../utils/shopInfo';
 
 export const ScanButton = (props) => {
     const [active, setActive] = useState(false);

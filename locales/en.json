@@ -19,7 +19,8 @@
   "ChatHistory": {
     "pageTitle": "",
     "selectChatTitle": "",
-    "datePickerTitle": ""
+    "datePickerTitle": "",
+    "chatInfoBox": "Empty Copy"
   },
   "NavigationMenu": {
     "analytics": "Analytics",
