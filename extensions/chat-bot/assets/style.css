@@ -14,6 +14,72 @@
     --general-initial-prompt-box-shadow-onHover: rgba(0, 0, 0, 0.3) 0px 4px 12px;
 }
 
+.custom-loader {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    color: #0404048f;
+    box-shadow:
+        19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 0px,
+        19px 0 0 5px, 38px 0 0 5px, 57px 0 0 5px,
+        19px 19px 0 0px, 38px 19px 0 0px, 57px 19px 0 0px;
+    transform: translateX(-38px);
+    animation: d6 4s infinite linear;
+    align-self: center;
+    bottom: 110px;
+    position: relative;
+    scale: .5;
+    display: flex !important;
+    opacity: 0;
+    transition: .3s ease-in-out;
+}
+
+@keyframes d6 {
+    12.5% {
+        box-shadow:
+            19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 5px,
+            19px 0 0 5px, 38px 0 0 0px, 57px 0 0 5px,
+            19px 19px 0 0px, 38px 19px 0 0px, 57px 19px 0 0px
+    }
+
+    25% {
+        box-shadow:
+            19px -19px 0 5px, 38px -19px 0 0px, 57px -19px 0 5px,
+            19px 0 0 0px, 38px 0 0 0px, 57px 0 0 0px,
+            19px 19px 0 0px, 38px 19px 0 5px, 57px 19px 0 0px
+    }
+
+    50% {
+        box-shadow:
+            19px -19px 0 5px, 38px -19px 0 5px, 57px -19px 0 0px,
+            19px 0 0 0px, 38px 0 0 0px, 57px 0 0 0px,
+            19px 19px 0 0px, 38px 19px 0 0px, 57px 19px 0 5px
+    }
+
+    62.5% {
+        box-shadow:
+            19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 0px,
+            19px 0 0 5px, 38px 0 0 0px, 57px 0 0 0px,
+            19px 19px 0 0px, 38px 19px 0 5px, 57px 19px 0 5px
+    }
+
+    75% {
+        box-shadow:
+            19px -19px 0 0px, 38px -19px 0 5px, 57px -19px 0 0px,
+            19px 0 0 0px, 38px 0 0 0px, 57px 0 0 5px,
+            19px 19px 0 0px, 38px 19px 0 0px, 57px 19px 0 5px
+    }
+
+    87.5% {
+        box-shadow:
+            19px -19px 0 0px, 38px -19px 0 5px, 57px -19px 0 0px,
+            19px 0 0 0px, 38px 0 0 5px, 57px 0 0 0px,
+            19px 19px 0 5px, 38px 19px 0 0px, 57px 19px 0 0px
+    }
+}
+
+
+
 
 /* 
         ecample of how e
