@@ -1,3 +1,12 @@
+function showLoader() {
+  var loader = document.querySelector('.custom-loader');
+  loader.style.opacity = '1';
+}
+function hideLoader() {
+  var loader = document.querySelector('.custom-loader');
+  loader.style.opacity = '0';
+}
+
 // Define regular expressions to match URLs, emails, and phone numbers
 const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 const emailRegex = /(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/ig;
@@ -289,6 +298,7 @@ function sendMessage(messageText) {
   }
 
   if (messageText !== '') {
+    showLoader(); // Show the loader
     var messagesContainer = document.getElementById('chatbubble-messages');
     var newMessage = document.createElement('div');
     newMessage.classList.add('chatbubble-message');
@@ -381,6 +391,7 @@ function handleIncomingMessage(message) {
 
   setTimeout(function () {
     chatbubbleGptMessage.style.opacity = '1'; // Set opacity to 1 for fade-in
+    hideLoader(); // Hide the loader
   }, 400);
 
   // Scroll to the latest message after the incoming message is complete
