@@ -26,9 +26,9 @@
     transform: translateX(-38px);
     animation: d6 4s infinite linear;
     align-self: center;
-    bottom: 110px;
+    bottom: 66px;
     position: relative;
-    scale: .5;
+    scale: .7;
     display: flex !important;
     opacity: 0;
     transition: .3s ease-in-out;
