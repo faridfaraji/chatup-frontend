@@ -108,13 +108,13 @@ if (!uniqueId || isExpired(uniqueId)) {
   console.log("Unique Id =", uniqueId);
 }
 
-var socket = io('https://5af9-34-125-95-96.ngrok-free.app', {
+var socket = io('https://5af9-34-125-95-96.ngrok-free.app/customer', {
   transports: ['websocket', 'polling', 'xhr-polling'],
   autoConnect: false
 });
 
 socket.on('connect', function () {
-  socket.emit('identification', uniqueId); // Emitting uniqueId on connection
+  // socket.emit('identification', uniqueId); // Emitting uniqueId on connection
   console.log('Connected to the server with ' + uniqueId);
 });
 
@@ -438,16 +438,37 @@ function sendMessageOnEnter(event) {
   }
 }
 
+function get_conversation_id() {
+  return new Promise((resolve, reject) => {
+    if (conversationUniqueId == null) {
+      init_payload = {
+        shop_id: window.shopId,
+        conversation_id: conversationUniqueId
+      }
+      socket.emit("init", init_payload);
 
-function sendMessageHelper(msg) {
-  var user_message = {
-    message: msg,
-    shop_id: window.shopId
-  };
+      // Setup a one-time event listener for the "init_response"
+      socket.once("init_response", function (data) {
+        conversationUniqueId = data;
+        localStorage.setItem("conversationUniqueId", conversationUniqueId);
+        resolve(conversationUniqueId); // Resolve the promise with the new conversationUniqueId
+      });
 
-  if (!socket.connected) socket.connect();
-  socket.emit("user_message", user_message);
+      // If there is an error, we reject the promise
+      socket.on('error', function(error) {
+        reject(error);
+      });
+    } else {
+      resolve(conversationUniqueId); // Resolve the promise with the existing conversationUniqueId
+    }
+  });
+}
 
+function send_user_message(user_message) {
+  socket.emit("message", user_message);
+}
+
+function display_ai_response(data) {
   var currentMessage = '';
   var chunkTimeout;
   var messageElement;
@@ -461,58 +482,79 @@ function sendMessageHelper(msg) {
   });
   var config = { childList: true };
   observer.observe(messageContainer, config);
+  var decodedData = decodeHTML(data);
+  currentMessage += decodedData;
 
-  socket.off('ai_response');
+  var lastMessageElement = messageContainer.lastElementChild;
 
-  socket.on('ai_response', function (data) {
-    console.log('Received data:', data);
+  if (lastMessageElement && lastMessageElement.classList.contains('chatbubble-gpt-message')) {
+    messageElement = lastMessageElement;
+  } else {
+    messageElement = document.createElement('div');
+    messageElement.classList.add('chatbubble-gpt-message');
 
-    var decodedData = decodeHTML(data);
-    currentMessage += decodedData;
+    var timestamp = document.createElement('div');
+    timestamp.classList.add('chatbubble-gpt-message-time');
+    timestamp.innerText = getCurrentTimestamp();
+    messageElement.setAttribute('data-timestamp', Date.now()); // set the timestamp attribute
+    messageContainer.appendChild(messageElement);
+    messageElement.appendChild(timestamp); // Append timestamp here before manipulating innerHTML
+  }
 
-    var lastMessageElement = messageContainer.lastElementChild;
+  // Create a temporary element to apply hyperlinking
+  var tempElement = document.createElement('div');
+  tempElement.textContent = currentMessage;
+  hyperlinkText(tempElement);
+  // Replace the HTML of the messageElement with the hyperlinked version
+  messageElement.innerHTML = tempElement.innerHTML;
 
-    if (lastMessageElement && lastMessageElement.classList.contains('chatbubble-gpt-message')) {
-      messageElement = lastMessageElement;
-    } else {
-      messageElement = document.createElement('div');
-      messageElement.classList.add('chatbubble-gpt-message');
+  clearTimeout(chunkTimeout);
+  chunkTimeout = setTimeout(function () {
+    var inputField = document.getElementById('chatbubble-input-field');
+    inputField.disabled = false;
+    var sendButton = document.getElementById('chatbubble-send');
+    sendButton.disabled = false;
 
-      var timestamp = document.createElement('div');
-      timestamp.classList.add('chatbubble-gpt-message-time');
-      timestamp.innerText = getCurrentTimestamp();
-      messageElement.setAttribute('data-timestamp', Date.now()); // set the timestamp attribute
-      messageContainer.appendChild(messageElement);
-      messageElement.appendChild(timestamp); // Append timestamp here before manipulating innerHTML
-    }
+    storeChatHistory();
+    scrollToLatestMessage();
 
-    // Create a temporary element to apply hyperlinking
-    var tempElement = document.createElement('div');
-    tempElement.textContent = currentMessage;
-    hyperlinkText(tempElement);
-    // Replace the HTML of the messageElement with the hyperlinked version
-    messageElement.innerHTML = tempElement.innerHTML;
-
-    clearTimeout(chunkTimeout);
-    chunkTimeout = setTimeout(function () {
-      var inputField = document.getElementById('chatbubble-input-field');
-      inputField.disabled = false;
-      var sendButton = document.getElementById('chatbubble-send');
-      sendButton.disabled = false;
-
-      storeChatHistory();
-      scrollToLatestMessage();
-
-      observer.disconnect();
-      hideLoader(); // Hide the loader
-    }, 1000); // Increased delay to 1 second
+    observer.disconnect();
+    hideLoader(); // Hide the loader
+  }, 1000); // Increased delay to 1 second
 
     // Scroll to the latest message after the incoming message is complete
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(function () {
       scrollToLatestMessage();
     }, 500); // Delay scrolling to give time for the message to render
+}
+
+
+
+function lister_for_ai_response() {
+  socket.on("ai_response", function (data) {
+    console.log(data);
+    display_ai_response(data);
   });
+}
+
+
+function sendMessageHelper(msg) {
+  if (!socket.connected) socket.connect();
+
+  get_conversation_id()
+  .then(conversation_id => {
+    var user_message = {
+      message: msg,
+      conversation_id: conversation_id
+    };
+    send_user_message(user_message)
+    console.log(conversation_id);
+  })
+  .catch(error => {
+    console.error("An error occurred:", error);
+  });
+  lister_for_ai_response();
 }
 
 
@@ -640,13 +682,8 @@ function removeFocusAfterDelay() {
 }
 
 
-var uniqueId = localStorage.getItem('uniqueId');
-if (!uniqueId) {
-  uniqueId = generateUniqueId();
-  localStorage.setItem('uniqueId', uniqueId);
-  setCookie('uniqueId', uniqueId, 24 * 60 * 60);
-  console.log("Unique Id =", uniqueId);
-}
+var conversationUniqueId = localStorage.getItem('conversationUniqueId');
+
 
 function generateUniqueId() {
 
