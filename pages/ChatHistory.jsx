@@ -6,22 +6,29 @@ import {
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { getChatHistory, getChatMessages } from "../utils/chatHistory";
 
 export default function ChatHistory() {
   const [chats, setChats] = useState([])
+  // todo:
+  // get history (dates)
+  const getChatHistoryCallback = async () => { getChatHistory().then((resp) => setChats(resp)) };
+  // todo: 
+  // useEffect(() => getChatHistoryCallback(today), [])
+  useEffect(() => getChatHistoryCallback(), [])
 
   const chatsByDate = chats.reduce((result, item) => {
     const { timestamp, ...rest } = item;
     const date = new Date(timestamp)
+    rest.fullDate = date
     const year = date.getFullYear();
     const month = date.getMonth() + 1; // Months are zero-based, so add 1
     const day = date.getDate();
     const formattedDate = `${year}-${month}-${day}`;
 
-    if (formattedDate in result) {
+    if ((formattedDate in result) && (rest.messages.length)) {
       result[formattedDate].push(rest);
     } else {
       result[formattedDate] = [rest];
@@ -32,32 +39,42 @@ export default function ChatHistory() {
 
 
   const [selectedChat, setSelectedChat] = useState([])
+  const [selectedChatId, setSelectedChatId] = useState("")
   const [selected, setSelected] = useState(null)
 
-  const handleSelect = (selectedId, conversationId) => {
+  const getSetChatMessages = (chatId) => {
+    getChatMessages(chatId).then((resp) => setSelectedChat(resp))
+  }
+
+  const polling = (conversationId) => {
+
+  }
+
+  const handleSelect = (selectedId, chatId) => {
     setSelected(selectedId)
-    getChatMessages(conversationId).then((resp) => setSelectedChat(resp))
+    getSetChatMessages(chatId)
   };
 
   const navSections = []
-  Object.entries(chatsByDate).forEach(([date, list]) => {
-    navSections.push(<Navigation.Section
-      key={date}
-      title={date}
-      items={list.map((currentChat, index) => ({
-        key: date + index,
-        label: currentChat.id,
-        selected: selected === date + index,
-        onClick: () => {
-          handleSelect(date + index, currentChat.id)
-        }
-      }))}
-    />)
-  })
+  Object
+    .entries(chatsByDate)
+    .sort((x,y) => {return x[1].fullDate-y[1].fullDate})
+    .forEach(([date, list]) => {
+      navSections.push(<Navigation.Section
+        key={date}
+        title={date}
+        items={list.map((currentChat, index) => ({
+          key: date + index,
+          label: currentChat.id,
+          selected: selected === date + index,
+          onClick: () => {
+            handleSelect(date + index, currentChat.id)
+          }
+        }))}
+      />)
+    })
 
-  const getChatHistoryCallback = async () => {
-    getChatHistory().then((resp) => setChats(resp))
-  };
+
 
 
   const navMarkup = (
@@ -66,6 +83,7 @@ export default function ChatHistory() {
         title="Date Range"
         items={[]}
       />
+      {/* todo: (date1, date2) => getChatHistoryCallback(date1, date2)) */}
       <DateRangePicker callback={() => getChatHistoryCallback()} />
       <br />
       {navSections}
