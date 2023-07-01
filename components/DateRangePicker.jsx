@@ -1,5 +1,30 @@
+import {
+  useBreakpoints,
+  Button,
+  Popover,
+  HorizontalGrid,
+  Select,
+  Scrollable,
+  Box,
+  OptionList,
+  VerticalStack,
+  HorizontalStack,
+  TextField,
+  Icon,
+  DatePicker
+} from "@shopify/polaris";
+import {
+  useState,
+  useRef,
+  useEffect
+} from "react";
+import {
+  CalendarMinor,
+  ArrowRightMinor
+} from "@shopify/polaris-icons"
+
 // This example is for guidance purposes. Copying it will come with caveats.
-function DateRangePicker() {
+export function DateRangePicker() {
   const { mdDown, lgUp } = useBreakpoints();
   const shouldShowMultiMonth = lgUp;
   const today = new Date(new Date().setHours(0, 0, 0, 0));
@@ -194,8 +219,8 @@ function DateRangePicker() {
   const buttonValue =
     activeDateRange.title === "Custom"
       ? activeDateRange.period.since.toDateString() +
-        " - " +
-        activeDateRange.period.until.toDateString()
+      " to " +
+      activeDateRange.period.until.toDateString()
       : activeDateRange.title;
   return (
     <Popover
@@ -207,13 +232,18 @@ function DateRangePicker() {
       sectioned={false}
       fullHeight
       activator={
-        <Button
-          size="slim"
-          icon={CalendarMinor}
-          onClick={() => setPopoverActive(!popoverActive)}
-        >
-          {buttonValue}
-        </Button>
+        <Box paddingInlineStart="4" paddingInlineEnd="4">
+          <Button
+            fullWidth
+            // plain
+            // monochrome
+            textAlign="center"
+            icon={CalendarMinor}
+            onClick={() => setPopoverActive(!popoverActive)}
+          >
+            {buttonValue}
+          </Button>
+        </Box>
       }
       onClose={() => setPopoverActive(false)}
     >
@@ -312,11 +342,9 @@ function DateRangePicker() {
       </Popover.Pane>
       <Popover.Pane fixed>
         <Popover.Section>
-          <HorizontalStack align="end">
+          <HorizontalStack gap="4" align="end">
             <Button onClick={cancel}>Cancel</Button>
-            <Button primary onClick={apply}>
-              Apply
-            </Button>
+            <Button primary onClick={apply}>Apply</Button>
           </HorizontalStack>
         </Popover.Section>
       </Popover.Pane>

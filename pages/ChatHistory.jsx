@@ -13,13 +13,14 @@ import {
   VerticalStack,
   Box
 } from "@shopify/polaris";
-import { 
+import {
   CalendarMinor,
 } from "@shopify/polaris-icons";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import { useState, useCallback } from "react";
 import { LoremIpsum } from "../components";
+import { DateRangePicker } from "../components/DateRangePicker";
 
 export default function ChatHistory() {
 
@@ -56,84 +57,37 @@ export default function ChatHistory() {
   const [datePickerActive, setDatePickerActive] = useState(true)
 
   const handleSelect = (selectedId, selectedMessages) => {
-    setSelected(selected => selected === selectedId ? null : selectedId);
+    setSelected(selectedId);
     setSelectedChat(selectedMessages)
-    setDatePickerActive(false)
   };
-
-  const handleDatePicker = () => {
-    setSelected(null)
-    setSelectedChat([])
-    setDatePickerActive(true)
-  }
 
   const navSections = []
   Object.entries(chatsByDate).forEach(([date, list]) => {
     navSections.push(<Navigation.Section
-      separator
       key={date}
       title={date}
       items={list.map((currentChat, index) => ({
-        key: date+index,
+        key: date + index,
         label: currentChat.summary,
-        selected: selected === date+index,
+        selected: selected === date + index,
         onClick: () => {
-          handleSelect(date+index, currentChat.messages)
+          handleSelect(date + index, currentChat.messages)
         }
       }))}
-      rollup={{
-        after: 2,
-        view: "View",
-        hide: "Hide",
-        activePath: "#"
-      }}
-      // action={{
-      //   accessibilityLabel: date,
-      //   icon: ChevronRightMinor,
-      //   onClick: () => {},
-      // }}
     />)
   })
 
 
 
 
-  const [{ month, year }, setDate] = useState({ month: 7, year: 2023 });
-  const [selectedDates, setSelectedDates] = useState({
-    start: new Date('Fri July 07 2023 00:00:00 GMT-0500 (EST)'),
-    end: new Date('Mon July 10 2023 00:00:00 GMT-0500 (EST)'),
-  });
-
-  const handleMonthChange = useCallback(
-    (month, year) => setDate({ month, year }),
-    [],
-  );
-
-  const datePickerMarkup = (
-        <DatePicker
-          month={month}
-          year={year}
-          onChange={setSelectedDates}
-          onMonthChange={handleMonthChange}
-          selected={selectedDates}
-          allowRange
-        />
-  )
-
   const navMarkup = (
     <Navigation key="nav" location="/">
       <Navigation.Section
-        key="info"
-        items={[
-          {
-            label: "Dates",
-            icon: CalendarMinor,
-            onClick: () => {
-              handleDatePicker()
-            }
-          }
-        ]}
+        title="Date Range"
+        items={[]}
       />
+      <DateRangePicker />
+      <br />
       {navSections}
     </Navigation>
   )
@@ -167,164 +121,11 @@ export default function ChatHistory() {
   return (
     <Page>
       <TitleBar />
-      <HorizontalStack align="space-between">
-        <Frame
-          navigation={navMarkup}
-        >
-          <AlphaCard>
-          <div style={{
-            // maxHeight: '400px',
-            overflowY: 'scroll'
-          }}>
-            {datePickerActive && datePickerMarkup}
-            {!datePickerActive && chatMarkup}
-          </div>
-          </AlphaCard>
-        </Frame>
-      </HorizontalStack>
+      <Frame navigation={navMarkup}>
+        <AlphaCard>
+          {chatMarkup}
+        </AlphaCard>
+      </Frame>
     </Page>
   );
 }
-
-
-// {selectedMessageIndex && (
-//   <div>
-
-//     {chats[selectedMessageIndex].map((message, messageIndex) => {
-
-//       // console.log(message)
-//       return (
-//         <div
-//           key={messageIndex}
-//           style={{
-//             display: 'flex',
-//             justifyContent: message.sender === 'admin' ? 'flex-start' : 'flex-end',
-//             marginBottom: '10px',
-//             marginLeft: message.sender === 'admin' ? "10px" : "0px",
-//             marginRight: message.sender === 'admin' ? "0px" : "10px",
-//           }}
-//         >
-//           <div
-//             style={{
-//               backgroundColor: message.sender === 'admin' ? '#e5e5e5' : '#008cff',
-//               color: message.sender === 'admin' ? '#000' : '#fff',
-//               borderRadius: '5px',
-//               padding: '10px',
-//               maxWidth: '70%',
-//             }}
-//           >
-//             {message.text}
-//           </div>
-//         </div>
-//       )
-//     })}
-//   </div>
-// ) || (
-//     <Layout>
-//       <Layout.Section>
-
-//         {/* <Popover
-//       active={popoverActive}
-//       activator={activator}
-//       autofocusTarget="first-node"
-//       onClose={togglePopoverActive}
-//     > */}
-//         <DatePicker
-//           month={month}
-//           year={year}
-//           onChange={setSelectedDates}
-//           onMonthChange={handleMonthChange}
-//           selected={selectedDates}
-//           allowRange
-//         />
-//       </Layout.Section>
-//       {/* // </Popover> */}
-//       <Layout.Section>
-
-//         <LoremIpsum padding="4" />
-//         {/* // content={t("ChatHistory.infoBox")}/> */}
-//       </Layout.Section>
-//     </Layout>
-//   )
-// }
-{/* <AlphaCard roundedAbove="0" padding={"0"}>
-
-<div
-  style={{
-    maxHeight: "400px",
-    overflowY: "scroll"
-  }}>
-
-  <VerticalStack>
-    {chats.map((currentChat, index) => (
-      <div
-        class="Polaris-Navigation__ItemInnerWrapper"
-        minHeight="60px"
-        onClick={() => handleSelectMessage(index)}
-        // background={selectedMessageIndex == index ? "bg-interactive-active" : "bg-interactive-subdued"}
-        // style={{minHeight: "60px", background: selectedMessageIndex == index ? "blue" : "green"}}
-        // onMouseOver="this.style.backgroundColor = 'red'"
-      >
-        <AlphaCard key={index} background={selectedMessageIndex == index ? "bg-interactive-active" : "bg-interactive-subdued"}>
-
-        <Text>
-          <p style={{ color: selectedMessageIndex == index ? '#fff' : '#000' }}>
-            {selectedMessageIndex == index ? "selected chat" : currentChat[0]}
-          </p>
-        </Text>
-        </AlphaCard>
-      </div>
-    ))}
-  </VerticalStack>
-</div>
-</AlphaCard> */}
-
-  // const [popoverActive, setPopoverActive] = useState(false)
-  // const togglePopoverActive = useCallback(
-  //   () => setPopoverActive((popoverActive) => !popoverActive),
-  //   [],
-  // );
-  // const activator = (
-  //   <Button onClick={togglePopoverActive} disclosure>
-  //     Date Range
-  //   </Button>
-  // );
-
-  // const [{ month, year }, setDate] = useState({ month: 7, year: 2023 });
-  // const [selectedDates, setSelectedDates] = useState({
-  //   start: new Date('Fri July 07 2023 00:00:00 GMT-0500 (EST)'),
-  //   end: new Date('Mon July 10 2023 00:00:00 GMT-0500 (EST)'),
-  // });
-
-  // const handleMonthChange = useCallback(
-  //   (month, year) => setDate({ month, year }),
-  //   [],
-  // );
-
-   // {
-  //   chats.map((currentChat, index) => (
-  //     <div
-  //       class="Polaris-Navigation__ItemInnerWrapper"
-  //       minHeight="60px"
-  //       onClick={() => handleSelectMessage(index)}
-  //     // background={selectedMessageIndex == index ? "bg-interactive-active" : "bg-interactive-subdued"}
-  //     // style={{minHeight: "60px", background: selectedMessageIndex == index ? "blue" : "green"}}
-  //     // onMouseOver="this.style.backgroundColor = 'red'"
-  //     >
-  //       <AlphaCard key={index} background={selectedMessageIndex == index ? "bg-interactive-active" : "bg-interactive-subdued"}>
-
-  //         <Text>
-  //           <p style={{ color: selectedMessageIndex == index ? '#fff' : '#000' }}>
-  //             {selectedMessageIndex == index ? "selected chat" : currentChat[0]}
-  //           </p>
-  //         </Text>
-  //       </AlphaCard>
-  //     </div>
-  //   ))
-  // }
-
-    // const [selectedMessageIndex, setSelectedMessageIndex] = useState(null);
-
-  // const handleSelectMessage = (index) => {
-  //   setSelectedMessageIndex(index);
-  // };
