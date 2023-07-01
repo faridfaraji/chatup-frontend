@@ -7,5 +7,5 @@ export default {
     latest_scan: {},
     host: url_params.get("host"),
     shop_url: url_params.get("shop"),
-    negative_keywords: []
+    negative_keywords: [],
 }

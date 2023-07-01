@@ -24,7 +24,7 @@ import {
 } from "@shopify/polaris-icons"
 
 // This example is for guidance purposes. Copying it will come with caveats.
-export function DateRangePicker() {
+export const DateRangePicker = (props) => {
   const { mdDown, lgUp } = useBreakpoints();
   const shouldShowMultiMonth = lgUp;
   const today = new Date(new Date().setHours(0, 0, 0, 0));
@@ -183,6 +183,7 @@ export function DateRangePicker() {
     setActiveDateRange(newDateRange);
   }
   function apply() {
+    props.callback()
     setPopoverActive(false);
   }
   function cancel() {
