@@ -468,48 +468,42 @@ function send_user_message(user_message) {
   socket.emit("message", user_message);
 }
 
-function display_ai_response(data) {
-  var currentMessage = '';
-  var chunkTimeout;
-  var messageElement;
-  var scrollTimeout;
 
-  var messageContainer = document.getElementById('chatbubble-messages');
-
+function display_ai_response(data, details) {
   var observer = new MutationObserver(function () {
     scrollToLatestMessage();
     storeChatHistory(); // Store chat history whenever a new message is added
   });
   var config = { childList: true };
-  observer.observe(messageContainer, config);
+  observer.observe(details.messageContainer, config);
   var decodedData = decodeHTML(data);
-  currentMessage += decodedData;
+  details.currentMessage += decodedData;
 
-  var lastMessageElement = messageContainer.lastElementChild;
+  var lastMessageElement = details.messageContainer.lastElementChild;
 
   if (lastMessageElement && lastMessageElement.classList.contains('chatbubble-gpt-message')) {
-    messageElement = lastMessageElement;
+    details.messageElement = lastMessageElement;
   } else {
-    messageElement = document.createElement('div');
-    messageElement.classList.add('chatbubble-gpt-message');
+    details.messageElement = document.createElement('div');
+    details.messageElement.classList.add('chatbubble-gpt-message');
 
     var timestamp = document.createElement('div');
     timestamp.classList.add('chatbubble-gpt-message-time');
     timestamp.innerText = getCurrentTimestamp();
-    messageElement.setAttribute('data-timestamp', Date.now()); // set the timestamp attribute
-    messageContainer.appendChild(messageElement);
-    messageElement.appendChild(timestamp); // Append timestamp here before manipulating innerHTML
+    details.messageElement.setAttribute('data-timestamp', Date.now()); // set the timestamp attribute
+    details.messageContainer.appendChild(details.messageElement);
+    details.messageElement.appendChild(timestamp); // Append timestamp here before manipulating innerHTML
   }
 
   // Create a temporary element to apply hyperlinking
   var tempElement = document.createElement('div');
-  tempElement.textContent = currentMessage;
+  tempElement.textContent = details.currentMessage;
   hyperlinkText(tempElement);
   // Replace the HTML of the messageElement with the hyperlinked version
-  messageElement.innerHTML = tempElement.innerHTML;
+  details.messageElement.innerHTML = tempElement.innerHTML;
 
-  clearTimeout(chunkTimeout);
-  chunkTimeout = setTimeout(function () {
+  clearTimeout(details.chunkTimeout);
+  details.chunkTimeout = setTimeout(function () {
     var inputField = document.getElementById('chatbubble-input-field');
     inputField.disabled = false;
     var sendButton = document.getElementById('chatbubble-send');
@@ -523,18 +517,18 @@ function display_ai_response(data) {
   }, 1000); // Increased delay to 1 second
 
     // Scroll to the latest message after the incoming message is complete
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(function () {
+    clearTimeout(details.scrollTimeout);
+    details.scrollTimeout = setTimeout(function () {
       scrollToLatestMessage();
     }, 500); // Delay scrolling to give time for the message to render
 }
 
 
 
-function lister_for_ai_response() {
+function lister_for_ai_response(details) {
   socket.on("ai_response", function (data) {
     console.log(data);
-    display_ai_response(data);
+    display_ai_response(data, details);
   });
 }
 
@@ -542,6 +536,13 @@ function lister_for_ai_response() {
 function sendMessageHelper(msg) {
   if (!socket.connected) socket.connect();
 
+  var details = {
+    currentMessage: '',
+    chunkTimeout: null,
+    messageElement: null,
+    scrollTimeout: null,
+    messageContainer: document.getElementById('chatbubble-messages')
+  }
   get_conversation_id()
   .then(conversation_id => {
     var user_message = {
@@ -554,7 +555,7 @@ function sendMessageHelper(msg) {
   .catch(error => {
     console.error("An error occurred:", error);
   });
-  lister_for_ai_response();
+  lister_for_ai_response(details);
 }
 
 
