@@ -469,7 +469,7 @@ function send_user_message(user_message) {
 }
 
 
-function display_ai_response(data, details) {
+function displayAiResponse(data, details) {
   var observer = new MutationObserver(function () {
     scrollToLatestMessage();
     storeChatHistory(); // Store chat history whenever a new message is added
@@ -525,10 +525,10 @@ function display_ai_response(data, details) {
 
 
 
-function lister_for_ai_response(details) {
+function listenForAiResponse(details) {
   socket.on("ai_response", function (data) {
     console.log(data);
-    display_ai_response(data, details);
+    displayAiResponse(data, details);
   });
 }
 
@@ -555,7 +555,7 @@ function sendMessageHelper(msg) {
   .catch(error => {
     console.error("An error occurred:", error);
   });
-  lister_for_ai_response(details);
+  listenForAiResponse(details);
 }
 
 
