@@ -3,10 +3,8 @@ import { useState, useCallback, useEffect, useTransition } from 'react';
 import { getNegativeKeywords, changeNegativeKeywords } from '../utils/negativeKeywords';
 import cache from '../cache';
 import { useTranslation } from 'react-i18next';
-import { useAuthenticatedFetch } from "../hooks"
 
 export const NegativeKeywords = (props) => {
-  const afetch = useAuthenticatedFetch();
   const { t } = useTranslation()
 
   // Initialize values
@@ -35,7 +33,7 @@ export const NegativeKeywords = (props) => {
     if (cache.shop_identifier === 0) {
       setTimeout(getSetNegativeKeywords, 50)
     } else {
-      getNegativeKeywords(afetch)
+      getNegativeKeywords()
         .then((fetched) => setSelectedTags(fetched))
     }
   }
@@ -44,7 +42,7 @@ export const NegativeKeywords = (props) => {
   // user wanted to remove. If we don't get a successful response from the server, we 
   // should inform the user that their keyword was not necessarily deleted.
   const removeTag = useCallback((tag) => async () => {
-    changeNegativeKeywords("DELETE", tag, afetch)
+    changeNegativeKeywords("DELETE", tag)
       .then((response) => {
         if (response.ok) {
           setSelectedTags((previousTags) => previousTags.filter((previousTag) => previousTag !== tag))
@@ -60,7 +58,7 @@ export const NegativeKeywords = (props) => {
   // keyword can't be confirmed but wasn't necessarily not added and that a refresh should
   // refresh their displayed list of keywords
   const addTag = async (tag) => {
-    changeNegativeKeywords("PUT", tag, afetch)
+    changeNegativeKeywords("PUT", tag)
       .then((response) => {
         if (response.ok) {
           setSelectedTags((previousTags) => [...previousTags, tag])
