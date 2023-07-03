@@ -1,9 +1,10 @@
 import constants from "../constants";
 import cache from "../cache";
-export async function scanShop() {
+
+export async function scanShop(afetch=fetch) {
     try {
         const fetch_url = constants.gateway_url + "/shops/shops/" + cache.shop_identifier + "/compute"
-            const response = await fetch(fetch_url, {
+            const response = await afetch(fetch_url, {
                 method: "POST",
                 credentials: constants.credentials,
                 headers: constants.headers
