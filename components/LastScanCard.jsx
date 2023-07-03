@@ -4,8 +4,10 @@ import { LoremIpsum } from './LoremIpsum';
 import { scanShop } from '../utils/scanShop';
 import cache from '../cache';
 import { getScanInfo } from '../utils/shopInfo';
+import { useTranslation } from 'react-i18next';
 
-export const ScanButton = (props) => {
+export const LastScanCard = () => {
+    const { t } = useTranslation()
     const [active, setActive] = useState(false);
     const [scanDisabled, setScanDisabled] = useState(false);
 
@@ -27,7 +29,7 @@ export const ScanButton = (props) => {
     //  update modal content depending on scanned status incl. last date scanned and notify re changes
     const handleChange = useCallback(() => {
         getScanInfo()
-        if(isScannable(cache.latest_scan.status)) {
+        if (isScannable(cache.latest_scan.status)) {
             setScanDisabled(false)
         }
         setActive(!active), [active]
@@ -40,30 +42,38 @@ export const ScanButton = (props) => {
         setScanDisabled(true)
     }, [active])
 
-    const activator = <Button primary fullWidth={props.fullWidth} onClick={handleChange}>Scan Shop</Button>;
+    const activator = <Button primary fullWidth onClick={handleChange}>Scan Shop</Button>;
+    const scanButton = <Modal
+        activator={activator}
+        open={active}
+        onClose={handleChange}
+        title="Scan title"
+        primaryAction={{
+            content: 'Confirm Scan',
+            onAction: handleConfirm,
+            disabled: scanDisabled
+        }}
+        secondaryActions={[
+            {
+                content: 'Content 2',
+                onAction: handleChange,
+            },
+        ]}
+    >
+        <Modal.Section>
+            {modalMessage}
+        </Modal.Section>
+    </Modal>
 
     return (
-        <Modal
-            activator={activator}
-            open={active}
-            onClose={handleChange}
-            title="Scan title"
-            primaryAction={{
-                content: 'Confirm Scan',
-                onAction: handleConfirm,
-                disabled: scanDisabled
-            }}
-            secondaryActions={[
-                {
-                    content: 'Content 2',
-                    onAction: handleChange,
-                },
-            ]}
-        >
-            <Modal.Section>
-                {modalMessage}
-                {/* <LoremIpsum padding="4" content={modalMessage}/> */}
-            </Modal.Section>
-        </Modal>
+        <AlphaCard >
+            <Text variant={cardTitle}>
+                {t("HomePage.LastScanTitle")}
+            </Text>
+            <VerticalStack>
+                <LoremIpsum padding={["4", "0", "2"]} content={t("HomePage.LastScanCopy")} />
+                {scanButton}
+            </VerticalStack>
+        </AlphaCard>
     );
 }

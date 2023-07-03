@@ -3,12 +3,15 @@ import {
   Navigation,
   AlphaCard,
   Page,
+  Button,
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { getChatHistory, getChatMessages } from "../utils/chatHistory";
+import cache from "../cache";
+import { SkeletonMessages } from "../components";
 
 export default function ChatHistory() {
   const [chats, setChats] = useState([])
@@ -21,56 +24,74 @@ export default function ChatHistory() {
 
   const chatsByDate = chats.reduce((result, item) => {
     const { timestamp, ...rest } = item;
-    const date = new Date(timestamp)
-    rest.fullDate = date
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // Months are zero-based, so add 1
-    const day = date.getDate();
-    const formattedDate = `${year}-${month}-${day}`;
+    if (rest.messages.length) {
+      const date = new Date(timestamp)
+      rest.fullDate = date
 
-    if ((formattedDate in result) && (rest.messages.length)) {
-      result[formattedDate].push(rest);
-    } else {
-      result[formattedDate] = [rest];
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1; // Months are zero-based, so add 1
+      const day = date.getDate();
+      const formattedDate = `${year}-${month}-${day}`;
+
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const seconds = date.getSeconds().toString().padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}:${seconds}`;
+      rest.time = formattedTime
+
+      if (result && formattedDate in result) {
+        result[formattedDate].push(rest);
+      } else {
+        result[formattedDate] = [rest];
+      }
     }
-
     return result;
+
   }, {});
 
 
   const [selectedChat, setSelectedChat] = useState([])
-  const [selectedChatId, setSelectedChatId] = useState("")
   const [selected, setSelected] = useState(null)
+  const [chatLoading, setChatLoading] = useState(true)
 
   const getSetChatMessages = (chatId) => {
-    getChatMessages(chatId).then((resp) => setSelectedChat(resp))
+    setChatLoading(true)
+    getChatMessages(chatId)
+      .then((resp) => setSelectedChat(resp))
+      // .then(() => setChatLoading(false))
   }
 
-  const polling = (conversationId) => {
+  const polling = (chatId) => {
 
   }
 
-  const handleSelect = (selectedId, chatId) => {
-    setSelected(selectedId)
+  const [skeletonChatMarkup, setSkeletonChatMarkup] = useState(<SkeletonMessages messages={2} />)
+  const handleSelect = (chatId, chatLength) => {
+    setSkeletonChatMarkup(<SkeletonMessages messages={chatLength} />)
+    setSelected(chatId)
     getSetChatMessages(chatId)
   };
 
   const navSections = []
   Object
     .entries(chatsByDate)
-    .sort((x,y) => {return x[1].fullDate-y[1].fullDate})
+    .sort((x, y) => {
+      return new Date(y[0]) - new Date(x[0])
+    })
     .forEach(([date, list]) => {
       navSections.push(<Navigation.Section
         key={date}
         title={date}
-        items={list.map((currentChat, index) => ({
-          key: date + index,
-          label: currentChat.id,
-          selected: selected === date + index,
-          onClick: () => {
-            handleSelect(date + index, currentChat.id)
-          }
-        }))}
+        items={list
+          .sort((x, y) => { return y.fullDate - x.fullDate })
+          .map((currentChat, index) => ({
+            key: currentChat.id,
+            label: currentChat.time + ": " + currentChat.messages.length,
+            selected: selected === currentChat.id,
+            onClick: () => {
+              handleSelect(currentChat.id, currentChat.messages.length)
+            }
+          }))}
       />)
     })
 
@@ -79,6 +100,7 @@ export default function ChatHistory() {
 
   const navMarkup = (
     <Navigation key="nav" location="/">
+      <Button primary fullWidth onClick={() => getChatHistoryCallback()}>refresh messages</Button>
       <Navigation.Section
         title="Date Range"
         items={[]}
@@ -115,13 +137,15 @@ export default function ChatHistory() {
     </div>
   ))
 
+
   const { t } = useTranslation();
   return (
     <Page>
       <TitleBar />
       <Frame navigation={navMarkup}>
         <AlphaCard>
-          {chatMarkup}
+          {chatLoading && skeletonChatMarkup}
+          {!chatLoading && chatMarkup}
         </AlphaCard>
       </Frame>
     </Page>

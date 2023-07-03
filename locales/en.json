@@ -1,14 +1,21 @@
 {
   "HomePage": {
-    "title": "Chat Bot",
-    "scanTitle": "Scan your shop's data (This is done automatically every 24 hours after this manual scan)",
-    "scanCopy": "ChatUp will get to know your store by pressing the 'Scan My Shop' button below. ChatUp will read your policies, page content as well as your contact method(s) & contact information such as email, phone number and/or address(es).",
+    "title": "ChatUp",
+    "scanTitle": "Automated Shop Data Scan (Every 24 hours)",
+    "scanCopy": "Discover insights about your store with ChatUp's 'Scan My Shop' feature. Analyze policies, page content, and contact information (email, phone number, address).",
+    "settingsTitle": "Tailor ChatUp for Your Shop",
+    "settingsCopy": "Personalize ChatUp's behavior and language to align with your shop's unique needs. Configure settings on the '<a href=\"http://www.google.com\">(Settings)[/Settings]</a>' page to suit your preferences and requirements.",
+    "embedTitle": "Integrate and Customize ChatUp in Your Theme",
+    "embedCopy": "Explore a wide range of options to integrate and fine-tune ChatUp. Watch the video and follow the instructions below to seamlessly integrate ChatUp in the 'Embeds' section, similar to customizing your theme."
+  },
+  "Settings": {
+    "title": "Settings",
     "negKeysTitle": "Negative Keywords",
-    "negKeysCopy": "ChatUp's artifical intelligence is designed for your needs. The words you choose below are negative keywords. Negative keywords will alert ChatUp to refrain from engaging in irrelevant conversations. In the event of any of these negative keywords presense in a message sent by your site visitors, ChatUp will reply with: 'I am designed to be helpful to you, or connect you to our support team regarding our website's information. What you just mentioned falls outside of my expertise. Is there something else I can help you with?'",
-    "tempTitle": "Choose ChatUp's Personality",
-    "tempCopy": "By choosing a personality you can ensure that ChatUp's approach and vocuabulary towards client messages are directed according to your branding needs.",
-    "embedTitle": "Here is how you can add ChatUp to your theme and customize it!",
-    "embedCopy": "ChatUp can be customized in so many different ways. Please check the video and instructions below to learn how. You can customize ChatUp similar to how you custimze your theme. Navigate to your 'Embeds' section and there you can see the customization options for ChatUp."
+    "negKeysShort": "ChatUp will avoid these topics",
+    "negKeysCopy": "Tailor ChatUp's AI to your needs by specifying negative keywords. These keywords alert ChatUp to avoid irrelevant conversations. If a visitor's message contains any of these negative keywords, ChatUp will respond with: 'I am here to assist you or connect you with our support team for website-related information. The topic you mentioned is outside my expertise. Is there anything else I can help you with?'",
+    "tempTitle": "Personality",
+    "tempShort": "ChatUp will maintain this demeanour",
+    "tempCopy": "Customize ChatUp's approach and vocabulary to align with your brand by selecting a personality. Choose the personality that best reflects your branding needs."
   },
   "Analytics": {
     "timeSeriesChartTitle": "",
@@ -17,12 +24,10 @@
     "barChartTitle": ""
   },
   "ChatHistory": {
-    "pageTitle": "",
-    "selectChatTitle": "",
-    "datePickerTitle": "",
-    "chatInfoBox": "Empty Copy"
+    "pageTitle": ""
   },
   "NavigationMenu": {
+    "settings": "Settings",
     "analytics": "Analytics",
     "chatHistory": "Chat History"
   },

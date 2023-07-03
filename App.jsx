@@ -31,6 +31,10 @@ export default function App() {
             <NavigationMenu
               navigationLinks={[
                 {
+                  label: t("NavigationMenu.settings"),
+                  destination: "/Settings",
+                },
+                {
                   label: t("NavigationMenu.analytics"),
                   destination: "/Analytics",
                 },
@@ -39,6 +43,7 @@ export default function App() {
                   destination: "/ChatHistory",
                 }
               ]}
+              matcher={(link, location) => link.destination === location.pathname}
             />
             <Routes pages={pages} />
           </QueryProvider>
