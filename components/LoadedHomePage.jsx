@@ -9,7 +9,7 @@ import cache from "../cache";
 
 
 export function LoadedHomePage() {
-    // const afetch = useAuthenticatedFetch();
+    const afetch = useAuthenticatedFetch();
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [timeScanned, setTimeScanned] = useState("")
@@ -17,12 +17,8 @@ export function LoadedHomePage() {
     // const [scan, setScan] = useState(null)
 
     const getSetScan = () => {
-        getShopInfo(
-            // fetch=afetch
-            ).then((resp) => {
-            getScanInfo(resp,
-                //  afetch
-                 ).then((resp) => {
+        getShopInfo(fetch=afetch).then((resp) => {
+            getScanInfo(resp, afetch).then((resp) => {
                 console.log(cache)
                 console.log(resp)
                 setScanStatus(resp.status ? resp.status : "none")

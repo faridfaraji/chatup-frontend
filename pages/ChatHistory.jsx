@@ -15,13 +15,11 @@ import cache from "../cache";
 import { SkeletonMessages } from "../components";
 
 export default function ChatHistory() {
-  // const afetch = useAuthenticatedFetch();
+  const afetch = useAuthenticatedFetch();
   const [chats, setChats] = useState([])
   // todo:
   // get history (dates)
-  const getChatHistoryCallback = async () => { getChatHistory(
-    // afetch
-    ).then((resp) => setChats(resp)) };
+  const getChatHistoryCallback = async () => { getChatHistory(afetch).then((resp) => setChats(resp)) };
   // todo: 
   // useEffect(() => getChatHistoryCallback(today), [])
   useEffect(() => getChatHistoryCallback(), [])
