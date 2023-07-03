@@ -6,15 +6,14 @@ import {
     VerticalStack,
 } from "@shopify/polaris"
 import { LoremIpsum } from "./LoremIpsum"
+import { CardTitle } from "./CardTitle"
 
 export const WelcomeCard = (props) => {
-    const cardTitle = "headingLg"
-
     return (
         <AlphaCard>
             <Box minHeight={props.minHeight}>
                 <VerticalStack gap="4">
-                    <Text variant={cardTitle} alignment="center"> {props.title} </Text>
+                    <CardTitle title = {props.title} alignment="center" />
                     <Divider />
                     <LoremIpsum content={props.content} />
                 </VerticalStack>

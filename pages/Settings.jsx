@@ -21,7 +21,7 @@ export default function Settings() {
             {
               title: "negKeys",
               copy: t("Settings.negKeysCopy"),
-              component: <NegativeKeywords />
+              component: <NegativeKeywords label={t("Settings.negKeysTitle")} />
             }
           ]}
         />
@@ -33,7 +33,7 @@ export default function Settings() {
               {
                 title: "temp",
                 copy: t("Settings.tempCopy"),
-                component: <Temperature />
+                component: <Temperature label={t("Settings.tempTitle")}/>
               }
             ]}
           />

@@ -20,10 +20,10 @@
     "tempCopy": "ChatUp will maintain this demeanour"
   },
   "Analytics": {
-    "timeSeriesChartTitle": "",
-    "funnelChartTitle": "",
-    "donutChartTitle": "",
-    "barChartTitle": ""
+    "timeSeriesChartTitle": "Metrics Over Time",
+    "funnelChartTitle": "Conversions",
+    "donutChartTitle": "Daily Tokens Remaining",
+    "barChartTitle": "Average Visit Length"
   },
   "ChatHistory": {
     "pageTitle": ""
@@ -36,7 +36,8 @@
   "Button": {
     "settings": "Configure Settings",
     "embed": "Embed Extension",
-    "scan": "Scan My Shop"
+    "scan": "Scan My Shop",
+    "submit": "Submit"
   },
   "NotFound": {
     "description": "Check the URL and try again, or use the search bar to find what you need.",
