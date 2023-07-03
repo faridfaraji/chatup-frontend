@@ -1,11 +1,11 @@
 import constants from "../constants"
 import cache from "../cache"
 
-export async function getNegativeKeywords(afetch=fetch) {
+export async function getNegativeKeywords() {
     try {
         const fetch_url = constants.gateway_url + "/database/shops/" +
             cache.shop_identifier + "/negative-keywords"
-        const response = await afetch(fetch_url, {
+        const response = await fetch(fetch_url, {
             method: 'GET',
             credentials: constants.credentials,
             headers: constants.headers
@@ -21,11 +21,11 @@ export async function getNegativeKeywords(afetch=fetch) {
     }
 }
 
-export async function changeNegativeKeywords(method, tag, afetch=fetch) {
+export async function changeNegativeKeywords(method, tag) {
     try {
         const fetch_url = constants.gateway_url + "/database/shops/" +
             cache.shop_identifier + `/negative-keywords/${tag}`
-        const response = await afetch(fetch_url, {
+        const response = await fetch(fetch_url, {
             method: method,
             credentials: constants.credentials,
             headers: constants.headers

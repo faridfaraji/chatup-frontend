@@ -1,10 +1,10 @@
 import constants from "../constants";
 import cache from "../cache";
 
-export async function getChatHistory(afetch = fetch) {
+export async function getChatHistory() {
     try {
         const fetch_url = constants.gateway_url + "/database/conversations?shop_id=" + cache.shop_identifier
-        const response = await afetch(fetch_url, {
+        const response = await fetch(fetch_url, {
             method: "GET",
             credentials: constants.credentials,
             headers: constants.headers
@@ -17,13 +17,13 @@ export async function getChatHistory(afetch = fetch) {
     }
 }
 
-export async function getChatMessages(chatId, afetch=fetch) {
+export async function getChatMessages(chatId) {
     if (chatId in cache.messages) {
         return cache.messages[chatId]
     } else {
         try {
             const fetch_url = constants.gateway_url + "/database/conversations/" + chatId + "/messages"
-            const response = await afetch(fetch_url, {
+            const response = await fetch(fetch_url, {
                 method: "GET",
                 credentials: constants.credentials,
                 headers: constants.headers
