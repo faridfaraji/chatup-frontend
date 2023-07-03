@@ -2,7 +2,7 @@ import { Select } from '@shopify/polaris';
 import { useState, useCallback } from 'react';
 
 
-export const Temperature = () => {
+export const Temperature = (props) => {
     const [selected, setSelected] = useState("professional");
     const handleSelectChange = useCallback(
         (value) => {
@@ -13,19 +13,16 @@ export const Temperature = () => {
     );
 
     const options = [
-        { label: "Professional", value: "professional" },
-        { label: "Friendly", value: "friendly" },
-        { label: "Informal", value: "informal" },
-        { label: "Engaging", value: "engaging" },
-        { label: "Humorous", value: "humorous" },
-        { label: "Empathetic", value: "empathetic" },
-        { label: "Energetic", value: "energetic" },
-        { label: "Laid-back", value: "laidback" },
+        { label: "Professional", value: "0.0" },
+        { label: "Friendly", value: "0.5" },
+        { label: "Informal", value: "1.0" },
+        { label: "Engaging", value: "1.5" },
+        { label: "Humorous", value: "2.0" },
     ]
 
     return (
         <Select
-            label="Personality"
+            label={props.label}
             options={options}
             onChange={handleSelectChange}
             value={selected}

@@ -40,6 +40,3 @@ export const SkeletonMessages = (props) => {
     }
     return skList
 }
-
-
-            // </div> */}

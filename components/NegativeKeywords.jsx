@@ -1,9 +1,11 @@
 import { Tag, Form, FormLayout, TextField, Button, VerticalStack, HorizontalStack, Box } from '@shopify/polaris';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useTransition } from 'react';
 import { getNegativeKeywords, changeNegativeKeywords } from '../utils/negativeKeywords';
 import cache from '../cache';
+import { useTranslation } from 'react-i18next';
 
 export const NegativeKeywords = (props) => {
+  const { t } = useTranslation()
 
   // Initialize values
   const [selectedTags, setSelectedTags] = useState(cache.negative_keywords);
@@ -26,7 +28,7 @@ export const NegativeKeywords = (props) => {
   // are still being used to generate their chatbot's responses even though we cannot fetch them
   useEffect(() => getSetNegativeKeywords(), []);
 
-
+  // useTransition() here?
   const getSetNegativeKeywords = function () {
     if (cache.shop_identifier === 0) {
       setTimeout(getSetNegativeKeywords, 50)
@@ -82,8 +84,8 @@ export const NegativeKeywords = (props) => {
             <TextField
               value={value}
               onChange={handleChange}
-              label="Negative Keywords"
-              connectedRight={<Button submit>Submit</Button>}
+              label={props.label}
+              connectedRight={<Button submit>{t("Button.submit")}</Button>}
             />
           </FormLayout>
         </Form>

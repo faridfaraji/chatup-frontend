@@ -2,7 +2,8 @@ import { AlphaCard, Page, Layout, Text, HorizontalStack, Box } from "@shopify/po
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import '@shopify/polaris-viz/build/esm/styles.css';
-import { BarChart, DonutChart, FunnelChart, LineChart, SparkBarChart } from "@shopify/polaris-viz";
+import { BarChart, DonutChart, FunnelChart, LineChart } from "@shopify/polaris-viz";
+import { CardTitle } from "../components";
 
 export default function Analytics() {
   const { t } = useTranslation();
@@ -356,29 +357,29 @@ export default function Analytics() {
     <Page>
       <TitleBar />
       <Layout>
-        <Layout.Section>
+        <Layout.Section fullWidth>
           <AlphaCard>
+            <CardTitle title={t("Analytics.timeSeriesChartTitle")} linebreak />
             <LineChart data={data_timeSeries} theme={vizTheme} />
           </AlphaCard>
         </Layout.Section>
-        <Layout.Section>
-          <HorizontalStack align="space-between">
-            <Box width="32%">
-              <AlphaCard>
-                <FunnelChart data={data_funnel} theme={vizTheme} />
-              </AlphaCard>
-            </Box>
-            <Box width="32%">
-              <AlphaCard>
-                <DonutChart data={data_donut} theme={vizTheme} />
-              </AlphaCard>
-            </Box>
-            <Box width="32%">
-              <AlphaCard>
-                <BarChart data={data_bar} theme={vizTheme} />
-              </AlphaCard>
-            </Box>
-          </HorizontalStack>
+        <Layout.Section oneThird>
+          <AlphaCard>
+            <CardTitle title={t("Analytics.funnelChartTitle")} linebreak />
+            <FunnelChart data={data_funnel} theme={vizTheme} />
+          </AlphaCard>
+        </Layout.Section>
+        <Layout.Section oneThird>
+          <AlphaCard>
+            <CardTitle title={t("Analytics.donutChartTitle")} linebreak />
+            <DonutChart data={data_donut} theme={vizTheme} />
+          </AlphaCard>
+        </Layout.Section>
+        <Layout.Section oneThird>
+          <AlphaCard>
+            <CardTitle title={t("Analytics.barChartTitle")} linebreak />
+            <BarChart data={data_bar} theme={vizTheme} />
+          </AlphaCard>
         </Layout.Section>
       </Layout>
     </Page>

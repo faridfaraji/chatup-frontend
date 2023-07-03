@@ -1,27 +1,6 @@
-import {
-  useBreakpoints,
-  Button,
-  Popover,
-  HorizontalGrid,
-  Select,
-  Scrollable,
-  Box,
-  OptionList,
-  VerticalStack,
-  HorizontalStack,
-  TextField,
-  Icon,
-  DatePicker
-} from "@shopify/polaris";
-import {
-  useState,
-  useRef,
-  useEffect
-} from "react";
-import {
-  CalendarMinor,
-  ArrowRightMinor
-} from "@shopify/polaris-icons"
+import { useBreakpoints, Button, Popover, HorizontalGrid, Select, Scrollable, Box, OptionList, VerticalStack, HorizontalStack, TextField, Icon, DatePicker } from "@shopify/polaris";
+import { useState, useRef, useEffect } from "react";
+import { CalendarMinor, ArrowRightMinor } from "@shopify/polaris-icons"
 
 // This example is for guidance purposes. Copying it will come with caveats.
 export const DateRangePicker = (props) => {
