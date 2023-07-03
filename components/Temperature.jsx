@@ -13,14 +13,11 @@ export const Temperature = () => {
     );
 
     const options = [
-        { label: "Professional", value: "professional" },
-        { label: "Friendly", value: "friendly" },
-        { label: "Informal", value: "informal" },
-        { label: "Engaging", value: "engaging" },
-        { label: "Humorous", value: "humorous" },
-        { label: "Empathetic", value: "empathetic" },
-        { label: "Energetic", value: "energetic" },
-        { label: "Laid-back", value: "laidback" },
+        { label: "Professional", value: "0.0" },
+        { label: "Friendly", value: "0.5" },
+        { label: "Informal", value: "1.0" },
+        { label: "Engaging", value: "1.5" },
+        { label: "Humorous", value: "2.0" },
     ]
 
     return (

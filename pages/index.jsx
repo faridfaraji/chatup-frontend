@@ -1,11 +1,10 @@
-import { Page } from "@shopify/polaris";
 import { SkeletonHomePage, LoadedHomePage } from "../components";
 import { useEffect, useState } from "react";
 import cache from "../cache";
 
-export default function OldHomePage() {
+export default function HomePage() {
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => checkLoaded(), []);
 
   const checkLoaded = function () {

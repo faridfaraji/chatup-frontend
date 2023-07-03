@@ -2,7 +2,7 @@ import { AlphaCard, Page, Layout, Text, HorizontalStack, Box } from "@shopify/po
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import '@shopify/polaris-viz/build/esm/styles.css';
-import { BarChart, DonutChart, FunnelChart, LineChart, SparkBarChart } from "@shopify/polaris-viz";
+import { BarChart, DonutChart, FunnelChart, LineChart } from "@shopify/polaris-viz";
 
 export default function Analytics() {
   const { t } = useTranslation();

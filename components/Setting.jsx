@@ -1,19 +1,9 @@
-import {
-    HorizontalGrid,
-    Box,
-    VerticalStack,
-    Text,
-    AlphaCard
-} from "@shopify/polaris"
-
+import { HorizontalGrid, Box, VerticalStack, Text, AlphaCard } from "@shopify/polaris"
 
 export const Setting = (props) => {
     const inputs = props.inputs.map((input) => {
         return (
-            <VerticalStack
-                gap="4"
-                key={input.title}
-            >
+            <VerticalStack gap="4" key={input.title}>
                 <Text as="p" variant="bodyMd">
                     {input.copy}
                 </Text>
