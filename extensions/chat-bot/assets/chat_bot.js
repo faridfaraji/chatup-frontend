@@ -108,7 +108,7 @@ if (!uniqueId || isExpired(uniqueId)) {
   console.log("Unique Id =", uniqueId);
 }
 
-var socket = io('https://5af9-34-125-95-96.ngrok-free.app/customer', {
+var socket = io('https://0be0-34-125-95-96.ngrok-free.app/customer', {
   transports: ['websocket', 'polling', 'xhr-polling'],
   autoConnect: false
 });
@@ -116,6 +116,7 @@ var socket = io('https://5af9-34-125-95-96.ngrok-free.app/customer', {
 socket.on('connect', function () {
   // socket.emit('identification', uniqueId); // Emitting uniqueId on connection
   console.log('Connected to the server with ' + uniqueId);
+
 });
 
 socket.on('connect_error', function (err) {
@@ -339,7 +340,7 @@ function sendMessage(messageText) {
   scrollToLatestMessage();
 
   // Reset the height of the input field
-  inputField.style.height = 'auto';
+  inputField.style.height = '54px';
 
   // Set focus back to the input field
   inputField.focus();
@@ -431,10 +432,11 @@ function typeMessage(message) {
 
 
 function sendMessageOnEnter(event) {
+  var inputField = document.getElementById('chatbubble-input-field');
   if (event.keyCode === 13) {
     event.preventDefault();
     sendMessage();
-
+    inputField.style.height = '54px';
   }
 }
 
@@ -455,7 +457,7 @@ function get_conversation_id() {
       });
 
       // If there is an error, we reject the promise
-      socket.on('error', function(error) {
+      socket.on('error', function (error) {
         reject(error);
       });
     } else {
@@ -516,11 +518,11 @@ function displayAiResponse(data, details) {
     hideLoader(); // Hide the loader
   }, 1000); // Increased delay to 1 second
 
-    // Scroll to the latest message after the incoming message is complete
-    clearTimeout(details.scrollTimeout);
-    details.scrollTimeout = setTimeout(function () {
-      scrollToLatestMessage();
-    }, 500); // Delay scrolling to give time for the message to render
+  // Scroll to the latest message after the incoming message is complete
+  clearTimeout(details.scrollTimeout);
+  details.scrollTimeout = setTimeout(function () {
+    scrollToLatestMessage();
+  }, 500); // Delay scrolling to give time for the message to render
 }
 
 
@@ -544,17 +546,17 @@ function sendMessageHelper(msg) {
     messageContainer: document.getElementById('chatbubble-messages')
   }
   get_conversation_id()
-  .then(conversation_id => {
-    var user_message = {
-      message: msg,
-      conversation_id: conversation_id
-    };
-    send_user_message(user_message)
-    console.log(conversation_id);
-  })
-  .catch(error => {
-    console.error("An error occurred:", error);
-  });
+    .then(conversation_id => {
+      var user_message = {
+        message: msg,
+        conversation_id: conversation_id
+      };
+      send_user_message(user_message)
+      console.log(conversation_id);
+    })
+    .catch(error => {
+      console.error("An error occurred:", error);
+    });
   listenForAiResponse(details);
 }
 
