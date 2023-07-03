@@ -83,7 +83,6 @@ export const NegativeKeywords = (props) => {
               value={value}
               onChange={handleChange}
               label="Negative Keywords"
-              helpText={<span>ChatUp will avoid these topics</span>}
               connectedRight={<Button submit>Submit</Button>}
             />
           </FormLayout>

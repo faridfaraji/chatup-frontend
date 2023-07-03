@@ -17,18 +17,24 @@ export async function getChatHistory() {
     }
 }
 
-export async function getChatMessages(conversationId) {
-    try {
-        const fetch_url = constants.gateway_url + "/database/conversations/" + conversationId + "/messages"
-        const response = await fetch(fetch_url, {
-            method: "GET",
-            credentials: constants.credentials,
-            headers: constants.headers
-        })
-        if (response.ok) {
-            return await response.json()
+export async function getChatMessages(chatId) {
+    if (chatId in cache.messages) {
+        return cache.messages[chatId]
+    } else {
+        try {
+            const fetch_url = constants.gateway_url + "/database/conversations/" + chatId + "/messages"
+            const response = await fetch(fetch_url, {
+                method: "GET",
+                credentials: constants.credentials,
+                headers: constants.headers
+            })
+            if (response.ok) {
+                const data = await response.json()
+                cache.messages[chatId] = data
+                return data
+            }
+        } catch (error) {
+            console.error("Error scanning shop:", error)
         }
-    } catch (error) {
-        console.error("Error scanning shop:", error)
     }
 }

@@ -3,7 +3,7 @@ import { SkeletonHomePage, LoadedHomePage } from "../components";
 import { useEffect, useState } from "react";
 import cache from "../cache";
 
-export default function HomePage() {
+export default function OldHomePage() {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => checkLoaded(), []);
@@ -17,10 +17,9 @@ export default function HomePage() {
     }
   }
 
+  const homePage = loading ? <SkeletonHomePage /> : <LoadedHomePage />
+
   return (
-    <Page narrowWidth>
-      {loading && <SkeletonHomePage />}
-      {!loading && <LoadedHomePage />}
-    </Page>
+    homePage
   )
 }
