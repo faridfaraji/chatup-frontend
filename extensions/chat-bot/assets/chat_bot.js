@@ -1,10 +1,14 @@
 function showLoader() {
   var loader = document.querySelector('.custom-loader');
-  loader.style.opacity = '1';
+  var sendButton = document.querySelector('#chatbubble-send');
+  sendButton.style.scale = '0';
+  loader.style.scale = '-.4';
 }
 function hideLoader() {
   var loader = document.querySelector('.custom-loader');
-  loader.style.opacity = '0';
+  var sendButton = document.querySelector('#chatbubble-send');
+  loader.style.scale = '0';
+  sendButton.style.scale = '1';
 }
 
 // Define regular expressions to match URLs, emails, and phone numbers
@@ -108,7 +112,7 @@ if (!uniqueId || isExpired(uniqueId)) {
   console.log("Unique Id =", uniqueId);
 }
 
-var socket = io('https://5af9-34-125-95-96.ngrok-free.app/customer', {
+var socket = io('https://0be0-34-125-95-96.ngrok-free.app/customer', {
   transports: ['websocket', 'polling', 'xhr-polling'],
   autoConnect: false
 });
@@ -116,6 +120,7 @@ var socket = io('https://5af9-34-125-95-96.ngrok-free.app/customer', {
 socket.on('connect', function () {
   // socket.emit('identification', uniqueId); // Emitting uniqueId on connection
   console.log('Connected to the server with ' + uniqueId);
+
 });
 
 socket.on('connect_error', function (err) {
@@ -338,8 +343,7 @@ function sendMessage(messageText) {
   removeOldMessages();
   scrollToLatestMessage();
 
-  // Reset the height of the input field
-  inputField.style.height = 'auto';
+
 
   // Set focus back to the input field
   inputField.focus();
@@ -388,10 +392,10 @@ function handleIncomingMessage(message) {
   timestamp.innerText = getCurrentTimestamp();
 
   chatbubbleGptMessage.appendChild(timestamp);
-
+  hideLoader(); // Hide the loader
   setTimeout(function () {
     chatbubbleGptMessage.style.opacity = '1'; // Set opacity to 1 for fade-in
-    hideLoader(); // Hide the loader
+
   }, 400);
 
   // Scroll to the latest message after the incoming message is complete
@@ -431,10 +435,10 @@ function typeMessage(message) {
 
 
 function sendMessageOnEnter(event) {
+  var inputField = document.getElementById('chatbubble-input-field');
   if (event.keyCode === 13) {
     event.preventDefault();
     sendMessage();
-
   }
 }
 
@@ -455,7 +459,7 @@ function get_conversation_id() {
       });
 
       // If there is an error, we reject the promise
-      socket.on('error', function(error) {
+      socket.on('error', function (error) {
         reject(error);
       });
     } else {
@@ -516,11 +520,11 @@ function displayAiResponse(data, details) {
     hideLoader(); // Hide the loader
   }, 1000); // Increased delay to 1 second
 
-    // Scroll to the latest message after the incoming message is complete
-    clearTimeout(details.scrollTimeout);
-    details.scrollTimeout = setTimeout(function () {
-      scrollToLatestMessage();
-    }, 500); // Delay scrolling to give time for the message to render
+  // Scroll to the latest message after the incoming message is complete
+  clearTimeout(details.scrollTimeout);
+  details.scrollTimeout = setTimeout(function () {
+    scrollToLatestMessage();
+  }, 500); // Delay scrolling to give time for the message to render
 }
 
 
@@ -544,17 +548,17 @@ function sendMessageHelper(msg) {
     messageContainer: document.getElementById('chatbubble-messages')
   }
   get_conversation_id()
-  .then(conversation_id => {
-    var user_message = {
-      message: msg,
-      conversation_id: conversation_id
-    };
-    send_user_message(user_message)
-    console.log(conversation_id);
-  })
-  .catch(error => {
-    console.error("An error occurred:", error);
-  });
+    .then(conversation_id => {
+      var user_message = {
+        message: msg,
+        conversation_id: conversation_id
+      };
+      send_user_message(user_message)
+      console.log(conversation_id);
+    })
+    .catch(error => {
+      console.error("An error occurred:", error);
+    });
   listenForAiResponse(details);
 }
 
@@ -660,13 +664,18 @@ textarea.addEventListener('click', function (event) {
 });
 
 
-let textArea = document.getElementById("input-round-box");
+let textArea = document.getElementById("chatbubble-input");
 
 textArea.addEventListener("input", autoResize, false);
 
 function autoResize() {
   this.style.height = 'auto';
   this.style.height = this.scrollHeight + 'px';
+
+  // Reset the height to the default value after sending a message
+  if (this.style.height === '54px') {
+    this.style.height = '54px';
+  }
 }
 
 
