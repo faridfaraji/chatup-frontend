@@ -8,7 +8,7 @@ export function LoadedHomePage() {
 
     const scan = <ScanButton />
     const settings = <SettingsButton />
-    const embed = <EmbedButton />        
+    const embed = <EmbedButton />     
 
     const commonMinHeight = "200px"
 
