@@ -1,15 +1,14 @@
 import { Page, Layout, Button } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@shopify/app-bridge-react";
-import { useAuthenticatedFetch } from "../hooks";
 import { WelcomeCard } from "./WelcomeCard";
 import { useEffect, useState } from "react";
 import { getScanInfo, getShopInfo } from "../utils/shopInfo";
 import cache from "../cache";
+import { useAuthenticatedFetch } from "../hooks";
 
-
-export function LoadedHomePage() {
-    // const afetch = useAuthenticatedFetch();
+export function LoadedHomePage(props) {
+    const fetch = useAuthenticatedFetch();
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [timeScanned, setTimeScanned] = useState("")
@@ -17,14 +16,8 @@ export function LoadedHomePage() {
     // const [scan, setScan] = useState(null)
 
     const getSetScan = () => {
-        getShopInfo(
-            // fetch=afetch
-            ).then((resp) => {
-            getScanInfo(resp,
-                //  afetch
-                 ).then((resp) => {
-                console.log(cache)
-                console.log(resp)
+        getShopInfo(null, fetch).then((resp) => {
+            getScanInfo(resp, fetch).then((resp) => {
                 setScanStatus(resp.status ? resp.status : "none")
                 setTimeScanned(resp.timestamp ? resp.timestamp : "never")
             })

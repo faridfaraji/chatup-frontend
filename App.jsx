@@ -19,26 +19,26 @@ export default function App() {
     <PolarisProvider>
       <BrowserRouter>
         <AppBridgeProvider>
-          <QueryProvider>
-            <NavigationMenu
-              navigationLinks={[
-                {
-                  label: t("NavigationMenu.settings"),
-                  destination: "/Settings",
-                },
-                {
-                  label: t("NavigationMenu.analytics"),
-                  destination: "/Analytics",
-                },
-                {
-                  label: t("NavigationMenu.chatHistory"),
-                  destination: "/ChatHistory",
-                }
-              ]}
-              matcher={(link, location) => link.destination === location.pathname}
-            />
-            <Routes pages={pages} />
-          </QueryProvider>
+            <QueryProvider>
+              <NavigationMenu
+                navigationLinks={[
+                  {
+                    label: t("NavigationMenu.settings"),
+                    destination: "/Settings",
+                  },
+                  {
+                    label: t("NavigationMenu.analytics"),
+                    destination: "/Analytics",
+                  },
+                  {
+                    label: t("NavigationMenu.chatHistory"),
+                    destination: "/ChatHistory",
+                  }
+                ]}
+                matcher={(link, location) => link.destination === location.pathname}
+              />
+              <Routes pages={pages} />
+            </QueryProvider>
         </AppBridgeProvider>
       </BrowserRouter>
     </PolarisProvider>
