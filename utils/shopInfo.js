@@ -14,8 +14,15 @@ export async function getShopId(fetchFun=fetch) {
         })
         if(response.ok) {
             const data = await response.json()
-            cache.shop_identifier = data
-            return data
+            // Check if the server responded with a redirect URL
+            if (data.redirect_url) {
+                // If it did, redirect the user to this URL
+                return data
+            } else {
+                // If it didn't, proceed as usual
+                cache.shop_identifier = data
+                return data
+            }
         }
     } catch (error) {
         console.error('Error fetching shop id:', error)
@@ -25,7 +32,7 @@ export async function getShopId(fetchFun=fetch) {
 export async function getShopInfo(id, fetchFun=fetch) {
     const shop_id = cache.shop_identifier ? cache.shop_identifier : id
     try {
-        const fetch_url = constants.gateway_url + "/database/shops/" + shop_id
+        const fetch_url = `${constants.gateway_url}/database/${constants.app_name}/shops/${shop_id}`
         const response = await fetchFun(fetch_url, {
             method: 'GET',
             credentials: constants.credentials,
@@ -44,7 +51,7 @@ export async function getShopInfo(id, fetchFun=fetch) {
 export async function getScanInfo(id, fetchFun=fetch) {
     const scan_id = cache.shop.latest_scan_id !== "" ? cache.shop.latest_scan_id : id 
     try {
-        const fetch_url = constants.gateway_url + "/database/scans/" + scan_id
+        const fetch_url = `${constants.gateway_url}/database/${constants.app_name}/scans/${scan_id}`
         const response = await fetchFun(fetch_url, {
             method: 'GET',
             credentials: constants.credentials,

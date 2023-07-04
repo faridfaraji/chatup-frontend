@@ -2,11 +2,11 @@
   "HomePage": {
     "title": "ChatUp",
     "scanTitle": "Scan Your Shop",
-    "scanCopy": "Discover insights about your store with ChatUp's 'Scan My Shop' feature. Analyze policies, page content, and contact information (email, phone number, address).",
-    "LastScanTitle": "",
-    "LastScanCopy": "",
-    "settingsTitle": "Optimize Your Experience",
-    "settingsCopy": "Personalize ChatUp's behavior and language to align with your shop's unique needs. Configure settings on the settings page to suit your preferences and requirements.",
+    "scanCopy": "This allows ChatUp to study and understand your store's policies, pages/blogs, contact information, order information, and all of the data that can make ChatUp answer your visitors' questions more accurately.",
+    "LastScanTitle": "Your store was last scanned on mm/dd/yyyy",
+    "LastScanCopy": "ChatUp has noticed and updates itself with QTY updates in the past 24 hours",
+    "settingsTitle": "Control ChatUp",
+    "settingsCopy": "Personalize ChatUp's personality and boundaries to make it align with your shop accordingly. Click 'Settings' and you will be redirected to the settings page right away.",
     "embedTitle": "Test and Integrate",
     "embedCopy": "Explore a wide range of options to integrate and fine-tune ChatUp. Watch the video and follow the instructions below to seamlessly integrate ChatUp in the 'Embeds' section, similar to customizing your theme."
   },
