@@ -4,15 +4,12 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Banner, Layout, Page } from "@shopify/polaris";
 
-export default function ExitIframe() {
+export default function ExitIframe({redirectUri}) {
   const app = useAppBridge();
-  const { search } = useLocation();
   const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
-    if (!!app && !!search) {
-      const params = new URLSearchParams(search);
-      const redirectUri = params.get("redirectUri");
+    if (!!app && !!redirectUri) {
       const url = new URL(decodeURIComponent(redirectUri));
 
       if (
@@ -28,7 +25,7 @@ export default function ExitIframe() {
         setShowWarning(true);
       }
     }
-  }, [app, search, setShowWarning]);
+  }, [app, redirectUri, setShowWarning]);
 
   return showWarning ? (
     <Page narrowWidth>
