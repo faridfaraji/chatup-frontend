@@ -9,13 +9,12 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const fetch = useAuthenticatedFetch();
   const [redirectUri, setRedirectUri] = useState(null);
-
-  useEffect(() => {
+  
+  const populate = () => {
     getShopId(fetch)
       .then((resp) => {
         if (resp.redirect_url) {
           setRedirectUri(resp.redirect_url);
-          setLoading(false); // also stop loading if we have a redirect URI
         } else {
           return getShopInfo(resp, fetch)
             .then((resp) => {
@@ -26,7 +25,9 @@ export default function HomePage() {
             .then(() => setLoading(false));
         }
       });
-  }, []);
+  }
+
+  useEffect(() => populate(), [])
 
   const homePage = loading ? <SkeletonHomePage /> : <LoadedHomePage />
   return redirectUri ? <ExitIframe redirectUri={redirectUri} /> : homePage;

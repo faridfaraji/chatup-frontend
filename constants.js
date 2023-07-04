@@ -1,10 +1,9 @@
 const {
     VITE_APP_NAME,
     VITE_BACKEND_URL,
-    VITE_SHOPIFY_API_KEY
+    VITE_SHOPIFY_CHAT_BOT_ID,
+    VITE_CHAT_BOT_EXT_NAME
 } = import.meta.env
-
-const url_params = new URLSearchParams(location.search)
 
 export default {
     gateway_url: VITE_BACKEND_URL,
@@ -14,5 +13,6 @@ export default {
         "ngrok-skip-browser-warning": "true"
     },
     credentials: "same-origin",
-    api_key: VITE_SHOPIFY_API_KEY,
+    ext_id: VITE_SHOPIFY_CHAT_BOT_ID,
+    ext_name: VITE_CHAT_BOT_EXT_NAME
  }
