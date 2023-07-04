@@ -36,7 +36,7 @@ const SkeletonMessage = (props) => {
 export const SkeletonMessages = (props) => {
     const skList = []
     for (var i = 0; i < props.messages; i++) {
-        skList.push(<SkeletonMessage lines={Math.ceil(Math.random() * 3)} side={i} />)
+        skList.push(<SkeletonMessage key={Math.random()} lines={Math.ceil(Math.random() * 3)} side={i} />)
     }
     return skList
 }

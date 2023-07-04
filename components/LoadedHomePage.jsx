@@ -2,10 +2,30 @@ import { Page, Layout, Button } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@shopify/app-bridge-react";
 import { WelcomeCard } from "./WelcomeCard";
+import { useEffect, useState } from "react";
+import { getScanInfo, getShopInfo } from "../utils/shopInfo";
+import cache from "../cache";
+import { useAuthenticatedFetch } from "../hooks";
 
-export function LoadedHomePage() {
+export function LoadedHomePage(props) {
+    const fetch = useAuthenticatedFetch();
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const [timeScanned, setTimeScanned] = useState("")
+    const [scanStatus, setScanStatus] = useState("")
+    // const [scan, setScan] = useState(null)
+
+    const getSetScan = () => {
+        getShopInfo(null, fetch).then((resp) => {
+            getScanInfo(resp, fetch).then((resp) => {
+                setScanStatus(resp.status ? resp.status : "none")
+                setTimeScanned(resp.timestamp ? resp.timestamp : "never")
+            })
+        })
+    }
+
+    useEffect(() => getSetScan(), [])
+
 
     const scan =
         <Button primary fullWidth onClick={() => { console.log("initiate scan")}}>

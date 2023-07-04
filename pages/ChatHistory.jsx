@@ -12,12 +12,14 @@ import { DateRangePicker } from "../components/DateRangePicker";
 import { getChatHistory, getChatMessages } from "../utils/chatHistory";
 import cache from "../cache";
 import { SkeletonMessages } from "../components";
+import { useAuthenticatedFetch } from "../hooks";
 
 export default function ChatHistory() {
+  const fetch = useAuthenticatedFetch();
   const [chats, setChats] = useState([])
   // todo:
   // get history (dates)
-  const getChatHistoryCallback = async () => { getChatHistory().then((resp) => setChats(resp)) };
+  const getChatHistoryCallback = async () => { getChatHistory(fetch).then((resp) => setChats(resp)) };
   // todo: 
   // useEffect(() => getChatHistoryCallback(today), [])
   useEffect(() => getChatHistoryCallback(), [])
@@ -56,7 +58,7 @@ export default function ChatHistory() {
 
   const getSetChatMessages = (chatId) => {
     setChatLoading(true)
-    getChatMessages(chatId)
+    getChatMessages(chatId, fetch)
       .then((resp) => setSelectedChat(resp))
       // .then(() => setChatLoading(false))
   }

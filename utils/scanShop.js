@@ -1,5 +1,6 @@
 import constants from "../constants";
 import cache from "../cache";
+
 export async function scanShop() {
     try {
         const fetch_url = constants.gateway_url + "/shops/shops/" + cache.shop_identifier + "/compute"
