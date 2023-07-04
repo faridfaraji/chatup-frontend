@@ -26,43 +26,19 @@ export function LoadedHomePage(props) {
 
     useEffect(() => getSetScan(), [])
 
+
     const scan =
-        <Button primary fullWidth onClick={() => {
-            console.log(timeScanned)
-            console.log(scanStatus)
-            getSetScan()
-        }}>
-            Tester
+        <Button primary fullWidth onClick={() => { console.log("initiate scan")}}>
+            {t("Button.scan")}
         </Button>
 
-    // useEffect(() => {
-    //     const enabled = timeScanned === "" || scanStatus === "ERROR"
-    //     const copy = timeScanned === "" ?
-    //         { t("Button.scan") } :
-
-    //     || scanStatus === "ERROR" ?
-    //         scanStatus === "COMPLETED" ?
-    //         { t("Button.scanned", { timeScanned: timeScanned }) } :
-    //         { t() } : b
-
-    //     const button = timeScanned === "" ?
-    //         <Button primary fullWidth onClick={() => { console.log("initiate scan") }}>
-    //             {t("Button.scan")}
-    //         </Button> :
-    //         <Button disabled fullWidth>
-    //             {t("Button.scanned", { timeScanned: timeScanned })}
-    //         </Button>
-
-    //     setScan(button)
-    // }, [timeScanned])
-
     const settings =
-        <Button fullWidth primary={timeScanned != ""} onClick={() => { navigate("/Settings") }}>
+        <Button fullWidth onClick={() => { navigate("/Settings") }}>
             {t("Button.settings")}
         </Button>
 
     const embed =
-        <Button fullWidth primary={timeScanned != ""} onClick={() => { console.log("embed link") }}>
+        <Button fullWidth onClick={() => { console.log("embed link") }}>
             {t("Button.embed")}
         </Button>
 
