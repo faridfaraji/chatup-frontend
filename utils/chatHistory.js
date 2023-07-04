@@ -3,7 +3,7 @@ import cache from "../cache";
 
 export async function getChatHistory(fetchFun=fetch) {
     try {
-        const fetch_url = constants.gateway_url + "/database/conversations?shop_id=" + cache.shop_identifier
+        const fetch_url = `${constants.gateway_url}/database/${constants.app_name}/conversations?shop_id=${cache.shop_identifier}`
         const response = await fetchFun(fetch_url, {
             method: "GET",
             credentials: constants.credentials,
@@ -22,7 +22,7 @@ export async function getChatMessages(chatId, fetchFun=fetch) {
         return cache.messages[chatId]
     } else {
         try {
-            const fetch_url = constants.gateway_url + "/database/conversations/" + chatId + "/messages"
+            const fetch_url = `${constants.gateway_url}/database/${constants.app_name}/conversations/${chatId}/messages`
             const response = await fetchFun(fetch_url, {
                 method: "GET",
                 credentials: constants.credentials,
