@@ -1,10 +1,14 @@
 function showLoader() {
   var loader = document.querySelector('.custom-loader');
-  loader.style.opacity = '1';
+  var sendButton = document.querySelector('#chatbubble-send');
+  sendButton.style.scale = '0';
+  loader.style.scale = '-.4';
 }
 function hideLoader() {
   var loader = document.querySelector('.custom-loader');
-  loader.style.opacity = '0';
+  var sendButton = document.querySelector('#chatbubble-send');
+  loader.style.scale = '0';
+  sendButton.style.scale = '1';
 }
 
 // Define regular expressions to match URLs, emails, and phone numbers
@@ -339,8 +343,7 @@ function sendMessage(messageText) {
   removeOldMessages();
   scrollToLatestMessage();
 
-  // Reset the height of the input field
-  inputField.style.height = '54px';
+
 
   // Set focus back to the input field
   inputField.focus();
@@ -389,10 +392,10 @@ function handleIncomingMessage(message) {
   timestamp.innerText = getCurrentTimestamp();
 
   chatbubbleGptMessage.appendChild(timestamp);
-
+  hideLoader(); // Hide the loader
   setTimeout(function () {
     chatbubbleGptMessage.style.opacity = '1'; // Set opacity to 1 for fade-in
-    hideLoader(); // Hide the loader
+
   }, 400);
 
   // Scroll to the latest message after the incoming message is complete
@@ -436,7 +439,6 @@ function sendMessageOnEnter(event) {
   if (event.keyCode === 13) {
     event.preventDefault();
     sendMessage();
-    inputField.style.height = '54px';
   }
 }
 
@@ -662,13 +664,18 @@ textarea.addEventListener('click', function (event) {
 });
 
 
-let textArea = document.getElementById("input-round-box");
+let textArea = document.getElementById("chatbubble-input");
 
 textArea.addEventListener("input", autoResize, false);
 
 function autoResize() {
   this.style.height = 'auto';
   this.style.height = this.scrollHeight + 'px';
+
+  // Reset the height to the default value after sending a message
+  if (this.style.height === '54px') {
+    this.style.height = '54px';
+  }
 }
 
 
