@@ -7,21 +7,14 @@ import { useAuthenticatedFetch } from "../hooks";
 export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const fetch = useAuthenticatedFetch();
-
-  useEffect(() => {
+  const populate = () => {
     getShopId(fetch)
-      .then((resp) => {
-        if (resp) {
-          return getShopInfo(resp, fetch)
-        }
-      })
-      .then((resp) => {
-        if (resp.latest_scan_id) {
-          return getScanInfo(resp.latest_scan_id)
-        }
-      })
+      .then((resp) => getShopInfo(resp, fetch))
+      .then((resp) => getScanInfo(resp.latest_scan_id, fetch))
       .then(() => setLoading(false))
-  }, []);
+  }
+
+  useEffect(() => populate(), [])
 
   const homePage = loading ? <SkeletonHomePage /> : <LoadedHomePage />
 

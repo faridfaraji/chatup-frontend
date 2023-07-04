@@ -37,7 +37,7 @@
     "settings": "Configure Settings",
     "embed": "Embed Extension",
     "scan": "Scan My Shop",
-    "scanned": "Last scanned {{ timeScanned }} ago",
+    "scanned": "Last scanned {{ duration }} ago",
     "submit": "Submit"
   },
   "NotFound": {

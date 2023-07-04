@@ -3,16 +3,21 @@ import {
   useBreakpoints,
   VerticalStack,
   Divider,
+  HorizontalGrid,
 } from "@shopify/polaris";
 import { NegativeKeywords, Temperature } from "../components";
 import { useTranslation } from "react-i18next";
 import { Setting } from "../components/Setting";
+import { EmbedButton } from "../components/buttons";
 
 export default function Settings() {
   const { t } = useTranslation();
   const { smUp } = useBreakpoints();
   return (
-    <Page divider>
+    <Page
+      divider
+      primaryAction={<EmbedButton />}
+      >
       <VerticalStack gap={{ xs: "8", sm: "4" }}>
         <Setting 
           title={t("Settings.negKeysTitle")}
