@@ -9,7 +9,7 @@ export const EmbedButton = () => {
     return (
         <Button
             primary={timestamp !== undefined}
-            onClick={() => { console.log("embed button") }}>
+            url={cache.embed_url}>
             {t("Button.embed")}
         </Button>
     )
