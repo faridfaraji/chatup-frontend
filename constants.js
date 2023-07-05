@@ -15,4 +15,4 @@ export default {
     credentials: "same-origin",
     ext_id: VITE_SHOPIFY_CHAT_BOT_ID,
     ext_name: VITE_CHAT_BOT_EXT_NAME
- }
+}

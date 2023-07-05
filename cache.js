@@ -3,7 +3,6 @@ import constants from "./constants"
 const url_params = new URLSearchParams(location.search)
 
 export default {
-    shop_identifier: 0,
     shop: {},
     latest_scan_id: "",
     latest_scan: {},
@@ -12,5 +11,6 @@ export default {
     negative_keywords: [],
     messages: {},
     chats: {},
-    embed_url: `https://${url_params.get("shop")}/admin/themes/current/editor?context=apps&activateAppId=${constants.ext_id}/${constants.ext_name}`
+    embed_url: `https://${url_params.get("shop")}/admin/themes/current/editor?context=apps&activateAppId=${constants.ext_id}/${constants.ext_name}`,
+    tester: 1
 }

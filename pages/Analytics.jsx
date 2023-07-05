@@ -1,12 +1,74 @@
-import { AlphaCard, Page, Layout, Text, HorizontalStack, Box } from "@shopify/polaris";
+import { AlphaCard, Page, Layout, Text, HorizontalStack, Box, Button } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import '@shopify/polaris-viz/build/esm/styles.css';
 import { BarChart, DonutChart, FunnelChart, LineChart } from "@shopify/polaris-viz";
 import { CardTitle } from "../components";
+import { useChatHistory } from "../hooks";
+import { useEffect, useState } from "react";
 
 export default function Analytics() {
   const { t } = useTranslation();
+  const getConvs = useChatHistory();
+  const [convs, setConvs] = useState({})
+  const [raw, setRaw] = useState([])
+  const [tsData, setTSData] = useState([])
+
+  useEffect(() => {
+    getConvs()
+      .then((resp) => setConvs(resp))
+      .then(() => setRaw(convs.map((conv) => {
+        return {
+          timestamp: new Date(conv.timestamp),
+          message_count: conv.messages.length
+        }
+      })))
+      .then(() => {
+        const d1 = new Date('July 1 2023')
+        const d2 = new Date('July 7 2023')
+        const timeStep = getTimeStep(d1, d2)
+        const timeArray = getTimeArray(d1, d2, timeStep)
+        const timeSeries = getTimeSeries(timeArray, raw)
+        setTSData(timeSeries)
+      })
+  }, [])
+
+  const getTimeStep = (start, end) => {
+    const diffMillis = end - start
+    const diffDays = Math.floor(diffMillis / (1000 * 60 * 60 * 24))
+    const breaks = [
+      { dur: 1, step: 3, },
+      { dur: 3, step: 6, },
+      { dur: 5, step: 12, },
+    ]
+    const step = breaks.find((bp) => diffDays <= bp.dur)
+    return (step ? step.step : 24) * 60 * 60 * 1000
+  }
+
+  const getTimeArray = (start, end, step) => {
+    const timeArray = []
+    let currentTime = start
+
+    while (currentTime <= end) {
+      timeArray.push(currentTime)
+      currentTime = new Date(currentTime.getTime() + step)
+    }
+
+    return timeArray
+  }
+
+  const getTimeSeries = (timeArray, raw) => {
+    const timeSeries = [
+      { name: "Conversations", data: timeArray.map((bucket) => {return {key: bucket, value: 0}}) },
+      { name: "Messages", data: timeArray.map((bucket) => {return {key: bucket, value: 0}}) }
+    ]
+    raw.forEach((conv) => {
+      const index = timeArray.findIndex((bucket) => conv.timestamp <= bucket)
+      timeSeries[0].data[index].value++,
+      timeSeries[1].data[index].value+=conv.message_count
+    })
+    return timeSeries
+  }
 
   const data_timeSeries = [
     {
@@ -254,64 +316,31 @@ export default function Analytics() {
       "name": "Breakfast",
       "data": [
         {
-          "key": "Monday",
+          "key": "Mon",
           "value": 3
         },
         {
-          "key": "Tuesday",
+          "key": "Tue",
           "value": -7
         },
         {
-          "key": "Wednesday",
+          "key": "Wed",
           "value": -7
         },
         {
-          "key": "Thursday",
+          "key": "Thu",
           "value": -8
         },
         {
-          "key": "Friday",
-          "value": 50
+          "key": "Fri",
+          "value": 20
         },
         {
-          "key": "Saturday",
+          "key": "Sat",
           "value": 0
         },
         {
-          "key": "Sunday",
-          "value": 0.1
-        }
-      ]
-    },
-    {
-      "name": "Lunch",
-      "data": [
-        {
-          "key": "Monday",
-          "value": 4
-        },
-        {
-          "key": "Tuesday",
-          "value": 0
-        },
-        {
-          "key": "Wednesday",
-          "value": -10
-        },
-        {
-          "key": "Thursday",
-          "value": 15
-        },
-        {
-          "key": "Friday",
-          "value": 8
-        },
-        {
-          "key": "Saturday",
-          "value": 50
-        },
-        {
-          "key": "Sunday",
+          "key": "Sun",
           "value": 0.1
         }
       ]
@@ -320,31 +349,31 @@ export default function Analytics() {
       "name": "Dinner",
       "data": [
         {
-          "key": "Monday",
+          "key": "Mon",
           "value": 7
         },
         {
-          "key": "Tuesday",
+          "key": "Tue",
           "value": 0
         },
         {
-          "key": "Wednesday",
+          "key": "Wed",
           "value": -15
         },
         {
-          "key": "Thursday",
+          "key": "Thu",
           "value": -12
         },
         {
-          "key": "Friday",
-          "value": 50
+          "key": "Fri",
+          "value": 20
         },
         {
-          "key": "Saturday",
+          "key": "Sat",
           "value": 5
         },
         {
-          "key": "Sunday",
+          "key": "Sun",
           "value": 0.1
         }
       ]
@@ -359,25 +388,28 @@ export default function Analytics() {
       <Layout>
         <Layout.Section fullWidth>
           <AlphaCard>
-            <CardTitle title={t("Analytics.timeSeriesChartTitle")} linebreak />
-            <LineChart data={data_timeSeries} theme={vizTheme} />
+            <HorizontalStack align="space-between" blockAlign="start">
+              <CardTitle title={t("Analytics.timeSeriesChartTitle")} linebreak />
+              <Button size="slim" onClick={() => console.log(tsData)}> TEST </Button>
+            </HorizontalStack>
+            <LineChart data={tsData} theme={vizTheme} />
           </AlphaCard>
         </Layout.Section>
         <Layout.Section oneThird>
           <AlphaCard>
-            <CardTitle title={t("Analytics.funnelChartTitle")} linebreak />
+            <CardTitle title={t("Analytics.funnelChartTitle")} />
             <FunnelChart data={data_funnel} theme={vizTheme} />
           </AlphaCard>
         </Layout.Section>
         <Layout.Section oneThird>
           <AlphaCard>
-            <CardTitle title={t("Analytics.donutChartTitle")} linebreak />
+            <CardTitle title={t("Analytics.donutChartTitle")} />
             <DonutChart data={data_donut} theme={vizTheme} />
           </AlphaCard>
         </Layout.Section>
         <Layout.Section oneThird>
           <AlphaCard>
-            <CardTitle title={t("Analytics.barChartTitle")} linebreak />
+            <CardTitle title={t("Analytics.barChartTitle")} />
             <BarChart data={data_bar} theme={vizTheme} />
           </AlphaCard>
         </Layout.Section>
