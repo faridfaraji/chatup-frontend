@@ -3,7 +3,6 @@ import constants from "./constants"
 const url_params = new URLSearchParams(location.search)
 
 export default {
-    shop_identifier: 0,
     shop: {},
     latest_scan_id: "",
     latest_scan: {},

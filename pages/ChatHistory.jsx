@@ -9,20 +9,20 @@ import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
-import { getChatHistory, getChatMessages } from "../utils/chatHistory";
 import cache from "../cache";
 import { SkeletonMessages } from "../components";
-import { useAuthenticatedFetch } from "../hooks";
+import { useAuthenticatedFetch } from "@shopify/app-bridge-react";
+
 
 export default function ChatHistory() {
   const fetch = useAuthenticatedFetch();
   const [chats, setChats] = useState([])
   // todo:
   // get history (dates)
-  const getChatHistoryCallback = async () => { getChatHistory(fetch).then((resp) => setChats(resp)) };
+  // const getChatHistoryCallback = async () => { getChatHistory(fetch).then((resp) => setChats(resp)) };
   // todo: 
   // useEffect(() => getChatHistoryCallback(today), [])
-  useEffect(() => getChatHistoryCallback(), [])
+  // useEffect(() => getChatHistoryCallback(), [])
 
   const chatsByDate = chats.reduce((result, item) => {
     const { timestamp, ...rest } = item;
@@ -58,9 +58,9 @@ export default function ChatHistory() {
 
   const getSetChatMessages = (chatId) => {
     setChatLoading(true)
-    getChatMessages(chatId, fetch)
+    getChatMessages(fetch, chatId)
       .then((resp) => setSelectedChat(resp))
-      // .then(() => setChatLoading(false))
+    // .then(() => setChatLoading(false))
   }
 
   const polling = (chatId) => {
@@ -102,13 +102,13 @@ export default function ChatHistory() {
 
   const navMarkup = (
     <Navigation key="nav" location="/">
-      <Button primary fullWidth onClick={() => getChatHistoryCallback()}>refresh messages</Button>
+      {/* <Button primary fullWidth onClick={() => getChatHistoryCallback()}>refresh messages</Button> */}
       <Navigation.Section
         title="Date Range"
         items={[]}
       />
       {/* todo: (date1, date2) => getChatHistoryCallback(date1, date2)) */}
-      <DateRangePicker callback={() => getChatHistoryCallback()} />
+      {/* <DateRangePicker callback={() => getChatHistoryCallback()} /> */}
       <br />
       {navSections}
     </Navigation>

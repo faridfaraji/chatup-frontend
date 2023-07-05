@@ -1,4 +1,4 @@
-import { Layout, Page, } from '@shopify/polaris';
+import { Layout, Page } from '@shopify/polaris';
 import React from 'react';
 import { SkeletonCard } from './SkeletonCard';
 

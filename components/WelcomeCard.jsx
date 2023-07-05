@@ -2,7 +2,6 @@ import {
     AlphaCard,
     Box,
     Divider,
-    Text,
     VerticalStack,
 } from "@shopify/polaris"
 import { LoremIpsum } from "./LoremIpsum"
@@ -13,7 +12,7 @@ export const WelcomeCard = (props) => {
         <AlphaCard>
             <Box minHeight={props.minHeight}>
                 <VerticalStack gap="4">
-                    <CardTitle title = {props.title} alignment="center" />
+                    <CardTitle title={props.title} alignment="center" />
                     <Divider />
                     <LoremIpsum content={props.content} />
                 </VerticalStack>

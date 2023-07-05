@@ -1,12 +1,11 @@
 import { Button } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import cache from "../../cache";
-import { useAuthenticatedFetch } from "../../hooks";
-import { scanShop } from "../../utils/scanShop";
+import { useScanner } from "../../hooks";
 
 export const ScanButton = () => {
-    fetch = useAuthenticatedFetch();
     const { t } = useTranslation();
+    const scanner = useScanner();
     const timestamp = cache.latest_scan.timestamp;
     let copy = t("Button.scan")
 
@@ -26,8 +25,8 @@ export const ScanButton = () => {
     return (
         <Button
             primary={timestamp === undefined}
-            disabled={timestamp !== undefined}
-            onClick={() => scanShop(fetch)}
+            // disabled={timestamp !== undefined}
+            onClick={() => scanner()}
         >
             {copy}
         </Button>
