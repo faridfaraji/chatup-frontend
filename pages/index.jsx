@@ -16,13 +16,7 @@ export default function HomePage() {
       .then((resp) => setRedirectUri(resp))
       .then(() => {
         if (!redirectUri) {
-          cacheShop()
-            .then((resp) => {
-              if (resp && resp.latest_scan_id) {
-                cacheScan(resp.latest_scan_id)
-              }
-            })
-            .then(() => setLoading(false))
+          cacheShop().then(() => cacheScan()).then(() => setLoading(false))
         }
       })
   }

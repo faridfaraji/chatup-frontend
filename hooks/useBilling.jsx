@@ -15,7 +15,7 @@ export const useBilling = () => {
             if (response.ok) {
                 const data = await response.json()
                 if (data.redirect_url) {
-                    return data
+                    return data.redirect_url
                 }
             }
         } catch (error) {

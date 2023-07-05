@@ -1,7 +1,8 @@
-import { Page, Layout } from "@shopify/polaris";
+import { Page, Layout, Button } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { WelcomeCard } from "./WelcomeCard";
 import { EmbedButton, ScanButton, SettingsButton } from "./buttons";
+import { useBilling, useShop } from "../hooks";
 
 export function LoadedHomePage() {
     const { t } = useTranslation();

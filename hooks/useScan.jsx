@@ -2,10 +2,10 @@ import cache from "../cache";
 import constants from "../constants"
 import { useAuthenticatedFetch } from ".";
 
-export const useLatestScan = (id) => {
-    const scan_id = cache.shop.latest_scan_id !== "" ? cache.shop.latest_scan_id : id
+export const useLatestScan = () => {
     const fetch = useAuthenticatedFetch();
     return async () => {
+        const scan_id = cache.latest_scan_id ? cache.latest_scan_id : cache.shop.latest_scan_id
         try {
             const fetch_url = `${constants.gateway_url}/database/${constants.app_name}/scans/${scan_id}`
             const response = await fetch(fetch_url, {
