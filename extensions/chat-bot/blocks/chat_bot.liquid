@@ -20,12 +20,12 @@
         font-family: {{ block.settings.heading_font.family }}, sans serif;
       }
       #chatbubble-header {
-        color: {{ block.settings.header_color }};
+        color: {{ block.settings.icon_fill }};
         background: {{ block.settings.icon_background_color }};
 
       }
       .close_button {
-        color: {{ block.settings.header_color }};
+        color: {{ block.settings.icon_fill }};
       }
       #chatbubble-button {
         background: {{ block.settings.icon_background_color }};
@@ -144,7 +144,7 @@
           {
             "type": "color",
             "id": "icon_fill",
-            "label": "ChatUp Icon Color",
+            "label": "Icon, Header & Close Button Color",
             "default": "#ffffff"
           },{
             "type": "range",
@@ -172,29 +172,24 @@
             "default": "How may I help you?",
             "label": "ChatUp Header Text"
           }, {
-            "type": "color",
-            "id": "header_color",
-            "label": "Heading & Close Button Color",
-            "default": "#ffffff"
-          }, {
             "type": "inline_richtext",
             "id": "inline_box_1",
-            "default": "Returns & Refund",
+            "default": "How can I contact you?",
             "label": "Pre-loaded Messages Box 1"
           }, {
             "type": "inline_richtext",
             "id": "inline_box_2",
-            "default": "Current Promotions",
+            "default": "Do you accept returns?",
             "label": "Pre-loaded Messages Box 2"
           }, {
             "type": "inline_richtext",
             "id": "inline_box_3",
-            "default": "Our Phone Number",
+            "default": "How long does shipping take?",
             "label": "Pre-loaded Messages Box 3"
           }, {
             "type": "inline_richtext",
             "id": "inline_box_4",
-            "default": "Our Email Address",
+            "default": "Can you recommend something?",
             "label": "Pre-loaded Messages Box 4"
           }
         ]
