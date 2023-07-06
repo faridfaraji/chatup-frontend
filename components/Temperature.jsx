@@ -1,12 +1,14 @@
 import { Select } from '@shopify/polaris';
 import { useState, useCallback } from 'react';
+import { useTemperature } from '../hooks/useTemperature';
 
 
 export const Temperature = (props) => {
     const [selected, setSelected] = useState("professional");
+    const sendTemperature = useTemperature();
     const handleSelectChange = useCallback(
         (value) => {
-            // todo: send new temperature to database
+            sendTemperature(value)
             setSelected(value)
         },
         [],
