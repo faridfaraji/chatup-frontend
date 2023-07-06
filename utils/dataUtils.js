@@ -45,7 +45,7 @@ const getTimeSeries = (timeArray, raw) => {
     })
     return [
         { name: "Conversations", data: conversations },
-        { name: "Messages", data: conversations }
+        { name: "Messages", data: messages }
     ]
 }
 
