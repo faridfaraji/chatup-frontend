@@ -8,17 +8,11 @@ export default function HomePage() {
   const [redirectUri, setRedirectUri] = useState(null);
 
   const checkBilling = useBilling();
-  const cacheShop = useShop();
-  const cacheScan = useLatestScan();
 
   const populate = () => {
     checkBilling()
-      .then((resp) => setRedirectUri(resp))
-      .then(() => {
-        if (!redirectUri) {
-          cacheShop().then(() => cacheScan()).then(() => setLoading(false))
-        }
-      })
+      .then((response) => setRedirectUri(response.redirect_ul))
+      .then(() => { if (!redirectUri) { setLoading(false) } })
   }
 
   useEffect(() => populate(), [])

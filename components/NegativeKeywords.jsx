@@ -1,6 +1,5 @@
 import { Tag, Form, FormLayout, TextField, Button, VerticalStack, HorizontalStack, Box } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
-import cache from '../cache';
 import { useTranslation } from 'react-i18next';
 import { useNegativeKeywordGetter, useNegativeKeywordSetter } from '../hooks';
 
@@ -9,10 +8,13 @@ export const NegativeKeywords = (props) => {
   const getNegativeKeywords = useNegativeKeywordGetter()
   const addNegativeKeyword = useNegativeKeywordSetter("PUT")
   const remNegativeKeyword = useNegativeKeywordSetter("DELETE")
-  const [selectedTags, setSelectedTags] = useState(cache.negative_keywords);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [value, setValue] = useState('');
 
-  useEffect(() => getNegativeKeywords().then((resp) => setSelectedTags(resp)), [])
+  useEffect(() => {
+    getNegativeKeywords()
+      .then((response) => setSelectedTags(response))
+  }, [])
 
   const handleChange = (newValue) => {
     setValue(newValue)
@@ -20,25 +22,17 @@ export const NegativeKeywords = (props) => {
 
   const removeTag = useCallback((tag) => async () => {
     remNegativeKeyword(tag)
-      .then((resp) => {
-        if (resp.ok) {
+      .then(() => {
           setSelectedTags((previousTags) => previousTags.filter((previousTag) => previousTag !== tag))
-        }
       })
-      .catch((error) => console.error('Error deleting negative keyword:', error));
   })
 
   const tagMarkup = selectedTags.map((tag) => (<Tag key={tag} onRemove={removeTag(tag)}>{tag}</Tag>))
 
   const addTag = async (tag) => {
+    setValue('')
+    setSelectedTags((previousTags) => [...previousTags, tag])
     addNegativeKeyword(tag)
-      .then((resp) => {
-        if (resp.ok) {
-          setSelectedTags((previousTags) => [...previousTags, tag])
-          setValue('')
-        }
-      })
-      .catch((error) => console.error('Failed to add negative keyword:', error));
   };
 
   const handleSubmit = (event) => {

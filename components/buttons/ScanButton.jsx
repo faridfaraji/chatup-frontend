@@ -1,83 +1,61 @@
-import { Button, Toast } from "@shopify/polaris";
+import { Box, Button, SkeletonDisplayText } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import cache from "../../cache";
-import { useLatestScan, useScanner } from "../../hooks";
+import { useLatestScan, useScanner, useShop } from "../../hooks";
 import { useCallback, useEffect, useState } from "react";
+
+
 
 export const ScanButton = () => {
     const { t } = useTranslation();
-    const scanner = useScanner();
-    const getLatestScan = useLatestScan();
-    const [latestScan, setLatestScan] = useState({})
-    const [pending, setPending] = useState(false)
-    const [copy, setCopy] = useState("")
-    const [diff, setDiff] = useState(0)
+    const scanShop = useScanner();
+    const getShop = useShop();
+    const getScan = useLatestScan();
+    const [button, setButton] = useState(<Button disabled={true} />)
 
-    const primary = ["ERROR", undefined].includes(latestScan.status)
-    const disabled = pending || diff < 12
-
-    const refresh = () => {
-        getLatestScan()
-            .then(setLatestScan(cache.latest_scan))
-            .then((scan) => {
-                console.log(scan)
-                if (["PENDING", "IN_PROGRESS"].includes(scan.status)) {
-                    setPending(true)
-                    setTimeout(refresh, 1000)
-                } else if (["ERROR", "COMPLETED"].includes(scan.status)) {
-                    setPending(false)
-                }
-            })
+    const load = () => {
+        getShop()
+            .then((shop) => getScan(shop.latest_scan_id))
+            .then((scan) => refreshButton(scan))
     }
 
-    useEffect(() => {
-        updateCopy()
-    }, [pending, latestScan])
+    useEffect(() => load(), [])
 
-    useEffect(() => {
-        refresh()
-    }, [])
-
-    const scanCallback = useCallback(() => {
-        setPending(true)
-        scanner().then(() => refresh())
-    })
-
-
-    const updateCopy = () => {
-        let tempCopy = t("Button.scan")
-
-        if (pending) {
-            tempCopy = `${t("Button.scanPending")}`
-        } else if (latestScan.timestamp && ["COMPLETED"].includes(latestScan.status)) {
-            const scan_time = new Date(`${latestScan.timestamp}+00:00`);
-            const curr_time = new Date();
-            const diffInMilliseconds = Math.abs(curr_time - scan_time);
-            const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
-            setDiff(Math.floor(diffInMinutes / 60))
-            const duration = diff >= 1 ?
-                diff + " hour" + (diff !== 1 ? "s" : "") :
-                diffInMinutes + " minute" + (diffInMinutes !== 1 ? "s" : "")
-
-            tempCopy = t("Button.scanned", { duration })
-        } else if (["ERROR"].includes(latestScan.status)) {
-            tempCopy = t("Button.scanError")
+    const refreshButton = (scan) => {
+        let tempButton = button
+        console.log(scan)
+        if (!scan) {
+            tempButton = <Button primary onClick={() => scanCallback()}>{t("Button.scan")}</Button>
+        } else if (["PENDING", "IN_PROGRESS"].includes(scan.status)) {
+            tempButton = <Button disabled>{t("Button.scanPending")}</Button>
+            setTimeout(() => load(), 1000);
+        } else {
+            const timeSince = getTimeSince(`${scan.timestamp}+00:00`)
+            if (["ERROR"].includes(scan.status)) tempButton = <Button primary onClick={() => scanCallback()}>{t("Button.scanError")}</Button>
+            else if (timeSince === 0) tempButton = <Button disabled>{t("Button.scannedZero")}</Button>
+            else if (timeSince === 1) tempButton = <Button disabled>{t("Button.scannedOne")}</Button>
+            else if (timeSince < 12) tempButton = <Button disabled>{t("Button.scanned", { timeSince: timeSince })}</Button>
+            else tempButton = <Button onClick={() => scanCallback()}>{t("Button.scanned", { timeSince: timeSince })}</Button>
         }
 
-        setCopy(tempCopy)
+        setButton(tempButton)
     }
 
+    const scanCallback = useCallback(() => {
+        scanShop()
+            .then((new_scan_id) => getScan(new_scan_id))
+            .then((new_scan) => refreshButton(new_scan))
+    })
 
-    return (
-        <Button
-            primary={primary}
-            disabled={disabled}
-            onClick={() => {
-                scanCallback()
-                console.log(latestScan)
-            }}
-        >
-            {copy}
-        </Button>
-    )
+    const getTimeSince = (time) => {
+        const since_time = new Date(time)
+        const curr_time = new Date();
+        const diffInMilliseconds = Math.abs(curr_time - since_time);
+        const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+        const diffInHours = Math.floor(diffInMinutes / 60)
+
+        return diffInHours
+    }
+
+    return button
 }

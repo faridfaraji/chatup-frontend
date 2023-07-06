@@ -13,7 +13,7 @@ export const Setting = (props) => {
     })
 
     return (
-        <HorizontalGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="4">
+        <HorizontalGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="4" alignItems="start">
             <Box
                 as="section"
                 paddingInlineStart={{ xs: 4, sm: 0 }}

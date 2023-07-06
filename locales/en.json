@@ -1,49 +1,51 @@
 {
   "HomePage": {
-    "title": "ChatUp",
-    "scanTitle": "Scan Your Shop",
-    "scanCopy": "This allows ChatUp to study and understand your store's policies, pages/blogs, contact information, order information, and all of the data that can make ChatUp answer your visitors' questions more accurately.",
-    "LastScanTitle": "Your store was last scanned on mm/dd/yyyy",
-    "LastScanCopy": "ChatUp has noticed and updates itself with QTY updates in the past 24 hours",
-    "settingsTitle": "Control ChatUp",
-    "settingsCopy": "Personalize ChatUp's personality and boundaries to make it align with your shop accordingly. Click 'Settings' and you will be redirected to the settings page right away.",
-    "embedTitle": "Test and Integrate",
-    "embedCopy": "Explore a wide range of options to integrate and fine-tune ChatUp. Watch the video and follow the instructions below to seamlessly integrate ChatUp in the 'Embeds' section, similar to customizing your theme."
+    "title": "Welcome to ChatUp",
+    "scanTitle": "Scan Your Store",
+    "scanCopy": "ChatUp delves deep into your store's policies, pages, products, contact info, and order data, enabling it to provide highly accurate answers to a visitor's queries.",
+    "LastScanTitle": "Last Scan: {{duration}} ago",
+    "LastScanCopy": "ChatUp stays updated with real-time product quantities, empowering you with the latest insights in the past 24 hours.",
+    "settingsTitle": "Personalize the User Experience",
+    "settingsCopy": "Align ChatUp with your shop's vibe and preferences. Visit the settings dashboard to shape ChatUp's personality and boundaries.",
+    "embedTitle": "Customize ChatUp",
+    "embedCopy": "Unleash the power of customization! Discover a range of cosmetic options to seamlessly integrate ChatUp with your branding and existing theme. Check out our quick tutorial for a smooth customization journey."
   },
-  "Settings": {
-    "title": "Settings",
+  "Configuration": {
+    "title": "App Configuration",
     "negKeysTitle": "Negative Keywords",
-    "negKeysShort": "Tailor ChatUp's AI to your needs by specifying negative keywords. These keywords alert ChatUp to avoid irrelevant conversations. If a visitor's message contains any of these negative keywords, ChatUp will respond with: 'I am here to assist you or connect you with our support team for website-related information. The topic you mentioned is outside my expertise. Is there anything else I can help you with?'",
-    "negKeysCopy": "ChatUp will avoid these topics",
-    "tempTitle": "Personality",
-    "tempShort": "Customize ChatUp's approach and vocabulary to align with your brand by selecting a personality. Choose the personality that best reflects your branding needs.",
-    "tempCopy": "ChatUp will maintain this demeanour"
+    "negKeysShort": "Tailor ChatUp's AI engine to perfection. Set boundaries using negative keywords to eliminate irrelevant conversations. If visitors mention any of these keywords, ChatUp will respond: (I'm a support agent for our website. The topic you mentioned is outside my scope, but how else can I assist you?)",
+    "negKeysCopy": "Add individual negative keywords or phrases for optimal results. Save them separately to enhance ChatUp's performance.",
+    "tempTitle": "Define the Personality",
+    "tempShort": "Infuse ChatUp with your brand's essence. Choose a personality that resonates best with your unique selling proposition.",
+    "tempCopy": "Your personality choice should reflect the essence of what you sell."
   },
   "Analytics": {
-    "timeSeriesChartTitle": "Metrics Over Time",
-    "funnelChartTitle": "Conversions",
-    "donutChartTitle": "Daily Tokens Remaining",
-    "barChartTitle": "Average Visit Length"
+    "timeSeriesChartTitle": "Messaging Trends Over Time",
+    "funnelChartTitle": "Conversion Insights",
+    "donutChartTitle": "Remaining Daily Messages",
+    "barChartTitle": "Average Visit Duration"
   },
   "ChatHistory": {
     "pageTitle": ""
   },
   "NavigationMenu": {
-    "settings": "Settings",
-    "analytics": "Analytics",
+    "configuration": "Configuration",
+    "insights": "Insights",
     "chatHistory": "Chat History"
   },
   "Button": {
-    "settings": "Configure Settings",
+    "configuration": "Configure Settings",
     "embed": "Embed Extension",
     "scan": "Scan My Shop",
-    "scanned": "Last scanned {{ duration }} ago",
+    "scanned": "Last scanned {{ timeSince }} hours ago",
+    "scannedOne": "Last scanned one hour ago",
+    "scannedZero": "Scanned within the hour",
     "scanPending": "Scanning",
     "scanError": "Scan error - retry",
     "submit": "Submit"
   },
   "NotFound": {
-    "description": "Check the URL and try again, or use the search bar to find what you need.",
-    "heading": "There is no page at this address"
+    "description": "Oops! The page you're looking for seems to be missing. Double-check the URL or use the search bar to find what you need.",
+    "heading": "Page Not Found"
   }
 }
