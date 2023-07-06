@@ -443,6 +443,7 @@ function sendMessageOnEnter(event) {
 }
 
 function get_conversation_id() {
+  var conversationUniqueId = localStorage.getItem('conversationUniqueId');
   return new Promise((resolve, reject) => {
     if (conversationUniqueId == null) {
       init_payload = {
@@ -690,9 +691,6 @@ function removeFocusAfterDelay() {
     }, 500);
   });
 }
-
-
-var conversationUniqueId = localStorage.getItem('conversationUniqueId');
 
 
 function generateUniqueId() {
