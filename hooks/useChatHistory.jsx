@@ -3,13 +3,13 @@ import { useAuthenticatedFetch } from ".";
 
 export const useChatHistory = () => {
     const fetch = useAuthenticatedFetch();
-    return (startDateTime, endDateTime) => {
+    return (since, until) => {
         const fetch_url = `${constants.gateway_url}/database/${constants.app_name}/conversations`
         const queryParams = new URLSearchParams();
 
-        if (startDateTime && endDateTime) {
-            queryParams.append("start_datetime", startDateTime.toISOString().slice(0, 19).replace("T", " "));
-            queryParams.append("end_datetime", endDateTime.toISOString().slice(0, 19).replace("T", " "));
+        if (since && until) {
+            queryParams.append("start_datetime", since.toISOString().slice(0, 19).replace("T", " "));
+            queryParams.append("end_datetime", until.toISOString().slice(0, 19).replace("T", " "));
         }
 
         const urlWithParams = queryParams.toString() ? `${fetch_url}?${queryParams.toString()}` : fetch_url;
