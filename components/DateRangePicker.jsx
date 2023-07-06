@@ -1,18 +1,24 @@
 import { useBreakpoints, Button, Popover, HorizontalGrid, Select, Scrollable, Box, OptionList, VerticalStack, HorizontalStack, TextField, Icon, DatePicker } from "@shopify/polaris";
 import { useState, useRef, useEffect } from "react";
 import { CalendarMinor, ArrowRightMinor } from "@shopify/polaris-icons"
+import { useTranslation } from "react-i18next";
 
 // This example is for guidance purposes. Copying it will come with caveats.
-export const DateRangePicker = (props) => {
+export const DateRangePicker = ({ onDateRangeChange }) => {
+  const { t } = useTranslation();
   const { mdDown, lgUp } = useBreakpoints();
   const shouldShowMultiMonth = lgUp;
-  const today = new Date(new Date().setHours(0, 0, 0, 0));
-  const yesterday = new Date(
-    new Date(new Date().setDate(today.getDate() - 1)).setHours(0, 0, 0, 0)
-  );
+  const today = new Date();
+
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  const oneWeekAgo = new Date(today);
+  oneWeekAgo.setDate(today.getDate() - 7);
+
   const ranges = [
     {
-      title: "Today",
+      title: t("Dates.today"),
       alias: "today",
       period: {
         since: today,
@@ -20,7 +26,7 @@ export const DateRangePicker = (props) => {
       },
     },
     {
-      title: "Yesterday",
+      title: t("Dates.yesterday"),
       alias: "yesterday",
       period: {
         since: yesterday,
@@ -28,12 +34,10 @@ export const DateRangePicker = (props) => {
       },
     },
     {
-      title: "Last 7 days",
+      title: t("Dates.pastWeek"),
       alias: "last7days",
       period: {
-        since: new Date(
-          new Date(new Date().setDate(today.getDate() - 7)).setHours(0, 0, 0, 0)
-        ),
+        since: oneWeekAgo,
         until: yesterday,
       },
     },
@@ -162,7 +166,7 @@ export const DateRangePicker = (props) => {
     setActiveDateRange(newDateRange);
   }
   function apply() {
-    props.callback()
+    onDateRangeChange(inputValues)
     setPopoverActive(false);
   }
   function cancel() {
@@ -215,8 +219,6 @@ export const DateRangePicker = (props) => {
         <Box paddingInlineStart="4" paddingInlineEnd="4">
           <Button
             fullWidth
-            // plain
-            // monochrome
             textAlign="center"
             icon={CalendarMinor}
             onClick={() => setPopoverActive(!popoverActive)}

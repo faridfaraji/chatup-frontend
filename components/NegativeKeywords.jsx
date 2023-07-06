@@ -21,10 +21,8 @@ export const NegativeKeywords = (props) => {
   };
 
   const removeTag = useCallback((tag) => async () => {
+    setSelectedTags((previousTags) => previousTags.filter((previousTag) => previousTag !== tag))
     remNegativeKeyword(tag)
-      .then(() => {
-          setSelectedTags((previousTags) => previousTags.filter((previousTag) => previousTag !== tag))
-      })
   })
 
   const tagMarkup = selectedTags.map((tag) => (<Tag key={tag} onRemove={removeTag(tag)}>{tag}</Tag>))
