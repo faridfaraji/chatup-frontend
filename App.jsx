@@ -23,12 +23,12 @@ export default function App() {
             <NavigationMenu
               navigationLinks={[
                 {
-                  label: t("NavigationMenu.settings"),
-                  destination: "/Settings",
+                  label: t("NavigationMenu.configuration"),
+                  destination: "/Configuration",
                 },
                 {
-                  label: t("NavigationMenu.analytics"),
-                  destination: "/Analytics",
+                  label: t("NavigationMenu.insights"),
+                  destination: "/Insights",
                 },
                 // {
                 //   label: t("NavigationMenu.chatHistory"),

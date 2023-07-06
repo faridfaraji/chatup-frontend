@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { Setting } from "../components/Setting";
 import { EmbedButton } from "../components/buttons";
 
-export default function Settings() {
+export default function Configuration() {
   const { t } = useTranslation();
   const { smUp } = useBreakpoints();
   return (
@@ -19,25 +19,25 @@ export default function Settings() {
     >
       <VerticalStack gap={{ xs: "8", sm: "4" }}>
         <Setting
-          title={t("Settings.negKeysTitle")}
-          short={t("Settings.negKeysShort")}
+          title={t("Configuration.negKeysTitle")}
+          short={t("Configuration.negKeysShort")}
           inputs={[
             {
               title: "negKeys",
-              copy: t("Settings.negKeysCopy"),
-              component: <NegativeKeywords label={t("Settings.negKeysTitle")} />
+              copy: t("Configuration.negKeysCopy"),
+              component: <NegativeKeywords label={t("Configuration.negKeysTitle")} />
             }
           ]}
         />
         {smUp ? <Divider /> : null}
         <Setting
-          title={t("Settings.tempTitle")}
-          short={t("Settings.tempShort")}
+          title={t("Configuration.tempTitle")}
+          short={t("Configuration.tempShort")}
           inputs={[
             {
               title: "temp",
-              copy: t("Settings.tempCopy"),
-              component: <Temperature label={t("Settings.tempTitle")} />
+              copy: t("Configuration.tempCopy"),
+              component: <Temperature label={t("Configuration.tempTitle")} />
             }
           ]}
         />
