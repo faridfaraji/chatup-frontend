@@ -10,7 +10,8 @@ export default {
     api_version: "v1",
     app_name: VITE_APP_NAME,
     headers: {
-        "ngrok-skip-browser-warning": "true"
+        "ngrok-skip-browser-warning": "true",
+        "content-type": "application/json"
     },
     credentials: "same-origin",
     ext_id: VITE_SHOPIFY_CHAT_BOT_ID,
