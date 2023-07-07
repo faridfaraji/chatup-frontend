@@ -1,0 +1,57 @@
+{
+    "HomePage": {
+        "title": "Benvenuto su ChatUp",
+        "scanTitle": "Scansiona il Tuo Negozio",
+        "scanCopy": "ChatUp esplora in profondità le politiche, le pagine, i prodotti, le informazioni di contatto e i dati sugli ordini del tuo negozio, consentendogli di fornire risposte altamente accurate alle domande dei visitatori.",
+        "LastScanTitle": "Ultima Scansione: {{ timeSince }} fa",
+        "LastScanCopy": "ChatUp rimane aggiornato con le quantità dei prodotti in tempo reale, fornendoti le ultime informazioni nei passati 24 ore.",
+        "settingsTitle": "Personalizza l'Esperienza Utente",
+        "settingsCopy": "Allinea ChatUp con l'atmosfera e le preferenze del tuo negozio. Visita il pannello delle impostazioni per modellare la personalità e i limiti di ChatUp.",
+        "embedTitle": "Personalizza ChatUp",
+        "embedCopy": "Libera il potere della personalizzazione! Scopri una serie di opzioni estetiche per integrare ChatUp in modo fluido con il tuo marchio e il tema esistente. Dai un'occhiata al nostro tutorial veloce per un percorso di personalizzazione senza intoppi."
+    },
+    "Configuration": {
+        "title": "Configurazione dell'App",
+        "negKeysTitle": "Parole Chiave Negative",
+        "negKeysShort": "Perfeziona il motore AI di ChatUp. Imposta dei limiti utilizzando parole chiave negative per eliminare conversazioni non pertinenti. Se i visitatori menzionano una di queste parole chiave, ChatUp risponderà: (Sono un agente di supporto per il nostro sito web. L'argomento che hai menzionato esce dal mio campo di competenza, ma come posso aiutarti in altro modo?)",
+        "negKeysCopy": "Aggiungi parole chiave negative o frasi individuali per ottenere risultati ottimali. Salvale separatamente per migliorare le prestazioni di ChatUp.",
+        "tempTitle": "Definisci la Personalità",
+        "tempShort": "Infondi a ChatUp l'essenza del tuo marchio. Scegli una personalità che si accordi al meglio con la tua proposta unica.",
+        "tempCopy": "La tua scelta di personalità dovrebbe riflettere l'essenza di ciò che vendi.",
+        "bottomCopy": "Ora è il momento di assicurarti che ChatUp sia visibile nel tuo negozio e che i tuoi utenti possano utilizzarlo!"
+    },
+    "Insights": {
+        "timeSeriesChartTitle": "Tendenze dei Messaggi nel Tempo",
+        "funnelChartTitle": "Insight di Conversione",
+        "donutChartTitle": "Messaggi Giornalieri Rimanenti",
+        "barChartTitle": "Durata Media delle Visite"
+    },
+    "ChatHistory": {
+        "pageTitle": ""
+    },
+    "NavigationMenu": {
+        "configuration": "Configurazione",
+        "insights": "Insight",
+        "chatHistory": "Cronologia Chat"
+    },
+    "Button": {
+        "configuration": "Configura Impostazioni",
+        "embed": "Incorpora Estensione",
+        "scan": "Scansiona il Mio Negozio",
+        "scanned": "Ultima scansione effettuata {{ timeSince }} ore fa",
+        "scannedOne": "Ultima scansione effettuata un'ora fa",
+        "scannedZero": "Scansionato nell'ultima ora",
+        "scanPending": "Scansione in corso",
+        "scanError": "Errore di scansione - riprova",
+        "submit": "Invia"
+    },
+    "NotFound": {
+        "description": "Ops! La pagina che stai cercando sembra mancare. Controlla l'URL o utilizza la barra di ricerca per trovare ciò di cui hai bisogno.",
+        "heading": "Pagina Non Trovata"
+    },
+    "Dates": {
+        "today": "Oggi",
+        "yesterday": "Ieri",
+        "pastWeek": "Settimana Scorsa"
+    }
+}

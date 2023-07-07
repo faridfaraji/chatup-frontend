@@ -3,7 +3,7 @@
     "title": "Welcome to ChatUp",
     "scanTitle": "Scan Your Store",
     "scanCopy": "ChatUp delves deep into your store's policies, pages, products, contact info, and order data, enabling it to provide highly accurate answers to a visitor's queries.",
-    "LastScanTitle": "Last Scan: {{duration}} ago",
+    "LastScanTitle": "Last Scan: {{ timeSince }} ago",
     "LastScanCopy": "ChatUp stays updated with real-time product quantities, empowering you with the latest insights in the past 24 hours.",
     "settingsTitle": "Personalize the User Experience",
     "settingsCopy": "Align ChatUp with your shop's vibe and preferences. Visit the settings dashboard to shape ChatUp's personality and boundaries.",
