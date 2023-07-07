@@ -6,7 +6,7 @@ import { tempString } from '../utils/dataUtils';
 
 
 export const Temperature = (props) => {
-    const [selected, setSelected] = useState("");
+    const [selected, setSelected] = useState(null);
     const sendTemperature = useTemperature();
     const getShop = useShop();
 
@@ -29,6 +29,7 @@ export const Temperature = (props) => {
     );
 
     const options = [
+        { label: "", value: null},
         { label: "Professional", value: "0.0" },
         { label: "Friendly", value: "0.5" },
         { label: "Informal", value: "1.0" },
