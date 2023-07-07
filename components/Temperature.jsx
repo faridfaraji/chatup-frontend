@@ -30,11 +30,11 @@ export const Temperature = (props) => {
 
     const options = [
         { label: "", value: null},
-        { label: "Professional", value: "0.0" },
-        { label: "Friendly", value: "0.5" },
-        { label: "Informal", value: "1.0" },
-        { label: "Engaging", value: "1.5" },
-        { label: "Humorous", value: "1.9" },
+        { label: "Professional", value: "0.00" },
+        { label: "Friendly", value: "0.25" },
+        { label: "Informal", value: "050" },
+        { label: "Engaging", value: "0.75" },
+        { label: "Humorous", value: "1.00" },
     ]
 
     return (
