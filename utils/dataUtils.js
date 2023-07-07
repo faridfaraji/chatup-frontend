@@ -69,3 +69,21 @@ export const formatOffset = (offsetMinutes) => {
 function padZero(value) {
     return String(value).padStart(2, "0");
 }
+
+export function tempString(floatValue) {
+    if (floatValue <= 0) {
+      return "0.0";
+    } else if (floatValue <= 0.25) {
+      return "0.0";
+    } else if (floatValue <= 0.75) {
+      return "0.5";
+    } else if (floatValue <= 1.25) {
+      return "1.0";
+    } else if (floatValue <= 1.75) {
+      return "1.5";
+    } else if (floatValue <= 2) {
+      return "2.0";
+    } else {
+      return "Invalid value";
+    }
+  }
