@@ -3,8 +3,8 @@ import { useAuthenticatedFetch } from ".";
 
 export const useLatestScan = () => {
     const fetch = useAuthenticatedFetch();
-    return (scan_id) => {
-        const fetch_url = `${constants.gateway_url}/database/${constants.app_name}/scans/${scan_id}`
+    return () => {
+        const fetch_url = `${constants.gateway_url}/database/${constants.app_name}/latest-scan`
         return fetch(fetch_url, {
             method: 'GET',
             credentials: constants.credentials,
