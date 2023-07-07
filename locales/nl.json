@@ -1,0 +1,57 @@
+{
+    "HomePage": {
+        "title": "Welkom bij ChatUp",
+        "scanTitle": "Scan Je Winkel",
+        "scanCopy": "ChatUp duikt diep in de beleidsregels, pagina's, producten, contactgegevens en ordergegevens van je winkel, waardoor het zeer nauwkeurige antwoorden kan geven op vragen van bezoekers.",
+        "LastScanTitle": "Laatste Scan: {{ timeSince }} geleden",
+        "LastScanCopy": "ChatUp blijft up-to-date met realtime producthoeveelheden en voorziet je van de nieuwste inzichten in de afgelopen 24 uur.",
+        "settingsTitle": "Personaliseer de Gebruikerservaring",
+        "settingsCopy": "Stem ChatUp af op de sfeer en voorkeuren van je winkel. Bezoek het instellingen-dashboard om de persoonlijkheid en grenzen van ChatUp vorm te geven.",
+        "embedTitle": "Pas ChatUp Aan",
+        "embedCopy": "Ontketen de kracht van aanpassing! Ontdek een scala aan cosmetische opties om ChatUp naadloos te integreren met je merk en bestaande thema. Bekijk onze snelle tutorial voor een soepele aanpassingsreis."
+    },
+    "Configuration": {
+        "title": "App-configuratie",
+        "negKeysTitle": "Negatieve Zoekwoorden",
+        "negKeysShort": "Verfijn de AI-engine van ChatUp. Stel grenzen met negatieve zoekwoorden om irrelevante gesprekken te elimineren. Als bezoekers een van deze zoekwoorden noemen, zal ChatUp reageren met: (Ik ben een supportmedewerker voor onze website. Het onderwerp dat je noemde valt buiten mijn expertise, maar hoe kan ik je nog meer helpen?)",
+        "negKeysCopy": "Voeg individuele negatieve zoekwoorden of zinnen toe voor optimale resultaten. Sla ze apart op om de prestaties van ChatUp te verbeteren.",
+        "tempTitle": "Definieer de Persoonlijkheid",
+        "tempShort": "Geef ChatUp de essentie van je merk. Kies een persoonlijkheid die het beste aansluit bij je unieke verkooppropositie.",
+        "tempCopy": "Je persoonlijkheidskeuze moet de essentie weerspiegelen van wat je verkoopt.",
+        "bottomCopy": "Nu is het tijd om ervoor te zorgen dat ChatUp zichtbaar is in je winkel en dat je gebruikers het kunnen gebruiken!"
+    },
+    "Insights": {
+        "timeSeriesChartTitle": "Berichtentrends in de Tijd",
+        "funnelChartTitle": "Conversie-inzichten",
+        "donutChartTitle": "Resterende Dagelijkse Berichten",
+        "barChartTitle": "Gemiddelde Bezoekduur"
+    },
+    "ChatHistory": {
+        "pageTitle": ""
+    },
+    "NavigationMenu": {
+        "configuration": "Configuratie",
+        "insights": "Inzichten",
+        "chatHistory": "Chatgeschiedenis"
+    },
+    "Button": {
+        "configuration": "Instellingen Configureren",
+        "embed": "Extensie Insluiten",
+        "scan": "Scan Mijn Winkel",
+        "scanned": "Laatst gescand {{ timeSince }} uur geleden",
+        "scannedOne": "Laatst gescand een uur geleden",
+        "scannedZero": "Gescand binnen het uur",
+        "scanPending": "Scannen",
+        "scanError": "Scanfout - opnieuw proberen",
+        "submit": "Verzenden"
+    },
+    "NotFound": {
+        "description": "Oeps! De pagina die je zoekt lijkt te ontbreken. Controleer de URL of gebruik de zoekbalk om te vinden wat je nodig hebt.",
+        "heading": "Pagina Niet Gevonden"
+    },
+    "Dates": {
+        "today": "Vandaag",
+        "yesterday": "Gisteren",
+        "pastWeek": "Afgelopen Week"
+    }
+}

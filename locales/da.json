@@ -1,0 +1,57 @@
+{
+    "HomePage": {
+        "title": "Velkommen til ChatUp",
+        "scanTitle": "Scan Din Butik",
+        "scanCopy": "ChatUp dykker dybt ned i din butiks politikker, sider, produkter, kontaktinformation og ordredata, hvilket muliggør nøjagtige svar på besøgendes spørgsmål.",
+        "LastScanTitle": "Seneste Scan: {{ timeSince }} siden",
+        "LastScanCopy": "ChatUp holdes opdateret med realtidsproduktmængder og giver dig de seneste indsigter inden for de seneste 24 timer.",
+        "settingsTitle": "Tilpas Brugeroplevelsen",
+        "settingsCopy": "Tilpas ChatUp til stemningen og præferencerne i din butik. Besøg indstillingspanelet for at forme ChatUps personlighed og grænser.",
+        "embedTitle": "Tilpas ChatUp",
+        "embedCopy": "Udnyt tilpasningens kraft! Opdag en række kosmetiske muligheder for at integrere ChatUp sømløst med dit brand og eksisterende tema. Se vores hurtige vejledning for en problemfri tilpasningsrejse."
+    },
+    "Configuration": {
+        "title": "App-konfiguration",
+        "negKeysTitle": "Negative Nøgleord",
+        "negKeysShort": "Tilpas ChatUps AI-motor til perfektion. Sæt grænser ved hjælp af negative nøgleord for at eliminere irrelevante samtaler. Hvis besøgende nævner nogen af disse nøgleord, vil ChatUp svare: (Jeg er en supportagent for vores hjemmeside. Emnet, du nævnte, er uden for mit kompetenceområde, men hvordan kan jeg ellers hjælpe dig?)",
+        "negKeysCopy": "Tilføj individuelle negative nøgleord eller sætninger for optimale resultater. Gem dem separat for at forbedre ChatUps præstation.",
+        "tempTitle": "Definér Personligheden",
+        "tempShort": "Indgyd ChatUp med dit brands essens. Vælg en personlighed, der bedst passer til dit unikke salgsforslag.",
+        "tempCopy": "Dit valg af personlighed bør afspejle essensen af det, du sælger.",
+        "bottomCopy": "Nu er det tid til at sikre, at ChatUp er synlig i din butik, og at dine brugere kan bruge den!"
+    },
+    "Insights": {
+        "timeSeriesChartTitle": "Beskedtrends Over Tid",
+        "funnelChartTitle": "Konverteringsindsigter",
+        "donutChartTitle": "Resterende Daglige Beskeder",
+        "barChartTitle": "Gennemsnitlig Besøgsvarighed"
+    },
+    "ChatHistory": {
+        "pageTitle": ""
+    },
+    "NavigationMenu": {
+        "configuration": "Konfiguration",
+        "insights": "Indsigter",
+        "chatHistory": "Chat Historik"
+    },
+    "Button": {
+        "configuration": "Konfigurér Indstillinger",
+        "embed": "Integrer Udvidelse",
+        "scan": "Scan Min Butik",
+        "scanned": "Senest scannet for {{ timeSince }} timer siden",
+        "scannedOne": "Senest scannet for en time siden",
+        "scannedZero": "Scannet inden for timen",
+        "scanPending": "Scanner",
+        "scanError": "Fejl ved scanning - prøv igen",
+        "submit": "Indsend"
+    },
+    "NotFound": {
+        "description": "Ups! Siden, du leder efter, ser ud til at mangle. Tjek URL'en eller brug søgefeltet til at finde det, du har brug for.",
+        "heading": "Side Ikke Fundet"
+    },
+    "Dates": {
+        "today": "I dag",
+        "yesterday": "I går",
+        "pastWeek": "Sidste uge"
+    }
+}

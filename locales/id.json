@@ -1,0 +1,57 @@
+{
+    "HomePage": {
+        "title": "Selamat datang di ChatUp",
+        "scanTitle": "Pindai Toko Anda",
+        "scanCopy": "ChatUp menyelami kebijakan, halaman, produk, informasi kontak, dan data pesanan toko Anda, sehingga dapat memberikan jawaban yang sangat akurat atas pertanyaan pengunjung.",
+        "LastScanTitle": "Pindai Terakhir: {{ timeSince }} yang lalu",
+        "LastScanCopy": "ChatUp tetap terupdate dengan kuantitas produk secara real-time, memberikan wawasan terbaru dalam 24 jam terakhir.",
+        "settingsTitle": "Personalisasi Pengalaman Pengguna",
+        "settingsCopy": "Mengatur ChatUp sesuai dengan suasana dan preferensi toko Anda. Kunjungi dasbor pengaturan untuk membentuk kepribadian dan batasan ChatUp.",
+        "embedTitle": "Kustomisasi ChatUp",
+        "embedCopy": "Tampilkan kekuatan kustomisasi! Temukan berbagai opsi kosmetik untuk mengintegrasikan ChatUp dengan merek dan tema yang ada. Lihat tutorial cepat kami untuk perjalanan kustomisasi yang mulus."
+    },
+    "Configuration": {
+        "title": "Konfigurasi Aplikasi",
+        "negKeysTitle": "Kata Kunci Negatif",
+        "negKeysShort": "Atur mesin kecerdasan buatan ChatUp secara sempurna. Tetapkan batasan dengan menggunakan kata kunci negatif untuk menghilangkan percakapan yang tidak relevan. Jika pengunjung menyebut salah satu kata kunci ini, ChatUp akan merespons: (Saya adalah agen dukungan untuk situs web kami. Topik yang Anda sebutkan di luar cakupan saya, tetapi bagaimana lagi saya bisa membantu Anda?)",
+        "negKeysCopy": "Tambahkan kata kunci negatif atau frasa secara individual untuk hasil optimal. Simpan secara terpisah untuk meningkatkan performa ChatUp.",
+        "tempTitle": "Tentukan Kepribadian",
+        "tempShort": "Tampilkan esensi merek Anda pada ChatUp. Pilih kepribadian yang paling sesuai dengan penawaran unik Anda.",
+        "tempCopy": "Pilihan kepribadian Anda harus mencerminkan inti dari apa yang Anda jual.",
+        "bottomCopy": "Sekarang saatnya memastikan ChatUp terlihat di toko Anda dan pengguna Anda dapat menggunakannya!"
+    },
+    "Insights": {
+        "timeSeriesChartTitle": "Tren Pesan dari Waktu ke Waktu",
+        "funnelChartTitle": "Wawasan Konversi",
+        "donutChartTitle": "Sisa Pesan Harian",
+        "barChartTitle": "Durasi Kunjungan Rata-rata"
+    },
+    "ChatHistory": {
+        "pageTitle": ""
+    },
+    "NavigationMenu": {
+        "configuration": "Konfigurasi",
+        "insights": "Wawasan",
+        "chatHistory": "Riwayat Chat"
+    },
+    "Button": {
+        "configuration": "Atur Pengaturan",
+        "embed": "Embed Ekstensi",
+        "scan": "Pindai Toko Saya",
+        "scanned": "Pindai terakhir {{ timeSince }} jam yang lalu",
+        "scannedOne": "Pindai terakhir satu jam yang lalu",
+        "scannedZero": "Pindai dalam satu jam terakhir",
+        "scanPending": "Pemindaian Sedang Dilakukan",
+        "scanError": "Kesalahan Pindai - coba lagi",
+        "submit": "Kirim"
+    },
+    "NotFound": {
+        "description": "Ups! Halaman yang Anda cari sepertinya tidak ada. Periksa URL atau gunakan bilah pencarian untuk menemukan yang Anda butuhkan.",
+        "heading": "Halaman Tidak Ditemukan"
+    },
+    "Dates": {
+        "today": "Hari Ini",
+        "yesterday": "Kemarin",
+        "pastWeek": "Minggu Lalu"
+    }
+}
