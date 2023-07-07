@@ -1,11 +1,25 @@
 import { Select } from '@shopify/polaris';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useTemperature } from '../hooks/useTemperature';
+import { useShop } from '../hooks';
+import { tempString } from '../utils/dataUtils';
 
 
 export const Temperature = (props) => {
-    const [selected, setSelected] = useState("professional");
+    const [selected, setSelected] = useState("");
     const sendTemperature = useTemperature();
+    const getShop = useShop();
+
+    const load = () => {
+        getShop()
+            .then((shop) => {
+                const value = shop ? tempString(shop.bot_temperature) : "0.0"
+                setSelected(value)
+            })
+    }
+
+    useEffect(() => load(), [])
+
     const handleSelectChange = useCallback(
         (value) => {
             sendTemperature(value)
