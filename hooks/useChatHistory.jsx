@@ -8,8 +8,8 @@ export const useChatHistory = () => {
         const queryParams = new URLSearchParams();
 
         if (since && until) {
-            queryParams.append("start_datetime", since.toISOString().slice(0, 19).replace("T", " "));
-            queryParams.append("end_datetime", until.toISOString().slice(0, 19).replace("T", " "));
+            queryParams.append("start_datetime", since.toISOString().slice(0, 19));
+            queryParams.append("end_datetime", until.toISOString().slice(0, 19));
         }
 
         const urlWithParams = queryParams.toString() ? `${fetch_url}?${queryParams.toString()}` : fetch_url;
