@@ -1,10 +1,14 @@
 import {
+  Box,
   Page,
   useBreakpoints,
   VerticalStack,
   Divider,
+  HorizontalStack,
+  HorizontalGrid,
+  AlphaCard,
 } from "@shopify/polaris";
-import { NegativeKeywords, Temperature } from "../components";
+import { LoremIpsum, NegativeKeywords, Temperature } from "../components";
 import { useTranslation } from "react-i18next";
 import { Setting } from "../components/Setting";
 import { EmbedButton } from "../components/buttons";
@@ -14,8 +18,8 @@ export default function Configuration() {
   const { smUp } = useBreakpoints();
   return (
     <Page
-      divider
-      primaryAction={<EmbedButton />}
+    // divider
+    // primaryAction={<EmbedButton />}
     >
       <VerticalStack gap={{ xs: "8", sm: "4" }}>
         <Setting
@@ -41,6 +45,13 @@ export default function Configuration() {
             }
           ]}
         />
+        {smUp ? <Divider /> : null}
+        <AlphaCard bg="--p-color-bg-inverse-active">
+          <HorizontalGrid columns={{ xs: "1fr", md: "5fr 2fr" }} gap="4" alignItems="center">
+            <LoremIpsum content={t("Configuration.bottomCopy")} />
+            <EmbedButton />
+          </HorizontalGrid>
+        </AlphaCard>
       </VerticalStack>
     </Page>
   )

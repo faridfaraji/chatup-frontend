@@ -12,12 +12,14 @@ export function LoadedHomePage() {
     const embed = <EmbedButton />
 
     const commonMinHeight = "200px"
+    const xsPadding = { xs: "5", sm: "0", }
 
     return (
         <Page>
             <Layout>
                 <Layout.Section oneThird>
                     <WelcomeCard
+                        padding={[xsPadding, xsPadding, "0", xsPadding]}
                         minHeight={commonMinHeight}
                         title={t("HomePage.scanTitle")}
                         content={t("HomePage.scanCopy")}
@@ -26,6 +28,7 @@ export function LoadedHomePage() {
                 </Layout.Section>
                 <Layout.Section oneThird>
                     <WelcomeCard
+                        padding={["0", xsPadding, "0", xsPadding]}
                         minHeight={commonMinHeight}
                         title={t("HomePage.settingsTitle")}
                         content={t("HomePage.settingsCopy")}
@@ -34,6 +37,7 @@ export function LoadedHomePage() {
                 </Layout.Section>
                 <Layout.Section oneThird>
                     <WelcomeCard
+                        padding={["0", xsPadding, xsPadding, xsPadding]}
                         minHeight={commonMinHeight}
                         title={t("HomePage.embedTitle")}
                         content={t("HomePage.embedCopy")}

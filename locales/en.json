@@ -17,7 +17,8 @@
     "negKeysCopy": "Add individual negative keywords or phrases for optimal results. Save them separately to enhance ChatUp's performance.",
     "tempTitle": "Define the Personality",
     "tempShort": "Infuse ChatUp with your brand's essence. Choose a personality that resonates best with your unique selling proposition.",
-    "tempCopy": "Your personality choice should reflect the essence of what you sell."
+    "tempCopy": "Your personality choice should reflect the essence of what you sell.",
+    "bottomCopy": "Now its time to make sure that ChatUp is visible on your store and your users can use it!"
   },
   "Insights": {
     "timeSeriesChartTitle": "Messaging Trends Over Time",
