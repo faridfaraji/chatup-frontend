@@ -34,7 +34,7 @@ export const Temperature = (props) => {
         { label: "Friendly", value: "0.5" },
         { label: "Informal", value: "1.0" },
         { label: "Engaging", value: "1.5" },
-        { label: "Humorous", value: "2.0" },
+        { label: "Humorous", value: "1.9" },
     ]
 
     return (

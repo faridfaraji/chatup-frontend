@@ -82,7 +82,7 @@ export function tempString(floatValue) {
     } else if (floatValue <= 1.75) {
       return "1.5";
     } else if (floatValue <= 2) {
-      return "2.0";
+      return "1.9";
     } else {
       return "Invalid value";
     }
