@@ -72,18 +72,18 @@ function padZero(value) {
 
 export function tempString(floatValue) {
     if (floatValue <= 0) {
-      return "0.0";
-    } else if (floatValue <= 0.25) {
-      return "0.0";
-    } else if (floatValue <= 0.75) {
-      return "0.5";
-    } else if (floatValue <= 1.25) {
-      return "1.0";
-    } else if (floatValue <= 1.75) {
-      return "1.5";
-    } else if (floatValue <= 2) {
-      return "1.9";
+      return "0.00";
+    } else if (floatValue <= 0.125) {
+      return "0.00";
+    } else if (floatValue <= 0.375) {
+      return "0.25";
+    } else if (floatValue <= 0.625) {
+      return "0.50";
+    } else if (floatValue <= 0.875) {
+      return "0.75";
+    } else if (floatValue <= 1) {
+      return "1.00";
     } else {
-      return "Invalid value";
+      return "0.00";
     }
   }
