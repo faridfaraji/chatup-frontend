@@ -15,6 +15,8 @@ import {
  */
 const DEFAULT_APP_LOCALE = "en";
 
+let _userLocale, _polarisTranslations;
+
 /**
  * The supported locales for the app.
  *
@@ -27,9 +29,8 @@ const DEFAULT_APP_LOCALE = "en";
  * @see Available Shopify Admin languages in the Shopify Help Center:
  * https://help.shopify.com/en/manual/your-account/languages#available-languages
  */
-const SUPPORTED_APP_LOCALES = ["en", "de", "fr"];
 
-let _userLocale, _polarisTranslations;
+export const SUPPORTED_APP_LOCALES = ["ar", "cs", "da", "de", "en", "es", "fi", "fr", "hi", "id", "it", "ja", "ko", "nb", "nl", "pl", "pt", "ru", "sv", "th", "tr", "vi", "zh-CN", "zh-TW", ]
 
 /**
  * Retrieves the user's locale from the `locale` request parameter and matches it to supported app locales.
