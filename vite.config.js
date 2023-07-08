@@ -76,7 +76,11 @@ export default defineConfig({
     port: process.env.FRONTEND_PORT,
     hmr: hmrConfig,
     proxy: {
-      "^/(\\?.*)?$": proxyOptionsLauch
+      "^/(\\?.*)?$": proxyOptionsLauch,
+      "/health": {
+        target: `${process.env.BACKEND_URL}`,  // assuming your express server running at port 3001
+        changeOrigin: true,
+      }  
     },
   },
 });
