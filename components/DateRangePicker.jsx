@@ -203,7 +203,7 @@ export const DateRangePicker = ({ onDateRangeChange }) => {
   const buttonValue =
     activeDateRange.title === "Custom"
       ? activeDateRange.period.since.toDateString() +
-      " to " +
+      " - " +
       activeDateRange.period.until.toDateString()
       : activeDateRange.title;
   return (

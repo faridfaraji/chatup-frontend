@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "Viestinnän Trendit Ajan Kuluessa",
         "funnelChartTitle": "Muuntamisen Tiedot",
         "donutChartTitle": "Jäljellä Olevat Päivittäiset Viestit",
+"distributionChartTitle": "Keskustelun jakautuminen vuorokaudenaikojen mukaan",
+"messagesRemaining": "Päivittäin jäljellä olevat viestit",
+"messagesSent": "Lähetetyt viestit",
+"messages": "Viestit",
+"conversation": "Keskustelut",
         "barChartTitle": "Keskimääräinen Vierailun Kesto"
     },
     "ChatHistory": {

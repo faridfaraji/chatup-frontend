@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "Tren Pesan dari Waktu ke Waktu",
         "funnelChartTitle": "Wawasan Konversi",
         "donutChartTitle": "Sisa Pesan Harian",
+"distributionChartTitle": "Distribusi Chat berdasarkan Waktu Harian",
+"messagesRemaining": "Sisa pesan harian",
+"messagesSent": "Pesan terkirim",
+"messages": "Pesan",
+"conversation": "Percakapan",
         "barChartTitle": "Durasi Kunjungan Rata-rata"
     },
     "ChatHistory": {

@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "Xu hướng Tin Nhắn Theo Thời Gian",
         "funnelChartTitle": "Thông tin Chuyển đổi",
         "donutChartTitle": "Số Tin Nhắn Còn lại Hàng Ngày",
+"distributionChartTitle": "Phân phối cuộc trò chuyện theo thời gian trong ngày",
+"messagesRemaining": "Số tin nhắn còn lại hàng ngày",
+"messagesSent": "Tin nhắn đã gửi",
+"messages": "Tin nhắn",
+"conversation": "Cuộc trò chuyện",
         "barChartTitle": "Thời Gian Trung Bình Truy Cập"
     },
     "ChatHistory": {

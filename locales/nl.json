@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "Berichtentrends in de Tijd",
         "funnelChartTitle": "Conversie-inzichten",
         "donutChartTitle": "Resterende Dagelijkse Berichten",
+"distributionChartTitle": "Chatverdeling per tijdstip van de dag",
+"messagesRemaining": "Resterende dagelijkse berichten",
+"messagesSent": "Verzonden berichten",
+"messages": "Berichten",
+"conversation": "Gesprekken",
         "barChartTitle": "Gemiddelde Bezoekduur"
     },
     "ChatHistory": {

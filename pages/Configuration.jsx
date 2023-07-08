@@ -46,12 +46,17 @@ export default function Configuration() {
           ]}
         />
         {smUp ? <Divider /> : null}
-        <AlphaCard bg="--p-color-bg-inverse-active">
-          <HorizontalGrid columns={{ xs: "1fr", md: "5fr 2fr" }} gap="4" alignItems="center">
-            <LoremIpsum content={t("Configuration.bottomCopy")} />
-            <EmbedButton />
-          </HorizontalGrid>
-        </AlphaCard>
+        <Box
+          paddingInlineStart={{ xs: 4, sm: 0 }}
+          paddingInlineEnd={{ xs: 4, sm: 0 }}
+        >
+          <AlphaCard bg="--p-color-bg-inverse-active">
+            <HorizontalGrid columns={{ xs: "1fr", md: "5fr 2fr" }} gap="4" alignItems="center">
+              <LoremIpsum content={t("Configuration.bottomCopy")} />
+              <EmbedButton />
+            </HorizontalGrid>
+          </AlphaCard>
+        </Box>
       </VerticalStack>
     </Page>
   )

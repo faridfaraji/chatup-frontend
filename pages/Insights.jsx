@@ -7,7 +7,8 @@ import { CardTitle } from "../components";
 import { useChatHistory } from "../hooks";
 import { useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
-import { formatChatData, formatOffset } from "../utils/dataUtils";
+import { formatChatDataForTS, formatChatDataForDonut } from "../utils/dataUtils";
+import { zeroRange } from "../utils/dateUtils"
 
 
 export default function Insights() {
@@ -21,38 +22,49 @@ export default function Insights() {
   const getChatHistory = useChatHistory();
   const [dates, setDates] = useState({});
   const [chats, setChats] = useState([]);
+  const [chatsToday, setChatsToday] = useState([])
   const [tsData, setTSData] = useState([]);
+  const [donutData, setDonutData] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const getToday = () => {
+    const sent = t("Insights.messagesSent") ?? "Messages sent"
+    const remaining = t("Insights.messagesRemaining") ?? "Daily messages remaining"
+    getChatHistory(today, tomorrow)
+      .then((data) => setChatsToday(data))
+      .then(() => formatChatDataForDonut(
+        chatsToday,
+        { since: today, until: tomorrow },
+        { sent: sent, remaining: remaining },
+        50
+      ))
+      .then((data) => setDonutData(data))
+  }
+
+  useEffect(() => getToday(), [])
 
   const updateChats = () => {
     const since = dates.since ?? today
     const until = dates.until ?? tomorrow
+    const conversations = t("Insights.conversation") ?? "Conversations"
+    const messages = t("Insights.messages") ?? "Messages"
     getChatHistory(since, until)
-      .then((response) => setChats(response))
-      .then(() => formatChatData(chats, {since: since, until: until}))
-      .then((formattedChats) => setTSData(formattedChats))
+      .then((data) => setChats(data))
+      .then(() => formatChatDataForTS(
+        chats,
+        { since: since, until: until },
+        { conversations: conversations, messages: messages }))
+      .then((data) => setTSData(data))
       .then(() => setLoading(false))
   }
-  
+
   useEffect(() => {
     updateChats()
   }, [dates])
 
-  const formatRange = (range) => {
-    const date = new Date();
-    const timezoneOffsetMinutes = date.getTimezoneOffset();
-
-    // Convert the offset to a string representation
-    const offsetString = formatOffset(timezoneOffsetMinutes);
-    const sinceDateTime = new Date(`${range.since} 00:00:00${offsetString}`)
-    const untilDateTime = new Date(`${range.until} 00:00:00${offsetString}`)
-    untilDateTime.setDate(untilDateTime.getDate() + 1)
-    return { since: sinceDateTime, until: untilDateTime }
-  }
-
   const handleDateChange = (range) => {
     setLoading(true)
-    const formattedDates = formatRange(range)
+    const formattedDates = zeroRange(range)
     setDates(formattedDates)
   }
 
@@ -62,19 +74,48 @@ export default function Insights() {
     <Page>
       <TitleBar />
       <Layout>
-        <Layout.Section fullWidth>
-          <AlphaCard>
-            <HorizontalStack align="space-between" blockAlign="start">
-              <CardTitle title={t("Insights.timeSeriesChartTitle")} linebreak />
-              <DateRangePicker onDateRangeChange={handleDateChange} />
-              {/* <Button size="slim" onClick={() => console.log(tsData)}> TEST </Button> */}
-            </HorizontalStack>
-            <VerticalStack inlineAlign="center">
-              {loading ? <Spinner /> : <LineChart data={tsData} theme={vizTheme} />}
-            </VerticalStack>
-          </AlphaCard>
+        <Layout.Section>
+          <Box
+            paddingInlineStart={{ xs: 4, sm: 0 }}
+            paddingInlineEnd={{ xs: 4, sm: 0 }}
+          >
+            <AlphaCard>
+              <HorizontalStack align="space-between" blockAlign="start">
+                <CardTitle title={t("Insights.timeSeriesChartTitle")} linebreak />
+                <DateRangePicker onDateRangeChange={handleDateChange} />
+              </HorizontalStack>
+              <VerticalStack inlineAlign="center">
+                {loading ? <Spinner /> : <LineChart data={tsData} theme={vizTheme} />}
+              </VerticalStack>
+            </AlphaCard>
+          </Box>
+        </Layout.Section>
+        <Layout.Section oneHalf>
+          <Box
+            paddingInlineStart={{ xs: 4, sm: 0 }}
+            paddingInlineEnd={{ xs: 4, sm: 0 }}
+          >
+            <AlphaCard>
+              <CardTitle title={t("Insights.donutChartTitle")}></CardTitle>
+              <DonutChart data={donutData} theme={vizTheme} legendFullWidth legendPosition="right" />
+            </AlphaCard>
+          </Box>
+        </Layout.Section>
+        <Layout.Section oneHalf>
+          <Box
+            paddingInlineStart={{ xs: 4, sm: 0 }}
+            paddingInlineEnd={{ xs: 4, sm: 0 }}
+          >
+            <AlphaCard>
+              <CardTitle title={t("Insights.distributionChartTitle")} />
+              <BarChart data={[]} theme={vizTheme} />
+            </AlphaCard>
+          </Box>
         </Layout.Section>
       </Layout>
     </Page>
   );
 }
+
+
+

@@ -24,6 +24,11 @@
     "timeSeriesChartTitle": "แนวโน้มของข้อความตลอดเวลา",
     "funnelChartTitle": "ข้อมูลการแปลง",
     "donutChartTitle": "จำนวนข้อความที่เหลือในแต่ละวัน",
+"distributionChartTitle": "การกระจายแชทตามเวลาในแต่ละวัน",
+"messagesRemaining": "ข้อความที่เหลือในแต่ละวัน",
+"messagesSent": "ข้อความที่ส่งแล้ว",
+"messages": "ข้อความ",
+"conversation": "การสนทนา",
     "barChartTitle": "ระยะเวลาเฉลี่ยของการเข้าชม"
   },
   "ChatHistory": {

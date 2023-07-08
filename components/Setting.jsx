@@ -28,9 +28,15 @@ export const Setting = (props) => {
                     </Text>
                 </VerticalStack>
             </Box>
-            <AlphaCard roundedAbove="sm">
-                {inputs}
-            </AlphaCard>
+            <Box
+                as="section"
+                paddingInlineStart={{ xs: 4, sm: 0 }}
+                paddingInlineEnd={{ xs: 4, sm: 0 }}
+            >
+                <AlphaCard roundedAbove="sm">
+                    {inputs}
+                </AlphaCard>
+            </Box>
         </HorizontalGrid>
     )
 }

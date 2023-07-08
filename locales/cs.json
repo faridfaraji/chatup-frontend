@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "Trendy zpráv v průběhu času",
         "funnelChartTitle": "Přehled konverzí",
         "donutChartTitle": "Zbývající denní zprávy",
+"distributionChartTitle": "Rozložení chatu podle času v průběhu dne",
+"messagesRemaining": "Denní zbývající zprávy",
+"messagesSent": "Odeslané zprávy",
+"messages": "Zprávy",
+"conversation": "Konverzace",
         "barChartTitle": "Průměrná délka návštěvy"
     },
     "ChatHistory": {

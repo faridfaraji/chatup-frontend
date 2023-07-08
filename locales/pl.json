@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "Trendy wiadomości w czasie",
         "funnelChartTitle": "Analiza konwersji",
         "donutChartTitle": "Pozostałe codzienne wiadomości",
+"distributionChartTitle": "Rozkład czatów w ciągu dnia",
+"messagesRemaining": "Pozostałe dziennie wiadomości",
+"messagesSent": "Wysłane wiadomości",
+"messages": "Wiadomości",
+"conversation": "Rozmowy",
         "barChartTitle": "Średni czas wizyty"
     },
     "ChatHistory": {

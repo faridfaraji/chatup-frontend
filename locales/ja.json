@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "時間の経過とともに変化するメッセージのトレンド",
         "funnelChartTitle": "コンバージョンの洞察",
         "donutChartTitle": "残りの日次メッセージ",
+"distributionChartTitle": "時間帯別チャット分布",
+"messagesRemaining": "残りのデイリーメッセージ",
+"messagesSent": "送信済みメッセージ",
+"messages": "メッセージ",
+"conversation": "会話",
         "barChartTitle": "平均訪問時間"
     },
     "ChatHistory": {
