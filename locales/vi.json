@@ -1,0 +1,57 @@
+{
+    "HomePage": {
+        "title": "Chào mừng đến với ChatUp",
+        "scanTitle": "Quét Cửa Hàng Của Bạn",
+        "scanCopy": "ChatUp sẽ phân tích sâu về chính sách, trang, sản phẩm, thông tin liên hệ và dữ liệu đơn hàng của cửa hàng bạn, giúp cung cấp câu trả lời chính xác cho các câu hỏi của khách truy cập.",
+        "LastScanTitle": "Lần Quét Cuối: {{ timeSince }} trước",
+        "LastScanCopy": "ChatUp luôn cập nhật số lượng sản phẩm theo thời gian thực, mang đến cho bạn những thông tin mới nhất trong vòng 24 giờ qua.",
+        "settingsTitle": "Cá nhân hóa Trải Nghiệm Người Dùng",
+        "settingsCopy": "Hãy điều chỉnh ChatUp theo phong cách và sở thích của cửa hàng bạn. Truy cập bảng điều khiển cài đặt để định hình cá nhân và giới hạn của ChatUp.",
+        "embedTitle": "Tùy chỉnh ChatUp",
+        "embedCopy": "Hãy khai thác sức mạnh của tùy chỉnh! Khám phá các tùy chọn trang trí để tích hợp ChatUp một cách mượt mà với thương hiệu và giao diện hiện có của bạn. Xem hướng dẫn nhanh của chúng tôi để có một hành trình tùy chỉnh trôi chảy."
+    },
+    "Configuration": {
+        "title": "Cấu hình Ứng dụng",
+        "negKeysTitle": "Từ Khóa Tiêu Cực",
+        "negKeysShort": "Tinh chỉnh động cơ AI của ChatUp để đạt sự hoàn thiện tối đa. Đặt giới hạn bằng cách sử dụng từ khóa tiêu cực để loại bỏ các cuộc trò chuyện không liên quan. Nếu khách truy cập nhắc đến bất kỳ từ khóa nào này, ChatUp sẽ trả lời: (Tôi là một nhân viên hỗ trợ cho trang web của chúng tôi. Chủ đề bạn đề cập nằm ngoài phạm vi của tôi, nhưng tôi có thể giúp bạn bằng cách nào khác không?)",
+        "negKeysCopy": "Thêm từ khóa tiêu cực hoặc cụm từ riêng lẻ để đạt được kết quả tối ưu. Lưu chúng riêng biệt để nâng cao hiệu suất của ChatUp.",
+        "tempTitle": "Xác Định Nhân Cách",
+        "tempShort": "Thẩm thấu ChatUp bằng bản chất thương hiệu của bạn. Chọn một nhân cách phù hợp nhất với đề xuất bán hàng độc đáo của bạn.",
+        "tempCopy": "Lựa chọn nhân cách của bạn nên phản ánh bản chất của những gì bạn đang bán.",
+        "bottomCopy": "Bây giờ là lúc đảm bảo rằng ChatUp hiển thị trên cửa hàng của bạn và người dùng có thể sử dụng nó!"
+    },
+    "Insights": {
+        "timeSeriesChartTitle": "Xu hướng Tin Nhắn Theo Thời Gian",
+        "funnelChartTitle": "Thông tin Chuyển đổi",
+        "donutChartTitle": "Số Tin Nhắn Còn lại Hàng Ngày",
+        "barChartTitle": "Thời Gian Trung Bình Truy Cập"
+    },
+    "ChatHistory": {
+        "pageTitle": ""
+    },
+    "NavigationMenu": {
+        "configuration": "Cấu hình",
+        "insights": "Thông tin",
+        "chatHistory": "Lịch sử Chat"
+    },
+    "Button": {
+        "configuration": "Cấu hình Thiết lập",
+        "embed": "Nhúng Tiện ích",
+        "scan": "Quét Cửa Hàng Của Tôi",
+        "scanned": "Lần quét cuối {{ timeSince }} giờ trước",
+        "scannedOne": "Lần quét cuối cách đây một giờ",
+        "scannedZero": "Quét trong vòng một giờ",
+        "scanPending": "Đang Quét",
+        "scanError": "Lỗi quét - thử lại",
+        "submit": "Gửi"
+    },
+    "NotFound": {
+        "description": "Rất tiếc! Trang bạn đang tìm kiếm dường như không tồn tại. Kiểm tra URL hoặc sử dụng thanh tìm kiếm để tìm nội dung bạn cần.",
+        "heading": "Không Tìm Thấy Trang"
+    },
+    "Dates": {
+        "today": "Hôm nay",
+        "yesterday": "Hôm qua",
+        "pastWeek": "Tuần trước"
+    }
+}
