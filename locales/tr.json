@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "Zaman İçinde Mesaj Trendleri",
         "funnelChartTitle": "Dönüşüm İpuçları",
         "donutChartTitle": "Kalan Günlük Mesajlar",
+"distributionChartTitle": "Günün Saatine Göre Sohbet Dağılımı",
+"messagesRemaining": "Günlük kalan mesajlar",
+"messagesSent": "Gönderilen mesajlar",
+"messages": "Mesajlar",
+"conversation": "Konuşmalar",
         "barChartTitle": "Ortalama Ziyaret Süresi"
     },
     "ChatHistory": {

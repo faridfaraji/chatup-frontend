@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "समय के साथ संदेश रुझान",
         "funnelChartTitle": "रूपांतरण अंदाज",
         "donutChartTitle": "बचे हुए दैनिक संदेश",
+"distributionChartTitle": "दिन के समय चैट वितरण",
+"messagesRemaining": "दैनिक संदेश शेष",
+"messagesSent": "भेजे गए संदेश",
+"messages": "संदेश",
+"conversation": "बातचीतें",
         "barChartTitle": "औसत यात्रा अवधि"
     },
     "ChatHistory": {

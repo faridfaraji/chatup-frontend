@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "消息趨勢隨時間變化",
         "funnelChartTitle": "轉化見解",
         "donutChartTitle": "剩餘每日消息",
+"distributionChartTitle": "聊天時間分布",
+"messagesRemaining": "每日剩餘訊息",
+"messagesSent": "已傳送訊息",
+"messages": "訊息",
+"conversation": "對話",
         "barChartTitle": "平均訪問時長"
     },
     "ChatHistory": {

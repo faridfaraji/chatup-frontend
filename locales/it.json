@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "Tendenze dei Messaggi nel Tempo",
         "funnelChartTitle": "Insight di Conversione",
         "donutChartTitle": "Messaggi Giornalieri Rimanenti",
+"distributionChartTitle": "Distribuzione delle chat in base all'orario del giorno",
+"messagesRemaining": "Messaggi rimanenti al giorno",
+"messagesSent": "Messaggi inviati",
+"messages": "Messaggi",
+"conversation": "Conversazioni",
         "barChartTitle": "Durata Media delle Visite"
     },
     "ChatHistory": {

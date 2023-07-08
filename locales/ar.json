@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "اتجاهات الرسائل مع مرور الوقت",
         "funnelChartTitle": "تحليلات التحويل",
         "donutChartTitle": "الرسائل اليومية المتبقية",
+"distributionChartTitle": "توزيع المحادثات حسب وقت اليوم",
+"messagesRemaining": "الرسائل المتبقية اليومية",
+"messagesSent": "الرسائل المرسلة",
+"messages": "الرسائل",
+"conversation": "المحادثات",
         "barChartTitle": "مدة الزيارة المتوسطة"
     },
     "ChatHistory": {

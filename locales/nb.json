@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "Meldingstrender Over Tid",
         "funnelChartTitle": "Konverteringsinnsikter",
         "donutChartTitle": "Resterende Daglige Meldinger",
+"distributionChartTitle": "Chatfordeling etter tid på dagen",
+"messagesRemaining": "Gjenværende meldinger i dag",
+"messagesSent": "Meldinger sendt",
+"messages": "Meldinger",
+"conversation": "Samtaler",
         "barChartTitle": "Gjennomsnittlig Besøksvarighet"
     },
     "ChatHistory": {

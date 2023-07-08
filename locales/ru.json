@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "Тенденции сообщений со временем",
         "funnelChartTitle": "Инсайты о конверсиях",
         "donutChartTitle": "Оставшиеся ежедневные сообщения",
+"distributionChartTitle": "Распределение чатов по времени суток",
+"messagesRemaining": "Оставшиеся сообщения на сегодня",
+"messagesSent": "Отправленные сообщения",
+"messages": "Сообщения",
+"conversation": "Беседы",
         "barChartTitle": "Средняя продолжительность посещения"
     },
     "ChatHistory": {

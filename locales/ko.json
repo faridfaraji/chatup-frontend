@@ -24,6 +24,11 @@
         "timeSeriesChartTitle": "시간에 따른 메시지 트렌드",
         "funnelChartTitle": "전환 인사이트",
         "donutChartTitle": "남은 일일 메시지",
+"distributionChartTitle": "시간대별 채팅 분포",
+"messagesRemaining": "하루에 남은 메시지",
+"messagesSent": "보낸 메시지",
+"messages": "메시지",
+"conversation": "대화",
         "barChartTitle": "평균 방문 기간"
     },
     "ChatHistory": {
