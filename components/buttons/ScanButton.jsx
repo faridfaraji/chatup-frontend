@@ -2,7 +2,7 @@ import { Box, Button, HorizontalStack, SkeletonDisplayText, Spinner } from "@sho
 import { useTranslation } from "react-i18next";
 import { useLatestScan, useScanner, useShop } from "../../hooks";
 import { useCallback, useEffect, useState } from "react";
-import { RefreshMinor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
+import { PlayMinor, RefreshMinor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
 
 export const ScanButton = () => {
     const { t } = useTranslation();
@@ -22,7 +22,7 @@ export const ScanButton = () => {
     const refreshButton = (scan) => {
         let tempButton = button
         if (!scan) {
-            tempButton = <Button fullwidth primary icon={RefreshMinor} onClick={() => scanCallback()}>{t("Button.scan")}</Button>
+            tempButton = <Button fullwidth primary icon={PlayMinor} onClick={() => scanCallback()}>{t("Button.scan")}</Button>
         } else if (["PENDING", "IN_PROGRESS"].includes(scan.status)) {
             tempButton = <Button fullwidth disabled>
                 <HorizontalStack gap="1" blockAlign="center">
