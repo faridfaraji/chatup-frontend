@@ -1,6 +1,6 @@
 
 const getRaw = (chats) => {
-    return chats.map((chat) => {
+    return chats?.map((chat) => {
         return {
             timestamp: new Date(chat.timestamp),
             message_count: chat.messages.length
@@ -60,9 +60,7 @@ export const formatChatData = (chats, dates) => {
 export const formatOffset = (offsetMinutes) => {
     const offsetHours = Math.floor(Math.abs(offsetMinutes) / 60);
     const offsetSign = offsetMinutes >= 0 ? "-" : "+";
-
     const formattedOffset = `${offsetSign}${padZero(offsetHours)}:${padZero(Math.abs(offsetMinutes) % 60)}`;
-
     return formattedOffset;
 }
 

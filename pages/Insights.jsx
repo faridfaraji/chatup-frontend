@@ -14,46 +14,48 @@ export default function Insights() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const oneWeekAgo = new Date(today);
-  oneWeekAgo.setDate(today.getDate() - 7);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
 
   const { t } = useTranslation();
   const getChatHistory = useChatHistory();
-  const [dates, setDates] = useState({ since: oneWeekAgo, until: today });
+  const [dates, setDates] = useState({});
   const [chats, setChats] = useState([]);
   const [tsData, setTSData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const updateChats = (dates) => {
-    getChatHistory(dates.since, dates.until)
+  const updateChats = () => {
+    const since = dates.since ?? today
+    const until = dates.until ?? tomorrow
+    getChatHistory(since, until)
       .then((response) => setChats(response))
+      .then(() => formatChatData(chats, {since: since, until: until}))
+      .then((formattedChats) => setTSData(formattedChats))
+      .then(() => setLoading(false))
   }
-
+  
   useEffect(() => {
-    updateChats(dates)
+    updateChats()
   }, [dates])
 
-  useEffect(() => {
-    setTSData(formatChatData(chats, dates))
-    setLoading(false)
-  }, [chats]);
-
-  const handleDateChange = (pickerRange) => {
-    setLoading(true)
+  const formatRange = (range) => {
     const date = new Date();
     const timezoneOffsetMinutes = date.getTimezoneOffset();
 
     // Convert the offset to a string representation
     const offsetString = formatOffset(timezoneOffsetMinutes);
-    const startDateTime = new Date(`${pickerRange.since} 00:00:00${offsetString}`)
-    // startDateTime.setHours(0, 0, 0, 0)
-    const endDateTime = new Date(`${pickerRange.until} 00:00:00${offsetString}`)
-    // endDateTime.setHours(0, 0, 0, 0)
-    endDateTime.setDate(endDateTime.getDate() + 1)
-
-    const newRange = { since: startDateTime, until: endDateTime }
-    setDates(newRange)
+    const sinceDateTime = new Date(`${range.since} 00:00:00${offsetString}`)
+    const untilDateTime = new Date(`${range.until} 00:00:00${offsetString}`)
+    untilDateTime.setDate(untilDateTime.getDate() + 1)
+    return { since: sinceDateTime, until: untilDateTime }
   }
+
+  const handleDateChange = (range) => {
+    setLoading(true)
+    const formattedDates = formatRange(range)
+    setDates(formattedDates)
+  }
+
   const vizTheme = "Light"
 
   return (
