@@ -13,7 +13,8 @@ export const zeroRange = (range) => {
     const sinceDateTime = new Date(`${range.since} 00:00:00${offsetString}`)
     const untilDateTime = new Date(`${range.until} 00:00:00${offsetString}`)
     untilDateTime.setDate(untilDateTime.getDate() + 1)
-    return { since: sinceDateTime, until: untilDateTime }
+    const newRange = { since: sinceDateTime, until: untilDateTime }
+    return newRange
 }
 
 function padZero(value) {

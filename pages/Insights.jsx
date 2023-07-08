@@ -7,8 +7,9 @@ import { CardTitle } from "../components";
 import { useChatHistory } from "../hooks";
 import { useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
-import { formatChatDataForTS, formatChatDataForDonut } from "../utils/dataUtils";
+import { getRaw, formatChatDataForTS, formatChatDataForDonut, formatChatDataForBar } from "../utils/dataUtils";
 import { zeroRange } from "../utils/dateUtils"
+import { CenteredSpinner } from "../components/misc";
 
 
 export default function Insights() {
@@ -19,56 +20,63 @@ export default function Insights() {
   tomorrow.setDate(today.getDate() + 1);
 
   const { t } = useTranslation();
+
+  // Get and set raw dates and data
   const getChatHistory = useChatHistory();
   const [dates, setDates] = useState({});
-  const [chats, setChats] = useState([]);
-  const [chatsToday, setChatsToday] = useState([])
-  const [tsData, setTSData] = useState([]);
-  const [donutData, setDonutData] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  const getToday = () => {
-    const sent = t("Insights.messagesSent") ?? "Messages sent"
-    const remaining = t("Insights.messagesRemaining") ?? "Daily messages remaining"
-    getChatHistory(today, tomorrow)
-      .then((data) => setChatsToday(data))
-      .then(() => formatChatDataForDonut(
-        chatsToday,
-        { since: today, until: tomorrow },
-        { sent: sent, remaining: remaining },
-        50
-      ))
-      .then((data) => setDonutData(data))
-  }
+  // the charts themselves
+  const [ts, setTS] = useState(<CenteredSpinner />);
+  const [donut, setDonut] = useState(<CenteredSpinner />);
+  const [bar, setBar] = useState(<CenteredSpinner />);
 
-  useEffect(() => getToday(), [])
-
-  const updateChats = () => {
-    const since = dates.since ?? today
-    const until = dates.until ?? tomorrow
-    const conversations = t("Insights.conversation") ?? "Conversations"
-    const messages = t("Insights.messages") ?? "Messages"
-    getChatHistory(since, until)
-      .then((data) => setChats(data))
-      .then(() => formatChatDataForTS(
-        chats,
-        { since: since, until: until },
-        { conversations: conversations, messages: messages }))
-      .then((data) => setTSData(data))
-      .then(() => setLoading(false))
-  }
-
-  useEffect(() => {
-    updateChats()
-  }, [dates])
-
+  // Update ts and bar when dates change
   const handleDateChange = (range) => {
-    setLoading(true)
     const formattedDates = zeroRange(range)
     setDates(formattedDates)
   }
 
+  // Refresh the chart whenever the data changes
   const vizTheme = "Light"
+
+  const refreshCharts = () => {
+    setTS(<CenteredSpinner />)
+    setBar(<CenteredSpinner />)
+    const since = dates.since ?? today
+    const until = dates.until ?? tomorrow
+    const tsRange = { since: since, until: until }
+    const barRange = { since: today, until: tomorrow }
+    const conversations = t("Insights.conversation") ?? "Conversations"
+    const messages = t("Insights.messages") ?? "Messages"
+    const names = { conversations: conversations, messages: messages }
+    getChatHistory(since, until)
+      .then((data) => getRaw(data))
+      .then((data) => {
+        return {
+          ts: formatChatDataForTS(data, tsRange, names),
+          bar: formatChatDataForBar(data, barRange, names)
+        }
+      })
+      .then((data) => {
+        setTS(<LineChart data={data.ts} theme={vizTheme} />)
+        setBar(<BarChart data={data.bar} theme={vizTheme} />)
+      })
+  }
+
+  const refreshDonut = () => {
+    setDonut(<CenteredSpinner />)
+    const drange = { since: today, until: tomorrow }
+    const sent = t("Insights.messagesSent") ?? "Messages sent"
+    const remaining = t("Insights.messagesRemaining") ?? "Daily messages remaining"
+    const names = { sent: sent, remaining: remaining }
+    getChatHistory(today, tomorrow)
+      .then((data) => getRaw(data))
+      .then((data) => formatChatDataForDonut(data, drange, names, 50))
+      .then((data) => setDonut(<DonutChart data={data} theme={vizTheme} legendFullWidth legendPosition="right" />))
+  }
+
+  useEffect(() => refreshCharts(), [dates])
+  useEffect(() => refreshDonut(), [])
 
   return (
     <Page>
@@ -84,9 +92,7 @@ export default function Insights() {
                 <CardTitle title={t("Insights.timeSeriesChartTitle")} linebreak />
                 <DateRangePicker onDateRangeChange={handleDateChange} />
               </HorizontalStack>
-              <VerticalStack inlineAlign="center">
-                {loading ? <Spinner /> : <LineChart data={tsData} theme={vizTheme} />}
-              </VerticalStack>
+              {ts}
             </AlphaCard>
           </Box>
         </Layout.Section>
@@ -96,8 +102,8 @@ export default function Insights() {
             paddingInlineEnd={{ xs: 4, sm: 0 }}
           >
             <AlphaCard>
-              <CardTitle title={t("Insights.donutChartTitle")}></CardTitle>
-              <DonutChart data={donutData} theme={vizTheme} legendFullWidth legendPosition="right" />
+              <CardTitle linebreak title={t("Insights.donutChartTitle")}></CardTitle>
+              {donut}
             </AlphaCard>
           </Box>
         </Layout.Section>
@@ -107,8 +113,8 @@ export default function Insights() {
             paddingInlineEnd={{ xs: 4, sm: 0 }}
           >
             <AlphaCard>
-              <CardTitle title={t("Insights.distributionChartTitle")} />
-              <BarChart data={[]} theme={vizTheme} />
+              <CardTitle linebreak title={t("Insights.distributionChartTitle")} />
+              {bar}
             </AlphaCard>
           </Box>
         </Layout.Section>
