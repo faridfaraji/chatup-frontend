@@ -18,6 +18,11 @@
         "tempTitle": "Definiera Personligheten",
         "tempShort": "Ge ChatUp din varumärkesessens. Välj en personlighet som bäst matchar ditt unika säljförslag.",
         "tempCopy": "Ditt personlighetsval bör återspegla essensen av det du säljer.",
+"humorous": "Humoristisk",
+"engaging": "Engagerande",
+"informal": "Oformell",
+"friendly": "Vänlig",
+"professional": "Professionell",
         "bottomCopy": "Nu är det dags att se till att ChatUp är synligt i din butik och att dina användare kan använda det!"
     },
     "Insights": {

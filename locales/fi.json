@@ -18,6 +18,11 @@
         "tempTitle": "Määritä Persoonallisuus",
         "tempShort": "Anna ChatUpille brändisi ydin. Valitse persoonallisuus, joka resonoi parhaiten uniikin myyntiehdotuksesi kanssa.",
         "tempCopy": "Persoonallisuusvalintasi tulisi heijastaa sitä, mitä myyt.",
+"humorous": "Hauska",
+"engaging": "Osallistava",
+"informal": "Rentoutunut",
+"friendly": "Ystävällinen",
+"professional": "Ammattimainen",
         "bottomCopy": "Nyt on aika varmistaa, että ChatUp näkyy kaupassasi ja käyttäjäsi voivat käyttää sitä!"
     },
     "Insights": {

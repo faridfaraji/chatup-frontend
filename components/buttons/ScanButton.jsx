@@ -18,7 +18,7 @@ export const ScanButton = () => {
 
     const refreshButton = (scan) => {
         let tempButton = button
-        if (!scan) {
+        if (!scan?.status) {
             tempButton = <Button fullwidth primary icon={PlayMinor} onClick={() => scanCallback()}>{t("Button.scan")}</Button>
         } else if (["PENDING", "IN_PROGRESS"].includes(scan.status)) {
             tempButton = <Button fullwidth disabled>

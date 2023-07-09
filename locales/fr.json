@@ -18,6 +18,11 @@
         "tempTitle": "Définir la personnalité",
         "tempShort": "Insufflez à ChatUp l'essence de votre marque. Choisissez une personnalité qui correspond le mieux à votre proposition de vente unique.",
         "tempCopy": "Votre choix de personnalité doit refléter l'essence de ce que vous vendez.",
+"humorous": "Plein d'humour",
+"engaging": "Captivant",
+"informal": "Informel",
+"friendly": "Amical",
+"professional": "Professionnel",
         "bottomCopy": "Il est maintenant temps de vous assurer que ChatUp est visible sur votre boutique et que vos utilisateurs peuvent l'utiliser !"
     },
     "Insights": {
