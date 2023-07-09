@@ -1,0 +1,62 @@
+{
+    "HomePage": {
+        "title": "ChatUp'e Hoş Geldiniz",
+        "scanTitle": "Mağazanızı Tara",
+        "scanCopy": "ChatUp, ziyaretçilerin sorularına son derece doğru yanıtlar verebilmek için mağazanın politikalarını, sayfalarını, ürünlerini, iletişim bilgilerini ve sipariş verilerini detaylı bir şekilde analiz eder.",
+        "LastScanTitle": "Son Tara: {{ timeSince }} önce",
+        "LastScanCopy": "ChatUp, gerçek zamanlı ürün miktarlarıyla güncellenerek son 24 saatteki en güncel bilgileri sunar.",
+        "settingsTitle": "Kullanıcı Deneyimini Kişiselleştirin",
+        "settingsCopy": "ChatUp'ı mağazanın havasına ve tercihlerine uygun şekilde ayarlayın. ChatUp'ın kişiliğini ve sınırlarını şekillendirmek için ayarlar paneline göz atın.",
+        "embedTitle": "ChatUp'ı Özelleştirin",
+        "embedCopy": "Özelleştirmenin gücünü keşfedin! ChatUp'ı markanızla ve mevcut tema ile sorunsuz bir şekilde entegre edebilmek için çeşitli kozmetik seçenekleri keşfedin. Sorunsuz bir özelleştirme deneyimi için hızlı bir rehberimize göz atın."
+    },
+    "Configuration": {
+        "title": "Uygulama Yapılandırması",
+        "negKeysTitle": "Negatif Anahtar Kelimeler",
+        "negKeysShort": "ChatUp'ın yapay zeka motorunu mükemmelleştirmek için sınırlar belirleyin. İlgisiz konuşmaları ortadan kaldırmak için negatif anahtar kelimeler kullanarak sınırlar belirleyin. Ziyaretçiler bu anahtar kelimelerden herhangi birini belirtirse, ChatUp şu şekilde yanıt verecektir: (Web sitemizin destek temsilcisiyim. Söz konusu konu benim kapsamım dışında, ancak size nasıl yardımcı olabilirim?)",
+        "negKeysCopy": "En iyi sonuçlar için bireysel negatif anahtar kelimeler veya ifadeler ekleyin. Performansı artırmak için bunları ayrı ayrı kaydedin.",
+        "tempTitle": "Kişiliği Tanımlayın",
+        "tempShort": "ChatUp'a markanızın özünü yansıtın. Benzersiz satış teklifinize en uygun kişiliği seçin.",
+        "tempCopy": "Kişilik seçiminiz, sattığınız şeyin özünü yansıtmalıdır.",
+        "bottomCopy": "Şimdi ChatUp'ın mağazanızda görünür olduğundan ve kullanıcılarının onu kullanabildiğinden emin olma zamanı!"
+    },
+    "Insights": {
+        "timeSeriesChartTitle": "Zaman İçinde Mesaj Trendleri",
+        "funnelChartTitle": "Dönüşüm İpuçları",
+        "donutChartTitle": "Kalan Günlük Mesajlar",
+"distributionChartTitle": "Günün Saatine Göre Sohbet Dağılımı",
+"messagesRemaining": "Günlük kalan mesajlar",
+"messagesSent": "Gönderilen mesajlar",
+"messages": "Mesajlar",
+"conversation": "Konuşmalar",
+        "barChartTitle": "Ortalama Ziyaret Süresi"
+    },
+    "ChatHistory": {
+        "pageTitle": ""
+    },
+    "NavigationMenu": {
+        "configuration": "Yapılandırma",
+        "insights": "İpuçları",
+        "chatHistory": "Sohbet Geçmişi"
+    },
+    "Button": {
+        "configuration": "Ayarları Yapılandır",
+        "embed": "Uzantıyı Göm",
+        "scan": "Mağazamı Tara",
+        "scanned": "{{ timeSince }} saat önce tarandı",
+        "scannedOne": "Bir saat önce tarandı",
+        "scannedZero": "Bir saat içinde tarandı",
+        "scanPending": "Tarama Devam Ediyor",
+        "scanError": "Tarama hatası - yeniden dene",
+        "submit": "Gönder"
+    },
+    "NotFound": {
+        "description": "Oops! Aradığınız sayfa bulunamıyor gibi görünüyor. URL'yi kontrol edin veya ihtiyacınız olanı bulmak için arama çubuğunu kullanın.",
+        "heading": "Sayfa Bulunamadı"
+    },
+    "Dates": {
+        "today": "Bugün",
+        "yesterday": "Dün",
+        "pastWeek": "Geçen Hafta"
+    }
+}

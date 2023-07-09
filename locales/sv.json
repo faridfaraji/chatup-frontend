@@ -1,0 +1,62 @@
+{
+    "HomePage": {
+        "title": "Välkommen till ChatUp",
+        "scanTitle": "Skanna Din Butik",
+        "scanCopy": "ChatUp granskar noggrant din butiks regler, sidor, produkter, kontaktinformation och orderdata, vilket gör det möjligt att ge mycket precisa svar på besökarens frågor.",
+        "LastScanTitle": "Senaste Skanning: {{ timeSince }} sedan",
+        "LastScanCopy": "ChatUp håller sig uppdaterad med realtidsinformation om produktantal och ger dig de senaste insikterna under de senaste 24 timmarna.",
+        "settingsTitle": "Anpassa Användarupplevelsen",
+        "settingsCopy": "Anpassa ChatUp efter din butiks stämning och preferenser. Besök inställningspanelen för att forma ChatUps personlighet och gränser.",
+        "embedTitle": "Anpassa ChatUp",
+        "embedCopy": "Utveckla anpassningens kraft! Upptäck ett utbud av kosmetiska alternativ för att sömlöst integrera ChatUp med ditt varumärke och befintliga tema. Kolla in vår snabba handledning för en smidig anpassningsresa."
+    },
+    "Configuration": {
+        "title": "Appkonfiguration",
+        "negKeysTitle": "Negativa Nyckelord",
+        "negKeysShort": "Finputsa ChatUps AI-motor till perfektion. Ställ gränser med negativa nyckelord för att eliminera irrelevanta konversationer. Om besökare nämner något av dessa nyckelord kommer ChatUp att svara: (Jag är en supportagent för vår webbplats. Ämnet du nämnde ligger utanför mitt kompetensområde, men hur kan jag annars hjälpa dig?)",
+        "negKeysCopy": "Lägg till enskilda negativa nyckelord eller fraser för optimala resultat. Spara dem separat för att förbättra ChatUps prestanda.",
+        "tempTitle": "Definiera Personligheten",
+        "tempShort": "Ge ChatUp din varumärkesessens. Välj en personlighet som bäst matchar ditt unika säljförslag.",
+        "tempCopy": "Ditt personlighetsval bör återspegla essensen av det du säljer.",
+        "bottomCopy": "Nu är det dags att se till att ChatUp är synligt i din butik och att dina användare kan använda det!"
+    },
+    "Insights": {
+        "timeSeriesChartTitle": "Meddelandetrender över tid",
+        "funnelChartTitle": "Konverteringsinsikter",
+        "donutChartTitle": "Återstående dagliga meddelanden",
+"distributionChartTitle": "Chattfördelning efter tid på dagen",
+"messagesRemaining": "Återstående meddelanden för dagen",
+"messagesSent": "Skickade meddelanden",
+"messages": "Meddelanden",
+"conversation": "Samtal",
+        "barChartTitle": "Genomsnittlig besökstid"
+    },
+    "ChatHistory": {
+        "pageTitle": ""
+    },
+    "NavigationMenu": {
+        "configuration": "Konfiguration",
+        "insights": "Insikter",
+        "chatHistory": "Chathistorik"
+    },
+    "Button": {
+        "configuration": "Konfigurera Inställningar",
+        "embed": "Bädda in Tillägg",
+        "scan": "Skanna Min Butik",
+        "scanned": "Senast skannad för {{ timeSince }} timmar sedan",
+        "scannedOne": "Senast skannad för en timme sedan",
+        "scannedZero": "Skannad inom den senaste timmen",
+        "scanPending": "Skannar",
+        "scanError": "Skanningsfel - försök igen",
+        "submit": "Skicka"
+    },
+    "NotFound": {
+        "description": "Hoppsan! Sidan du letar efter verkar saknas. Kontrollera URL:en eller använd sökfältet för att hitta det du behöver.",
+        "heading": "Sidan Hittades Inte"
+    },
+    "Dates": {
+        "today": "Idag",
+        "yesterday": "Igår",
+        "pastWeek": "Föregående Vecka"
+    }
+}

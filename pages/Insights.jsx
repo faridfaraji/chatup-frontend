@@ -7,72 +7,121 @@ import { CardTitle } from "../components";
 import { useChatHistory } from "../hooks";
 import { useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
-import { formatChatData, formatOffset } from "../utils/dataUtils";
+import { getRaw, formatChatDataForTS, formatChatDataForDonut, formatChatDataForBar } from "../utils/dataUtils";
+import { zeroRange } from "../utils/dateUtils"
+import { CenteredSpinner } from "../components/misc";
 
 
 export default function Insights() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const oneWeekAgo = new Date(today);
-  oneWeekAgo.setDate(today.getDate() - 7);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
 
   const { t } = useTranslation();
+
+  // Get and set raw dates and data
   const getChatHistory = useChatHistory();
-  const [dates, setDates] = useState({ since: oneWeekAgo, until: today });
-  const [chats, setChats] = useState([]);
-  const [tsData, setTSData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [dates, setDates] = useState({});
 
-  const updateChats = (dates) => {
-    getChatHistory(dates.since, dates.until)
-      .then((response) => setChats(response))
+  // the charts themselves
+  const [ts, setTS] = useState(<CenteredSpinner />);
+  const [donut, setDonut] = useState(<CenteredSpinner />);
+  const [bar, setBar] = useState(<CenteredSpinner />);
+
+  // Update ts and bar when dates change
+  const handleDateChange = (range) => {
+    const formattedDates = zeroRange(range)
+    setDates(formattedDates)
   }
 
-  useEffect(() => {
-    updateChats(dates)
-  }, [dates])
-
-  useEffect(() => {
-    setTSData(formatChatData(chats, dates))
-    setLoading(false)
-  }, [chats]);
-
-  const handleDateChange = (pickerRange) => {
-    setLoading(true)
-    const date = new Date();
-    const timezoneOffsetMinutes = date.getTimezoneOffset();
-
-    // Convert the offset to a string representation
-    const offsetString = formatOffset(timezoneOffsetMinutes);
-    const startDateTime = new Date(`${pickerRange.since} 00:00:00${offsetString}`)
-    // startDateTime.setHours(0, 0, 0, 0)
-    const endDateTime = new Date(`${pickerRange.until} 00:00:00${offsetString}`)
-    // endDateTime.setHours(0, 0, 0, 0)
-    endDateTime.setDate(endDateTime.getDate() + 1)
-
-    const newRange = { since: startDateTime, until: endDateTime }
-    setDates(newRange)
-  }
+  // Refresh the chart whenever the data changes
   const vizTheme = "Light"
+
+  const refreshCharts = () => {
+    setTS(<CenteredSpinner />)
+    setBar(<CenteredSpinner />)
+    const since = dates.since ?? today
+    const until = dates.until ?? tomorrow
+    const tsRange = { since: since, until: until }
+    const barRange = { since: today, until: tomorrow }
+    const conversations = t("Insights.conversation") ?? "Conversations"
+    const messages = t("Insights.messages") ?? "Messages"
+    const names = { conversations: conversations, messages: messages }
+    getChatHistory(since, until)
+      .then((data) => getRaw(data))
+      .then((data) => {
+        return {
+          ts: formatChatDataForTS(data, tsRange, names),
+          bar: formatChatDataForBar(data, barRange, names)
+        }
+      })
+      .then((data) => {
+        setTS(<LineChart data={data.ts} theme={vizTheme} />)
+        setBar(<BarChart data={data.bar} theme={vizTheme} />)
+      })
+  }
+
+  const refreshDonut = () => {
+    setDonut(<CenteredSpinner />)
+    const drange = { since: today, until: tomorrow }
+    const sent = t("Insights.messagesSent") ?? "Messages sent"
+    const remaining = t("Insights.messagesRemaining") ?? "Daily messages remaining"
+    const names = { sent: sent, remaining: remaining }
+    getChatHistory(today, tomorrow)
+      .then((data) => getRaw(data))
+      .then((data) => formatChatDataForDonut(data, drange, names, 50))
+      .then((data) => setDonut(<DonutChart data={data} theme={vizTheme} legendFullWidth legendPosition="right" />))
+  }
+
+  useEffect(() => refreshCharts(), [dates])
+  useEffect(() => refreshDonut(), [])
 
   return (
     <Page>
       <TitleBar />
       <Layout>
-        <Layout.Section fullWidth>
-          <AlphaCard>
-            <HorizontalStack align="space-between" blockAlign="start">
-              <CardTitle title={t("Insights.timeSeriesChartTitle")} linebreak />
-              <DateRangePicker onDateRangeChange={handleDateChange} />
-              {/* <Button size="slim" onClick={() => console.log(tsData)}> TEST </Button> */}
-            </HorizontalStack>
-            <VerticalStack inlineAlign="center">
-              {loading ? <Spinner /> : <LineChart data={tsData} theme={vizTheme} />}
-            </VerticalStack>
-          </AlphaCard>
+        <Layout.Section>
+          <Box
+            paddingInlineStart={{ xs: 4, sm: 0 }}
+            paddingInlineEnd={{ xs: 4, sm: 0 }}
+          >
+            <AlphaCard>
+              <HorizontalStack align="space-between" blockAlign="start">
+                <CardTitle title={t("Insights.timeSeriesChartTitle")} linebreak />
+                <DateRangePicker onDateRangeChange={handleDateChange} />
+              </HorizontalStack>
+              {ts}
+            </AlphaCard>
+          </Box>
+        </Layout.Section>
+        <Layout.Section oneHalf>
+          <Box
+            paddingInlineStart={{ xs: 4, sm: 0 }}
+            paddingInlineEnd={{ xs: 4, sm: 0 }}
+          >
+            <AlphaCard>
+              <CardTitle linebreak title={t("Insights.donutChartTitle")}></CardTitle>
+              {donut}
+            </AlphaCard>
+          </Box>
+        </Layout.Section>
+        <Layout.Section oneHalf>
+          <Box
+            paddingInlineStart={{ xs: 4, sm: 0 }}
+            paddingInlineEnd={{ xs: 4, sm: 0 }}
+          >
+            <AlphaCard>
+              <CardTitle linebreak title={t("Insights.distributionChartTitle")} />
+              {bar}
+            </AlphaCard>
+          </Box>
         </Layout.Section>
       </Layout>
     </Page>
   );
 }
+
+
+

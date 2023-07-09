@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Alfa" rel="stylesheet">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js" defer></script>
     <script src="{{ 'chat_bot.js' | asset_url }}" defer></script>
-
     {% style %}
     {{ block.settings.heading_font | font_face }}
       #chatbubble-window, #chatbubble-messages, #input-round-box, .initial-message-boxes  {
@@ -22,7 +21,6 @@
       #chatbubble-header {
         color: {{ block.settings.icon_fill }};
         background: {{ block.settings.icon_background_color }};
-
       }
       .close_button {
         color: {{ block.settings.icon_fill }};
@@ -37,7 +35,6 @@
     {% endstyle %}
   </head>
   <body>
-
     <div id="chatbubble">
       <button
         id="chatbubble-button"
@@ -76,7 +73,6 @@
           <div id="message-container">
             <div id="message">{{ block.settings.inline }}</div>
           </div>
-
           <button
             id="chatbubble_close"
             class="close_button"
@@ -104,7 +100,6 @@
         <div id="chatbubble-messages"><!-- Chat messages will be dynamically added here -->
         </div>
         <!-- <button id="stop-generating-button" onclick="stopGenerating()">Stop Generating</button> -->
-        
         <div id="input-round-box">
           <div id="chatbubble-input">
             <textarea
@@ -195,9 +190,6 @@
         ]
       }
     {% endschema %}
-
-
-
     <script>
       window.shopId = "{{ shop.id }}";
     </script>

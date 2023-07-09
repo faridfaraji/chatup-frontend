@@ -1,0 +1,62 @@
+{
+    "HomePage": {
+        "title": "Bem-vindo ao ChatUp",
+        "scanTitle": "Escanear sua loja",
+        "scanCopy": "O ChatUp analisa profundamente as políticas, páginas, produtos, informações de contato e dados de pedidos da sua loja, permitindo fornecer respostas altamente precisas às perguntas dos visitantes.",
+        "LastScanTitle": "Última verificação: {{ timeSince }} atrás",
+        "LastScanCopy": "O ChatUp mantém-se atualizado com as quantidades de produtos em tempo real, fornecendo as informações mais recentes nas últimas 24 horas.",
+        "settingsTitle": "Personalize a experiência do usuário",
+        "settingsCopy": "Alinhe o ChatUp com a imagem e as preferências da sua loja. Acesse o painel de configurações para moldar a personalidade e os limites do ChatUp.",
+        "embedTitle": "Personalize o ChatUp",
+        "embedCopy": "Desfrute do poder da personalização! Descubra uma variedade de opções de aparência para integrar perfeitamente o ChatUp à sua marca e ao tema existente. Confira nosso tutorial rápido para uma jornada de personalização tranquila."
+    },
+    "Configuration": {
+        "title": "Configuração do Aplicativo",
+        "negKeysTitle": "Palavras-chave Negativas",
+        "negKeysShort": "Ajuste o motor de IA do ChatUp à perfeição. Defina limites usando palavras-chave negativas para eliminar conversas irrelevantes. Se os visitantes mencionarem alguma dessas palavras-chave, o ChatUp responderá: (Eu sou um agente de suporte para nosso site. O tópico que você mencionou está fora do meu escopo, mas como mais posso ajudá-lo?)",
+        "negKeysCopy": "Adicione palavras-chave ou frases negativas individuais para obter resultados ideais. Salve-as separadamente para aprimorar o desempenho do ChatUp.",
+        "tempTitle": "Defina a Personalidade",
+        "tempShort": "Incorpore a essência da sua marca ao ChatUp. Escolha uma personalidade que se identifique melhor com sua proposta única de venda.",
+        "tempCopy": "Sua escolha de personalidade deve refletir a essência do que você vende.",
+        "bottomCopy": "Agora é hora de garantir que o ChatUp esteja visível em sua loja e que seus usuários possam utilizá-lo!"
+    },
+    "Insights": {
+        "timeSeriesChartTitle": "Tendências de Mensagens ao Longo do Tempo",
+        "funnelChartTitle": "Informações de Conversão",
+        "donutChartTitle": "Mensagens Diárias Restantes",
+"distributionChartTitle": "Distribuição de chats por horário do dia",
+"messagesRemaining": "Mensagens diárias restantes",
+"messagesSent": "Mensagens enviadas",
+"messages": "Mensagens",
+"conversation": "Conversas",
+        "barChartTitle": "Duração Média da Visita"
+    },
+    "ChatHistory": {
+        "pageTitle": ""
+    },
+    "NavigationMenu": {
+        "configuration": "Configuração",
+        "insights": "Informações",
+        "chatHistory": "Histórico de Chat"
+    },
+    "Button": {
+        "configuration": "Configurar Ajustes",
+        "embed": "Incorporar Extensão",
+        "scan": "Escanear Minha Loja",
+        "scanned": "Última verificação há {{ timeSince }} horas",
+        "scannedOne": "Última verificação há uma hora",
+        "scannedZero": "Verificado dentro da última hora",
+        "scanPending": "Escanando",
+        "scanError": "Erro na verificação - tente novamente",
+        "submit": "Enviar"
+    },
+    "NotFound": {
+        "description": "Ops! A página que você está procurando parece estar faltando. Verifique o URL ou use a barra de pesquisa para encontrar o que você precisa.",
+        "heading": "Página Não Encontrada"
+    },
+    "Dates": {
+        "today": "Hoje",
+        "yesterday": "Ontem",
+        "pastWeek": "Semana Passada"
+    }
+}

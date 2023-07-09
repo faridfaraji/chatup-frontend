@@ -112,7 +112,7 @@ if (!uniqueId || isExpired(uniqueId)) {
   console.log("Unique Id =", uniqueId);
 }
 
-var socket = io('https://0be0-34-125-95-96.ngrok-free.app/customer', {
+var socket = io('https://chat.awesoon.tech/customer', {
   transports: ['websocket', 'polling', 'xhr-polling'],
   autoConnect: false
 });

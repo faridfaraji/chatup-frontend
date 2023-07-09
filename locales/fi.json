@@ -1,0 +1,62 @@
+{
+    "HomePage": {
+        "title": "Tervetuloa ChatUpiin",
+        "scanTitle": "Skannaa Kauppaasi",
+        "scanCopy": "ChatUp tutkii perusteellisesti kauppasi politiikat, sivut, tuotteet, yhteystiedot ja tilaustiedot, mikä mahdollistaa tarkat vastaukset vierailijoiden kysymyksiin.",
+        "LastScanTitle": "Viimeisin Skannaus: {{ timeSince }} sitten",
+        "LastScanCopy": "ChatUp pysyy ajan tasalla reaaliaikaisista tuotemääristä ja tarjoaa sinulle viimeisimmät tiedot viimeisen 24 tunnin aikana.",
+        "settingsTitle": "Muokkaa Käyttökokemusta",
+        "settingsCopy": "Räätälöi ChatUp kauppasi tunnelmaan ja mieltymyksiin. Vieraile asetusten hallintapaneelissa muokataksesi ChatUpin persoonallisuutta ja rajauksia.",
+        "embedTitle": "Räätälöi ChatUp",
+        "embedCopy": "Hyödynnä räätälöinnin voima! Tutustu kosmeettisiin vaihtoehtoihin integroidaksesi ChatUpin saumattomasti brändisi ja nykyisen teeman kanssa. Tutustu nopeaan opastukseemme sujuvaa räätälöintimatkaa varten."
+    },
+    "Configuration": {
+        "title": "Sovelluksen Kokoonpano",
+        "negKeysTitle": "Kielteiset Avainsanat",
+        "negKeysShort": "Hienosäädä ChatUpin AI-moottori täydellisyyteen. Aseta rajat käyttämällä kielteisiä avainsanoja poistaaksesi epärelevantit keskustelut. Jos vierailijat mainitsevat mitään näistä avainsanoista, ChatUp vastaa: (Olen tukihenkilö verkkosivustollemme. Mainitsemasi aihe ei kuulu toimialaani, mutta kuinka voin muuten auttaa sinua?)",
+        "negKeysCopy": "Lisää yksittäisiä kielteisiä avainsanoja tai fraaseja optimaalisten tulosten saavuttamiseksi. Tallenna ne erikseen parantaaksesi ChatUpin suorituskykyä.",
+        "tempTitle": "Määritä Persoonallisuus",
+        "tempShort": "Anna ChatUpille brändisi ydin. Valitse persoonallisuus, joka resonoi parhaiten uniikin myyntiehdotuksesi kanssa.",
+        "tempCopy": "Persoonallisuusvalintasi tulisi heijastaa sitä, mitä myyt.",
+        "bottomCopy": "Nyt on aika varmistaa, että ChatUp näkyy kaupassasi ja käyttäjäsi voivat käyttää sitä!"
+    },
+    "Insights": {
+        "timeSeriesChartTitle": "Viestinnän Trendit Ajan Kuluessa",
+        "funnelChartTitle": "Muuntamisen Tiedot",
+        "donutChartTitle": "Jäljellä Olevat Päivittäiset Viestit",
+"distributionChartTitle": "Keskustelun jakautuminen vuorokaudenaikojen mukaan",
+"messagesRemaining": "Päivittäin jäljellä olevat viestit",
+"messagesSent": "Lähetetyt viestit",
+"messages": "Viestit",
+"conversation": "Keskustelut",
+        "barChartTitle": "Keskimääräinen Vierailun Kesto"
+    },
+    "ChatHistory": {
+        "pageTitle": ""
+    },
+    "NavigationMenu": {
+        "configuration": "Kokoonpano",
+        "insights": "Tiedot",
+        "chatHistory": "Keskusteluhistoria"
+    },
+    "Button": {
+        "configuration": "Määritä Asetukset",
+        "embed": "Upota Laajennus",
+        "scan": "Skannaa Kauppani",
+        "scanned": "Viimeksi skannattu {{ timeSince }} tuntia sitten",
+        "scannedOne": "Viimeksi skannattu tunti sitten",
+        "scannedZero": "Skannattu tunnin sisällä",
+        "scanPending": "Skannaus meneillään",
+        "scanError": "Virhe skannauksessa – yritä uudelleen",
+        "submit": "Lähetä"
+    },
+    "NotFound": {
+        "description": "Hupsista! Etsimääsi sivua ei löytynyt. Tarkista URL tai käytä hakupalkkia löytääksesi tarvitsemasi tiedot.",
+        "heading": "Sivua Ei Löytynyt"
+    },
+    "Dates": {
+        "today": "Tänään",
+        "yesterday": "Eilen",
+        "pastWeek": "Edellinen Viikko"
+    }
+}

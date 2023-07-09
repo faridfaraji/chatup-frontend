@@ -1,0 +1,62 @@
+{
+    "HomePage": {
+        "title": "Vítejte v ChatUp",
+        "scanTitle": "Skenování vašeho obchodu",
+        "scanCopy": "ChatUp prozkoumává podrobně politiky, stránky, produkty, kontaktní informace a údaje o objednávkách vašeho obchodu, což mu umožňuje poskytovat přesné odpovědi na dotazy návštěvníků.",
+        "LastScanTitle": "Poslední sken: před {{ timeSince }}",
+        "LastScanCopy": "ChatUp je vždy aktuální s počty produktů v reálném čase a poskytuje vám nejnovější informace za posledních 24 hodin.",
+        "settingsTitle": "Přizpůsobte si uživatelskou zkušenost",
+        "settingsCopy": "Vytvarujte si ChatUp podle atmosféry a preferencí vašeho obchodu. Navštivte panel nastavení, kde můžete upravit osobnost a hranice ChatUpu.",
+        "embedTitle": "Přizpůsobte si ChatUp",
+        "embedCopy": "Využijte sílu přizpůsobení! Objevte širokou škálu kosmetických možností, které vám umožní bezproblémově integrovat ChatUp do vašeho značení a stávajícího designu. Podívejte se na naše rychlé tutoriály pro snadnou přizpůsobovací cestu."
+    },
+    "Configuration": {
+        "title": "Konfigurace aplikace",
+        "negKeysTitle": "Negativní klíčová slova",
+        "negKeysShort": "Nastavte AI motor ChatUpu do dokonalosti. Použijte negativní klíčová slova pro nastavení hranic a eliminaci irelevantních konverzací. Pokud návštěvníci zmíní některá z těchto klíčových slov, ChatUp odpoví: (Jsem zákaznický zástupce naší webové stránky. Téma, které jste zmínil/a, přesahuje mé kompetence, ale jak jinak vám mohu pomoci?)",
+        "negKeysCopy": "Přidejte jednotlivá negativní klíčová slova nebo fráze pro optimální výsledky. Ukládejte je samostatně a zlepšete tak výkon ChatUpu.",
+        "tempTitle": "Definujte osobnost",
+        "tempShort": "Vložte do ChatUpu esenci vaší značky. Vyberte osobnost, která nejlépe odpovídá vašemu jedinečnému prodejnímu argumentu.",
+        "tempCopy": "Vaše volba osobnosti by měla odrážet podstatu toho, co prodáváte.",
+        "bottomCopy": "Nyní je čas zajistit, aby byl ChatUp viditelný ve vašem obchodě a aby jej vaši uživatelé mohli používat!"
+    },
+    "Insights": {
+        "timeSeriesChartTitle": "Trendy zpráv v průběhu času",
+        "funnelChartTitle": "Přehled konverzí",
+        "donutChartTitle": "Zbývající denní zprávy",
+"distributionChartTitle": "Rozložení chatu podle času v průběhu dne",
+"messagesRemaining": "Denní zbývající zprávy",
+"messagesSent": "Odeslané zprávy",
+"messages": "Zprávy",
+"conversation": "Konverzace",
+        "barChartTitle": "Průměrná délka návštěvy"
+    },
+    "ChatHistory": {
+        "pageTitle": ""
+    },
+    "NavigationMenu": {
+        "configuration": "Konfigurace",
+        "insights": "Přehledy",
+        "chatHistory": "Historie chatu"
+    },
+    "Button": {
+        "configuration": "Nastavit nastavení",
+        "embed": "Vložit rozšíření",
+        "scan": "Skenovat můj obchod",
+        "scanned": "Naposledy načteno před {{ timeSince }} hodinami",
+        "scannedOne": "Naposledy načteno před hodinou",
+        "scannedZero": "Načteno v průběhu poslední hodiny",
+        "scanPending": "Probíhá skenování",
+        "scanError": "Chyba skenování – opakovat",
+        "submit": "Odeslat"
+    },
+    "NotFound": {
+        "description": "Ups! Vypadá to, že stránka, kterou hledáte, chybí. Zkontrolujte URL nebo použijte vyhledávací pole k nalezení požadovaného obsahu.",
+        "heading": "Stránka nenalezená"
+    },
+    "Dates": {
+        "today": "Dnes",
+        "yesterday": "Včera",
+        "pastWeek": "Minulý týden"
+    }
+}

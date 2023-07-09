@@ -1,0 +1,62 @@
+{
+    "HomePage": {
+        "title": "歡迎來到ChatUp",
+        "scanTitle": "掃描您的商店",
+        "scanCopy": "ChatUp深入研究您商店的政策、頁面、產品、聯繫資訊和訂單資料，使其能夠對訪客的查詢提供高度準確的答案。",
+        "LastScanTitle": "上次掃描：{{ timeSince }}前",
+        "LastScanCopy": "ChatUp即時更新產品數量，在過去24小時內提供最新見解。",
+        "settingsTitle": "個人化使用者體驗",
+        "settingsCopy": "透過訪問設定儀表板，使ChatUp與您商店的氛圍和偏好相符。塑造ChatUp的個性和範圍。",
+        "embedTitle": "自訂ChatUp",
+        "embedCopy": "釋放自訂的力量！探索各種外觀選項，使ChatUp與您的品牌和現有主題無縫整合。查看我們的快速教學，輕鬆進行自訂之旅。"
+    },
+    "Configuration": {
+        "title": "應用程式配置",
+        "negKeysTitle": "負面關鍵字",
+        "negKeysShort": "將ChatUp的AI引擎調校到完美狀態。使用負面關鍵字設定邊界，消除無關的對話。如果訪客提到以下任何關鍵字，ChatUp將回覆：（我是我們網站的支援代理人。您提到的話題超出了我的範圍，但我還能如何協助您？）",
+        "negKeysCopy": "為了獲得最佳結果，請添加個別的負面關鍵字或詞語。單獨儲存它們以提升ChatUp的效能。",
+        "tempTitle": "定義個性",
+        "tempShort": "賦予ChatUp您品牌的精髓。選擇最符合您獨特銷售主張的個性。",
+        "tempCopy": "您的個性選擇應反映您所銷售產品的精髓。",
+        "bottomCopy": "現在是確保ChatUp在您的商店上可見，讓您的使用者可以使用它的時候了！"
+    },
+    "Insights": {
+        "timeSeriesChartTitle": "消息趨勢隨時間變化",
+        "funnelChartTitle": "轉化見解",
+        "donutChartTitle": "剩餘每日消息",
+"distributionChartTitle": "聊天時間分布",
+"messagesRemaining": "每日剩餘訊息",
+"messagesSent": "已傳送訊息",
+"messages": "訊息",
+"conversation": "對話",
+        "barChartTitle": "平均訪問時長"
+    },
+    "ChatHistory": {
+        "pageTitle": ""
+    },
+    "NavigationMenu": {
+        "configuration": "配置",
+        "insights": "見解",
+        "chatHistory": "聊天歷史"
+    },
+    "Button": {
+        "configuration": "設定配置",
+        "embed": "嵌入擴充功能",
+        "scan": "掃描我的商店",
+        "scanned": "上次掃描：{{ timeSince }}小時前",
+        "scannedOne": "上次掃描：一小時前",
+        "scannedZero": "一小時內掃描",
+        "scanPending": "正在掃描",
+        "scanError": "掃描錯誤 - 重試",
+        "submit": "提交"
+    },
+    "NotFound": {
+        "description": "糟糕！您正在尋找的頁面似乎已經遺失。請仔細檢查URL或使用搜尋欄位尋找您需要的內容。",
+        "heading": "找不到頁面"
+    },
+    "Dates": {
+        "today": "今天",
+        "yesterday": "昨天",
+        "pastWeek": "過去一週"
+    }
+}
