@@ -1,20 +1,17 @@
 import { Box, Button, HorizontalStack, SkeletonDisplayText, Spinner } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
-import { useLatestScan, useScanner, useShop } from "../../hooks";
+import { useLatestScan, useScanner } from "../../hooks";
 import { useCallback, useEffect, useState } from "react";
 import { PlayMinor, RefreshMinor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
 
 export const ScanButton = () => {
     const { t } = useTranslation();
     const scanShop = useScanner();
-    const getShop = useShop();
     const getScan = useLatestScan();
     const [button, setButton] = useState(<Button disabled={true} />)
 
     const load = () => {
-        getShop()
-            .then((shop) => getScan(shop.latest_scan_id))
-            .then((scan) => refreshButton(scan))
+        getScan().then((scan) => refreshButton(scan))
     }
 
     useEffect(() => load(), [])

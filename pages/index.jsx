@@ -1,7 +1,7 @@
 import { SkeletonHomePage, LoadedHomePage } from "../components";
 import { useEffect, useState } from "react";
 import ExitIframe from "../pages/ExitIframe";
-import { useBilling, useLatestScan, useShop } from "../hooks";
+import { useBilling } from "../hooks";
 
 export default function HomePage() {
   const [loading, setLoading] = useState(true);
