@@ -10,6 +10,7 @@ import { DateRangePicker } from "../components/DateRangePicker";
 import { getRaw, formatChatDataForTS, formatChatDataForDonut, formatChatDataForBar } from "../utils/dataUtils";
 import { zeroRange } from "../utils/dateUtils"
 import { CenteredSpinner } from "../components/misc";
+import { RefreshMinor } from '@shopify/polaris-icons';
 
 
 export default function Insights() {
@@ -24,6 +25,8 @@ export default function Insights() {
   // Get and set raw dates and data
   const getChatHistory = useChatHistory();
   const [dates, setDates] = useState({});
+  // TODO get and set max daily messages for shop's subscription tier
+  const maxDailyMessages = 200
 
   // the charts themselves
   const [ts, setTS] = useState(<CenteredSpinner />);
@@ -71,18 +74,41 @@ export default function Insights() {
     const names = { sent: sent, remaining: remaining }
     getChatHistory(today, tomorrow)
       .then((data) => getRaw(data))
-      .then((data) => formatChatDataForDonut(data, drange, names, 50))
-      .then((data) => setDonut(<DonutChart data={data} theme={vizTheme} legendFullWidth legendPosition="right" />))
+      .then((data) => formatChatDataForDonut(data, maxDailyMessages))
+      .then((data) => setDonut(
+        <DonutChart
+          data={data}
+          theme={vizTheme}
+          showLegend={false}
+          legendPosition="top"
+          renderInnerValueContent={() => {
+            return <div>
+              <Text variant="bodyLg" fontWeight="bold">
+                {`${data[0].data[0].value}`}
+              </Text>
+              <Text variant="bodySm">
+                {`/ ${maxDailyMessages}`}
+              </Text>
+            </div>
+          }}
+        />
+      ))
+  }
+
+  const refreshAllCharts = () => {
+    refreshCharts()
+    refreshDonut()
   }
 
   useEffect(() => refreshCharts(), [dates])
   useEffect(() => refreshDonut(), [])
 
+
   return (
     <Page>
       <TitleBar />
       <Layout>
-        <Layout.Section>
+        <Layout.Section fullWidth>
           <Box
             paddingInlineStart={{ xs: 4, sm: 0 }}
             paddingInlineEnd={{ xs: 4, sm: 0 }}
@@ -90,13 +116,16 @@ export default function Insights() {
             <AlphaCard>
               <HorizontalStack align="space-between" blockAlign="start">
                 <CardTitle title={t("Insights.timeSeriesChartTitle")} linebreak />
-                <DateRangePicker onDateRangeChange={handleDateChange} />
+                <HorizontalStack>
+                  <Button primary icon={RefreshMinor} onClick={() => refreshAllCharts()}></Button>
+                  <DateRangePicker onDateRangeChange={handleDateChange} />
+                </HorizontalStack>
               </HorizontalStack>
               {ts}
             </AlphaCard>
           </Box>
         </Layout.Section>
-        <Layout.Section oneHalf>
+        <Layout.Section oneThird>
           <Box
             paddingInlineStart={{ xs: 4, sm: 0 }}
             paddingInlineEnd={{ xs: 4, sm: 0 }}
@@ -107,7 +136,7 @@ export default function Insights() {
             </AlphaCard>
           </Box>
         </Layout.Section>
-        <Layout.Section oneHalf>
+        <Layout.Section>
           <Box
             paddingInlineStart={{ xs: 4, sm: 0 }}
             paddingInlineEnd={{ xs: 4, sm: 0 }}

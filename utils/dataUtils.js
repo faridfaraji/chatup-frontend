@@ -3,7 +3,7 @@ import { formatHours, formatOneDay, formatOneDayHours } from "./dateUtils"
 export const getRaw = (chats) => {
     return chats?.map((chat) => {
         return {
-            timestamp: new Date(chat.timestamp),
+            timestamp: new Date(`${chat.timestamp}+00:00`),
             message_count: chat.messages.length
         }
     })
@@ -13,8 +13,8 @@ const getTimeStep = (start, end) => {
     const diffMillis = end - start
     const diffDays = Math.floor(diffMillis / (1000 * 60 * 60 * 24))
     const breaks = [
-        { dur: 1, step: 4, },
-        { dur: 3, step: 8, },
+        { dur: 1, step: 3, },
+        { dur: 3, step: 6, },
         { dur: 5, step: 12, },
     ]
     const step = breaks.find((bp) => diffDays <= bp.dur)
@@ -68,38 +68,20 @@ export const formatChatDataForTS = (chats, dates, names) => {
     return timeSeries
 }
 
-const getDonut = (array, chats, names, max) => {
-    const messages = array.map((bucket) => {
-        return {
-            name: bucket.name,
-            data: [{
-                key: names.sent,
-                value: 0
-            }]
-        }
-    })
-    chats.forEach((chat) => {
-        const index = array.findIndex((bucket) => chat.timestamp <= bucket.timestamp)
-        if (index > -1) {
-            messages[index].data[0].value += chat.message_count
-        }
-    })
+export const formatChatDataForDonut = (chats, max) => {
+    const donut = []
     let message_total = 0
     chats.forEach((chat) => message_total += chat.message_count)
     const remaining = max > message_total ? max - message_total : 0
-    messages.push({ name: names.remaining, data: [{ key: names.sent, value: remaining }] })
-
-    return messages
-}
-
-export const formatChatDataForDonut = (chats, dates, names, max) => {
-    const array = getTimeArray(dates.since, dates.until, 6 * 60 * 60 * 1000)
-    const donut = getDonut(array, chats, names, max)
+    donut.push({ name: "0", data: [{key: "0", value: message_total}]})
+    donut.push({ name: "1", data: [{ key: "1", value: -remaining }] })
+    donut.push({ name: "2", data: [{ key: "2", value: remaining }] })
+    
     return donut
 }
 
 export const formatChatDataForBar = (chats, dates, names) => {
-    const array = getTimeArray(dates.since, dates.until, 4 * 60 * 60 * 1000)
+    const array = getTimeArray(dates.since, dates.until, 3 * 60 * 60 * 1000)
     const year = dates.since.getFullYear()
     const month = dates.since.getMonth()
     const date = dates.since.getDate()

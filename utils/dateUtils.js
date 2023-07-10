@@ -23,11 +23,11 @@ function padZero(value) {
 
 export const formatHours = (date1, date2) => {
     // Get the hours from the Date objects
-    const firstHour = date1.getHours().toString().padStart(2, '0');
-    const secondHour = date2.getHours().toString().padStart(2, '0');
+    const firstHour = date1.toLocaleTimeString([], { hour: "numeric" })
+    const secondHour = date2.toLocaleTimeString([], { hour: "numeric" })
 
     // Create the reduced string in the format "HH-HH"
-    const HHHH = `${firstHour}-${secondHour === "00" ? "24" : secondHour}`;
+    const HHHH = `${firstHour}-${secondHour}`;
 
     return HHHH
 }
@@ -47,8 +47,8 @@ export const formatOneDay = (date) => {
 
 export const formatOneDayHours = (date1, date2) => {
     // Get the hours from the Date objects
-    const firstHour = date1.getHours().toString().padStart(2, '0');
-    const secondHour = date2.getHours().toString().padStart(2, '0');
+    const firstHour = date1.toLocaleTimeString([], { hour: "numeric" })
+    const secondHour = date2.toLocaleTimeString([], { hour: "numeric" })
 
     // date1 will always be the right date. date 2 can be midnight tomorrow
     // Get the month
@@ -58,7 +58,17 @@ export const formatOneDayHours = (date1, date2) => {
     const day = date1.getDate().toString().padStart(2, '0');
 
     // Create the reduced string in the format "(MM-DD) HH-HH"
-    const MDHH = `(${month}-${day}) ${firstHour}-${secondHour === "00" ? "24" : secondHour}`;
+    const MDHH = `(${month}-${day}) ${firstHour}-${secondHour}`;
 
     return MDHH
+}
+
+export const getTimeSince = (time) => {
+    const since_time = new Date(time)
+    const curr_time = new Date();
+    const diffInMilliseconds = Math.abs(curr_time - since_time);
+    const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+    const diffInHours = Math.floor(diffInMinutes / 60)
+
+    return diffInHours
 }
