@@ -6,10 +6,36 @@ const formatOffset = (offsetMinutes) => {
     return formattedOffset;
 }
 
-export const zeroRange = (range) => {
-    const date = new Date();
-    const timezoneOffsetMinutes = date.getTimezoneOffset();
-    const offsetString = formatOffset(timezoneOffsetMinutes);
+function timeZoneOffsetInMinutes(ianaTimeZone) {
+    const now = new Date();
+    now.setSeconds(0, 0);
+
+    // Format current time in `ianaTimeZone` as `M/DD/YYYY, HH:MM:SS`:
+    const tzDateString = now.toLocaleString('en-US', {
+        timeZone: ianaTimeZone,
+        hourCycle: 'h23',
+    });
+
+    // Parse formatted date string:
+    const match = /(\d+)\/(\d+)\/(\d+), (\d+):(\d+)/.exec(tzDateString);
+    const [_, month, day, year, hour, min] = match.map(Number);
+
+    // Change date string's time zone to UTC and get timestamp:
+    const tzTime = Date.UTC(year, month - 1, day, hour, min);
+
+    // Return the offset between UTC and target time zone:
+    return Math.floor((tzTime - now.getTime()) / (1000 * 60));
+}
+
+export const zeroRange = (range, iana) => {
+    const now = new Date();
+    let offsetMinutes = now.getTimezoneOffset()
+    try { 
+        offsetMinutes = timeZoneOffsetInMinutes(iana) 
+    } catch (err) { 
+        console.log("Shop timezone invalid, using browser.", err)
+    }
+    const offsetString = formatOffset(offsetMinutes);
     const sinceDateTime = new Date(`${range.since} 00:00:00${offsetString}`)
     const untilDateTime = new Date(`${range.until} 00:00:00${offsetString}`)
     untilDateTime.setDate(untilDateTime.getDate() + 1)
@@ -74,23 +100,4 @@ export const getTimeSince = (time) => {
 }
 
 
-function timeZoneOffsetInMinutes(ianaTimeZone) {
-    const now = new Date();
-    now.setSeconds(0, 0);
 
-    // Format current time in `ianaTimeZone` as `M/DD/YYYY, HH:MM:SS`:
-    const tzDateString = now.toLocaleString('en-US', {
-        timeZone: ianaTimeZone,
-        hourCycle: 'h23',
-    });
-
-    // Parse formatted date string:
-    const match = /(\d+)\/(\d+)\/(\d+), (\d+):(\d+)/.exec(tzDateString);
-    const [_, month, day, year, hour, min] = match.map(Number);
-
-    // Change date string's time zone to UTC and get timestamp:
-    const tzTime = Date.UTC(year, month - 1, day, hour, min);
-
-    // Return the offset between UTC and target time zone:
-    return Math.floor((tzTime - now.getTime()) / (1000 * 60));
-}

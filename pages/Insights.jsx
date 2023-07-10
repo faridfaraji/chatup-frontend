@@ -4,27 +4,54 @@ import { useTranslation } from "react-i18next";
 import '@shopify/polaris-viz/build/esm/styles.css';
 import { BarChart, DonutChart, FunnelChart, LineChart } from "@shopify/polaris-viz";
 import { CardTitle } from "../components";
-import { useChatHistory } from "../hooks";
+import { useChatHistory, useTimezone } from "../hooks";
 import { useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { getRaw, formatChatDataForTS, formatChatDataForDonut, formatChatDataForBar } from "../utils/dataUtils";
 import { zeroRange } from "../utils/dateUtils"
-import { CenteredSpinner } from "../components/misc";
+import { AutoRefresh, CenteredSpinner } from "../components/misc";
 import { RefreshMinor } from '@shopify/polaris-icons';
 
 
 export default function Insights() {
-  const today = new Date();
+  const now = new Date()
+  const twoFourAgo = new Date(now)
+  twoFourAgo.setDate(now.getDate() - 1)
+
+  const today = new Date(now);
   today.setHours(0, 0, 0, 0);
+
+  const yesterday = new Date(today)
+  yesterday.setDate(today.getDate() - 1)
 
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
 
   const { t } = useTranslation();
 
-  // Get and set raw dates and data
+  // fetch data from dbs
   const getChatHistory = useChatHistory();
   const [dates, setDates] = useState({});
+  const getIana = useTimezone();
+  const [iana, setIana] = useState("")
+
+  useEffect(() => { getIana().then((response) => setIana(response)) }, [])
+
+  // auto refresh
+  const [checked, setChecked] = useState(false);
+  const valid = dates?.since >= yesterday
+
+  const autoRefreshFun = () => {
+    if (checked && valid) {
+      // refreshAllCharts()
+      console.log("refreshing")
+    }
+    setTimeout(autoRefreshFun, 5 * 1000)
+  }
+
+  useEffect(() => setTimeout(() => autoRefreshFun(), 5 * 1000), [])
+
+
   // TODO get and set max daily messages for shop's subscription tier
   const maxDailyMessages = 200
 
@@ -35,7 +62,7 @@ export default function Insights() {
 
   // Update ts and bar when dates change
   const handleDateChange = (range) => {
-    const formattedDates = zeroRange(range)
+    const formattedDates = zeroRange(range, iana)
     setDates(formattedDates)
   }
 
@@ -45,7 +72,7 @@ export default function Insights() {
   const refreshCharts = () => {
     setTS(<CenteredSpinner />)
     setBar(<CenteredSpinner />)
-    const since = dates.since ?? today
+    const since = dates.since ?? yesterday
     const until = dates.until ?? tomorrow
     const tsRange = { since: since, until: until }
     const barRange = { since: today, until: tomorrow }
@@ -68,7 +95,7 @@ export default function Insights() {
 
   const refreshDonut = () => {
     setDonut(<CenteredSpinner />)
-    const drange = { since: today, until: tomorrow }
+    const drange = { since: twoFourAgo, until: now }
     const sent = t("Insights.messagesSent") ?? "Messages sent"
     const remaining = t("Insights.messagesRemaining") ?? "Daily messages remaining"
     const names = { sent: sent, remaining: remaining }
@@ -107,20 +134,22 @@ export default function Insights() {
   return (
     <Page>
       <TitleBar />
+      <CardTitle title={t("NavigationMenu.insights")} linebreak />
       <Layout>
+        <Layout.Section fullWidth>
+          <HorizontalStack align="space-between" blockAlign="center">
+            <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
+            <AutoRefresh checked={checked} setChecked={setChecked} invalidText={t("Insights.invalidRefresh")} valid={valid} />
+            {/* <Button primary size="slim" icon={RefreshMinor} onClick={() => refreshAllCharts()}></Button> */}
+          </HorizontalStack>
+        </Layout.Section>
         <Layout.Section fullWidth>
           <Box
             paddingInlineStart={{ xs: 4, sm: 0 }}
             paddingInlineEnd={{ xs: 4, sm: 0 }}
           >
             <AlphaCard>
-              <HorizontalStack align="space-between" blockAlign="start">
-                <CardTitle title={t("Insights.timeSeriesChartTitle")} linebreak />
-                <HorizontalStack>
-                  <Button primary icon={RefreshMinor} onClick={() => refreshAllCharts()}></Button>
-                  <DateRangePicker onDateRangeChange={handleDateChange} />
-                </HorizontalStack>
-              </HorizontalStack>
+              <CardTitle title={t("Insights.timeSeriesChartTitle")} linebreak />
               {ts}
             </AlphaCard>
           </Box>
