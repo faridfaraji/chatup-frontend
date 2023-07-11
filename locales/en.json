@@ -35,9 +35,10 @@
     "remaining": "Remaining",
     "messagesSent": "Messages sent",
     "messages": "Messages",
+    "comparison": "Comparison",
     "conversation": "Conversations",
     "barChartTitle": "Average Visit Duration",
-    "invalidRefresh": "Auto-refresh is only available for data from the past two days"
+    "invalidRefresh": "Auto-refresh is only available for data from the past day"
   },
   "ChatHistory": {
     "pageTitle": ""

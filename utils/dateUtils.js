@@ -27,20 +27,19 @@ function timeZoneOffsetInMinutes(ianaTimeZone) {
     return Math.floor((tzTime - now.getTime()) / (1000 * 60));
 }
 
-export const zeroRange = (range, iana) => {
+export const zeroRange = (range) => {
     const now = new Date();
     let offsetMinutes = now.getTimezoneOffset()
-    try {
-        offsetMinutes = timeZoneOffsetInMinutes(iana)
-    } catch (err) {
-        console.log("Shop timezone invalid, using browser.", err)
-    }
     const offsetString = formatOffset(offsetMinutes);
     const sinceDateTime = new Date(`${range.since} 00:00:00${offsetString}`)
     const untilDateTime = new Date(`${range.until} 00:00:00${offsetString}`)
     untilDateTime.setDate(untilDateTime.getDate() + 1)
     const newRange = { since: sinceDateTime, until: untilDateTime }
     return newRange
+}
+
+export const compRange = (range) => {
+    return { since: new Date(2 * range.since - range.until), until: range.since }
 }
 
 function padZero(value) {
@@ -104,6 +103,25 @@ export const formatDayHour = (date) => {
     return formatted
 }
 
+const isOneDay = (date1, date2) => {
+    const diffMillis = Math.abs(date2 - date1)
+    const oneDay = 24 * 60 * 60 * 1000
+    return diffMillis <= oneDay
+}
+
+export const formatRange = (range) => {
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { month: "short", day: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = isOneDay(range.since, range.until) ?
+        formatter.format(range.since) :
+        formatter.formatRange(range.since, range.until)
+    return formatted
+}
+
 export const getTimeSince = (time) => {
     const since_time = new Date(time)
     const curr_time = new Date();
@@ -114,5 +132,8 @@ export const getTimeSince = (time) => {
     return diffInHours
 }
 
-
-
+export const setYMD = (date, year, month, day) => {
+    date.setYear(year)
+    date.setMonth(month)
+    date.setDate(day)
+}

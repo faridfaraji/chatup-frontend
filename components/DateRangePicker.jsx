@@ -19,14 +19,6 @@ export const DateRangePicker = ({ onDateRangeChange, activatorSize }) => {
 
   const ranges = [
     {
-      title: t("Dates.pastTwo"),
-      alias: "pastTwo",
-      period: {
-        since: yesterday,
-        until: today,
-      },
-    },
-    {
       title: t("Dates.today"),
       alias: "today",
       period: {

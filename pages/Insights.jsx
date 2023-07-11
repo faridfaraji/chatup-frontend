@@ -2,36 +2,41 @@ import { AlphaCard, Page, Layout, Text, HorizontalStack, Box, Button, Spinner, V
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import '@shopify/polaris-viz/build/esm/styles.css';
-import { BarChart, ComboChart, DonutChart, FunnelChart, LineChart } from "@shopify/polaris-viz";
+import { BarChart, DonutChart, FunnelChart, Legend, LineChart } from "@shopify/polaris-viz";
 import { CardTitle } from "../components";
 import { useChatHistory, useTimezone } from "../hooks";
 import { useCallback, useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { getRaw, formatChatDataForTS, formatChatDataForDonut, formatChatDataForBar } from "../utils/dataUtils";
-import { zeroRange } from "../utils/dateUtils"
+import { zeroRange, compRange, formatRange } from "../utils/dateUtils"
 import { CenteredSpinner } from "../components/misc";
 import { QuestionMarkInverseMinor } from '@shopify/polaris-icons';
+import { useMessageCounts } from "../hooks/useMessageCounts";
 
 
 export default function Insights() {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  // en: today
+  const kyou = new Date();
+  kyou.setHours(0, 0, 0, 0);
 
-  const yesterday = new Date(today)
-  yesterday.setDate(today.getDate() - 1)
+  // en: yesterday
+  const kinou = new Date(kyou)
+  kinou.setDate(kyou.getDate() - 1)
 
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
+  // en: the day before yesterday
+  const ototoi = new Date(kyou)
+  ototoi.setDate(kyou.getDate() - 2)
+
+  // en: tomorrow
+  const ashita = new Date(kyou);
+  ashita.setDate(kyou.getDate() + 1);
 
   const { t } = useTranslation();
 
   // fetch data from dbs
-  const getChatHistory = useChatHistory();
+  const getMessages = useMessageCounts();
   const [dates, setDates] = useState({});
-  const getIana = useTimezone();
-  const [iana, setIana] = useState("")
-
-  useEffect(() => { getIana().then((response) => setIana(response)) }, [])
+  const [compDates, setCompDates] = useState({});
 
   // auto refresh
   const refreshAllCharts = () => {
@@ -39,7 +44,7 @@ export default function Insights() {
     refreshDonut()
   }
 
-  const refreshable = !(dates?.since < yesterday) && !(dates?.until < new Date())
+  const refreshable = !(dates?.since < kyou)
   const [checked, setChecked] = useState(false);
   const handleCheck = useCallback((newChecked) => setChecked(newChecked), [])
 
@@ -72,8 +77,9 @@ export default function Insights() {
 
   // Update ts and bar when dates change
   const handleDateChange = (range) => {
-    const formattedDates = zeroRange(range, iana)
+    const formattedDates = zeroRange(range)
     setDates(formattedDates)
+    setCompDates(compRange(formattedDates))
   }
 
   // Refresh the chart whenever the data changes
@@ -82,19 +88,23 @@ export default function Insights() {
   const refreshCharts = () => {
     setTS(<CenteredSpinner />)
     setBar(<CenteredSpinner />)
-    const since = dates.since ?? yesterday
-    const until = dates.until ?? tomorrow
-    const tsRange = { since: since, until: until }
-    const barRange = { since: today, until: tomorrow }
-    const conversations = t("Insights.conversation") ?? "Conversations"
-    const messages = t("Insights.messages") ?? "Messages"
-    const names = { conversations: conversations, messages: messages }
-    getChatHistory(since, until)
-      .then((data) => getRaw(data))
+    const primeSince = dates.since ?? kyou
+    const primeUntil = dates.until ?? ashita
+    const compSince = compDates.since ?? kinou
+    const compUntil = compDates.until ?? kyou
+    const primeRange = { since: primeSince, until: primeUntil }
+    const compRange = { since: compSince, until: compUntil }
+    const barRange = { since: kyou, until: ashita }
+    const primeRangeName = formatRange(primeRange)
+    const compRangeName = formatRange(compRange)
+    const names = { prime: primeRangeName, comp: compRangeName }
+    // right now only supporting a single prime/comp range where prime.since = comp.until
+    getMessages(compSince, primeUntil)
+      .then((data) => (getRaw(data)))
       .then((data) => {
         return {
-          ts: formatChatDataForTS(data, tsRange, names),
-          bar: formatChatDataForBar(data, barRange, names)
+          ts: formatChatDataForTS(data, primeRange, compRange, names),
+          bar: formatChatDataForBar(data, barRange, primeRange.since, names)
         }
       })
       .then((data) => {
@@ -112,7 +122,7 @@ export default function Insights() {
     const remaining = t("Insights.remaining") ?? "Remaining"
     const key = t("Dates.today") ?? "Today"
     const names = { sent: used, remaining: remaining, key: key }
-    getChatHistory(since, until)
+    getMessages(since, until)
       .then((data) => getRaw(data))
       .then((data) => formatChatDataForDonut(data, names, maxDailyMessages))
       .then((data) => setDonut(
