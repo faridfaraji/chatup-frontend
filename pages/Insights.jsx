@@ -1,17 +1,15 @@
-import { AlphaCard, Page, Layout, Text, HorizontalStack, Box, Button, Spinner, VerticalStack, Checkbox, Tooltip, Icon } from "@shopify/polaris";
-import { TitleBar } from "@shopify/app-bridge-react";
+import { AlphaCard, Page, Layout, Text, HorizontalStack, Box, Checkbox, Tooltip, Icon } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import '@shopify/polaris-viz/build/esm/styles.css';
-import { BarChart, DonutChart, FunnelChart, Legend, LineChart } from "@shopify/polaris-viz";
+import { BarChart, DonutChart, LineChart } from "@shopify/polaris-viz";
 import { CardTitle } from "../components";
-import { useChatHistory, useTimezone } from "../hooks";
 import { useCallback, useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { getRaw, formatChatDataForTS, formatChatDataForDonut, formatChatDataForBar } from "../utils/dataUtils";
 import { zeroRange, compRange, formatRange } from "../utils/dateUtils"
 import { CenteredSpinner } from "../components/misc";
 import { QuestionMarkInverseMinor } from '@shopify/polaris-icons';
-import { useMessageCounts } from "../hooks/useMessageCounts";
+import { useMessageCounts } from "../hooks";
 
 
 export default function Insights() {
