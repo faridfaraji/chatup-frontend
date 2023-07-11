@@ -99,7 +99,7 @@ export default function Insights() {
       })
       .then((data) => {
         setTS(<LineChart data={data.ts} theme={vizTheme} />)
-        setBar(<BarChart data={data.bar} theme={vizTheme} />)
+        setBar(<BarChart data={data.bar} theme={vizTheme} xAxisOptions={{ "hide": true }} />)
       })
   }
 

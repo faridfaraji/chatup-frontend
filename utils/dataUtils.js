@@ -1,4 +1,4 @@
-import { formatHours, formatOneDay, formatOneDayHours } from "./dateUtils"
+import { formatHour, formatDayHour, formatHours, formatOneDay, formatOneDayHours } from "./dateUtils"
 
 export const getRaw = (chats) => {
     return chats?.map((chat) => {
@@ -31,9 +31,10 @@ const getTimeArray = (start, end, step) => {
     while (currentTime <= end) {
         const prevTime = timeArray.slice(-1).pop()?.timestamp ?? currentTime
         const nextTime = new Date(currentTime.getTime() + step)
-        const name = diffDays === 1 ? formatHours(prevTime, currentTime) :
-            diffDays < 6 ? formatOneDayHours(prevTime, currentTime) :
-                formatOneDay(prevTime)
+        let name = diffDays < 1 ? formatHour(currentTime) : formatDayHour(currentTime)
+        if(step > 1 * 60 * 60 * 1000) {
+            name = diffDays <= 1 ? formatHours(prevTime, currentTime) : formatOneDayHours(prevTime, currentTime)
+        }
         timeArray.push({ name: name, timestamp: currentTime })
         currentTime = nextTime
     }
@@ -62,7 +63,8 @@ const getTimeSeries = (timeArray, chats, names) => {
 }
 
 export const formatChatDataForTS = (chats, dates, names) => {
-    const step = getTimeStep(dates.since, dates.until)
+    const step = 1 * 60 * 60 * 1000
+    // getTimeStep(dates.since, dates.until)
     const array = getTimeArray(dates.since, dates.until, step)
     const timeSeries = getTimeSeries(array, chats, names)
     return timeSeries
@@ -80,7 +82,7 @@ export const formatChatDataForDonut = (chats, names, max) => {
 }
 
 export const formatChatDataForBar = (chats, dates, names) => {
-    const array = getTimeArray(dates.since, dates.until, 3 * 60 * 60 * 1000)
+    const array = getTimeArray(dates.since, dates.until, 4 * 60 * 60 * 1000)
     const year = dates.since.getFullYear()
     const month = dates.since.getMonth()
     const date = dates.since.getDate()

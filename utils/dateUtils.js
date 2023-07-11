@@ -60,6 +60,17 @@ export const formatHours = (date1, date2) => {
     return formatted
 }
 
+export const formatHour = (date) => {
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { hour: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = formatter.format(date)
+    return formatted
+}
+
 export const formatOneDay = (date) => {
     // Compatibility:
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
@@ -79,6 +90,17 @@ export const formatOneDayHours = (date1, date2) => {
     let options = { hour: "numeric", month: "short", day: "numeric" }
     let formatter = Intl.DateTimeFormat(locale = locale, options = options)
     const formatted = formatter.formatRange(date1, date2)
+    return formatted
+}
+
+export const formatDayHour = (date) => {
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { hour: "numeric", month: "short", day: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = formatter.format(date)
     return formatted
 }
 
