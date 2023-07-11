@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLatestScan, useScanner } from "../../hooks";
 import { useCallback, useEffect, useState } from "react";
 import { PlayMinor, RefreshMinor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
+import { getTimeSince } from "../../utils/dateUtils";
 
 export const ScanButton = () => {
     const { t } = useTranslation();
@@ -45,16 +46,6 @@ export const ScanButton = () => {
             .then((new_scan_id) => getScan(new_scan_id))
             .then((new_scan) => refreshButton(new_scan))
     })
-
-    const getTimeSince = (time) => {
-        const since_time = new Date(time)
-        const curr_time = new Date();
-        const diffInMilliseconds = Math.abs(curr_time - since_time);
-        const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
-        const diffInHours = Math.floor(diffInMinutes / 60)
-
-        return diffInHours
-    }
 
     return button
 }

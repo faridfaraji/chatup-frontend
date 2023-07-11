@@ -6,10 +6,31 @@ const formatOffset = (offsetMinutes) => {
     return formattedOffset;
 }
 
+function timeZoneOffsetInMinutes(ianaTimeZone) {
+    const now = new Date();
+    now.setSeconds(0, 0);
+
+    // Format current time in `ianaTimeZone` as `M/DD/YYYY, HH:MM:SS`:
+    const tzDateString = now.toLocaleString('en-US', {
+        timeZone: ianaTimeZone,
+        hourCycle: 'h23',
+    });
+
+    // Parse formatted date string:
+    const match = /(\d+)\/(\d+)\/(\d+), (\d+):(\d+)/.exec(tzDateString);
+    const [_, month, day, year, hour, min] = match.map(Number);
+
+    // Change date string's time zone to UTC and get timestamp:
+    const tzTime = Date.UTC(year, month - 1, day, hour, min);
+
+    // Return the offset between UTC and target time zone:
+    return Math.floor((tzTime - now.getTime()) / (1000 * 60));
+}
+
 export const zeroRange = (range) => {
-    const date = new Date();
-    const timezoneOffsetMinutes = date.getTimezoneOffset();
-    const offsetString = formatOffset(timezoneOffsetMinutes);
+    const now = new Date();
+    let offsetMinutes = now.getTimezoneOffset()
+    const offsetString = formatOffset(offsetMinutes);
     const sinceDateTime = new Date(`${range.since} 00:00:00${offsetString}`)
     const untilDateTime = new Date(`${range.until} 00:00:00${offsetString}`)
     untilDateTime.setDate(untilDateTime.getDate() + 1)
@@ -17,48 +38,102 @@ export const zeroRange = (range) => {
     return newRange
 }
 
+export const compRange = (range) => {
+    return { since: new Date(2 * range.since - range.until), until: range.since }
+}
+
 function padZero(value) {
     return String(value).padStart(2, "0");
 }
 
 export const formatHours = (date1, date2) => {
-    // Get the hours from the Date objects
-    const firstHour = date1.getHours().toString().padStart(2, '0');
-    const secondHour = date2.getHours().toString().padStart(2, '0');
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { hour: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const fdate1 = formatter.format(date1)
+    const fdate2 = formatter.format(date2)
+    const formatted = `${fdate1} - ${fdate2}`
+    return formatted
+}
 
-    // Create the reduced string in the format "HH-HH"
-    const HHHH = `${firstHour}-${secondHour === "00" ? "24" : secondHour}`;
-
-    return HHHH
+export const formatHour = (date) => {
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { hour: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = formatter.format(date)
+    return formatted
 }
 
 export const formatOneDay = (date) => {
-    // Get the month
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-
-    // Get the date
-    const day = date.getDate().toString().padStart(2, '0');
-
-    // Create the reduced string in the format "MM-DD"
-    const MD = `${month}-${day}`;
-
-    return MD
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { month: "short", day: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = formatter.format(date)
+    return formatted
 }
 
 export const formatOneDayHours = (date1, date2) => {
-    // Get the hours from the Date objects
-    const firstHour = date1.getHours().toString().padStart(2, '0');
-    const secondHour = date2.getHours().toString().padStart(2, '0');
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { hour: "numeric", month: "short", day: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = formatter.formatRange(date1, date2)
+    return formatted
+}
 
-    // date1 will always be the right date. date 2 can be midnight tomorrow
-    // Get the month
-    const month = (date1.getMonth() + 1).toString().padStart(2, '0');
+export const formatDayHour = (date) => {
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { hour: "numeric", month: "short", day: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = formatter.format(date)
+    return formatted
+}
 
-    // Get the date
-    const day = date1.getDate().toString().padStart(2, '0');
+const isOneDay = (date1, date2) => {
+    const diffMillis = Math.abs(date2 - date1)
+    const oneDay = 24 * 60 * 60 * 1000
+    return diffMillis <= oneDay
+}
 
-    // Create the reduced string in the format "(MM-DD) HH-HH"
-    const MDHH = `(${month}-${day}) ${firstHour}-${secondHour === "00" ? "24" : secondHour}`;
+export const formatRange = (range) => {
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { month: "short", day: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = isOneDay(range.since, range.until) ?
+        formatter.format(range.since) :
+        formatter.formatRange(range.since, range.until)
+    return formatted
+}
 
-    return MDHH
+export const getTimeSince = (time) => {
+    const since_time = new Date(time)
+    const curr_time = new Date();
+    const diffInMilliseconds = Math.abs(curr_time - since_time);
+    const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+    const diffInHours = Math.floor(diffInMinutes / 60)
+
+    return diffInHours
+}
+
+export const setYMD = (date, year, month, day) => {
+    date.setYear(year)
+    date.setMonth(month)
+    date.setDate(day)
 }

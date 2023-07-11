@@ -1,11 +1,8 @@
-import { formatHours, formatOneDay, formatOneDayHours } from "./dateUtils"
+import { formatHour, formatDayHour, formatHours, formatOneDay, formatOneDayHours, setYMD } from "./dateUtils"
 
-export const getRaw = (chats) => {
-    return chats?.map((chat) => {
-        return {
-            timestamp: new Date(chat.timestamp),
-            message_count: chat.messages.length
-        }
+export const getRaw = (messages) => {
+    return messages?.map((msg) => {
+        return new Date(`${msg.timestamp}+00:00`)
     })
 }
 
@@ -13,8 +10,8 @@ const getTimeStep = (start, end) => {
     const diffMillis = end - start
     const diffDays = Math.floor(diffMillis / (1000 * 60 * 60 * 24))
     const breaks = [
-        { dur: 1, step: 4, },
-        { dur: 3, step: 8, },
+        { dur: 1, step: 3, },
+        { dur: 3, step: 6, },
         { dur: 5, step: 12, },
     ]
     const step = breaks.find((bp) => diffDays <= bp.dur)
@@ -31,91 +28,68 @@ const getTimeArray = (start, end, step) => {
     while (currentTime <= end) {
         const prevTime = timeArray.slice(-1).pop()?.timestamp ?? currentTime
         const nextTime = new Date(currentTime.getTime() + step)
-        const name = diffDays === 1 ? formatHours(prevTime, currentTime) :
-            diffDays < 6 ? formatOneDayHours(prevTime, currentTime) :
-                formatOneDay(prevTime)
+        let name = diffDays < 1 ? formatHour(currentTime) : formatDayHour(currentTime)
+        if (step > 1 * 60 * 60 * 1000) {
+            name = diffDays <= 1 ? formatHours(prevTime, currentTime) : formatOneDayHours(prevTime, currentTime)
+        }
         timeArray.push({ name: name, timestamp: currentTime })
         currentTime = nextTime
     }
 
-    timeArray.shift()
-
     return timeArray
 }
 
-const getTimeSeries = (timeArray, chats, names) => {
-    const conversations = timeArray.map((bucket) => { return { key: bucket.name, value: 0 } })
-    const messages = timeArray.map((bucket) => { return { key: bucket.name, value: 0 } })
-
-    chats.forEach((chat) => {
-        const index = timeArray.findIndex((bucket) => chat.timestamp <= bucket.timestamp)
+const getTimeSeries = (timeArray, messages, name, isComparison) => {
+    const bucketedMessages = timeArray.map((bucket) => { return { key: bucket.name, value: 0 } })
+    messages.forEach((msg) => {
+        const index = timeArray.findIndex((bucket) => msg <= bucket.timestamp)
         if (index > -1) {
-            conversations[index].value += 1
-            messages[index].value += chat.message_count
+            bucketedMessages[index].value += 1
         }
     })
-    return [
-        // These names are internationalized back in ../pages/Insights.jsx
-        { name: names.conversations, data: conversations },
-        { name: names.messages, data: messages }
-    ]
+    return [{ name: name, data: bucketedMessages, isComparison: isComparison }]
 }
 
-export const formatChatDataForTS = (chats, dates, names) => {
-    const step = getTimeStep(dates.since, dates.until)
-    const array = getTimeArray(dates.since, dates.until, step)
-    const timeSeries = getTimeSeries(array, chats, names)
-    return timeSeries
+// partitions a list of comparible objects around a single breakpoint
+// list is split into before u after => (-infty, bp)u[bp, infty)
+const split = (obj, bp) => {
+    const ba = { before: [], after: [] }
+    obj.forEach((obj) => obj < bp ? ba.before.push(obj) : ba.after.push(obj))
+    return ba
 }
 
-const getDonut = (array, chats, names, max) => {
-    const messages = array.map((bucket) => {
-        return {
-            name: bucket.name,
-            data: [{
-                key: names.sent,
-                value: 0
-            }]
-        }
-    })
-    chats.forEach((chat) => {
-        const index = array.findIndex((bucket) => chat.timestamp <= bucket.timestamp)
-        if (index > -1) {
-            messages[index].data[0].value += chat.message_count
-        }
-    })
-    let message_total = 0
-    chats.forEach((chat) => message_total += chat.message_count)
+export const formatChatDataForTS = (messages, dates, comp, names) => {
+    const step = 1 * 60 * 60 * 1000
+    const splitMessages = split(messages, dates.since)
+    const primeArray = getTimeArray(dates.since, new Date(), step)
+    const compArray = getTimeArray(comp.since, comp.until, step)
+    const primeSeries = getTimeSeries(primeArray, splitMessages.after, names.prime, false)
+    const compSeries = getTimeSeries(compArray, splitMessages.before, names.comp, true)
+    return [...primeSeries, ...compSeries]
+}
+
+export const formatChatDataForDonut = (messages, names, max) => {
+    const donut = []
+    let message_total = messages.length
     const remaining = max > message_total ? max - message_total : 0
-    messages.push({ name: names.remaining, data: [{ key: names.sent, value: remaining }] })
-
-    return messages
-}
-
-export const formatChatDataForDonut = (chats, dates, names, max) => {
-    const array = getTimeArray(dates.since, dates.until, 6 * 60 * 60 * 1000)
-    const donut = getDonut(array, chats, names, max)
+    donut.push({ name: names.used, data: [{ key: names.key, value: message_total }] })
+    donut.push({ name: names.remaining, data: [{ key: names.key, value: remaining }] })
     return donut
 }
 
-export const formatChatDataForBar = (chats, dates, names) => {
+
+export const formatChatDataForBar = (messages, dates, bp, names) => {
     const array = getTimeArray(dates.since, dates.until, 4 * 60 * 60 * 1000)
+    array.shift()
     const year = dates.since.getFullYear()
     const month = dates.since.getMonth()
-    const date = dates.since.getDate()
-    const everythingIsToday = chats.map((chat) => {
-        const newStamp = new Date(chat.timestamp)
-        newStamp.setFullYear(year)
-        newStamp.setMonth(month)
-        newStamp.setDate(date)
-
-        return ({
-            timestamp: newStamp,
-            message_count: chat.message_count
-        })
-    })
-    const timeSeries = getTimeSeries(array, everythingIsToday, names)
-    return timeSeries
+    const day = dates.since.getDate()
+    const splitMessages = split(messages, bp)
+    splitMessages.before.forEach((msg) => setYMD(msg, year, month, day))
+    splitMessages.after.forEach((msg) => setYMD(msg, year, month, day))
+    const primeSeries = getTimeSeries(array, splitMessages.after, names.prime, false)
+    const compSeries = getTimeSeries(array, splitMessages.before, names.comp, true)
+    return [...primeSeries, ...compSeries]
 }
 
 export function tempString(floatValue) {

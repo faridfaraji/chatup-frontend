@@ -1,10 +1,10 @@
 import constants from "../constants"
-import { useAuthenticatedFetch } from ".";
+import { useAuthenticatedFetch } from "."
 
-export const useShop = () => {
+export const useActivePlan = () => {
     const fetch = useAuthenticatedFetch();
     return () => {
-        const fetch_url = `${constants.gateway_url}/database/${constants.app_name}`
+        const fetch_url = `${constants.gateway_url}/${constants.api_version}/shopify/${constants.app_name}/plans/selected`
         return fetch(fetch_url, {
             method: 'GET',
             credentials: constants.credentials,

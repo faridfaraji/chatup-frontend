@@ -18,23 +18,27 @@
     "tempTitle": "Define the Personality",
     "tempShort": "Infuse ChatUp with your brand's essence. Choose a personality that resonates best with your unique selling proposition.",
     "tempCopy": "Your personality choice should reflect the essence of what you sell.",
-"humorous": "Humorous",
-"engaging": "Engaging",
-"informal": "Informal",
-"friendly": "Friendly",
-"professional": "Professional",
+    "humorous": "Humorous",
+    "engaging": "Engaging",
+    "informal": "Informal",
+    "friendly": "Friendly",
+    "professional": "Professional",
     "bottomCopy": "Now its time to make sure that ChatUp is visible on your store and your users can use it!"
   },
   "Insights": {
     "timeSeriesChartTitle": "Messaging Trends Over Time",
     "funnelChartTitle": "Conversion Insights",
-    "donutChartTitle": "Remaining Daily Messages",
-"distributionChartTitle": "Chat Distribution by Time of Day",
-"messagesRemaining": "Daily messages remaining",
-"messagesSent": "Messages sent",
-"messages": "Messages",
-"conversation": "Conversations",
-    "barChartTitle": "Average Visit Duration"
+    "donutChartTitle": "Daily Messages Used",
+    "distributionChartTitle": "Chat Distribution by Time of Day",
+    "messagesRemaining": "Daily messages remaining",
+    "used": "Used",
+    "remaining": "Remaining",
+    "messagesSent": "Messages sent",
+    "messages": "Messages",
+    "comparison": "Comparison",
+    "conversation": "Conversations",
+    "barChartTitle": "Average Visit Duration",
+    "invalidRefresh": "Auto-refresh is only available for data from the past day"
   },
   "ChatHistory": {
     "pageTitle": ""
@@ -53,13 +57,16 @@
     "scannedZero": "Scanned within the hour",
     "scanPending": "Scanning",
     "scanError": "Scan error - retry",
-    "submit": "Submit"
+    "submit": "Submit",
+    "autoRefresh": "Auto-refresh",
+    "validRefresh": "Data will refresh every 60 seconds"
   },
   "NotFound": {
     "description": "Oops! The page you're looking for seems to be missing. Double-check the URL or use the search bar to find what you need.",
     "heading": "Page Not Found"
   },
   "Dates": {
+    "pastTwo": "Past Two Days",
     "today": "Today",
     "yesterday": "Yesterday",
     "pastWeek": "Past Week"

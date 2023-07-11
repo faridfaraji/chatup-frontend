@@ -18,8 +18,8 @@ export default function Configuration() {
   const { smUp } = useBreakpoints();
   return (
     <Page
-    // divider
-    // primaryAction={<EmbedButton />}
+      title={t("NavigationMenu.configuration")}
+      divider
     >
       <VerticalStack gap={{ xs: "8", sm: "4" }}>
         <Setting

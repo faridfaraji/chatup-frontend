@@ -4,10 +4,11 @@ import { CalendarMinor, ArrowRightMinor } from "@shopify/polaris-icons"
 import { useTranslation } from "react-i18next";
 
 // This example is for guidance purposes. Copying it will come with caveats.
-export const DateRangePicker = ({ onDateRangeChange }) => {
+export const DateRangePicker = ({ onDateRangeChange, activatorSize }) => {
   const { t } = useTranslation();
   const { mdDown, lgUp } = useBreakpoints();
   const shouldShowMultiMonth = lgUp;
+
   const today = new Date();
 
   const yesterday = new Date(today);
@@ -216,16 +217,15 @@ export const DateRangePicker = ({ onDateRangeChange }) => {
       sectioned={false}
       fullHeight
       activator={
-        <Box paddingInlineStart="4" paddingInlineEnd="4">
-          <Button
+        <Button
             fullWidth
             textAlign="center"
             icon={CalendarMinor}
+            size={activatorSize}
             onClick={() => setPopoverActive(!popoverActive)}
           >
             {buttonValue}
           </Button>
-        </Box>
       }
       onClose={() => setPopoverActive(false)}
     >
@@ -316,6 +316,7 @@ export const DateRangePicker = ({ onDateRangeChange }) => {
                   onChange={handleCalendarChange}
                   multiMonth={shouldShowMultiMonth}
                   allowRange
+                  disableDatesAfter={today}
                 />
               </div>
             </VerticalStack>
