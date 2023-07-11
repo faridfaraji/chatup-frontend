@@ -1,8 +1,8 @@
-import { Page, Layout, Button } from "@shopify/polaris";
+import { Page, Layout, Button, CalloutCard, AlphaCard, EmptyState, HorizontalGrid, Box, HorizontalStack } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { WelcomeCard } from "./WelcomeCard";
 import { EmbedButton, ScanButton, SettingsButton } from "./buttons";
-import { useBilling, useShop } from "../hooks";
+import { robot } from "../assets";
 
 export function LoadedHomePage() {
     const { t } = useTranslation();
@@ -17,6 +17,17 @@ export function LoadedHomePage() {
     return (
         <Page>
             <Layout>
+
+                <Layout.Section fullWidth>
+                    <div style={{
+                        "display": "block",
+                        "margin-left": "auto",
+                        "margin-right": "auto",
+                        "width": "50%"}}
+                    >
+                            <EmptyState fullWidth image={robot}></EmptyState>
+                    </div>
+                </Layout.Section>
                 <Layout.Section oneThird>
                     <WelcomeCard
                         padding={[xsPadding, xsPadding, "0", xsPadding]}
@@ -43,6 +54,11 @@ export function LoadedHomePage() {
                         content={t("HomePage.embedCopy")}
                         button={embed}
                     />
+                </Layout.Section>
+                <Layout.Section fullWidth>
+                    <AlphaCard>
+                        
+                    </AlphaCard>
                 </Layout.Section>
             </Layout>
         </Page >

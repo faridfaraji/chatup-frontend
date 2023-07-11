@@ -1,6 +1,6 @@
 export { useAppQuery } from "./useAppQuery";
 export { useAuthenticatedFetch } from "./useAuthenticatedFetch";
-export { useBilling } from "./useBilling";
+export { useActivePlan } from "./useActivePlan";
 export { useChatHistory } from "./useChatHistory";
 export { useMessageHistory } from "./useMessageHistory";
 export { useNegativeKeywordGetter, useNegativeKeywordSetter } from "./useNegativeKeywords";
