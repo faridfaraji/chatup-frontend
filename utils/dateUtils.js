@@ -30,9 +30,9 @@ function timeZoneOffsetInMinutes(ianaTimeZone) {
 export const zeroRange = (range, iana) => {
     const now = new Date();
     let offsetMinutes = now.getTimezoneOffset()
-    try { 
-        offsetMinutes = timeZoneOffsetInMinutes(iana) 
-    } catch (err) { 
+    try {
+        offsetMinutes = timeZoneOffsetInMinutes(iana)
+    } catch (err) {
         console.log("Shop timezone invalid, using browser.", err)
     }
     const offsetString = formatOffset(offsetMinutes);
@@ -48,45 +48,38 @@ function padZero(value) {
 }
 
 export const formatHours = (date1, date2) => {
-    // Get the hours from the Date objects
-    const firstHour = date1.toLocaleTimeString([], { hour: "numeric" })
-    const secondHour = date2.toLocaleTimeString([], { hour: "numeric" })
-
-    // Create the reduced string in the format "HH-HH"
-    const HHHH = `${firstHour}-${secondHour}`;
-
-    return HHHH
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { hour: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const fdate1 = formatter.format(date1)
+    const fdate2 = formatter.format(date2)
+    const formatted = `${fdate1} - ${fdate2}`
+    return formatted
 }
 
 export const formatOneDay = (date) => {
-    // Get the month
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-
-    // Get the date
-    const day = date.getDate().toString().padStart(2, '0');
-
-    // Create the reduced string in the format "MM-DD"
-    const MD = `${month}-${day}`;
-
-    return MD
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { month: "short", day: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = formatter.format(date)
+    return formatted
 }
 
 export const formatOneDayHours = (date1, date2) => {
-    // Get the hours from the Date objects
-    const firstHour = date1.toLocaleTimeString([], { hour: "numeric" })
-    const secondHour = date2.toLocaleTimeString([], { hour: "numeric" })
-
-    // date1 will always be the right date. date 2 can be midnight tomorrow
-    // Get the month
-    const month = (date1.getMonth() + 1).toString().padStart(2, '0');
-
-    // Get the date
-    const day = date1.getDate().toString().padStart(2, '0');
-
-    // Create the reduced string in the format "(MM-DD) HH-HH"
-    const MDHH = `(${month}-${day}) ${firstHour}-${secondHour}`;
-
-    return MDHH
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    let locale = navigator.language
+    let options = { hour: "numeric", month: "short", day: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = formatter.formatRange(date1, date2)
+    return formatted
 }
 
 export const getTimeSince = (time) => {

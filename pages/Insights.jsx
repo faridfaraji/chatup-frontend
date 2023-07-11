@@ -1,24 +1,20 @@
-import { AlphaCard, Page, Layout, Text, HorizontalStack, Box, Button, Spinner, VerticalStack } from "@shopify/polaris";
+import { AlphaCard, Page, Layout, Text, HorizontalStack, Box, Button, Spinner, VerticalStack, Checkbox, Tooltip, Icon } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import '@shopify/polaris-viz/build/esm/styles.css';
-import { BarChart, DonutChart, FunnelChart, LineChart } from "@shopify/polaris-viz";
+import { BarChart, ComboChart, DonutChart, FunnelChart, LineChart } from "@shopify/polaris-viz";
 import { CardTitle } from "../components";
 import { useChatHistory, useTimezone } from "../hooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { getRaw, formatChatDataForTS, formatChatDataForDonut, formatChatDataForBar } from "../utils/dataUtils";
 import { zeroRange } from "../utils/dateUtils"
-import { AutoRefresh, CenteredSpinner } from "../components/misc";
-import { RefreshMinor } from '@shopify/polaris-icons';
+import { CenteredSpinner } from "../components/misc";
+import { QuestionMarkInverseMinor } from '@shopify/polaris-icons';
 
 
 export default function Insights() {
-  const now = new Date()
-  const twoFourAgo = new Date(now)
-  twoFourAgo.setDate(now.getDate() - 1)
-
-  const today = new Date(now);
+  const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   const yesterday = new Date(today)
@@ -38,19 +34,33 @@ export default function Insights() {
   useEffect(() => { getIana().then((response) => setIana(response)) }, [])
 
   // auto refresh
-  const [checked, setChecked] = useState(false);
-  const valid = dates?.since >= yesterday
-
-  const autoRefreshFun = () => {
-    if (checked && valid) {
-      // refreshAllCharts()
-      console.log("refreshing")
-    }
-    setTimeout(autoRefreshFun, 5 * 1000)
+  const refreshAllCharts = () => {
+    refreshCharts()
+    refreshDonut()
   }
 
-  useEffect(() => setTimeout(() => autoRefreshFun(), 5 * 1000), [])
+  const refreshable = !(dates?.since < yesterday) && !(dates?.until < new Date())
+  const [checked, setChecked] = useState(false);
+  const handleCheck = useCallback((newChecked) => setChecked(newChecked), [])
 
+  const [refreshFlag, setRefreshFlag] = useState(false);
+  useEffect(() => {
+    setRefreshFlag(checked && refreshable)
+  }, [checked, refreshable])
+
+  const autoRefreshFun = () => {
+    if (refreshFlag) { refreshAllCharts() }
+  };
+  useEffect(() => {
+    let refreshInterval;
+    if (refreshFlag) {
+      refreshInterval = setInterval(autoRefreshFun, 60000); // 60 seconds
+    }
+
+    return () => {
+      clearInterval(refreshInterval);
+    };
+  }, [refreshFlag]);
 
   // TODO get and set max daily messages for shop's subscription tier
   const maxDailyMessages = 200
@@ -95,13 +105,16 @@ export default function Insights() {
 
   const refreshDonut = () => {
     setDonut(<CenteredSpinner />)
-    const drange = { since: twoFourAgo, until: now }
-    const sent = t("Insights.messagesSent") ?? "Messages sent"
-    const remaining = t("Insights.messagesRemaining") ?? "Daily messages remaining"
-    const names = { sent: sent, remaining: remaining }
-    getChatHistory(today, tomorrow)
+    const until = new Date()
+    const since = new Date(until)
+    since.setDate(until.getDate() - 1)
+    const used = t("Insights.used") ?? "Used"
+    const remaining = t("Insights.remaining") ?? "Remaining"
+    const key = t("Dates.today") ?? "Today"
+    const names = { sent: used, remaining: remaining, key: key }
+    getChatHistory(since, until)
       .then((data) => getRaw(data))
-      .then((data) => formatChatDataForDonut(data, maxDailyMessages))
+      .then((data) => formatChatDataForDonut(data, names, maxDailyMessages))
       .then((data) => setDonut(
         <DonutChart
           data={data}
@@ -122,25 +135,25 @@ export default function Insights() {
       ))
   }
 
-  const refreshAllCharts = () => {
-    refreshCharts()
-    refreshDonut()
-  }
-
   useEffect(() => refreshCharts(), [dates])
   useEffect(() => refreshDonut(), [])
 
 
   return (
-    <Page>
-      <TitleBar />
-      <CardTitle title={t("NavigationMenu.insights")} linebreak />
+    <Page
+      title={t("NavigationMenu.insights")}
+      divider
+    >
       <Layout>
         <Layout.Section fullWidth>
           <HorizontalStack align="space-between" blockAlign="center">
             <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
-            <AutoRefresh checked={checked} setChecked={setChecked} invalidText={t("Insights.invalidRefresh")} valid={valid} />
-            {/* <Button primary size="slim" icon={RefreshMinor} onClick={() => refreshAllCharts()}></Button> */}
+            <HorizontalStack gap="1">
+              <Checkbox disabled={!refreshable} label={t("Button.autoRefresh")} checked={checked} onChange={handleCheck} />
+              <Tooltip content={refreshable ? t("Button.validRefresh") : t("Insights.invalidRefresh")}>
+                <Icon source={QuestionMarkInverseMinor} />
+              </Tooltip>
+            </HorizontalStack>
           </HorizontalStack>
         </Layout.Section>
         <Layout.Section fullWidth>

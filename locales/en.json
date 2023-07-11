@@ -28,9 +28,11 @@
   "Insights": {
     "timeSeriesChartTitle": "Messaging Trends Over Time",
     "funnelChartTitle": "Conversion Insights",
-    "donutChartTitle": "Remaining Daily Messages",
+    "donutChartTitle": "Daily Messages Sent",
     "distributionChartTitle": "Chat Distribution by Time of Day",
     "messagesRemaining": "Daily messages remaining",
+    "used": "Used",
+    "remaining": "Remaining",
     "messagesSent": "Messages sent",
     "messages": "Messages",
     "conversation": "Conversations",

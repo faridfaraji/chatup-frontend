@@ -68,14 +68,13 @@ export const formatChatDataForTS = (chats, dates, names) => {
     return timeSeries
 }
 
-export const formatChatDataForDonut = (chats, max) => {
+export const formatChatDataForDonut = (chats, names, max) => {
     const donut = []
     let message_total = 0
     chats.forEach((chat) => message_total += chat.message_count)
     const remaining = max > message_total ? max - message_total : 0
-    donut.push({ name: "0", data: [{key: "0", value: message_total}]})
-    donut.push({ name: "1", data: [{ key: "1", value: -remaining }] })
-    donut.push({ name: "2", data: [{ key: "2", value: remaining }] })
+    donut.push({ name: names.used, data: [{key: names.key, value: message_total}]})
+    donut.push({ name: names.remaining, data: [{ key: names.key, value: remaining }] })
     
     return donut
 }
