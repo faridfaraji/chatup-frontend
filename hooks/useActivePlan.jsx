@@ -1,5 +1,6 @@
 import constants from "../constants"
 import { useAuthenticatedFetch } from "."
+import cache from "../cache";
 
 
 
@@ -7,7 +8,7 @@ import { useAuthenticatedFetch } from "."
 export const useShopValidator = () => {
     const fetch = useAuthenticatedFetch();
     return () => {
-        const fetch_url = `${constants.gateway_url}/${constants.api_version}/shopify/${constants.app_name}/plans/validate-shop`
+        const fetch_url = `${constants.gateway_url}/${constants.api_version}/shopify/${constants.app_name}/plans/validate-shop?shop_url=${cache.shop_url}`
         return fetch(fetch_url, {
             method: 'GET',
             credentials: constants.credentials,

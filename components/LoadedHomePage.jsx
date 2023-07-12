@@ -140,7 +140,7 @@ export function LoadedHomePage() {
         // refreshScan({ status: "IN_PROGRESS", timestamp: "2023-07-07T23:19:12" })
         // refreshScan({status: "SUCCESS", timestamp: "2023-07-07T23:19:12"})
         // refreshScan({})
-        // validateShop().then((data) => console.log(data))
+        validateShop().then((data) => console.log(data))
     }
     const testButton = <Button onClick={() => test()}>TEST</Button>
 
