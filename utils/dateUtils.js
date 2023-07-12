@@ -122,6 +122,18 @@ export const formatRange = (range) => {
     return formatted
 }
 
+export const localizeTimestamp = (timestamp) => {
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    const date = new Date(timestamp)
+    let locale = navigator.language
+    let options = { month: "short", day: "numeric", hour: "numeric", minute: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = formatter.format(date)
+    return formatted
+}
+
 export const getTimeSince = (time) => {
     const since_time = new Date(time)
     const curr_time = new Date();
@@ -136,4 +148,14 @@ export const setYMD = (date, year, month, day) => {
     date.setYear(year)
     date.setMonth(month)
     date.setDate(day)
+}
+
+// Timestamps are returned from the backend with an implicit UTC timezone
+// We make that timezone explicit
+export const withUTC = (timestamp) => {
+    return `${timestamp}+00:00`
+}
+
+export const dateFromUTC = (timestamp) => {
+    return new Date(withUTC(timestamp))
 }

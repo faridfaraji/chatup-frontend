@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLatestScan, useScanner } from "../../hooks";
 import { useCallback, useEffect, useState } from "react";
 import { PlayMinor, RefreshMinor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
-import { getTimeSince } from "../../utils/dateUtils";
+import { getTimeSince, withUTC } from "../../utils/dateUtils";
 
 export const ScanButton = () => {
     const { t } = useTranslation();
@@ -19,23 +19,19 @@ export const ScanButton = () => {
 
     const refreshButton = (scan) => {
         let tempButton = button
-        if (!scan?.status) {
-            tempButton = <Button fullwidth primary icon={PlayMinor} onClick={() => scanCallback()}>{t("Button.scan")}</Button>
-        } else if (["PENDING", "IN_PROGRESS"].includes(scan.status)) {
-            tempButton = <Button fullwidth disabled>
-                <HorizontalStack gap="1" blockAlign="center">
-                    <Spinner size="small" />
-                    {t("Button.scanPending")}
-                </HorizontalStack>
-            </Button>
-            setTimeout(() => load(), 2500);
+        const primaryScan = <Button fullwidth primary icon={PlayMinor} onClick={() => scanCallback()}>{t("Button.scan")}</Button>
+        const errorScan = <Button fullwidth primary icon={DiamondAlertMinor} onClick={() => scanCallback()}>{t("Button.scanError")}</Button>
+        const pendingScan = <Button fullwidth disabled><HorizontalStack gap="1" blockAlign="center"><Spinner size="small" />{t("Button.scanPending")}</HorizontalStack></Button>
+        const doneScanned = <Button fullwidth disabled icon={CircleTickMinor}>{t("Button.scanned")}</Button>
+        if (!scan?.status) tempButton = primaryScan
+        else if (["PENDING", "IN_PROGRESS"].includes(scan.status)) {
+            tempButton = pendingScan
+            setTimeout(refreshButton, 2000)
         } else {
-            const timeSince = getTimeSince(`${scan.timestamp}+00:00`)
-            if (["ERROR"].includes(scan.status)) tempButton = <Button fullwidth primary icon={DiamondAlertMinor} onClick={() => scanCallback()}>{t("Button.scanError")}</Button>
-            else if (timeSince === 0) tempButton = <Button fullwidth disabled icon={CircleTickMinor}>{t("Button.scannedZero")}</Button>
-            else if (timeSince === 1) tempButton = <Button fullwidth disabled icon={CircleTickMinor}>{t("Button.scannedOne")}</Button>
-            else if (timeSince < 12) tempButton = <Button fullwidth disabled icon={CircleTickMinor}>{t("Button.scanned", { timeSince: timeSince })}</Button>
-            else tempButton = <Button fullwidth icon={RefreshMinor} onClick={() => scanCallback()}>{t("Button.scanned", { timeSince: timeSince })}</Button>
+            const timeSince = getTimeSince(withUTC(scan.timestamp))
+            if (["ERROR"].includes(scan.status)) tempButton = errorScan
+            else if (timeSince < 12) tempButton = doneScanned
+            else tempButton = primaryScan
         }
 
         setButton(tempButton)
