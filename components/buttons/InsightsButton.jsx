@@ -8,6 +8,7 @@ export const InsightsButton = () => {
 
     return (
         <Button
+            primary
             icon={AnalyticsMinor}
             onClick={() => { navigate("/Insights") }}>
             {t("Button.insights")}

@@ -1,8 +1,8 @@
-import { formatHour, formatDayHour, formatHours, formatOneDay, formatOneDayHours, setYMD } from "./dateUtils"
+import { formatHour, formatDayHour, formatHours, formatOneDay, formatOneDayHours, setYMD, withUTC, dateFromUTC } from "./dateUtils"
 
 export const getRaw = (messages) => {
     return messages?.map((msg) => {
-        return new Date(`${msg.timestamp}+00:00`)
+        return dateFromUTC(msg.timestamp)
     })
 }
 
