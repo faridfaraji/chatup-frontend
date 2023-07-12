@@ -68,13 +68,35 @@ export const formatChatDataForTS = (messages, dates, comp, names) => {
     return [...primeSeries, ...compSeries]
 }
 
+const makeBasicDonutData = (names, values) => {
+    return (
+        [
+            {
+                name: names.used,
+                data: [{
+                    key: names.key,
+                    value: values.used
+                }]
+            },
+            {
+                name: names.remaining,
+                data: [{
+                    key: names.key,
+                    value: values.max > values.used ? values.max - values.used : 0
+                }]
+            },
+        ]
+    )
+}
+
+
 export const formatChatDataForDonut = (messages, names, max) => {
-    const donut = []
-    let message_total = messages.length
-    const remaining = max > message_total ? max - message_total : 0
-    donut.push({ name: names.used, data: [{ key: names.key, value: message_total }] })
-    donut.push({ name: names.remaining, data: [{ key: names.key, value: remaining }] })
-    return donut
+    return makeBasicDonutData(names, {used: messages.length, max: max})
+}
+
+export const formatValidationForDonut = (validation, names) => {
+    const donut = makeBasicDonutData(names, {used: validation.current_usage, max: validation.message_limit})
+    return {donut: donut, validation: validation}
 }
 
 

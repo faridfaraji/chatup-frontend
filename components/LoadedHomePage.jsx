@@ -2,10 +2,49 @@ import { Page, Layout, Button, CalloutCard, AlphaCard, EmptyState, HorizontalGri
 import { useTranslation } from "react-i18next";
 import { WelcomeCard } from "./WelcomeCard";
 import { EmbedButton, ScanButton, SettingsButton } from "./buttons";
-import { robot } from "../assets";
+import { useActivePlan, useShopValidator } from "../hooks";
+import { useEffect, useState } from "react";
+import { Robot } from "./images";
+import { DonutChart } from "@shopify/polaris-viz";
+import { CenteredSpinner } from "./misc";
+import { formatValidationForDonut } from "../utils/dataUtils";
 
 export function LoadedHomePage() {
     const { t } = useTranslation();
+    const [loading, setLoading] = useState(true);
+    const getPlan = useActivePlan();
+    const validateShop = useShopValidator();
+    const [donut, setDonut] = useState(<CenteredSpinner />);
+
+
+    useEffect(() => refreshDonut(), [])
+    const refreshDonut = () => {
+        setDonut(<CenteredSpinner />)
+        validateShop()
+            .then((data) => (formatValidationForDonut(data)))
+            .then((data) =>
+                setDonut(
+                    <DonutChart
+                        data={data.data}
+                        showLegend={false}
+                        legendPosition="top"
+                        renderInnerValueContent={() => {
+                            return <div>
+                                <Text variant="bodyLg" fontWeight="bold">
+                                    {`${data.validation.current_usage}`}
+                                </Text>
+                                <Text variant="bodySm">
+                                    {`/ ${data.validation.message_limit}`}
+                                </Text>
+                            </div>
+                        }}
+                    />))
+    }
+
+    const test = () => {
+        // validateShop().then((data) => console.log(data))
+    }
+    const testButton = <Button onClick={() => test()}>TEST</Button>
 
     const scan = <ScanButton />
     const settings = <SettingsButton />
@@ -15,18 +54,12 @@ export function LoadedHomePage() {
     const xsPadding = { xs: "5", sm: "0", }
 
     return (
-        <Page>
+        <Page
+            title="Welcome to ChatUp"
+            primaryAction={testButton}>
             <Layout>
-
                 <Layout.Section fullWidth>
-                    <div style={{
-                        "display": "block",
-                        "margin-left": "auto",
-                        "margin-right": "auto",
-                        "width": "50%"}}
-                    >
-                            <EmptyState fullWidth image={robot}></EmptyState>
-                    </div>
+                    <Robot />
                 </Layout.Section>
                 <Layout.Section oneThird>
                     <WelcomeCard
@@ -56,9 +89,18 @@ export function LoadedHomePage() {
                     />
                 </Layout.Section>
                 <Layout.Section fullWidth>
-                    <AlphaCard>
-                        
-                    </AlphaCard>
+                    <AlphaCard.Section>
+                        <HorizontalStack>
+                            {donut}
+                            <VerticalStack>
+                                <Text>Last scanned</Text>
+                                <Text>Scan available X hours</Text>
+                                <Text>Messages Recieved Today</Text>
+                                <Text>Summary Statistic</Text>
+                                <InsightsButton />
+                            </VerticalStack>
+                        </HorizontalStack>
+                    </AlphaCard.Section>
                 </Layout.Section>
             </Layout>
         </Page >

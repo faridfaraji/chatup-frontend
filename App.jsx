@@ -8,6 +8,8 @@ import {
   QueryProvider,
   PolarisProvider,
 } from "./components";
+import AwesoonProvider from "./components/providers/AwesoonProvider";
+import { PolarisVizLightTheme, PolarisVizProvider } from "@shopify/polaris-viz";
 
 export default function App() {
   // Any .tsx or .jsx files in /pages will become a route
@@ -16,31 +18,35 @@ export default function App() {
   const { t } = useTranslation();
 
   return (
-    <PolarisProvider>
-      <BrowserRouter>
-        <AppBridgeProvider>
-          <QueryProvider>
-            <NavigationMenu
-              navigationLinks={[
-                {
-                  label: t("NavigationMenu.configuration"),
-                  destination: "/Configuration",
-                },
-                {
-                  label: t("NavigationMenu.insights"),
-                  destination: "/Insights",
-                },
-                // {
-                //   label: t("NavigationMenu.chatHistory"),
-                //   destination: "/ChatHistory",
-                // }
-              ]}
-              matcher={(link, location) => link.destination === location.pathname}
-            />
-            <Routes pages={pages} />
-          </QueryProvider>
-        </AppBridgeProvider>
-      </BrowserRouter>
-    </PolarisProvider>
+    <AwesoonProvider>
+      <PolarisProvider>
+        <PolarisVizProvider themes={{ Default: PolarisVizLightTheme }}>
+          <BrowserRouter>
+            <AppBridgeProvider>
+              <QueryProvider>
+                <NavigationMenu
+                  navigationLinks={[
+                    {
+                      label: t("NavigationMenu.configuration"),
+                      destination: "/Configuration",
+                    },
+                    {
+                      label: t("NavigationMenu.insights"),
+                      destination: "/Insights",
+                    },
+                    // {
+                    //   label: t("NavigationMenu.chatHistory"),
+                    //   destination: "/ChatHistory",
+                    // }
+                  ]}
+                  matcher={(link, location) => link.destination === location.pathname}
+                />
+                <Routes pages={pages} />
+              </QueryProvider>
+            </AppBridgeProvider>
+          </BrowserRouter>
+        </PolarisVizProvider>
+      </PolarisProvider>
+    </AwesoonProvider>
   );
 }

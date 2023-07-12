@@ -81,8 +81,6 @@ export default function Insights() {
   }
 
   // Refresh the chart whenever the data changes
-  const vizTheme = "Light"
-
   const refreshCharts = () => {
     setTS(<CenteredSpinner />)
     setBar(<CenteredSpinner />)
@@ -106,8 +104,8 @@ export default function Insights() {
         }
       })
       .then((data) => {
-        setTS(<LineChart data={data.ts} theme={vizTheme} />)
-        setBar(<BarChart data={data.bar} theme={vizTheme} xAxisOptions={{ "hide": true }} />)
+        setTS(<LineChart data={data.ts} />)
+        setBar(<BarChart data={data.bar} xAxisOptions={{ "hide": true }} />)
       })
   }
 
@@ -126,7 +124,6 @@ export default function Insights() {
       .then((data) => setDonut(
         <DonutChart
           data={data}
-          theme={vizTheme}
           showLegend={false}
           legendPosition="top"
           renderInnerValueContent={() => {
