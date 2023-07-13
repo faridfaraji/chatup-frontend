@@ -12,6 +12,7 @@ import { DateRangePicker } from "../components/DateRangePicker";
 import cache from "../cache";
 import { SkeletonMessages } from "../components";
 import { useAuthenticatedFetch } from "@shopify/app-bridge-react";
+import { zeroRange } from "../utils";
 
 
 export default function ChatHistory() {
@@ -139,9 +140,32 @@ export default function ChatHistory() {
     </div>
   ))
 
+  const [dates, setDates] = useState({});
 
   const { t } = useTranslation();
+
+  const handleDateChange = (range) => {
+    const formattedDates = zeroRange(range)
+    setDates(formattedDates)
+  }
+
   return (
+    <Page
+      title={t("NavigationMenu.insights")}
+      divider
+    >
+      <Layout>
+        <Layout.Section fullWidth>
+          <HorizontalStack align="space-between" blockAlign="center">
+            <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
+          </HorizontalStack>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  )
+}
+
+{/* return (
     <Page>
       <TitleBar />
       <Frame navigation={navMarkup}>
@@ -151,5 +175,4 @@ export default function ChatHistory() {
         </AlphaCard>
       </Frame>
     </Page>
-  );
-}
+  ); */}
