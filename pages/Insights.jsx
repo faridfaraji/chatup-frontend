@@ -2,12 +2,10 @@ import { AlphaCard, Page, Layout, Text, HorizontalStack, Box, Checkbox, Tooltip,
 import { useTranslation } from "react-i18next";
 import '@shopify/polaris-viz/build/esm/styles.css';
 import { BarChart, DonutChart, LineChart } from "@shopify/polaris-viz";
-import { CardTitle } from "../components";
+import { CardTitle, DateRangePicker, CenteredSpinner } from "../components";
 import { useCallback, useEffect, useState } from "react";
-import { DateRangePicker } from "../components/DateRangePicker";
 import { getRaw, formatChatDataForTS, formatChatDataForDonut, formatChatDataForBar } from "../utils/dataUtils";
 import { zeroRange, compRange, formatRange } from "../utils/dateUtils"
-import { CenteredSpinner } from "../components/misc";
 import { QuestionMarkInverseMinor } from '@shopify/polaris-icons';
 import { useMessageCounts } from "../hooks";
 
@@ -178,7 +176,7 @@ export default function Insights() {
             paddingInlineEnd={{ xs: 4, sm: 0 }}
           >
             <AlphaCard>
-              <CardTitle linebreak title={t("Insights.donutChartTitle")}></CardTitle>
+            <CardTitle linebreak title={t("Insights.donutChartTitle")}></CardTitle>
               {donut}
             </AlphaCard>
           </Box>

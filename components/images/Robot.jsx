@@ -10,6 +10,7 @@ export const Robot = () => {
 
     const img_style = {
         height: "auto",
+        maxWidth: "100vw",
         maxHeight: "50vh",
     }
 
