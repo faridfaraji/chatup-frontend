@@ -6,5 +6,6 @@ export { useMessageHistory } from "./useMessageHistory";
 export { useNegativeKeywordGetter, useNegativeKeywordSetter } from "./useNegativeKeywords";
 export { useScanner, useLatestScan } from "./useScan";
 export { useShop } from "./useShop";
+export { useTemperature } from "./useTemperature";
 export { useTimezone } from "./useTimezone";
 export { useMessageCounts } from "./useMessageCounts";

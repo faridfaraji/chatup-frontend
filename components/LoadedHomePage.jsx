@@ -1,15 +1,14 @@
-import { Spinner, Page, Layout, Button, CalloutCard, AlphaCard, EmptyState, HorizontalGrid, Box, HorizontalStack, VerticalStack, Text, List, Divider } from "@shopify/polaris";
+import { Spinner, Page, Layout, Button, AlphaCard, HorizontalGrid, Box, HorizontalStack, VerticalStack, Text, List, Divider } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { WelcomeCard } from "./WelcomeCard";
-import { EmbedButton, SettingsButton, InsightsButton } from "./buttons";
 import { useActivePlan, useLatestScan, useMessageCounts, useScanner, useShopValidator } from "../hooks";
 import { useCallback, useEffect, useState } from "react";
-import { Robot } from "./images";
 import { DonutChart } from "@shopify/polaris-viz";
+import { dateFromUTC, formatChatDataForDonut, formatValidationForDonut, getRaw, getTimeSince, localizeTimestamp } from "../utils";
 import { CenteredSpinner, PaddedCell } from "./misc";
-import { formatChatDataForDonut, formatValidationForDonut, getRaw } from "../utils/dataUtils";
+import { EmbedButton, InsightsButton, SettingsButton } from "./buttons";
+import { Robot } from "./images";
 import { CardTitle } from "./CardTitle";
-import { dateFromUTC, getTimeSince, localizeTimestamp, withUTC } from "../utils/dateUtils";
 import { RecentSearchesMajor, RefreshMinor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
 
 export function LoadedHomePage() {
