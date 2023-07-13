@@ -10,8 +10,7 @@ import { CenteredSpinner, PaddedCell } from "./misc";
 import { formatChatDataForDonut, formatValidationForDonut, getRaw } from "../utils/dataUtils";
 import { CardTitle } from "./CardTitle";
 import { dateFromUTC, getTimeSince, localizeTimestamp, withUTC } from "../utils/dateUtils";
-import { PlayMinor, RefreshMinor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
-
+import { RecentSearchesMajor, RefreshMinor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
 
 export function LoadedHomePage() {
     const { t } = useTranslation();
@@ -36,7 +35,7 @@ export function LoadedHomePage() {
 
     const refreshScan = (scan) => {
         let tempButton = scanButton
-        const primaryScan = <Button fullwidth primary icon={PlayMinor} onClick={() => scanCallback()}>{t("Button.scan")}</Button>
+        const primaryScan = <Button fullwidth primary icon={RecentSearchesMajor} onClick={() => scanCallback()}>{t("Button.scan")}</Button>
         const errorScan = <Button fullwidth primary icon={DiamondAlertMinor} onClick={() => scanCallback()}>{t("Button.scanError")}</Button>
         const pendingScan = <Button fullwidth disabled><HorizontalStack gap="1" blockAlign="center"><Spinner size="small" />{t("Button.scanPending")}</HorizontalStack></Button>
         const doneScanned = <Button fullwidth disabled icon={CircleTickMinor}>{t("Button.scanned")}</Button>
