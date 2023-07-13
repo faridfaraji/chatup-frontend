@@ -16,8 +16,8 @@ export const useNegativeKeywordGetter = () => {
 export const useNegativeKeywordSetter = (method) => {
     const fetch = useAuthenticatedFetch();
 
-    return (tag) => {
-        const fetch_url = `${constants.gateway_url}/database/${constants.app_name}/negative-keywords/${tag}`
+    return (key) => {
+        const fetch_url = `${constants.gateway_url}/database/${constants.app_name}/negative-keywords/${key}`
         return fetch(fetch_url, {
             method: method,
             credentials: constants.credentials,

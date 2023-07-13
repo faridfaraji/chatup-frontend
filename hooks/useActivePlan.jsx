@@ -2,9 +2,6 @@ import constants from "../constants"
 import { useAuthenticatedFetch } from "."
 import cache from "../cache";
 
-
-
-
 export const useShopValidator = () => {
     const fetch = useAuthenticatedFetch();
     return () => {
