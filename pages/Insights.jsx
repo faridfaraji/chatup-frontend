@@ -145,19 +145,19 @@ export default function Insights() {
   return (
     <Page
       title={t("NavigationMenu.insights")}
+      primaryAction={
+        <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
+      }
+      secondaryActions={[
+        {
+
+        }
+      ]}
       divider
     >
       <Layout>
         <Layout.Section fullWidth>
-          <HorizontalStack align="space-between" blockAlign="center">
-            <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
-            <HorizontalStack gap="1">
-              <Checkbox disabled={!refreshable} label={t("Button.autoRefresh")} checked={checked} onChange={handleCheck} />
-              <Tooltip content={refreshable ? t("Button.validRefresh") : t("Insights.invalidRefresh")}>
-                <Icon source={QuestionMarkInverseMinor} />
-              </Tooltip>
-            </HorizontalStack>
-          </HorizontalStack>
+
         </Layout.Section>
         <Layout.Section fullWidth>
           <Box
@@ -165,7 +165,16 @@ export default function Insights() {
             paddingInlineEnd={{ xs: 4, sm: 0 }}
           >
             <AlphaCard>
-              <CardTitle title={t("Insights.timeSeriesChartTitle")} linebreak />
+              <HorizontalStack align="space-between" blockAlign="center">
+                <CardTitle title={t("Insights.timeSeriesChartTitle")} />
+                <HorizontalStack gap="1">
+                  <Checkbox disabled={!refreshable} label={t("Button.autoRefresh")} checked={checked} onChange={handleCheck} />
+                  <Tooltip content={refreshable ? t("Button.validRefresh") : t("Insights.invalidRefresh")}>
+                    <Icon source={QuestionMarkInverseMinor} />
+                  </Tooltip>
+                </HorizontalStack>
+              </HorizontalStack>
+              <br />
               {ts}
             </AlphaCard>
           </Box>
@@ -176,7 +185,7 @@ export default function Insights() {
             paddingInlineEnd={{ xs: 4, sm: 0 }}
           >
             <AlphaCard>
-            <CardTitle linebreak title={t("Insights.donutChartTitle")}></CardTitle>
+              <CardTitle linebreak title={t("Insights.donutChartTitle")}></CardTitle>
               {donut}
             </AlphaCard>
           </Box>
