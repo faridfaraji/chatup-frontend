@@ -1,4 +1,4 @@
-import { AlphaCard, Page, Layout, Text, HorizontalStack, Box, Checkbox, Tooltip, Icon } from "@shopify/polaris";
+import { AlphaCard, Page, Layout, Text, HorizontalStack, Box, Checkbox, Tooltip, Icon, Divider } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import '@shopify/polaris-viz/build/esm/styles.css';
 import { BarChart, DonutChart, LineChart } from "@shopify/polaris-viz";
@@ -27,10 +27,19 @@ export default function Insights() {
   const ashita = new Date(kyou);
   ashita.setDate(kyou.getDate() + 1);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const translateTopics = (topics) => {
-    return topics.map(([topic, value]) => [t(topic) ?? topic, value])
+    const topicList = topics.map((topic) => i18n.exists(`Insights.${topic}`) ? t(`Insights.${topic}`) : t("Insights.General Inquiries and Complaints"))
+    const topicData = {}
+    for (const topic of topicList) {
+      if (topicData[topic]) {
+        topicData[topic]++;
+      } else {
+        topicData[topic] = 1;
+      }
+    }
+    return topicData
   }
 
   // fetch data from dbs
@@ -117,11 +126,14 @@ export default function Insights() {
       .then((data) => translateTopics(data))
       .then((data) => makeTopicDonutData(data))
       .then((data) => {
-        setDonut(<DonutChart data={data} legendPosition="bottom"/>)
+        setDonut(<DonutChart data={data} legendPosition="right" legendFullWidth={true} />)
       })
   }
 
   useEffect(() => fresh(), [dates])
+
+  // Common chart box height
+  const CommonMinHeight = "250px"
 
   return (
     <Page
@@ -129,11 +141,11 @@ export default function Insights() {
       primaryAction={
         <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
       }
-      secondaryActions={[
-        {
+      // secondaryActions={[
+      //   {
 
-        }
-      ]}
+      //   }
+      // ]}
       divider
     >
       <Layout>
@@ -156,7 +168,11 @@ export default function Insights() {
                 </HorizontalStack>
               </HorizontalStack>
               <br />
-              {ts}
+              <Divider />
+              <br />
+              <Box minHeight={CommonMinHeight}>
+                {ts}
+              </Box>
             </AlphaCard>
           </Box>
         </Layout.Section>
@@ -164,10 +180,16 @@ export default function Insights() {
           <Box
             paddingInlineStart={{ xs: 4, sm: 0 }}
             paddingInlineEnd={{ xs: 4, sm: 0 }}
+            paddingBlockEnd={{ sm: 0, md: 4 }}
           >
             <AlphaCard>
-              <CardTitle linebreak title={t("Insights.donutChartTitle")}></CardTitle>
-              {donut}
+              <CardTitle title={t("Insights.donutTopicChartTitle")}></CardTitle>
+              <br />
+              <Divider />
+              <br />
+              <Box minHeight={CommonMinHeight}>
+                {donut}
+              </Box>
             </AlphaCard>
           </Box>
         </Layout.Section>
@@ -175,10 +197,16 @@ export default function Insights() {
           <Box
             paddingInlineStart={{ xs: 4, sm: 0 }}
             paddingInlineEnd={{ xs: 4, sm: 0 }}
+            paddingBlockEnd="4"
           >
             <AlphaCard>
-              <CardTitle linebreak title={t("Insights.distributionChartTitle")} />
-              {bar}
+              <CardTitle title={t("Insights.distributionChartTitle")} />
+              <br />
+              <Divider />
+              <br />
+              <Box minHeight={CommonMinHeight}>
+                {bar}
+              </Box>
             </AlphaCard>
           </Box>
         </Layout.Section>

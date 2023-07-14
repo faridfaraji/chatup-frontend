@@ -33,6 +33,7 @@
     "timeSeriesChartTitle": "Messaging Trends Over Time",
     "funnelChartTitle": "Conversion Insights",
     "donutChartTitle": "Daily Messages Used",
+    "donutTopicChartTitle": "Chats by Topic",
     "distributionChartTitle": "Chat Distribution by Time of Day",
     "messagesRemaining": "Daily messages remaining",
     "used": "Used",
@@ -43,13 +44,13 @@
     "conversation": "Conversations",
     "barChartTitle": "Average Visit Duration",
     "invalidRefresh": "Auto-refresh is only available for data from the past day",
-    "Product Information": "Product Information",
-    "Order Status and Tracking": "Order Status and Tracking",
-    "Technical Support": "Technical Support",
-    "Returns and Refunds": "Returns and Refunds",
-    "Account Management": "Account Management",
-    "Promotions and Discounts": "Promotions and Discounts",
-    "General Inquiries and Complaints":"General Inquiries and Complaints"
+    "Product Information": "Products",
+    "Order Status and Tracking": "Orders",
+    "Technical Support": "Tech Support",
+    "Returns and Refunds": "Returns",
+    "Account Management": "Accounts",
+    "Promotions and Discounts": "Promotions",
+    "General Inquiries and Complaints":"General"
   },
   "ChatHistory": {
     "title": "Title",

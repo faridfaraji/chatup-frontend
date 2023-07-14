@@ -7,19 +7,16 @@ export const getRaw = (messages) => {
 }
 
 export const getTopics = (chats) => {
-    const topics = {}
+    const topics = []
     chats.forEach((chat) => {
         const tags = chat?.conversation_summary?.classifications ?
             chat.conversation_summary.classifications.split(', ') : []
         tags.forEach((topic) => {
-            if (topic in topics) {
-                topics[topic] += 1
-            } else {
-                topics[topic] = 1
-            }
+            topic = topic.replace(/[^\w\s]|_/g, "");
+            topics.push(topic)
         })
     })
-    return Object.entries(topics)
+    return topics
 }
 
 const getTimeStep = (start, end) => {
@@ -85,9 +82,8 @@ export const formatChatDataForTS = (messages, dates, comp, names) => {
 }
 
 export const makeTopicDonutData = (topics) => {
-    console.log(topics)
     const donut = []
-    topics.forEach(([topic, value]) => {
+    Object.entries(topics).forEach(([topic, value]) => {
         donut.push(
             {
                 name: topic,
