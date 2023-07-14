@@ -7,6 +7,7 @@ import {
   Layout,
   HorizontalStack,
   TopBar,
+  useBreakpoints,
 } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useState } from "react";
@@ -17,6 +18,16 @@ import { useChatHistory, useMessageHistory } from "../hooks";
 
 
 export default function ChatHistory() {
+  //  broad imports for accessibility
+  const { t } = useTranslation();
+  const { smDown } = useBreakpoints();
+  const [navVis, setNavVis] = useState(smDown)
+
+  const toggleNav = () => {
+    setNavVis(!navVis)
+  }
+
+
   // en: today
   const kyou = new Date();
   kyou.setHours(0, 0, 0, 0);
@@ -33,7 +44,6 @@ export default function ChatHistory() {
   const ashita = new Date(kyou);
   ashita.setDate(kyou.getDate() + 1);
 
-  const { t } = useTranslation();
 
   // date picking
   const [dates, setDates] = useState({});
@@ -166,7 +176,7 @@ export default function ChatHistory() {
   const content = selected ? chatView ? chat : summary : <Robot />
 
   return (
-    <Frame navigation={navMarkup}>
+    <Frame navigation={navMarkup} showMobileNavigation={navVis}>
       <Page
         title={t("NavigationMenu.chatHistory")}
         divider
@@ -174,6 +184,10 @@ export default function ChatHistory() {
           <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
         }
         secondaryActions={[
+          {
+            content: t("ChatHistory.viewNav"),
+            onAction: () => toggleNav()
+          },
           {
             content: "TEST",
             onAction: () => test()
