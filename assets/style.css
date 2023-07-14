@@ -61,15 +61,15 @@
 }
 
 .happy-dot {
-    background-color: #9ACD32;
+    background-color: #165220;
 }
 
 .neutral-dot {
-    background-color: #F5F5DC;
+    background-color: #646422;
 }
 
 .unhappy-dot {
-    background-color: #8B4513;
+    background-color: #7d3e25;
 }
 
 .null-dot {
