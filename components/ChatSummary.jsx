@@ -30,7 +30,7 @@ export const ChatSummary = ({ summary, callback }) => {
                     <div>
 
                         <Text variant="headingSm">{t("ChatHistory.summary")}</Text>
-                        <Text>{t("ChatHistory.notCollected")}</Text>
+                        <Text>{summary.summary}</Text>
                         <br />
                     </div>
                     : null
