@@ -42,7 +42,14 @@
     "comparison": "Comparison",
     "conversation": "Conversations",
     "barChartTitle": "Average Visit Duration",
-    "invalidRefresh": "Auto-refresh is only available for data from the past day"
+    "invalidRefresh": "Auto-refresh is only available for data from the past day",
+    "Product Information": "Product Information",
+    "Order Status and Tracking": "Order Status and Tracking",
+    "Technical Support": "Technical Support",
+    "Returns and Refunds": "Returns and Refunds",
+    "Account Management": "Account Management",
+    "Promotions and Discounts": "Promotions and Discounts",
+    "General Inquiries and Complaints":"General Inquiries and Complaints"
   },
   "ChatHistory": {
     "title": "Title",

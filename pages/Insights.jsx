@@ -4,10 +4,10 @@ import '@shopify/polaris-viz/build/esm/styles.css';
 import { BarChart, DonutChart, LineChart } from "@shopify/polaris-viz";
 import { CardTitle, DateRangePicker, CenteredSpinner } from "../components";
 import { useCallback, useEffect, useState } from "react";
-import { getRaw, formatChatDataForTS, formatChatDataForDonut, formatChatDataForBar } from "../utils/dataUtils";
+import { getRaw, formatChatDataForTS, formatChatDataForBar, getTopics, makeTopicDonutData } from "../utils/dataUtils";
 import { zeroRange, compRange, formatRange } from "../utils/dateUtils"
 import { QuestionMarkInverseMinor } from '@shopify/polaris-icons';
-import { useMessageCounts } from "../hooks";
+import { useChatHistory, useMessageCounts } from "../hooks";
 
 
 export default function Insights() {
@@ -29,15 +29,20 @@ export default function Insights() {
 
   const { t } = useTranslation();
 
+  const translateTopics = (topics) => {
+    return topics.map(([topic, value]) => [t(topic) ?? topic, value])
+  }
+
   // fetch data from dbs
   const getMessages = useMessageCounts();
+  const getChats = useChatHistory();
   const [dates, setDates] = useState({});
   const [compDates, setCompDates] = useState({});
 
   // auto refresh
-  const refreshAllCharts = () => {
+  const fresh = () => {
+    resetCharts()
     refreshCharts()
-    refreshDonut()
   }
 
   const refreshable = !(dates?.since < kyou)
@@ -50,7 +55,7 @@ export default function Insights() {
   }, [checked, refreshable])
 
   const autoRefreshFun = () => {
-    if (refreshFlag) { refreshAllCharts() }
+    if (refreshFlag) { fresh() }
   };
   useEffect(() => {
     let refreshInterval;
@@ -62,9 +67,6 @@ export default function Insights() {
       clearInterval(refreshInterval);
     };
   }, [refreshFlag]);
-
-  // TODO get and set max daily messages for shop's subscription tier
-  const maxDailyMessages = 200
 
   // the charts themselves
   const [ts, setTS] = useState(<CenteredSpinner />);
@@ -78,10 +80,14 @@ export default function Insights() {
     setCompDates(compRange(formattedDates))
   }
 
-  // Refresh the chart whenever the data changes
-  const refreshCharts = () => {
+  // reset all charts to spinnnnnnn
+  const resetCharts = () => {
     setTS(<CenteredSpinner />)
     setBar(<CenteredSpinner />)
+    setDonut(<CenteredSpinner />)
+  }
+  // Refresh the chart whenever the data changes
+  const refreshCharts = () => {
     const primeSince = dates.since ?? kyou
     const primeUntil = dates.until ?? ashita
     const compSince = compDates.since ?? kinou
@@ -94,7 +100,7 @@ export default function Insights() {
     const names = { prime: primeRangeName, comp: compRangeName }
     // right now only supporting a single prime/comp range where prime.since = comp.until
     getMessages(compSince, primeUntil)
-      .then((data) => (getRaw(data)))
+      .then((data) => getRaw(data))
       .then((data) => {
         return {
           ts: formatChatDataForTS(data, primeRange, compRange, names),
@@ -105,42 +111,17 @@ export default function Insights() {
         setTS(<LineChart data={data.ts} />)
         setBar(<BarChart data={data.bar} xAxisOptions={{ "hide": true }} />)
       })
+
+    getChats(primeSince, primeUntil)
+      .then((data) => getTopics(data))
+      .then((data) => translateTopics(data))
+      .then((data) => makeTopicDonutData(data))
+      .then((data) => {
+        setDonut(<DonutChart data={data} legendPosition="bottom"/>)
+      })
   }
 
-  const refreshDonut = () => {
-    setDonut(<CenteredSpinner />)
-    const until = new Date()
-    const since = new Date(until)
-    since.setDate(until.getDate() - 1)
-    const used = t("Insights.used") ?? "Used"
-    const remaining = t("Insights.remaining") ?? "Remaining"
-    const key = t("Dates.today") ?? "Today"
-    const names = { sent: used, remaining: remaining, key: key }
-    getMessages(since, until)
-      .then((data) => getRaw(data))
-      .then((data) => formatChatDataForDonut(data, names, maxDailyMessages))
-      .then((data) => setDonut(
-        <DonutChart
-          data={data}
-          showLegend={false}
-          legendPosition="top"
-          renderInnerValueContent={() => {
-            return <div>
-              <Text variant="bodyLg" fontWeight="bold">
-                {`${data[0].data[0].value}`}
-              </Text>
-              <Text variant="bodySm">
-                {`/ ${maxDailyMessages}`}
-              </Text>
-            </div>
-          }}
-        />
-      ))
-  }
-
-  useEffect(() => refreshCharts(), [dates])
-  useEffect(() => refreshDonut(), [])
-
+  useEffect(() => fresh(), [dates])
 
   return (
     <Page
@@ -179,7 +160,7 @@ export default function Insights() {
             </AlphaCard>
           </Box>
         </Layout.Section>
-        <Layout.Section oneThird>
+        <Layout.Section oneHalf>
           <Box
             paddingInlineStart={{ xs: 4, sm: 0 }}
             paddingInlineEnd={{ xs: 4, sm: 0 }}
@@ -190,7 +171,7 @@ export default function Insights() {
             </AlphaCard>
           </Box>
         </Layout.Section>
-        <Layout.Section>
+        <Layout.Section oneHalf>
           <Box
             paddingInlineStart={{ xs: 4, sm: 0 }}
             paddingInlineEnd={{ xs: 4, sm: 0 }}
