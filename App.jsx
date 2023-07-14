@@ -34,10 +34,10 @@ export default function App() {
                       label: t("NavigationMenu.insights"),
                       destination: "/Insights",
                     },
-                    // {
-                    //   label: t("NavigationMenu.chatHistory"),
-                    //   destination: "/ChatHistory",
-                    // }
+                    {
+                      label: t("NavigationMenu.chatHistory"),
+                      destination: "/ChatHistory",
+                    }
                   ]}
                   matcher={(link, location) => link.destination === location.pathname}
                 />

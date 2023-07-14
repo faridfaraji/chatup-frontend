@@ -4,77 +4,107 @@ import {
   AlphaCard,
   Page,
   Button,
+  Layout,
+  HorizontalStack,
+  TopBar,
 } from "@shopify/polaris";
-import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
-import cache from "../cache";
-import { SkeletonMessages } from "../components";
-import { useAuthenticatedFetch } from "@shopify/app-bridge-react";
-import { zeroRange } from "../utils";
+import { Chat, ChatSummary, Robot, SkeletonCard, SkeletonMessages } from "../components";
+import { dateFromUTC, localizeDatestamp, localizeTime, zeroRange } from "../utils";
+import { useChatHistory, useMessageHistory } from "../hooks";
 
 
 export default function ChatHistory() {
-  const fetch = useAuthenticatedFetch();
-  const [chats, setChats] = useState([])
-  // todo:
-  // get history (dates)
-  // const getChatHistoryCallback = async () => { getChatHistory(fetch).then((resp) => setChats(resp)) };
-  // todo: 
-  // useEffect(() => getChatHistoryCallback(today), [])
-  // useEffect(() => getChatHistoryCallback(), [])
+  // en: today
+  const kyou = new Date();
+  kyou.setHours(0, 0, 0, 0);
 
-  const chatsByDate = chats.reduce((result, item) => {
+  // en: yesterday
+  const kinou = new Date(kyou)
+  kinou.setDate(kyou.getDate() - 1)
+
+  // en: the day before yesterday
+  const ototoi = new Date(kyou)
+  ototoi.setDate(kyou.getDate() - 2)
+
+  // en: tomorrow
+  const ashita = new Date(kyou);
+  ashita.setDate(kyou.getDate() + 1);
+
+  const { t } = useTranslation();
+
+  // date picking
+  const [dates, setDates] = useState({});
+  const handleDateChange = (range) => {
+    const formattedDates = zeroRange(range)
+    setDates(formattedDates)
+  }
+
+  // chat info fetching
+  const [chats, setChats] = useState([]);
+  const [chatsByDate, setChatsByDate] = useState([]);
+  const [chatsById, setChatsById] = useState([])
+  const getChats = useChatHistory();
+
+  const refreshChats = () => {
+    const since = dates.since ?? kyou
+    const until = dates.until ?? ashita
+    getChats(since, until)
+      .then((data) => {
+        setChats(data)
+        setChatsByDate(data.reduce(reduceByDate, {}))
+        setChatsById(data.reduce(reduceById, {}))
+      })
+  }
+
+  useEffect(() => refreshChats(), [dates])
+
+  const test = () => {
+    console.log(chats)
+    console.log(chatsByDate)
+    console.log(chatsById)
+  }
+
+  const reduceByDate = (result, item) => {
     const { timestamp, ...rest } = item;
-    if (rest.messages.length) {
-      const date = new Date(timestamp)
-      rest.fullDate = date
+    if (rest.user_message_count) {
+      const fulldate = dateFromUTC(timestamp)
+      const datestamp = localizeDatestamp(fulldate)
+      const time = localizeTime(fulldate)
+      rest.fulldate = fulldate
+      rest.time = time
 
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1; // Months are zero-based, so add 1
-      const day = date.getDate();
-      const formattedDate = `${year}-${month}-${day}`;
-
-      const hours = date.getHours().toString().padStart(2, '0');
-      const minutes = date.getMinutes().toString().padStart(2, '0');
-      const seconds = date.getSeconds().toString().padStart(2, '0');
-      const formattedTime = `${hours}:${minutes}:${seconds}`;
-      rest.time = formattedTime
-
-      if (result && formattedDate in result) {
-        result[formattedDate].push(rest);
+      if (datestamp in result) {
+        result[datestamp].push(rest);
       } else {
-        result[formattedDate] = [rest];
+        result[datestamp] = [rest];
       }
     }
     return result;
+  }
 
-  }, {});
+  const reduceById = (result, item) => {
+    const { id, ...rest } = item
+    result[id] = rest
+    return result
+  }
 
-
-  const [selectedChat, setSelectedChat] = useState([])
+  // building nav from chat data
   const [selected, setSelected] = useState(null)
-  const [chatLoading, setChatLoading] = useState(true)
 
-  const getSetChatMessages = (chatId) => {
-    setChatLoading(true)
-    getChatMessages(fetch, chatId)
-      .then((resp) => setSelectedChat(resp))
-    // .then(() => setChatLoading(false))
+  const dot = (sentiment) => {
+    const dotClass = sentiment ? `dot ${sentiment}-dot` : "dot null-dot"
+    return <span className={dotClass} />
   }
 
-  const polling = (chatId) => {
-
-  }
-
-  const [skeletonChatMarkup, setSkeletonChatMarkup] = useState(<SkeletonMessages messages={2} />)
-  const handleSelect = (chatId, chatLength) => {
-    setSkeletonChatMarkup(<SkeletonMessages messages={chatLength} />)
+  // const [chatLoading, setChatLoading] = useState(true)
+  const handleSelect = (chatId) => {
+    setChatView(false)
+    resetChat()
     setSelected(chatId)
-    getSetChatMessages(chatId)
-  };
-
+  }
   const navSections = []
   Object
     .entries(chatsByDate)
@@ -86,93 +116,82 @@ export default function ChatHistory() {
         key={date}
         title={date}
         items={list
-          .sort((x, y) => { return y.fullDate - x.fullDate })
-          .map((currentChat, index) => ({
+          .sort((x, y) => { return y.fulldate - x.fulldate })
+          .map((currentChat) => ({
             key: currentChat.id,
-            label: currentChat.time + ": " + currentChat.messages.length,
+            label:
+              <div>
+                {dot(currentChat.conversation_summary.satisfaction)}
+                {` ${currentChat.time}: ` +
+                  (
+                    currentChat.conversation_summary.title ??
+                    `${currentChat.user_message_count + currentChat.ai_message_count} ${t("Insights.messages")}`
+                  )
+                }
+              </div>,
+
             selected: selected === currentChat.id,
-            onClick: () => {
-              handleSelect(currentChat.id, currentChat.messages.length)
-            }
+            onClick: () => handleSelect(currentChat.id)
           }))}
       />)
     })
 
+  const navMarkup = <Navigation key="nav" location="/">{navSections}</Navigation>
 
+  // Building main panel content from nav data
+  const [chatView, setChatView] = useState(false);
+  const [chat, setChat] = useState(null)
+  const getMessages = useMessageHistory();
 
-
-  const navMarkup = (
-    <Navigation key="nav" location="/">
-      {/* <Button primary fullWidth onClick={() => getChatHistoryCallback()}>refresh messages</Button> */}
-      <Navigation.Section
-        title="Date Range"
-        items={[]}
-      />
-      {/* todo: (date1, date2) => getChatHistoryCallback(date1, date2)) */}
-      {/* <DateRangePicker callback={() => getChatHistoryCallback()} /> */}
-      <br />
-      {navSections}
-    </Navigation>
-  )
-
-  const chatMarkup = selectedChat.map((message, index) => (
-    <div
-      key={index}
-      style={{
-        display: 'flex',
-        justifyContent: message.message_type === 'AI' ? 'flex-start' : 'flex-end',
-        marginBottom: '10px',
-        marginLeft: message.message_type === 'AI' ? "10px" : "0px",
-        marginRight: message.message_type === 'AI' ? "0px" : "10px",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: message.message_type === 'AI' ? '#e5e5e5' : '#008cff',
-          color: message.message_type === 'AI' ? '#000' : '#fff',
-          borderRadius: '5px',
-          padding: '10px',
-          maxWidth: '70%',
-        }}
-      >
-        {message.message}
-      </div>
-    </div>
-  ))
-
-  const [dates, setDates] = useState({});
-
-  const { t } = useTranslation();
-
-  const handleDateChange = (range) => {
-    const formattedDates = zeroRange(range)
-    setDates(formattedDates)
+  const viewSummary = () => {
+    setChatView(false)
+    resetChat()
   }
 
+  const viewChat = useCallback(() => {
+    resetChat()
+    getMessages(selected)
+      .then((data) => {
+        console.log(data)
+        setChat(<Chat chat={data} callback={viewSummary} />)
+      })
+      .then(() => setChatView(true))
+  }, [selected])
+
+  const resetChat = useCallback(() => {
+    setChat(<SkeletonCard lines={10} />)
+  }, [selected])
+
+  const summary = <ChatSummary summary={chatsById[selected]?.conversation_summary} callback={viewChat} />
+  const content = selected ? chatView ? chat : summary : <Robot />
+
   return (
-    <Page
-      title={t("NavigationMenu.insights")}
-      divider
-    >
-      <Layout>
-        <Layout.Section fullWidth>
-          <HorizontalStack align="space-between" blockAlign="center">
-            <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
-          </HorizontalStack>
-        </Layout.Section>
-      </Layout>
-    </Page>
+    <Frame navigation={navMarkup}>
+      <Page
+        title={t("NavigationMenu.chatHistory")}
+        divider
+        primaryAction={
+          <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
+        }
+        secondaryActions={[
+          {
+            content: "TEST",
+            onAction: () => test()
+          },
+          {
+            content: "REFRESH",
+            onAction: () => refreshChats()
+          }
+        ]}
+      >
+
+
+        <Layout>
+          <Layout.Section fullWidth>
+            {content}
+          </Layout.Section>
+        </Layout>
+      </Page>
+    </Frame>
   )
 }
-
-{/* return (
-    <Page>
-      <TitleBar />
-      <Frame navigation={navMarkup}>
-        <AlphaCard>
-          {chatLoading && skeletonChatMarkup}
-          {!chatLoading && chatMarkup}
-        </AlphaCard>
-      </Frame>
-    </Page>
-  ); */}

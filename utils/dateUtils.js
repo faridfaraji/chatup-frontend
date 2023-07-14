@@ -134,6 +134,31 @@ export const localizeTimestamp = (timestamp) => {
     return formatted
 }
 
+export const localizeDatestamp = (timestamp) => {
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    const date = new Date(timestamp)
+    let locale = navigator.language
+    let options = { month: "short", day: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = formatter.format(date)
+    return formatted
+}
+
+export const localizeTime = (timestamp) => {
+    // Compatibility:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+    const date = new Date(timestamp)
+    let locale = navigator.language
+    let options = { hour: "numeric", minute: "numeric" }
+    let formatter = Intl.DateTimeFormat(locale = locale, options = options)
+    const formatted = formatter.format(date)
+    return formatted
+}
+
+
 export const getTimeSince = (time) => {
     const since_time = new Date(time)
     const curr_time = new Date();

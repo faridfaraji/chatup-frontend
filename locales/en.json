@@ -45,7 +45,14 @@
     "invalidRefresh": "Auto-refresh is only available for data from the past day"
   },
   "ChatHistory": {
-    "pageTitle": ""
+    "title": "Title",
+    "untitled": "Untitled",
+    "summary": "Summary",
+    "topics": "Topics",
+    "customerSatisfaction": "Customer Satisfaction",
+    "notCollected": "Not collected",
+    "viewChat": "View Chat",
+    "viewSummary": "View Summary"
   },
   "NavigationMenu": {
     "configuration": "Configuration",
