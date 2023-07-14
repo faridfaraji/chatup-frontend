@@ -17,6 +17,9 @@ export default function App() {
   const pages = import.meta.globEager("./pages/**/!(*.test.[jt]sx)*.([jt]sx)");
   const { t } = useTranslation();
 
+  PolarisVizLightTheme["arc"]["thickness"] = 50
+  PolarisVizLightTheme["chartContainer"]["minHeight"] = 250
+
   return (
     <AwesoonProvider>
       <PolarisProvider>

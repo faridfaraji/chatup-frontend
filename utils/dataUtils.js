@@ -6,6 +6,19 @@ export const getRaw = (messages) => {
     })
 }
 
+export const getTopics = (chats) => {
+    const topics = []
+    chats.forEach((chat) => {
+        const tags = chat?.conversation_summary?.classifications ?
+            chat.conversation_summary.classifications.split(', ') : []
+        tags.forEach((topic) => {
+            topic = topic.replace(/[^\w\s]|_/g, "");
+            topics.push(topic)
+        })
+    })
+    return topics
+}
+
 const getTimeStep = (start, end) => {
     const diffMillis = end - start
     const diffDays = Math.floor(diffMillis / (1000 * 60 * 60 * 24))
@@ -68,6 +81,24 @@ export const formatChatDataForTS = (messages, dates, comp, names) => {
     return [...primeSeries, ...compSeries]
 }
 
+export const makeTopicDonutData = (topics) => {
+    const donut = []
+    Object.entries(topics).forEach(([topic, value]) => {
+        donut.push(
+            {
+                name: topic,
+                data: [
+                    {
+                        key: topic,
+                        value: value
+                    }
+                ]
+            }
+        )
+    })
+    return donut
+}
+
 const makeBasicDonutData = (names, values) => {
     return (
         [
@@ -91,12 +122,12 @@ const makeBasicDonutData = (names, values) => {
 
 
 export const formatChatDataForDonut = (messages, names, max) => {
-    return makeBasicDonutData(names, {used: messages.length, max: max})
+    return makeBasicDonutData(names, { used: messages.length, max: max })
 }
 
 export const formatValidationForDonut = (validation, names) => {
-    const donut = makeBasicDonutData(names, {used: validation.current_usage, max: validation.message_limit})
-    return {donut: donut, validation: validation}
+    const donut = makeBasicDonutData(names, { used: validation.current_usage, max: validation.message_limit })
+    return { donut: donut, validation: validation }
 }
 
 

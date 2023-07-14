@@ -7,10 +7,6 @@ export const ChatSummary = ({ summary, callback }) => {
     const tags = summary?.classifications ? summary.classifications.split(', ') : []
     const tagMarkup = tags.map((tag) => <Tag key={tag}>{tag}</Tag>)
 
-    console.log(summary)
-    console.log(tags)
-    console.log(tagMarkup)
-
     return (
         <AlphaCard>
             <CardTitle linebreak title={summary?.title ?? t("ChatHistory.untitled")} />

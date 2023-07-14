@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { WelcomeCard } from "./WelcomeCard";
 import { useActivePlan, useLatestScan, useMessageCounts, useScanner, useShopValidator } from "../hooks";
 import { useCallback, useEffect, useState } from "react";
-import { DonutChart } from "@shopify/polaris-viz";
+import { DonutChart, PolarisVizLightTheme } from "@shopify/polaris-viz";
 import { dateFromUTC, formatChatDataForDonut, formatValidationForDonut, getRaw, getTimeSince, localizeTimestamp } from "../utils";
 import { CenteredSpinner, PaddedCell } from "./misc";
 import { EmbedButton, InsightsButton, SettingsButton } from "./buttons";
@@ -138,7 +138,8 @@ export function LoadedHomePage() {
         // refreshScan({ status: "IN_PROGRESS", timestamp: "2023-07-07T23:19:12" })
         // refreshScan({status: "SUCCESS", timestamp: "2023-07-07T23:19:12"})
         // refreshScan({})
-        validateShop().then((data) => console.log(data))
+        // validateShop().then((data) => console.log(data))
+        
     }
     const testButton = <Button onClick={() => test()}>TEST</Button>
 
@@ -197,7 +198,7 @@ export function LoadedHomePage() {
 
                                 {donut}
                                 <VerticalStack align="end">
-                                    <Box paddingBlockEnd={"10"}>
+                                    <Box paddingBlockEnd={"20"}>
                                         <List type="bullet">
                                             <List.Item>{lastScanInfo}</List.Item>
                                             <List.Item>{nextScanInfo}</List.Item>
