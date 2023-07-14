@@ -61,17 +61,31 @@
 }
 
 .happy-dot {
-    background-color: #165220;
+    background-color: #278f38;
 }
 
 .neutral-dot {
-    background-color: #646422;
+    background-color: #c4bd35;
 }
 
 .unhappy-dot {
-    background-color: #7d3e25;
+    background-color: #984e30;
 }
 
 .null-dot {
     background-color: #03203F;
+}
+
+.loading {
+    background-color: var(--p-color-bg-strong);
+}
+
+.nav-date {
+    border-radius: var(--p-border-radius-1);
+    width: 30%;
+}
+
+.nav-text {
+    border-radius: var(--p-border-radius-1);
+    width: 80%;
 }

@@ -3,8 +3,8 @@ import { robot } from "../../assets"
 export const Robot = () => {
     const div_style = {
         display: "flex",
-        "justify-content": "center",
-        "align-items": "center",
+        justifyContent: "center",
+        alignItems: "center",
         width: "100%"
     }
 

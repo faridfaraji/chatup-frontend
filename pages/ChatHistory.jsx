@@ -12,21 +12,21 @@ import {
 import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
-import { Chat, ChatSummary, Robot, SkeletonCard, SkeletonMessages } from "../components";
+import { Chat, ChatSummary, Robot, SkeletonCard, SkeletonChats } from "../components";
 import { dateFromUTC, localizeDatestamp, localizeTime, zeroRange } from "../utils";
 import { useChatHistory, useMessageHistory } from "../hooks";
+import { ConversationMinor } from '@shopify/polaris-icons';
 
 
 export default function ChatHistory() {
   //  broad imports for accessibility
   const { t } = useTranslation();
-  const { smDown } = useBreakpoints();
-  const [navVis, setNavVis] = useState(smDown)
+  const bp = useBreakpoints();
+  const [navVis, setNavVis] = useState(bp.mdDown)
 
   const toggleNav = () => {
     setNavVis(!navVis)
   }
-
 
   // en: today
   const kyou = new Date();
@@ -48,8 +48,12 @@ export default function ChatHistory() {
   // date picking
   const [dates, setDates] = useState({});
   const handleDateChange = (range) => {
+    setChatsLoading(true)
     const formattedDates = zeroRange(range)
     setDates(formattedDates)
+    setSelected(null)
+    setNavVis(bp.mdDown)
+    setChatView(false)
   }
 
   // chat info fetching
@@ -57,8 +61,10 @@ export default function ChatHistory() {
   const [chatsByDate, setChatsByDate] = useState([]);
   const [chatsById, setChatsById] = useState([])
   const getChats = useChatHistory();
+  const [chatsLoading, setChatsLoading] = useState(true);
 
   const refreshChats = () => {
+    setChatsLoading(true)
     const since = dates.since ?? kyou
     const until = dates.until ?? ashita
     getChats(since, until)
@@ -67,6 +73,7 @@ export default function ChatHistory() {
         setChatsByDate(data.reduce(reduceByDate, {}))
         setChatsById(data.reduce(reduceById, {}))
       })
+      .then(() => setChatsLoading(false))
   }
 
   useEffect(() => refreshChats(), [dates])
@@ -105,7 +112,7 @@ export default function ChatHistory() {
   const [selected, setSelected] = useState(null)
 
   const dot = (sentiment) => {
-    const dotClass = sentiment ? `dot ${sentiment}-dot` : "dot null-dot"
+    const dotClass = sentiment ? `dot ${sentiment.toLowerCase()}-dot` : "dot null-dot"
     return <span className={dotClass} />
   }
 
@@ -113,6 +120,7 @@ export default function ChatHistory() {
   const handleSelect = (chatId) => {
     setChatView(false)
     resetChat()
+    if (bp.mdDown) toggleNav()
     setSelected(chatId)
   }
   const navSections = []
@@ -146,7 +154,8 @@ export default function ChatHistory() {
       />)
     })
 
-  const navMarkup = <Navigation key="nav" location="/">{navSections}</Navigation>
+  const navLoading = <SkeletonChats /> 
+  const navMarkup = <Navigation key="nav" location="/">{chatsLoading ? navLoading : navSections}</Navigation>
 
   // Building main panel content from nav data
   const [chatView, setChatView] = useState(false);
@@ -162,7 +171,6 @@ export default function ChatHistory() {
     resetChat()
     getMessages(selected)
       .then((data) => {
-        console.log(data)
         setChat(<Chat chat={data} callback={viewSummary} />)
       })
       .then(() => setChatView(true))
@@ -174,32 +182,20 @@ export default function ChatHistory() {
 
   const summary = <ChatSummary summary={chatsById[selected]?.conversation_summary} callback={viewChat} />
   const content = selected ? chatView ? chat : summary : <Robot />
+  const navButton = <Button icon={ConversationMinor} onClick={() => toggleNav()} size="slim">{t("ChatHistory.viewNav")}</Button>
 
   return (
-    <Frame navigation={navMarkup} showMobileNavigation={navVis}>
+    <Frame navigation={navMarkup} showMobileNavigation={navVis} onNavigationDismiss={() => toggleNav()}>
       <Page
         title={t("NavigationMenu.chatHistory")}
         divider
         primaryAction={
-          <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
+          <HorizontalStack gap="1">
+            {bp.mdDown ? navButton : null}
+            <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
+          </HorizontalStack>
         }
-        secondaryActions={[
-          {
-            content: t("ChatHistory.viewNav"),
-            onAction: () => toggleNav()
-          },
-          {
-            content: "TEST",
-            onAction: () => test()
-          },
-          {
-            content: "REFRESH",
-            onAction: () => refreshChats()
-          }
-        ]}
       >
-
-
         <Layout>
           <Layout.Section fullWidth>
             {content}
