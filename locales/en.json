@@ -6,13 +6,14 @@
     "scannedNever": "Scan your store to get started",
     "scanned": "Store last scanned {{ localizedTimestamp }}",
     "scanAvailable": "Scan available now",
-    "scanAvailableIn": "You can scan again after {{ localizedTimestamp }}",
+    "scanAvailableIn": "Scan again at {{ localizedTimestamp }}",
     "LastScanTitle": "Last Scan: {{ timeSince }} ago",
     "LastScanCopy": "ChatUp stays updated with real-time product quantities, empowering you with the latest insights in the past 24 hours.",
     "settingsTitle": "Personalize the User Experience",
     "settingsCopy": "Align ChatUp with your shop's vibe and preferences. Visit the settings dashboard to shape ChatUp's personality and boundaries.",
     "embedTitle": "Customize ChatUp",
-    "embedCopy": "Unleash the power of customization! Discover a range of cosmetic options to seamlessly integrate ChatUp with your branding and existing theme. Check out our quick tutorial for a smooth customization journey."
+    "embedCopy": "Unleash the power of customization! Discover a range of cosmetic options to seamlessly integrate ChatUp with your branding and existing theme. Check out our quick tutorial for a smooth customization journey.",
+    "xMessagesRemaining": "{{ x }} messages remaining"
   },
   "Configuration": {
     "title": "App Configuration",
@@ -66,7 +67,8 @@
   "NavigationMenu": {
     "configuration": "Configuration",
     "insights": "Insights",
-    "chatHistory": "Chat History"
+    "chatHistory": "Chat History",
+    "billing": "Billing"
   },
   "Button": {
     "configuration": "Configure Settings",
@@ -80,7 +82,8 @@
     "scanError": "Scan error - please retry",
     "submit": "Submit",
     "autoRefresh": "Auto-refresh",
-    "validRefresh": "Data will refresh every 60 seconds"
+    "validRefresh": "Data will refresh every 60 seconds",
+    "billing": "Change Plan"
   },
   "NotFound": {
     "description": "Oops! The page you're looking for seems to be missing. Double-check the URL or use the search bar to find what you need.",

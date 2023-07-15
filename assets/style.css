@@ -10,6 +10,10 @@
     --a-color-bg-neutral-message-hover: rgb(241, 242, 244, 1);
 }
 
+.Polaris-Button:hover {
+    transition: 0.4s !important;
+}
+
 .human-message-container {
     display: flex;
     justify-content: flex-start;

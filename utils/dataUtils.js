@@ -100,6 +100,8 @@ export const makeTopicDonutData = (topics) => {
 }
 
 const makeBasicDonutData = (names, values) => {
+    console.log(names)
+    console.log(values)
     return (
         [
             {
@@ -107,14 +109,16 @@ const makeBasicDonutData = (names, values) => {
                 data: [{
                     key: names.key,
                     value: values.used
-                }]
+                }],
+                color: "#d45ebd"
             },
             {
                 name: names.remaining,
                 data: [{
                     key: names.key,
                     value: values.max > values.used ? values.max - values.used : 0
-                }]
+                }],
+                color: "#039fdb"
             },
         ]
     )

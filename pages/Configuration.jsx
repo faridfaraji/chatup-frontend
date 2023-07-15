@@ -131,6 +131,10 @@ export default function Configuration() {
     });
   }, [compKeys, compTemp])
 
+  useEffect(() => {
+
+  }, [])
+
   // Use DB data. put and delete as needed. 
   // Reloading from DB after to ensure correct values
   const saveChanges = () => {
