@@ -61,7 +61,8 @@
     "customerSatisfaction": "Customer Satisfaction",
     "notCollected": "Not collected",
     "viewChat": "View Chat",
-    "viewSummary": "View Summary"
+    "viewSummary": "View Summary",
+    "viewNav": "View Chats"
   },
   "NavigationMenu": {
     "configuration": "Configuration",
