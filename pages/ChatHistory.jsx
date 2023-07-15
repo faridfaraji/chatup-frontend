@@ -111,9 +111,8 @@ export default function ChatHistory() {
   // building nav from chat data
   const [selected, setSelected] = useState(null)
 
-  const dot = (sentiment) => {
-    const dotClass = sentiment ? `dot ${sentiment.toLowerCase()}-dot` : "dot null-dot"
-    return <span className={dotClass} />
+  const chatClass = (sentiment) => { 
+    return sentiment ? `chat ${sentiment.toLowerCase()}-chat` : "chat neutral-chat"
   }
 
   // const [chatLoading, setChatLoading] = useState(true)
@@ -138,8 +137,7 @@ export default function ChatHistory() {
           .map((currentChat) => ({
             key: currentChat.id,
             label:
-              <div>
-                {dot(currentChat.conversation_summary.satisfaction)}
+              <div className={chatClass(currentChat.conversation_summary.satisfaction)}>
                 {` ${currentChat.time}: ` +
                   (
                     currentChat.conversation_summary.title ??
