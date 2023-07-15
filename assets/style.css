@@ -1,7 +1,11 @@
 :root {
     --p-color-bg-primary: #03203F !important;
-    --p-color-bg-primary-hover: #073653 !important;
-    --p-color-bg-primary-active: #041E31 !important;
+    --p-color-bg-primary-hover: #0f5682 !important;
+    --p-color-bg-primary-active: #09304d !important;
+}
+
+.Polaris-Button:hover {
+    transition: 0.4s !important;
 }
 
 .human-message-container {

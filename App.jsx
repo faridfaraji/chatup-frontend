@@ -30,6 +30,10 @@ export default function App() {
                 <NavigationMenu
                   navigationLinks={[
                     {
+                      label: t("NavigationMenu.chatHistory"),
+                      destination: "/ChatHistory",
+                    },
+                    {
                       label: t("NavigationMenu.configuration"),
                       destination: "/Configuration",
                     },
@@ -38,9 +42,9 @@ export default function App() {
                       destination: "/Insights",
                     },
                     {
-                      label: t("NavigationMenu.chatHistory"),
-                      destination: "/ChatHistory",
-                    }
+                      label: t("NavigationMenu.billing"),
+                      destination: "/Billing",
+                    },
                   ]}
                   matcher={(link, location) => link.destination === location.pathname}
                 />
