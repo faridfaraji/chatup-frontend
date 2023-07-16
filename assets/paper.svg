@@ -1,0 +1,38 @@
+<svg id="_19.99-a-month-plan" data-name="19.99-a-month-plan" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="974.2" height="813.1" viewBox="0 0 974.2 813.1">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        fill: #1d1d1b;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="252.53" y1="252.53" x2="827.47" y2="827.47" gradientTransform="translate(540 -223.7) rotate(45)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#032040"/>
+      <stop offset="1" stop-color="#29abe2"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <circle class="cls-1" cx="540" cy="540" r="406.5" transform="translate(-255.6 406.5) rotate(-45)"/>
+    <g>
+      <g>
+        <polygon class="cls-2" points="968.5 202.4 5.7 580.7 347.4 580.7 445.6 739.2 500.1 580.7 913.9 580.7 968.5 202.4"/>
+        <path class="cls-3" d="M477.5,878.4a5.5,5.5,0,0,1-4.8-2.7L376.1,719.9H37.6a5.7,5.7,0,0,1-5.6-4.6,5.8,5.8,0,0,1,3.5-6.4L998.3,330.5a5.7,5.7,0,0,1,5.6.9,5.6,5.6,0,0,1,2.1,5.3L951.5,715a5.7,5.7,0,0,1-5.7,4.9H536.1L482.9,874.5a5.9,5.9,0,0,1-4.8,3.9ZM67.7,708.5H379.3a5.6,5.6,0,0,1,4.8,2.7L476,859.5l50.7-147.1a5.7,5.7,0,0,1,5.3-3.9H940.9l52.5-363.8Z" transform="translate(-31.9 -133.5)"/>
+      </g>
+      <g>
+        <polygon class="cls-2" points="445.6 739.2 600.3 580.7 500.1 580.7 445.6 739.2"/>
+        <path class="cls-3" d="M477.5,878.4a5.8,5.8,0,0,1-5.4-7.6l54.6-158.4a5.7,5.7,0,0,1,5.3-3.9H632.2a5.8,5.8,0,0,1,4.1,9.7L481.6,876.7A5.8,5.8,0,0,1,477.5,878.4Zm58.6-158.5-45,130.7L618.7,719.9Z" transform="translate(-31.9 -133.5)"/>
+      </g>
+      <g>
+        <polygon class="cls-2" points="347.4 580.7 968.5 202.4 500.1 580.7 347.4 580.7"/>
+        <path class="cls-3" d="M379.3,719.9a5.7,5.7,0,0,1-3-10.6L997.4,331a5.7,5.7,0,0,1,6.6,9.3L535.6,718.6a5.7,5.7,0,0,1-8-.8,5.6,5.6,0,0,1,.9-8L930,385.4,382.2,719.1A6,6,0,0,1,379.3,719.9Z" transform="translate(-31.9 -133.5)"/>
+      </g>
+    </g>
+  </g>
+</svg>

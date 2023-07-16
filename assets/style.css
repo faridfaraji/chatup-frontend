@@ -133,3 +133,31 @@
     border-radius: var(--p-border-radius-1);
     width: 80%;
 }
+
+.plan-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.plan-img {
+    height: auto;
+    max-width: 18vw;
+    max-height: 18vw;
+    aspect-ratio: 1;
+    scale: 0.5;
+}
+
+.plan-name {
+    text-align: center;
+}
+
+.plan-name p {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.not-included {
+    text-decoration: line-through;
+}

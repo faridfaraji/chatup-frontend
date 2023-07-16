@@ -51,7 +51,7 @@
     "Returns and Refunds": "Returns",
     "Account Management": "Accounts",
     "Promotions and Discounts": "Promotions",
-    "General Inquiries and Complaints":"General"
+    "General Inquiries and Complaints": "General"
   },
   "ChatHistory": {
     "title": "Title",
@@ -69,6 +69,20 @@
     "insights": "Insights",
     "chatHistory": "Chat History",
     "billing": "Billing"
+  },
+  "Billing": {
+    "currentPlan": "Current Plan",
+    "choosePlan": "Choose Plan",
+    "emerging": "Emerging",
+    "established": "Established",
+    "expanding": "Expanding",
+    "enterprise": "Enterprise",
+    "messages": "{{ n }} messages per day",
+    "negKeys": "Negative Keywords",
+    "languages": "All-Language Chat",
+    "personality": "Personality",
+    "insights": "Insights & Analytics",
+    "history": "Chat History"
   },
   "Button": {
     "configuration": "Configure Settings",
