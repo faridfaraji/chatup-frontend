@@ -77,7 +77,7 @@
     "established": "Established",
     "expanding": "Expanding",
     "enterprise": "Enterprise",
-    "messages": "{{ n }} messages per day",
+    "messages": "{{ n }} daily messages",
     "negKeys": "Negative Keywords",
     "languages": "All-Language Chat",
     "personality": "Personality",
