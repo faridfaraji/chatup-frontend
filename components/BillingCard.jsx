@@ -1,9 +1,8 @@
-import { AlphaCard, Box, Button, CalloutCard, Divider, HorizontalGrid, HorizontalStack, Icon, Layout, Text, VerticalStack } from "@shopify/polaris"
+import { AlphaCard, Button, Divider, HorizontalGrid, HorizontalStack, Icon, Layout, VerticalStack } from "@shopify/polaris"
 import { PaddedCell } from "./misc"
-import { CircleTickMinor, CircleCancelMinor } from '@shopify/polaris-icons';
+import { CircleTickMinor } from '@shopify/polaris-icons';
 import { useTranslation } from "react-i18next";
 import { CardTitle } from "./CardTitle";
-import { mars } from "../assets";
 
 const PlanFeature = (props) => {
     const { name, include } = props
