@@ -134,7 +134,7 @@
     width: 80%;
 }
 
-.plan-container {
+.tall-img-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -143,11 +143,24 @@
 
 .plan-img {
     height: auto;
-    max-width: 18vw;
-    max-height: 18vw;
+    max-width: 33vw;
+    max-height: 33vh;
     aspect-ratio: 1;
-    scale: 0.5;
 }
+
+.wide-img-container {
+    display: flex;
+    justify-content: center;
+}
+
+.tall-img {
+    scale: 0.5
+}
+
+.wide-img {
+    scale: 0.8;
+}
+
 
 .plan-name {
     text-align: center;

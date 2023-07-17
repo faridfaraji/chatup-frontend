@@ -82,7 +82,9 @@
     "languages": "All-Language Chat",
     "personality": "Personality",
     "insights": "Insights & Analytics",
-    "history": "Chat History"
+    "history": "Chat History",
+    "enterpriseMessages": "5 cents per message",
+    "enterpriseFeatures": "All features"
   },
   "Button": {
     "configuration": "Configure Settings",
