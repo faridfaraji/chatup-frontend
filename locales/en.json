@@ -76,15 +76,17 @@
     "emerging": "Emerging",
     "established": "Established",
     "expanding": "Expanding",
-    "enterprise": "Enterprise",
+    "enterprise": "Enterprise Plan",
     "messages": "{{ n }} daily messages",
     "negKeys": "Negative Keywords",
     "languages": "All-Language Chat",
     "personality": "Personality",
     "insights": "Insights & Analytics",
     "history": "Chat History",
-    "enterpriseMessages": "5 cents per message",
-    "enterpriseFeatures": "All features"
+    "enterpriseMessages": "Unlimited messages", 
+    "pricePerMessage": "{{ price }} per message",
+    "enterpriseFeatures": "All features",
+    "pricePerMonth": "{{ price }} per month"
   },
   "Button": {
     "configuration": "Configure Settings",

@@ -40,7 +40,6 @@ export function LoadedHomePage() {
     const refreshScan = (scan) => {
         if (!scan?.status) {
             setLastScanInfo(t("HomePage.scannedNever"))
-            setNextScanInfo(t("HomePage.scanAvailable"))
             setScanButton(primaryScan)
         } else {
             const timestampUTC = dateFromUTC(scan.timestamp)
@@ -63,6 +62,9 @@ export function LoadedHomePage() {
     }
 
     const scanCallback = useCallback(() => {
+        const now = new Date()
+        const ts = now.toISOString().slice(0, 19)
+        refreshScan({status: "PENDING", timestamp: ts})
         scanShop()
             .then((new_scan_id) => getScan(new_scan_id))
             .then((new_scan) => refreshScan(new_scan))
@@ -80,7 +82,6 @@ export function LoadedHomePage() {
         validateShop()
             .then((data) => (formatValidationForDonut(data, names)))
             .then((data) => {
-                console.log(data)
                 setMessagesRemaining(data.validation.message_limit - data.validation.current_usage)
                 setDonut(
                     <DonutChart

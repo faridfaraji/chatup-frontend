@@ -100,8 +100,6 @@ export const makeTopicDonutData = (topics) => {
 }
 
 const makeBasicDonutData = (names, values) => {
-    console.log(names)
-    console.log(values)
     return (
         [
             {

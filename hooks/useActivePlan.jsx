@@ -28,8 +28,8 @@ export const useActivePlan = () => {
 
 export const usePlanSetter = () => {
     const fetch = useAuthenticatedFetch();
-    return () => {
-        const fetch_url = `${constants.gateway_url}/${constants.api_version}/shopify/${constants.app_name}/plans/selected`
+    return (plan_name) => {
+        const fetch_url = `${constants.gateway_url}/${constants.api_version}/shopify/${constants.app_name}/plans/${plan_name}/select`
         return fetch(fetch_url, {
             method: 'GET',
             credentials: constants.credentials,

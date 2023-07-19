@@ -8,3 +8,11 @@ export const SkeletonCard = (props) => {
         </AlphaCard>
     )
 }
+
+export const TallSkeleton = (props) => {
+
+}
+
+export const WideSkeleton = (props) => {
+    
+}
