@@ -82,7 +82,6 @@ export function LoadedHomePage() {
         validateShop()
             .then((data) => (formatValidationForDonut(data, names)))
             .then((data) => {
-                console.log(data)
                 setMessagesRemaining(data.validation.message_limit - data.validation.current_usage)
                 setDonut(
                     <DonutChart

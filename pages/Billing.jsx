@@ -14,9 +14,6 @@ export default function Billing() {
     const expProps = { src: steel, name: t("Billing.expanding"), msgs: constants.messages.steel, price: constants.prices.steel, plan_name: constants.plan_names.steel, negKeys: true, languages: true, personality: true, insights: true, history: true, enterprise: false}
     const entProps = { src: mars, name: t("Billing.enterprise"), msgs: constants.messages.mars, price: constants.prices.mars, plan_name: constants.plan_names.mars, negKeys: true, languages: true, personality: true, insights: true, history: true, enterprise: true}
 
-    console.log(constants)
-    console.log(emrProps, estProps, expProps, entProps)
-
     // row of 3 tall with wide enterprise underneath
     const lgPage = <Layout>
         <Layout.Section fullWidth>

@@ -68,8 +68,6 @@ export const WideBillingCard = (props) => {
     const { src, name, msgs, negKeys, languages, personality, insights, history, current, price, enterprise, plan_name } = props.props
     const msgsName = msgs ? t("Billing.messages", { n: msgs }) : t("Billing.enterpriseMessages")
 
-    console.log(price)
-
     return (
         <AlphaCard>
             <Layout>
