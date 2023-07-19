@@ -3,17 +3,30 @@ import { PaddedCell } from "./misc"
 import { CircleTickMinor } from '@shopify/polaris-icons';
 import { useTranslation } from "react-i18next";
 import { CardTitle } from "./CardTitle";
+import constants from "../constants";
+import { usePlanSetter } from "../hooks";
+import { useNavigate } from "@shopify/app-bridge-react";
+
+const ChoosePlanButton = ({ current, price, enterprise, plan_name }) => {
+    const { t } = useTranslation();
+    const choosePlan = usePlanSetter();
+    const navigate = useNavigate();
+    const handleChoice = () => {choosePlan(plan_name).then((data) => navigate(data?.confirmation_page_url))}
+    const buttonCopy = current ? t("Billing.currentPlan") : enterprise ? t("Billing.pricePerMessage", {price: price}) : t("Billing.pricePerMonth", {price: price})
+    const button = <Button id="plan-button" onClick={() => handleChoice()} fullWidth primary>{buttonCopy}</Button>
+    return button
+}
 
 const PlanFeature = (props) => {
     const { name, include } = props
     return <PaddedCell padding={["0", "5", "0", "5"]}>
         <HorizontalStack align="space-between">
             <HorizontalStack gap="1">
-                <div width="25%">
-                    {include ? <Icon source={CircleTickMinor} /> : null}
-                </div>
-                <div width="75%" className={include ? "" : "not-included"}>
-                    {name}
+                <div className={`plan-feature ${include ? "" : "not-included"}`}>
+                    {include ? <div id="checkmark" /> : <div id="xmark"/>}
+                    <p>
+                        {name}
+                    </p>
                 </div>
             </HorizontalStack>
             <div />
@@ -23,7 +36,7 @@ const PlanFeature = (props) => {
 
 export const TallBillingCard = (props) => {
     const { t } = useTranslation()
-    const { src, name, msgs, negKeys, languages, personality, insights, history, current } = props.props
+    const { src, name, msgs, negKeys, languages, personality, insights, history, current, price, enterprise, plan_name } = props.props
     const msgsName = msgs ? t("Billing.messages", { n: msgs }) : t("Billing.enterpriseMessages")
 
     return (
@@ -44,7 +57,7 @@ export const TallBillingCard = (props) => {
                 <PlanFeature name={t("Billing.personality")} include={personality} />
                 <PlanFeature name={t("Billing.insights")} include={insights} />
                 <PlanFeature name={t("Billing.history")} include={history} />
-                <Button primary>{current ? t("Billing.currentPlan") : t("Billing.choosePlan")}</Button>
+                <ChoosePlanButton current={current} price={price} enterprise={enterprise} plan_name={plan_name} />
             </VerticalStack>
         </AlphaCard>
     )
@@ -52,8 +65,10 @@ export const TallBillingCard = (props) => {
 
 export const WideBillingCard = (props) => {
     const { t } = useTranslation();
-    const { src, name, msgs, negKeys, languages, personality, insights, history, current } = props.props
+    const { src, name, msgs, negKeys, languages, personality, insights, history, current, price, enterprise, plan_name } = props.props
     const msgsName = msgs ? t("Billing.messages", { n: msgs }) : t("Billing.enterpriseMessages")
+
+    console.log(price)
 
     return (
         <AlphaCard>
@@ -81,7 +96,7 @@ export const WideBillingCard = (props) => {
                             </VerticalStack>
                         </HorizontalGrid>
                         <div style={{ width: "75%", alignSelf: "center" }}>
-                            <Button fullWidth primary>{current ? t("Billing.currentPlan") : t("Billing.choosePlan")}</Button>
+                            <ChoosePlanButton current={current} price={price} enterprise={enterprise} plan_name={plan_name}/>
                         </div>
                     </VerticalStack>
                 </Layout.Section>

@@ -8,6 +8,8 @@
     --a-color-bg-negative-message-hover: rgb(212, 94, 189, 0.7);
     --a-color-bg-neutral-message: rgb(241, 242, 244, 0.3);
     --a-color-bg-neutral-message-hover: rgb(241, 242, 244, 1);
+    --a-color-bg-check-mark: rgb(3, 32, 63);
+    --a-color-bg-x-mark: rgb(105, 27, 27);
 }
 
 .Polaris-Button:hover {
@@ -33,7 +35,7 @@
 .human-message {
     background-color: #e5e5e5;
     color: #000;
-    border-radius: 5px;
+    border-radius: 10px 10px 10px 0px;
     padding: 10px;
     max-width: 70%;
 }
@@ -41,7 +43,7 @@
 .ai-message {
     background-color: #008cff;
     color: #fff;
-    border-radius: 5px;
+    border-radius: 10px 10px 0px 10px;
     padding: 10px;
     max-width: 70%;
 }
@@ -134,6 +136,7 @@
     width: 80%;
 }
 
+/* Billing Page: containers for plan svgs */
 .tall-img-container {
     display: flex;
     justify-content: center;
@@ -161,7 +164,7 @@
     scale: 0.8;
 }
 
-
+/* Billing Page: Plan text decorations and styling */
 .plan-name {
     text-align: center;
 }
@@ -171,6 +174,109 @@
     font-size: 1.1em;
 }
 
+.plan-feature {
+    display: flex;
+    align-items: center;
+
+    /* white-space: nowrap; */
+    /* overflow: auto; */
+}
+
+.plan-feature p {
+    flex: 1;
+    font-size: 1em;
+    line-height: 1;
+    min-width: 0;
+}
+
 .not-included {
     text-decoration: line-through;
 }
+
+.included .plan-feature::before {
+    content: icon;
+}
+
+/* Billing Page: Check mark for included plan features, x for not */
+#checkmark {
+    display:inline-block;
+    width: 1.1rem;
+    height:1.1rem;
+    background: var(--a-color-bg-check-mark);
+    border-radius:50%;
+    -ms-transform: rotate(45deg); /* IE 9 */
+    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+    margin-right:0.50rem;
+}
+
+#checkmark:before{
+    content:"";
+    position: absolute;
+    width:0.15rem;
+    height:0.45rem;
+    background-color:#fff;
+    left:0.50rem;
+    top:0.30rem;
+}
+
+#checkmark:after{
+    content:"";
+    position: absolute;
+    width:0.15rem;
+    height:0.15rem;
+    background-color:#fff;
+    left:0.40rem;
+    top:0.60rem;
+}
+
+#xmark {
+    display:inline-block;
+    width: 1.1rem;
+    height:1.1rem;
+    /* background: var(--a-color-bg-x-mark); */
+    background: #fff;
+    border-radius:50%;
+    /* IE 9 */
+    /* -ms-transform: rotate(45deg); */
+    /* Chrome, Safari, Opera */
+    /* -webkit-transform: rotate(45deg); */
+    transform: rotate(45deg);
+    margin-right:0.50rem;
+}
+
+#xmark:before{
+    content:"";
+    position: absolute;
+    width:0.15rem;
+    height:0.45rem;
+    /* background-color:#fff; */
+    background-color: var(--a-color-bg-check-mark);
+    left:0.475rem;
+    top:0.325rem;
+}
+
+#xmark:after{
+    content:"";
+    position: absolute;
+    width:0.45rem;
+    height:0.15rem;
+    /* background-color:#fff; */
+    background-color: var(--a-color-bg-check-mark);
+    left:0.325rem;
+    top:0.475rem;
+}
+
+
+
+
+/* Billing Page: Choose Plan button decoration */
+#plan-button {
+    border-radius: 10px 10px 10px 0px;
+    transition: 0.3s ease-in;
+}
+
+#plan-button:hover {
+    border-radius: 10px 10px 0px 10px;
+}
+
