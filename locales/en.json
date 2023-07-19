@@ -86,7 +86,8 @@
     "enterpriseMessages": "Unlimited messages", 
     "pricePerMessage": "{{ price }} per message",
     "enterpriseFeatures": "All features",
-    "pricePerMonth": "{{ price }} per month"
+    "pricePerMonth": "{{ price }} per month",
+    "redirecting": "Redirecting"
   },
   "Button": {
     "configuration": "Configure Settings",
@@ -98,6 +99,7 @@
     "scannedZero": "Scanned within the hour",
     "scanPending": "Scanning",
     "scanError": "Scan error - please retry",
+    "fetchError": "Fetch error - please retry",
     "submit": "Submit",
     "autoRefresh": "Auto-refresh",
     "validRefresh": "Data will refresh every 60 seconds",

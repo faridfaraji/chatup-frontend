@@ -1,4 +1,4 @@
-import { Spinner, Page, Layout, Button, AlphaCard, HorizontalGrid, Box, HorizontalStack, VerticalStack, Text, List, Divider } from "@shopify/polaris";
+import { Spinner, Page, Layout, Button, AlphaCard, HorizontalGrid, Box, HorizontalStack, VerticalStack, Text, List, Divider, useBreakpoints } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { WelcomeCard } from "./WelcomeCard";
 import { useActivePlan, useLatestScan, useMessageCounts, useScanner, useShopValidator } from "../hooks";
@@ -13,6 +13,7 @@ import { RecentSearchesMajor, RefreshMinor, CircleTickMinor, DiamondAlertMinor }
 
 export function LoadedHomePage() {
     const { t } = useTranslation();
+    const bp = useBreakpoints();
     const [loading, setLoading] = useState(true);
     const getPlan = useActivePlan();
     const validateShop = useShopValidator();
@@ -64,7 +65,7 @@ export function LoadedHomePage() {
     const scanCallback = useCallback(() => {
         const now = new Date()
         const ts = now.toISOString().slice(0, 19)
-        refreshScan({status: "PENDING", timestamp: ts})
+        refreshScan({ status: "PENDING", timestamp: ts })
         scanShop()
             .then((new_scan_id) => getScan(new_scan_id))
             .then((new_scan) => refreshScan(new_scan))
@@ -147,15 +148,17 @@ export function LoadedHomePage() {
                         button={settings}
                     />
                 </Layout.Section>
-                <Layout.Section oneThird>
-                    <WelcomeCard
-                        padding={["0", xsPadding, "0", xsPadding]}
-                        minHeight={commonMinHeight}
-                        title={t("HomePage.embedTitle")}
-                        content={t("HomePage.embedCopy")}
-                        button={embed}
-                    />
-                </Layout.Section>
+                {bp.xsOnly ? null :
+                    <Layout.Section oneThird>
+                        <WelcomeCard
+                            padding={["0", xsPadding, "0", xsPadding]}
+                            minHeight={commonMinHeight}
+                            title={t("HomePage.embedTitle")}
+                            content={t("HomePage.embedCopy")}
+                            button={embed}
+                        />
+                    </Layout.Section>
+                }
                 <Layout.Section fullWidth>
                     <PaddedCell padding={["0", xsPadding, "5", xsPadding]}>
 
@@ -169,8 +172,9 @@ export function LoadedHomePage() {
                                 <VerticalStack align="end">
                                     <Box paddingBlockEnd={"20"}>
                                         <List type="bullet">
+                                            <List.Item>(Current Plan Name/Info)</List.Item>
                                             <List.Item>{lastScanInfo}</List.Item>
-                                            <List.Item>{t("HomePage.xMessagesRemaining", {x: messagesRemaining})}</List.Item>
+                                            <List.Item>{t("HomePage.xMessagesRemaining", { x: messagesRemaining })}</List.Item>
                                             <List.Item>(X dollars for Y more messages)</List.Item>
                                             <List.Item>(Summary Statistic 2)</List.Item>
                                         </List>

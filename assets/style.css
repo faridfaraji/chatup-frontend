@@ -12,6 +12,20 @@
     --a-color-bg-x-mark: rgb(105, 27, 27);
 }
 
+/* Robot styling */
+.robot-box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.robot {
+    max-width: 75%;
+    max-height: 50vh;
+    aspect-ratio: calc(2512.64 / 1653.45);
+    height: auto;
+}
+
 .Polaris-Button:hover {
     transition: 0.4s !important;
 }
@@ -137,31 +151,16 @@
 }
 
 /* Billing Page: containers for plan svgs */
-.tall-img-container {
+.img-container { 
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 100%;
+    max-width: 100%;
 }
 
 .plan-img {
+    max-width: 10rem;
     height: auto;
-    max-width: 33vw;
-    max-height: 33vh;
     aspect-ratio: 1;
-}
-
-.wide-img-container {
-    display: flex;
-    justify-content: center;
-}
-
-.tall-img {
-    scale: 0.5
-}
-
-.wide-img {
-    scale: 0.8;
 }
 
 /* Billing Page: Plan text decorations and styling */
@@ -199,72 +198,74 @@
 
 /* Billing Page: Check mark for included plan features, x for not */
 #checkmark {
-    display:inline-block;
+    display: inline-block;
     width: 1.1rem;
-    height:1.1rem;
+    height: 1.1rem;
     background: var(--a-color-bg-check-mark);
-    border-radius:50%;
-    -ms-transform: rotate(45deg); /* IE 9 */
-    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+    border-radius: 50%;
+    -ms-transform: rotate(45deg);
+    /* IE 9 */
+    -webkit-transform: rotate(45deg);
+    /* Chrome, Safari, Opera */
     transform: rotate(45deg);
-    margin-right:0.50rem;
+    margin-right: 0.50rem;
 }
 
-#checkmark:before{
-    content:"";
+#checkmark:before {
+    content: "";
     position: absolute;
-    width:0.15rem;
-    height:0.45rem;
-    background-color:#fff;
-    left:0.50rem;
-    top:0.30rem;
+    width: 0.15rem;
+    height: 0.45rem;
+    background-color: #fff;
+    left: 0.50rem;
+    top: 0.30rem;
 }
 
-#checkmark:after{
-    content:"";
+#checkmark:after {
+    content: "";
     position: absolute;
-    width:0.15rem;
-    height:0.15rem;
-    background-color:#fff;
-    left:0.40rem;
-    top:0.60rem;
+    width: 0.15rem;
+    height: 0.15rem;
+    background-color: #fff;
+    left: 0.40rem;
+    top: 0.60rem;
 }
 
 #xmark {
-    display:inline-block;
+    display: inline-block;
     width: 1.1rem;
-    height:1.1rem;
+    height: 1.1rem;
     /* background: var(--a-color-bg-x-mark); */
     background: #fff;
-    border-radius:50%;
+    border-radius: 50%;
     /* IE 9 */
     /* -ms-transform: rotate(45deg); */
     /* Chrome, Safari, Opera */
     /* -webkit-transform: rotate(45deg); */
     transform: rotate(45deg);
-    margin-right:0.50rem;
+    margin-right: 0.50rem;
 }
 
-#xmark:before{
-    content:"";
+#xmark:before {
+    content: "";
     position: absolute;
-    width:0.15rem;
-    height:0.45rem;
+    width: 0.15rem;
+    height: 0.45rem;
     /* background-color:#fff; */
     background-color: var(--a-color-bg-check-mark);
-    left:0.475rem;
-    top:0.325rem;
+    left: 0.475rem;
+    top: 0.325rem;
 }
 
-#xmark:after{
-    content:"";
+#xmark:after {
+    content: "";
     position: absolute;
-    width:0.45rem;
-    height:0.15rem;
+    width: 0.45rem;
+    height: 0.15rem;
     /* background-color:#fff; */
     background-color: var(--a-color-bg-check-mark);
-    left:0.325rem;
-    top:0.475rem;
+    left: 0.325rem;
+    top: 0.475rem;
 }
 
 
@@ -279,4 +280,3 @@
 #plan-button:hover {
     border-radius: 10px 10px 0px 10px;
 }
-
