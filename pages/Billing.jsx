@@ -1,18 +1,66 @@
 import { Box, Grid, HorizontalStack, Layout, Page, VerticalStack, useBreakpoints } from "@shopify/polaris";
-import { TallBillingCard, WideBillingCard } from "../components/BillingCard";
 import { useTranslation } from "react-i18next";
-import { canvas, mars, paper, steel } from "../assets";
-import { PaddedCell } from "../components";
+import { PaddedCell, TallBillingCard, WideBillingCard } from "../components";
 import constants from "../constants";
+import { useActivePlan } from "../hooks";
 
 export default function Billing() {
     const { t } = useTranslation();
     const bp = useBreakpoints();
+    const getActivePlan = useActivePlan();
 
-    const emrProps = { src: paper, name: t("Billing.emerging"), msgs: constants.messages.paper, price: constants.prices.paper, plan_name: constants.plan_names.paper, negKeys: true, languages: true, personality: false, insights: false, history: false, enterprise: false}
-    const estProps = { src: canvas, name: t("Billing.established"), msgs: constants.messages.canvas, price: constants.prices.canvas, plan_name: constants.plan_names.canvas, negKeys: true, languages: true, personality: true, insights: false, history: false, enterprise: false}
-    const expProps = { src: steel, name: t("Billing.expanding"), msgs: constants.messages.steel, price: constants.prices.steel, plan_name: constants.plan_names.steel, negKeys: true, languages: true, personality: true, insights: true, history: true, enterprise: false}
-    const entProps = { src: mars, name: t("Billing.enterprise"), msgs: constants.messages.mars, price: constants.prices.mars, plan_name: constants.plan_names.mars, negKeys: true, languages: true, personality: true, insights: true, history: true, enterprise: true}
+    const emrProps = {
+        plan: "paper",
+        name: t("Billing.emerging"),
+        msgs: constants.messages.paper,
+        price: constants.prices.paper,
+        plan_name: constants.plan_names.paper,
+        negKeys: true,
+        languages: true,
+        personality: false,
+        insights: false,
+        history: false,
+        enterprise: false
+    }
+    const estProps = {
+        plan: "canvas",
+        name: t("Billing.established"),
+        msgs: constants.messages.canvas,
+        price: constants.prices.canvas,
+        plan_name: constants.plan_names.canvas,
+        negKeys: true,
+        languages: true,
+        personality: true,
+        insights: false,
+        history: false,
+        enterprise: false
+    }
+    const expProps = {
+        plan: "steel",
+        name: t("Billing.expanding"),
+        msgs: constants.messages.steel,
+        price: constants.prices.steel,
+        plan_name: constants.plan_names.steel,
+        negKeys: true,
+        languages: true,
+        personality: true,
+        insights: true,
+        history: true,
+        enterprise: false
+    }
+    const entProps = {
+        plan: "mars",
+        name: t("Billing.enterprise"),
+        msgs: constants.messages.mars,
+        price: constants.prices.mars,
+        plan_name: constants.plan_names.mars,
+        negKeys: true,
+        languages: true,
+        personality: true,
+        insights: true,
+        history: true,
+        enterprise: true
+    }
 
     // row of 3 tall with wide enterprise underneath
     const lgPage = <Layout>

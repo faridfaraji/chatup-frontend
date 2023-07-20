@@ -29,9 +29,9 @@ export default {
         mars: 0
     },
     plan_names: {
-        paper: "pay",
-        canvas: "pay_plus",
-        steel: "pay_plus_plus",
-        mars: "free"
+        paper: "paper",
+        canvas: "canvas",
+        steel: "steel",
+        mars: "mars"
     }
 }
