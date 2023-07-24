@@ -13,7 +13,18 @@
     "settingsCopy": "Align ChatUp with your shop's vibe and preferences. Visit the settings dashboard to shape ChatUp's personality and boundaries.",
     "embedTitle": "Customize ChatUp",
     "embedCopy": "Unleash the power of customization! Discover a range of cosmetic options to seamlessly integrate ChatUp with your branding and existing theme. Check out our quick tutorial for a smooth customization journey.",
-    "xMessagesRemaining": "{{ x }} messages remaining"
+    "xMessagesRemaining": "{{ x }} messages remaining",
+    "currentPlan": "Current Plan",
+    "Free Trial": "Free Trial",
+    "Emerging": "Emerging",
+    "Established": "Established",
+    "Expanding": "Expanding",
+    "Enterprise": "Enterprise",
+    "upgradeFree Trial": "Free trial ends in {{ time }} hours",
+    "upgradeEmerging": "Only $30 per month for 150 more daily messages!",
+    "upgradeEstablished": "Only $50 per month for 300 more daily messages!",
+    "upgradeExpanding": "Upgrade to Enterprise for unlimited messages!",
+    "upgradeEnterprise": "Please contact us directly for additional services."
   },
   "Configuration": {
     "title": "App Configuration",
@@ -62,7 +73,8 @@
     "notCollected": "Not collected",
     "viewChat": "View Chat",
     "viewSummary": "View Summary",
-    "viewNav": "View Chats"
+    "viewNav": "View Chats",
+    "noChats": "No chats found for selected time period"
   },
   "NavigationMenu": {
     "configuration": "Configuration",
@@ -83,7 +95,7 @@
     "personality": "Personality",
     "insights": "Insights & Analytics",
     "history": "Chat History",
-    "enterpriseMessages": "Unlimited messages", 
+    "enterpriseMessages": "Unlimited messages",
     "pricePerMessage": "{{ price }} per message",
     "enterpriseFeatures": "All features",
     "pricePerMonth": "{{ price }} per month",
@@ -113,6 +125,7 @@
     "pastTwo": "Past Two Days",
     "today": "Today",
     "yesterday": "Yesterday",
-    "pastWeek": "Past Week"
+    "pastWeek": "Past Week",
+    "pastMonth": "Past Month"
   }
 }
