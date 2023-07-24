@@ -30,12 +30,12 @@ export default function App() {
                 <NavigationMenu
                   navigationLinks={[
                     {
-                      label: t("NavigationMenu.chatHistory"),
-                      destination: "/ChatHistory",
-                    },
-                    {
                       label: t("NavigationMenu.configuration"),
                       destination: "/Configuration",
+                    },
+                    {
+                      label: t("NavigationMenu.chatHistory"),
+                      destination: "/ChatHistory",
                     },
                     {
                       label: t("NavigationMenu.insights"),

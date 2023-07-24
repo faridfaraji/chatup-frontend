@@ -152,8 +152,9 @@ export default function ChatHistory() {
       />)
     })
 
-  const navLoading = <SkeletonChats /> 
-  const navMarkup = <Navigation key="nav" location="/">{chatsLoading ? navLoading : navSections}</Navigation>
+  const navLoading = <SkeletonChats />
+  const noChats = <Navigation.Section key={"noChats"} title={t("ChatHistory.noChats")} items={[]} />
+  const navMarkup = <Navigation key="nav" location="/">{chatsLoading ? navLoading : navSections?.length ? navSections : noChats}</Navigation>
 
   // Building main panel content from nav data
   const [chatView, setChatView] = useState(false);

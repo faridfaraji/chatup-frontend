@@ -17,6 +17,9 @@ export const DateRangePicker = ({ onDateRangeChange, activatorSize }) => {
   const oneWeekAgo = new Date(today);
   oneWeekAgo.setDate(today.getDate() - 7);
 
+  const oneMonthAgo = new Date(today);
+  oneMonthAgo.setMonth(today.getMonth() - 1)
+
   const ranges = [
     {
       title: t("Dates.today"),
@@ -39,6 +42,14 @@ export const DateRangePicker = ({ onDateRangeChange, activatorSize }) => {
       alias: "last7days",
       period: {
         since: oneWeekAgo,
+        until: yesterday,
+      },
+    },
+    {
+      title: t("Dates.pastMonth"),
+      alias: "lastMonth",
+      period: {
+        since: oneMonthAgo,
         until: yesterday,
       },
     },

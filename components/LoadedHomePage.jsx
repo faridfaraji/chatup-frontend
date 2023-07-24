@@ -15,7 +15,8 @@ export function LoadedHomePage() {
     const { t } = useTranslation();
     const bp = useBreakpoints();
     const [loading, setLoading] = useState(true);
-    const getPlan = useActivePlan();
+    const getActivePlan = useActivePlan();
+    const [activePlan, setActivePlan] = useState(false);
     const validateShop = useShopValidator();
     const getMessages = useMessageCounts();
     const [donut, setDonut] = useState(<CenteredSpinner />);
@@ -25,10 +26,12 @@ export function LoadedHomePage() {
     const [scanButton, setScanButton] = useState(<Button disabled={true} />)
     const [messagesRemaining, setMessagesRemaining] = useState(0);
 
+
     // Scan State logic
     // TODO: This was moved here because 2 components required scan info. Can it be containerized?
     const load = () => {
         getScan().then((scan) => refreshScan(scan))
+        getActivePlan().then((data) => setActivePlan(data))
     }
 
     useEffect(() => load(), [])
@@ -71,6 +74,16 @@ export function LoadedHomePage() {
             .then((new_scan) => refreshScan(new_scan))
     })
 
+    // Generate upgrade copy
+    const generateUpgradeCopy = (plan_name) => {
+        const key = `HomePage.upgrade${plan_name}`
+        switch(plan_name) {
+            case "Free Trial":
+                return t(key, {time: "3 days"})
+            default:
+                return t(key)
+        }
+    }
 
     // Donut chart might be containerizable. Strong chance. We'll see.
     useEffect(() => refreshDonut(), [])
@@ -109,6 +122,7 @@ export function LoadedHomePage() {
         // refreshScan({status: "SUCCESS", timestamp: "2023-07-07T23:19:12"})
         // refreshScan({})
         validateShop().then((data) => console.log(data))
+        console.log(activePlan)
         // console.log(nextScanInfo)
     }
     const testButton = <Button onClick={() => test()}>TEST</Button>
@@ -172,11 +186,10 @@ export function LoadedHomePage() {
                                 <VerticalStack align="end">
                                     <Box paddingBlockEnd={"20"}>
                                         <List type="bullet">
-                                            <List.Item>(Current Plan Name/Info)</List.Item>
                                             <List.Item>{lastScanInfo}</List.Item>
+                                            {activePlan ? <List.Item>{`${t("HomePage.currentPlan")}: ${t(`HomePage.${activePlan.name}`)}`}</List.Item> : null}
                                             <List.Item>{t("HomePage.xMessagesRemaining", { x: messagesRemaining })}</List.Item>
-                                            <List.Item>(X dollars for Y more messages)</List.Item>
-                                            <List.Item>(Summary Statistic 2)</List.Item>
+                                            {activePlan ? <List.Item>{generateUpgradeCopy(activePlan.name)}</List.Item> : null}
                                         </List>
                                     </Box>
                                     <BillingButton />
