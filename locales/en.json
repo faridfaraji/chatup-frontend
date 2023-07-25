@@ -4,7 +4,7 @@
     "scanTitle": "Scan Your Store",
     "scanCopy": "ChatUp delves deep into your store's policies, pages, products, contact info, and order data, enabling it to provide highly accurate answers to a visitor's queries.",
     "scannedNever": "Scan your store to get started",
-    "scanned": "Store last scanned {{ localizedTimestamp }}",
+    "scanned": "Last scan of your store occured on {{ localizedTimestamp }}",
     "scanAvailable": "Scan available now",
     "scanAvailableIn": "Scan again at {{ localizedTimestamp }}",
     "LastScanTitle": "Last Scan: {{ timeSince }} ago",
@@ -13,14 +13,14 @@
     "settingsCopy": "Align ChatUp with your shop's vibe and preferences. Visit the settings dashboard to shape ChatUp's personality and boundaries.",
     "embedTitle": "Customize ChatUp",
     "embedCopy": "Unleash the power of customization! Discover a range of cosmetic options to seamlessly integrate ChatUp with your branding and existing theme. Check out our quick tutorial for a smooth customization journey.",
-    "xMessagesRemaining": "{{ x }} messages remaining",
+    "xMessagesRemaining": "{{ x }} messages left for today",
     "currentPlan": "Current Plan",
     "Free Trial": "Free Trial",
     "Emerging": "Emerging",
     "Established": "Established",
     "Expanding": "Expanding",
     "Enterprise": "Enterprise",
-    "upgradeFree Trial": "Free trial ends in {{ time }} hours",
+    "upgradeFree Trial": "Your trial period lasts until {{ time }}",
     "upgradeEmerging": "Only $30 per month for 150 more daily messages!",
     "upgradeEstablished": "Only $50 per month for 300 more daily messages!",
     "upgradeExpanding": "Upgrade to Enterprise for unlimited messages!",
@@ -83,7 +83,7 @@
     "billing": "Billing"
   },
   "Billing": {
-    "currentPlan": "Current Plan",
+    "currentPlan": "You are currently on our {{plan_name}} plan",
     "choosePlan": "Choose Plan",
     "emerging": "Emerging",
     "established": "Established",
@@ -115,7 +115,7 @@
     "submit": "Submit",
     "autoRefresh": "Auto-refresh",
     "validRefresh": "Data will refresh every 60 seconds",
-    "billing": "Change Plan"
+    "billing": "Upgrade & Save"
   },
   "NotFound": {
     "description": "Oops! The page you're looking for seems to be missing. Double-check the URL or use the search bar to find what you need.",
