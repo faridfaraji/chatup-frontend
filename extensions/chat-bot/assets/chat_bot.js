@@ -504,8 +504,14 @@ function displayAiResponse(data, details) {
   var tempElement = document.createElement('div');
   tempElement.textContent = details.currentMessage;
   hyperlinkText(tempElement);
-  // Replace the HTML of the messageElement with the hyperlinked version
-  details.messageElement.innerHTML = tempElement.innerHTML;
+
+  // Create a pre element
+  var preElement = document.createElement('pre');
+  preElement.innerHTML = tempElement.innerHTML;
+
+  // Replace the HTML of the messageElement with the pre element
+  details.messageElement.innerHTML = '';
+  details.messageElement.appendChild(preElement);
 
   clearTimeout(details.chunkTimeout);
   details.chunkTimeout = setTimeout(function () {
@@ -527,6 +533,7 @@ function displayAiResponse(data, details) {
     scrollToLatestMessage();
   }, 500); // Delay scrolling to give time for the message to render
 }
+
 
 
 
