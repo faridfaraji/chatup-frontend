@@ -34,11 +34,9 @@ export const WideBillingCard = (props) => {
 
     return (
         <AlphaCard>
-            <Layout>
-                <Layout.Section oneThird>
+            <HorizontalGrid columns={{ sm: 1, md: ["oneThird", "twoThirds"] }}>
                 <PlanImage plan={plan} />
-                </Layout.Section>
-                <Layout.Section>
+                <VerticalStack>
                     <CardTitle linebreak title={name} />
                     <Divider />
                     <br />
@@ -59,8 +57,8 @@ export const WideBillingCard = (props) => {
                             <ChoosePlanButton current={current} price={price} enterprise={enterprise} plan_name={plan_name} />
                         </div>
                     </VerticalStack>
-                </Layout.Section>
-            </Layout>
+                </VerticalStack>
+            </HorizontalGrid>
         </AlphaCard>
     )
 }
