@@ -63,5 +63,9 @@
         "today": "今日",
         "yesterday": "昨日",
         "pastWeek": "先週"
+    },
+    "Billing": {
+        "emerging": "新興の",
+        "established": "設立された"
     }
 }

@@ -20,11 +20,11 @@
     "Established": "Established",
     "Expanding": "Expanding",
     "Enterprise": "Enterprise",
-    "upgradeFree Trial": "Your trial period lasts until {{ time }}",
-    "upgradeEmerging": "Only $30 per month for 150 more daily messages!",
-    "upgradeEstablished": "Only $50 per month for 300 more daily messages!",
-    "upgradeExpanding": "Upgrade to Enterprise for unlimited messages!",
-    "upgradeEnterprise": "Please contact us directly for additional services."
+    "upgrade": "Your trial period lasts until {{ date }}",
+    "upgrade19.00": "Only $30 per month for 150 more daily messages!",
+    "upgrade49.00": "Only $50 per month for 300 more daily messages!",
+    "upgrade99.00": "Upgrade to Enterprise for unlimited messages!",
+    "upgrade499.00": "Please contact us directly for additional services."
   },
   "Configuration": {
     "title": "App Configuration",
@@ -83,7 +83,7 @@
     "billing": "Billing"
   },
   "Billing": {
-    "currentPlan": "You are currently on our {{plan_name}} plan",
+    "currentPlan": "Current Plan",
     "choosePlan": "Choose Plan",
     "emerging": "Emerging",
     "established": "Established",
