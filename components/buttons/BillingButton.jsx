@@ -1,7 +1,7 @@
 import { Button } from "@shopify/polaris";
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "@shopify/app-bridge-react";
-import { SelectMinor } from '@shopify/polaris-icons';
+import { CircleChevronUpMinor } from '@shopify/polaris-icons';
 
 export const BillingButton = () => {
     const { t } = useTranslation();
@@ -10,7 +10,7 @@ export const BillingButton = () => {
     return (
         <Button
             primary
-            icon={SelectMinor}
+            icon={CircleChevronUpMinor}
             onClick={() => { navigate("/Billing") }}>
             {t("Button.billing")}
         </Button>

@@ -4,19 +4,16 @@ import { useNavigate } from "@shopify/app-bridge-react";
 import { useEffect, useState } from "react";
 import { usePlanSetter } from "../../hooks";
 
-export const ChoosePlanButton = ({ current, price, enterprise, plan_name }) => {
+export const ChoosePlanButton = ({ current, price, plan, name }) => {
     const { t } = useTranslation();
     const choosePlan = usePlanSetter();
     const navigate = useNavigate();
     const [button, setButton] = useState(<Button disabled={true} />);
 
-    const buttonCopy =
-            current ? t("Billing.currentPlan") :
-                enterprise ? t("Billing.pricePerMessage", { price: price }) :
-                    t("Billing.pricePerMonth", { price: price })
+    const buttonCopy = current ? t("Billing.currentPlan") : t("Billing.pricePerMonth", { price: price })
 
     const activeButton =
-        <Button id="plan-button" onClick={() => handleChoice()} fullWidth primary>
+        <Button id="plan-button" onClick={() => handleChoice()} fullWidth primary disabled={current}>
             {buttonCopy}
         </Button>
 
@@ -35,7 +32,7 @@ export const ChoosePlanButton = ({ current, price, enterprise, plan_name }) => {
 
     const handleChoice = () => {
         setButton(fetchingButton)
-        choosePlan(plan_name).then((data) => {
+        choosePlan(plan, name).then((data) => {
             const url = data?.confirmation_page_url
             console.log(data)
             if (url) {
@@ -48,7 +45,7 @@ export const ChoosePlanButton = ({ current, price, enterprise, plan_name }) => {
         })
     }
     const activateButton = () => { setButton(activeButton) }
-    useEffect(() => activateButton(), [])
+    useEffect(() => activateButton(), [current])
 
     return button
 }

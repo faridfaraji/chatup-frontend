@@ -1,1 +1,1 @@
-export { msgDonut } from "./msgDonut";
+export { MessageDonut } from "./MessageDonut";

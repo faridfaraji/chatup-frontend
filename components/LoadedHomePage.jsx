@@ -1,37 +1,36 @@
 import { Spinner, Page, Layout, Button, AlphaCard, HorizontalGrid, Box, HorizontalStack, VerticalStack, Text, List, Divider, useBreakpoints } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { WelcomeCard } from "./WelcomeCard";
-import { useActivePlan, useLatestScan, useMessageCounts, useScanner, useShopValidator } from "../hooks";
+import { useActivePlan, useLatestScan, useMessageCounts, useScanner } from "../hooks";
 import { useCallback, useEffect, useState } from "react";
-import { DonutChart, PolarisVizLightTheme } from "@shopify/polaris-viz";
-import { dateFromUTC, formatChatDataForDonut, formatValidationForDonut, getRaw, getTimeSince, localizeTimestamp } from "../utils";
-import { CenteredSpinner, PaddedCell } from "./misc";
-import { EmbedButton, InsightsButton, SettingsButton, BillingButton } from "./buttons";
+import { dateFromUTC, getTimeSince, localizeDatestamp, localizeTimestamp } from "../utils";
+import { PaddedCell } from "./misc";
+import { EmbedButton, SettingsButton, BillingButton } from "./buttons";
 import { Robot } from "./images";
 import { CardTitle } from "./CardTitle";
-import { RecentSearchesMajor, RefreshMinor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
+import { RecentSearchesMajor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
+import { MessageDonut } from "./charts";
+import constants from "../constants";
 
 export function LoadedHomePage() {
     const { t } = useTranslation();
     const bp = useBreakpoints();
-    const [loading, setLoading] = useState(true);
     const getActivePlan = useActivePlan();
     const [activePlan, setActivePlan] = useState(false);
-    const validateShop = useShopValidator();
     const getMessages = useMessageCounts();
-    const [donut, setDonut] = useState(<CenteredSpinner />);
+    const [messages, setMessages] = useState([]);
     const scanShop = useScanner();
     const getScan = useLatestScan();
     const [lastScanInfo, setLastScanInfo] = useState("")
     const [scanButton, setScanButton] = useState(<Button disabled={true} />)
-    const [messagesRemaining, setMessagesRemaining] = useState(0);
 
 
     // Scan State logic
     // TODO: This was moved here because 2 components required scan info. Can it be containerized?
     const load = () => {
-        getScan().then((scan) => refreshScan(scan))
         getActivePlan().then((data) => setActivePlan(data))
+        getMessages().then((data) => setMessages(data))
+        getScan().then((scan) => refreshScan(scan))
     }
 
     useEffect(() => load(), [])
@@ -75,45 +74,15 @@ export function LoadedHomePage() {
     })
 
     // Generate upgrade copy
-    const generateUpgradeCopy = (plan_name) => {
-        const key = `HomePage.upgrade${plan_name}`
-        switch(plan_name) {
-            case "Free Trial":
-                return t(key, {time: "3 days"})
-            default:
-                return t(key)
-        }
+    const generateUpgradeCopy = (price, trial_end) => {
+        const date = new Date(trial_end)
+        const formatted_date = localizeDatestamp(date)
+        const key = `HomePage.upgrade${price}`
+        if (price) return t(key)
+        else return t(key, { date: formatted_date })
     }
 
-    // Donut chart might be containerizable. Strong chance. We'll see.
-    useEffect(() => refreshDonut(), [])
-    const refreshDonut = () => {
-        setDonut(<CenteredSpinner />)
-        const used = t("Insights.used")
-        const remaining = t("Insights.remaining")
-        const key = t("Dates.today")
-        const names = { used: used, remaining: remaining, key: key }
-        validateShop()
-            .then((data) => (formatValidationForDonut(data, names)))
-            .then((data) => {
-                setMessagesRemaining(data.validation.message_limit - data.validation.current_usage)
-                setDonut(
-                    <DonutChart
-                        data={data.donut}
-                        legendPosition="right"
-                        renderInnerValueContent={() => {
-                            return <div>
-                                <Text variant="bodyLg" fontWeight="bold">
-                                    {`${data.validation.current_usage}`}
-                                </Text>
-                                <Text variant="bodySm">
-                                    {`/ ${data.validation.message_limit}`}
-                                </Text>
-                            </div>
-                        }}
-                    />)
-            })
-    }
+
 
     const test = () => {
         // refreshScan({status: "ERROR", timestamp: "2023-07-07T23:19:12"})
@@ -121,7 +90,7 @@ export function LoadedHomePage() {
         // refreshScan({ status: "IN_PROGRESS", timestamp: "2023-07-07T23:19:12" })
         // refreshScan({status: "SUCCESS", timestamp: "2023-07-07T23:19:12"})
         // refreshScan({})
-        validateShop().then((data) => console.log(data))
+        // validateShop().then((data) => console.log(data))
         console.log(activePlan)
         // console.log(nextScanInfo)
     }
@@ -181,15 +150,14 @@ export function LoadedHomePage() {
                             <Divider />
                             <br />
                             <HorizontalGrid columns={xsColumns}>
-
-                                {donut}
+                                <MessageDonut current_usage={messages.length} message_limit={activePlan ? constants.price_to_messages[activePlan?.price] : false} />
                                 <VerticalStack align="end">
                                     <Box paddingBlockEnd={"20"}>
                                         <List type="bullet">
                                             <List.Item>{lastScanInfo}</List.Item>
-                                            {activePlan ? <List.Item>{`${t("HomePage.currentPlan")}: ${t(`HomePage.${activePlan.name}`)}`}</List.Item> : null}
-                                            <List.Item>{t("HomePage.xMessagesRemaining", { x: messagesRemaining })}</List.Item>
-                                            {activePlan ? <List.Item>{generateUpgradeCopy(activePlan.name)}</List.Item> : null}
+                                            {activePlan ? <List.Item>{`${t("HomePage.currentPlan")}: ${activePlan.name}`}</List.Item> : null}
+                                            <List.Item>{t("HomePage.xMessagesRemaining", { x: activePlan ? constants.price_to_messages[activePlan?.price] - messages.length : "-" })}</List.Item>
+                                            {activePlan ? <List.Item>{generateUpgradeCopy(activePlan.price, activePlan.trial_ends_on)}</List.Item> : null}
                                         </List>
                                     </Box>
                                     <BillingButton />

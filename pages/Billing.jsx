@@ -3,63 +3,64 @@ import { useTranslation } from "react-i18next";
 import { PaddedCell, TallBillingCard, WideBillingCard } from "../components";
 import constants from "../constants";
 import { useActivePlan } from "../hooks";
+import { useEffect, useState } from "react";
 
 export default function Billing() {
     const { t } = useTranslation();
     const bp = useBreakpoints();
     const getActivePlan = useActivePlan();
+    const [activePlan, setActivePlan] = useState({ name: "Free" });
+
+    const load = () => getActivePlan().then((data) => setActivePlan(data))
+    useEffect(() => load(), [])
 
     const emrProps = {
         plan: "paper",
         name: t("Billing.emerging"),
         msgs: constants.messages.paper,
         price: constants.prices.paper,
-        plan_name: constants.plan_names.paper,
+        current: constants.price_check.paper == activePlan.price,
         negKeys: true,
         languages: true,
         personality: false,
         insights: false,
         history: false,
-        enterprise: false
     }
     const estProps = {
         plan: "canvas",
         name: t("Billing.established"),
         msgs: constants.messages.canvas,
         price: constants.prices.canvas,
-        plan_name: constants.plan_names.canvas,
+        current: constants.price_check.canvas == activePlan.price,
         negKeys: true,
         languages: true,
         personality: true,
         insights: false,
         history: false,
-        enterprise: false
     }
     const expProps = {
         plan: "steel",
         name: t("Billing.expanding"),
         msgs: constants.messages.steel,
         price: constants.prices.steel,
-        plan_name: constants.plan_names.steel,
+        current: constants.price_check.steel == activePlan.price,
         negKeys: true,
         languages: true,
         personality: true,
         insights: true,
-        history: true,
-        enterprise: false
+        history: false,
     }
     const entProps = {
         plan: "mars",
         name: t("Billing.enterprise"),
         msgs: constants.messages.mars,
         price: constants.prices.mars,
-        plan_name: constants.plan_names.mars,
+        current: constants.price_check.mars == activePlan.price,
         negKeys: true,
         languages: true,
         personality: true,
         insights: true,
         history: true,
-        enterprise: true
     }
 
     // row of 3 tall with wide enterprise underneath

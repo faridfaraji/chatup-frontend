@@ -20,7 +20,13 @@ export default {
         paper: "$19",
         canvas: "$49",
         steel: "$99",
-        mars: "5¢"
+        mars: "$499"
+    },
+    price_check: {
+        paper: "19.00",
+        canvas: "49.00",
+        steel: "99.00",
+        mars: "499.00"
     },
     messages: {
         paper: 50,
@@ -33,5 +39,11 @@ export default {
         canvas: "canvas",
         steel: "steel",
         mars: "mars"
+    },
+    price_to_messages: {
+        "19.00": 50,
+        "49.00": 200,
+        "99.00": 500,
+        "499.00": 0,
     }
 }

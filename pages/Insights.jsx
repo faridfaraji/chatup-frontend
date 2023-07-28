@@ -30,15 +30,28 @@ export default function Insights() {
   const { t, i18n } = useTranslation();
 
   const translateTopics = (topics) => {
+    const fullTopicList = [
+      t("Insights.Product Information"),
+      t("Insights.Order Status and Tracking"),
+      t("Insights.Technical Support"),
+      t("Insights.Returns and Refunds"),
+      t("Insights.Account Management"),
+      t("Insights.Promotions and Discounts"),
+      t("Insights.General Inquiries and Complaints"),
+    ]
+
     const topicList = topics.map((topic) => i18n.exists(`Insights.${topic}`) ? t(`Insights.${topic}`) : t("Insights.General Inquiries and Complaints"))
     const topicData = {}
-    for (const topic of topicList) {
-      if (topicData[topic]) {
-        topicData[topic]++;
-      } else {
-        topicData[topic] = 1;
-      }
+
+    for (const topic of fullTopicList) {
+      console.log(topic)
+      topicData[topic] = 0
     }
+
+    for (const topic of topicList) {
+      topicData[topic]++;
+    }
+
     return topicData
   }
 

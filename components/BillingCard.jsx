@@ -8,7 +8,7 @@ import { PlanImage } from "./images";
 
 export const TallBillingCard = (props) => {
     const { t } = useTranslation()
-    const { plan, name, msgs, negKeys, languages, personality, insights, history, current, price, enterprise, plan_name } = props.props
+    const { plan, name, msgs, negKeys, languages, personality, insights, history, current, price } = props.props
 
     return (
         <AlphaCard>
@@ -22,7 +22,7 @@ export const TallBillingCard = (props) => {
                 <PlanFeature name={t("Billing.personality")} include={personality} />
                 <PlanFeature name={t("Billing.insights")} include={insights} />
                 <PlanFeature name={t("Billing.history")} include={history} />
-                <ChoosePlanButton current={current} price={price} enterprise={enterprise} plan_name={plan_name} />
+                <ChoosePlanButton current={current} price={price} plan={plan} name={name} />
             </VerticalStack>
         </AlphaCard>
     )
@@ -30,7 +30,7 @@ export const TallBillingCard = (props) => {
 
 export const WideBillingCard = (props) => {
     const { t } = useTranslation();
-    const { plan, name, msgs, negKeys, languages, personality, insights, history, current, price, enterprise, plan_name } = props.props
+    const { plan, name, msgs, negKeys, languages, personality, insights, history, current, price } = props.props
 
     return (
         <AlphaCard>
@@ -54,7 +54,7 @@ export const WideBillingCard = (props) => {
                             </VerticalStack>
                         </HorizontalGrid>
                         <div style={{ width: "75%", alignSelf: "center" }}>
-                            <ChoosePlanButton current={current} price={price} enterprise={enterprise} plan_name={plan_name} />
+                            <ChoosePlanButton current={current} price={price} plan={plan} name={name}  />
                         </div>
                     </VerticalStack>
                 </VerticalStack>
