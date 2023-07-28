@@ -1,7 +1,7 @@
 import { Spinner, Page, Layout, Button, AlphaCard, HorizontalGrid, Box, HorizontalStack, VerticalStack, Text, List, Divider, useBreakpoints } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { WelcomeCard } from "./WelcomeCard";
-import { useActivePlan, useLatestScan, useMessageCounts, useScanner } from "../hooks";
+import { useActivePlan, useLatestScan, useMessageCounts, useScanner, useShopValidator } from "../hooks";
 import { useCallback, useEffect, useState } from "react";
 import { dateFromUTC, getTimeSince, localizeDatestamp, localizeTimestamp } from "../utils";
 import { PaddedCell } from "./misc";
@@ -16,6 +16,7 @@ export function LoadedHomePage() {
     const { t } = useTranslation();
     const bp = useBreakpoints();
     const getActivePlan = useActivePlan();
+    const validateShop = useShopValidator();
     const [activePlan, setActivePlan] = useState(false);
     const getMessages = useMessageCounts();
     const [messages, setMessages] = useState([]);
@@ -74,11 +75,11 @@ export function LoadedHomePage() {
     })
 
     // Generate upgrade copy
-    const generateUpgradeCopy = (price, trial_end) => {
+    const generateUpgradeCopy = (plan_id, trial_end) => {
         const date = new Date(trial_end)
         const formatted_date = localizeDatestamp(date)
-        const key = `HomePage.upgrade${price}`
-        if (price) return t(key)
+        const key = `HomePage.upgrade${plan_id}`
+        if (plan_id) return t(key)
         else return t(key, { date: formatted_date })
     }
 
@@ -90,7 +91,7 @@ export function LoadedHomePage() {
         // refreshScan({ status: "IN_PROGRESS", timestamp: "2023-07-07T23:19:12" })
         // refreshScan({status: "SUCCESS", timestamp: "2023-07-07T23:19:12"})
         // refreshScan({})
-        // validateShop().then((data) => console.log(data))
+        validateShop().then((data) => console.log(data))
         console.log(activePlan)
         // console.log(nextScanInfo)
     }
@@ -150,14 +151,14 @@ export function LoadedHomePage() {
                             <Divider />
                             <br />
                             <HorizontalGrid columns={xsColumns}>
-                                <MessageDonut current_usage={messages.length} message_limit={activePlan ? constants.price_to_messages[activePlan?.price] : false} />
+                                <MessageDonut current_usage={messages.length} message_limit={activePlan ? constants.messages[activePlan?.name.slice(0, 4)] : false} />
                                 <VerticalStack align="end">
                                     <Box paddingBlockEnd={"20"}>
                                         <List type="bullet">
                                             <List.Item>{lastScanInfo}</List.Item>
-                                            {activePlan ? <List.Item>{`${t("HomePage.currentPlan")}: ${activePlan.name}`}</List.Item> : null}
-                                            <List.Item>{t("HomePage.xMessagesRemaining", { x: activePlan ? constants.price_to_messages[activePlan?.price] - messages.length : "-" })}</List.Item>
-                                            {activePlan ? <List.Item>{generateUpgradeCopy(activePlan.price, activePlan.trial_ends_on)}</List.Item> : null}
+                                            {activePlan ? <List.Item>{`${t("HomePage.currentPlan")}: ${t(`HomePage.${activePlan?.name.slice(0, 4)}`)}`}</List.Item> : null}
+                                            <List.Item>{t("HomePage.xMessagesRemaining", { x: activePlan ? constants.messages[activePlan?.name.slice(0, 4)] - messages.length : "-" })}</List.Item>
+                                            {activePlan ? <List.Item>{generateUpgradeCopy(activePlan.name.slice(0, 4), activePlan.trial_ends_on)}</List.Item> : null}
                                         </List>
                                     </Box>
                                     <BillingButton />

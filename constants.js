@@ -17,33 +17,21 @@ export default {
     ext_id: VITE_SHOPIFY_CHAT_BOT_ID,
     ext_name: VITE_CHAT_BOT_EXT_NAME,
     prices: {
-        paper: "$19",
-        canvas: "$49",
-        steel: "$99",
-        mars: "$499"
-    },
-    price_check: {
-        paper: "19.00",
-        canvas: "49.00",
-        steel: "99.00",
-        mars: "499.00"
+        "[01]": "$19",
+        "[02]": "$49",
+        "[03]": "$99",
+        "[04]": "$499"
     },
     messages: {
-        paper: 50,
-        canvas: 200,
-        steel: 500,
-        mars: 0
+        "[01]": 50,
+        "[02]": 200,
+        "[03]": 500,
+        "[04]": 0
     },
     plan_names: {
-        paper: "paper",
-        canvas: "canvas",
-        steel: "steel",
-        mars: "mars"
+        "[01]": "paper",
+        "[02]": "canvas",
+        "[03]": "steel",
+        "[04]": "mars"
     },
-    price_to_messages: {
-        "19.00": 50,
-        "49.00": 200,
-        "99.00": 500,
-        "499.00": 0,
-    }
 }
