@@ -15,11 +15,11 @@ export default function Billing() {
     useEffect(() => load(), [])
 
     const emrProps = {
-        plan: "paper",
-        name: t("Billing.emerging"),
-        msgs: constants.messages.paper,
-        price: constants.prices.paper,
-        current: constants.price_check.paper == activePlan.price,
+        plan: "[01]",
+        name: t("Billing.[01]"),
+        msgs: constants.messages["[01]"],
+        price: constants.prices["[01]"],
+        current: "[01]" == activePlan.name.slice(0, 4),
         negKeys: true,
         languages: true,
         personality: false,
@@ -27,11 +27,11 @@ export default function Billing() {
         history: false,
     }
     const estProps = {
-        plan: "canvas",
-        name: t("Billing.established"),
-        msgs: constants.messages.canvas,
-        price: constants.prices.canvas,
-        current: constants.price_check.canvas == activePlan.price,
+        plan: "[02]",
+        name: t("Billing.[02]"),
+        msgs: constants.messages["[02]"],
+        price: constants.prices["[02]"],
+        current: "[02]" == activePlan.name.slice(0, 4),
         negKeys: true,
         languages: true,
         personality: true,
@@ -39,11 +39,11 @@ export default function Billing() {
         history: false,
     }
     const expProps = {
-        plan: "steel",
-        name: t("Billing.expanding"),
-        msgs: constants.messages.steel,
-        price: constants.prices.steel,
-        current: constants.price_check.steel == activePlan.price,
+        plan: "[03]",
+        name: t("Billing.[03]"),
+        msgs: constants.messages["[03]"],
+        price: constants.prices["[03]"],
+        current: "[03]" == activePlan.name.slice(0, 4),
         negKeys: true,
         languages: true,
         personality: true,
@@ -51,11 +51,11 @@ export default function Billing() {
         history: false,
     }
     const entProps = {
-        plan: "mars",
-        name: t("Billing.enterprise"),
-        msgs: constants.messages.mars,
-        price: constants.prices.mars,
-        current: constants.price_check.mars == activePlan.price,
+        plan: "[04]",
+        name: t("Billing.[04]"),
+        msgs: constants.messages["[04]"],
+        price: constants.prices["[04]"],
+        current: "[04]" == activePlan.name.slice(0, 4),
         negKeys: true,
         languages: true,
         personality: true,
