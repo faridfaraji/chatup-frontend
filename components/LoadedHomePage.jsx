@@ -76,7 +76,7 @@ export function LoadedHomePage() {
 
     // Generate upgrade copy
     const generateUpgradeCopy = (plan_id, trial_end) => {
-        const date = new Date(trial_end)
+        const date = new Date(trial_end ?? null)
         const formatted_date = localizeDatestamp(date)
         const key = `HomePage.upgrade${plan_id}`
         if (plan_id) return t(key)
