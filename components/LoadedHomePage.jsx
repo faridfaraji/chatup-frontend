@@ -75,7 +75,7 @@ export function LoadedHomePage() {
 
     // Generate upgrade copy
     const generateUpgradeCopy = (price, trial_end) => {
-        const date = new Date(trial_end)
+        const date = new Date(trial_end ?? null)
         const formatted_date = localizeDatestamp(date)
         const key = `HomePage.upgrade${price}`
         if (price) return t(key)
