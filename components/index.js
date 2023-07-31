@@ -1,3 +1,4 @@
+export { AccessWrapper } from "./AccessWrapper";
 export { LoremIpsum } from "./LoremIpsum";
 export { LoadedHomePage } from "./LoadedHomePage";
 export { Setting } from "./Setting";
