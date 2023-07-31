@@ -109,7 +109,7 @@ export function LoadedHomePage() {
     return (
         <Page
             title="Welcome to ChatUp"
-            primaryAction={testButton}>
+            >
             <Layout>
                 <Layout.Section fullWidth>
                     <Robot />
