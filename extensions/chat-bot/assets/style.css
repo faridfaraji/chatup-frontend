@@ -16,6 +16,7 @@
 
 pre {
     text-wrap: wrap;
+    white-space: break-spaces !important;
     font-family: inherit;
 }
 
@@ -640,7 +641,7 @@ textarea {
 }
 
 #initial_prompts {
-    display: flex;
+    display: none;
     overflow: hidden;
     gap: 10px;
     align-items: flex-end;
