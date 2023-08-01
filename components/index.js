@@ -1,5 +1,4 @@
 export { LoremIpsum } from "./LoremIpsum";
-export { LoadedHomePage } from "./LoadedHomePage";
 export { Setting } from "./Setting";
 export { WelcomeCard } from "./WelcomeCard";
 export { CardTitle } from "./CardTitle";
