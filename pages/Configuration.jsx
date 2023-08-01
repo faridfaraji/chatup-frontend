@@ -95,18 +95,19 @@ export default function Configuration() {
 
   // Define the temp select component
   const bot_temp = (
-    <Select
-      label={t("Configuration.tempTitle")}
-      options={[
-        { label: t("Configuration.professional"), value: "0.00" },
-        { label: t("Configuration.friendly"), value: "0.25" },
-        { label: t("Configuration.informal"), value: "0.50" },
-        { label: t("Configuration.engaging"), value: "0.75" },
-        { label: t("Configuration.humorous"), value: "1.00" },
-      ]}
-      onChange={handleTempChange}
-      value={temp}
-    />
+      <Select
+        contentEditable={false}
+        label={t("Configuration.tempTitle")}
+        options={[
+          { label: t("Configuration.professional"), value: "0.00" },
+          { label: t("Configuration.friendly"), value: "0.25" },
+          { label: t("Configuration.informal"), value: "0.50" },
+          { label: t("Configuration.engaging"), value: "0.75" },
+          { label: t("Configuration.humorous"), value: "1.00" },
+        ]}
+        onChange={handleTempChange}
+        value={temp}
+      />
   )
 
   // Contextual Save Bar State Logic
@@ -186,7 +187,7 @@ export default function Configuration() {
           }]}
         />
         {smUp ? <Divider /> : null}
-        <AccessWrapper minimum={2}>
+        <AccessWrapper minimum={2} copy={t("Configuration.upgrade")} fullpage={false}>
           <Setting
             title={t("Configuration.tempTitle")}
             short={t("Configuration.tempShort")}

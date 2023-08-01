@@ -39,6 +39,7 @@
     "informal": "Informal",
     "friendly": "Friendly",
     "professional": "Professional",
+    "upgrade": "Upgrade now to unlock Personality!",
     "bottomCopy": "Now its time to make sure that ChatUp is visible on your store and your users can use it!"
   },
   "Insights": {
@@ -62,7 +63,8 @@
     "Returns and Refunds": "Returns",
     "Account Management": "Accounts",
     "Promotions and Discounts": "Promotions",
-    "General Inquiries and Complaints": "General"
+    "General Inquiries and Complaints": "General",
+    "upgrade": "Upgrade now to unlock Insights!"
   },
   "ChatHistory": {
     "title": "Title",
@@ -74,7 +76,8 @@
     "viewChat": "View Chat",
     "viewSummary": "View Summary",
     "viewNav": "View Chats",
-    "noChats": "No chats found for selected time period"
+    "noChats": "No chats found for selected time period",
+    "upgrade": "Upgrade now to unlock Chat History!"
   },
   "NavigationMenu": {
     "configuration": "Configuration",
@@ -115,7 +118,8 @@
     "submit": "Submit",
     "autoRefresh": "Auto-refresh",
     "validRefresh": "Data will refresh every 60 seconds",
-    "billing": "Upgrade & Save"
+    "billing": "Billing",
+    "upgrade": "Upgrade & Save"
   },
   "NotFound": {
     "description": "Oops! The page you're looking for seems to be missing. Double-check the URL or use the search bar to find what you need.",
