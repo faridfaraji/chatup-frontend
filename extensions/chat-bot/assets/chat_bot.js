@@ -114,7 +114,7 @@ if (!uniqueId || isExpired(uniqueId)) {
   console.log("Unique Id =", uniqueId);
 }
 
-var socket = io('https://chat.awesoon.tech/customer', {
+var socket = io('https://chat.dev.awesoon.tech/customer', {
   transports: ['websocket', 'polling', 'xhr-polling'],
   autoConnect: false
 });
