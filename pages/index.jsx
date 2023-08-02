@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { RecentSearchesMajor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
 import { useActivePlan, useLatestScan, useScanner, useShopValidator } from "../hooks";
 import { dateFromUTC, getTimeSince, localizeDatestamp, localizeTimestamp } from "../utils";
-import { BillingButton, CardTitle, EmbedButton, MessageDonut, PaddedCell, Robot, SettingsButton, SkeletonHomePage, WelcomeCard } from "../components";
+import { UpgradeButton, CardTitle, EmbedButton, MessageDonut, PaddedCell, Robot, SettingsButton, SkeletonHomePage, WelcomeCard } from "../components";
 
 export default function HomePage() {
   const { t } = useTranslation();
@@ -161,7 +161,7 @@ export default function HomePage() {
                         {/* {activePlan & validity ? <List.Item>{generateUpgradeCopy(activePlan.name.slice(0, 4))}</List.Item> : null} */}
                       </List>
                     </Box>
-                    <BillingButton />
+                    <UpgradeButton />
                   </VerticalStack>
                 </HorizontalGrid>
               </AlphaCard>

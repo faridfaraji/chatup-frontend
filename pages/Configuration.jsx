@@ -1,8 +1,8 @@
 import { Box, Button, Page, useBreakpoints, VerticalStack, Divider, HorizontalStack, HorizontalGrid, AlphaCard, Tag, Form, FormLayout, TextField, Select } from "@shopify/polaris";
-import { EmbedButton, LoremIpsum, PaddedCell, Setting } from "../components";
+import { AccessWrapper, EmbedButton, LoremIpsum, PaddedCell, Setting } from "../components";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, useCallback } from "react";
-import { useNegativeKeywordGetter, useNegativeKeywordSetter, useShop, useTemperature } from "../hooks";
+import { useActivePlan, useNegativeKeywordGetter, useNegativeKeywordSetter, useShop, useTemperature } from "../hooks";
 import { useContextualSaveBar } from "@shopify/app-bridge-react";
 import { tempString } from "../utils/dataUtils";
 
@@ -95,18 +95,19 @@ export default function Configuration() {
 
   // Define the temp select component
   const bot_temp = (
-    <Select
-      label={t("Configuration.tempTitle")}
-      options={[
-        { label: t("Configuration.professional"), value: "0.00" },
-        { label: t("Configuration.friendly"), value: "0.25" },
-        { label: t("Configuration.informal"), value: "0.50" },
-        { label: t("Configuration.engaging"), value: "0.75" },
-        { label: t("Configuration.humorous"), value: "1.00" },
-      ]}
-      onChange={handleTempChange}
-      value={temp}
-    />
+      <Select
+        contentEditable={false}
+        label={t("Configuration.tempTitle")}
+        options={[
+          { label: t("Configuration.professional"), value: "0.00" },
+          { label: t("Configuration.friendly"), value: "0.25" },
+          { label: t("Configuration.informal"), value: "0.50" },
+          { label: t("Configuration.engaging"), value: "0.75" },
+          { label: t("Configuration.humorous"), value: "1.00" },
+        ]}
+        onChange={handleTempChange}
+        value={temp}
+      />
   )
 
   // Contextual Save Bar State Logic
@@ -186,14 +187,16 @@ export default function Configuration() {
           }]}
         />
         {smUp ? <Divider /> : null}
-        <Setting
-          title={t("Configuration.tempTitle")}
-          short={t("Configuration.tempShort")}
-          inputs={[{
-            copy: t("Configuration.tempCopy"),
-            component: bot_temp
-          }]}
-        />
+        <AccessWrapper minimum={2} copy={t("Configuration.upgrade")} fullpage={false}>
+          <Setting
+            title={t("Configuration.tempTitle")}
+            short={t("Configuration.tempShort")}
+            inputs={[{
+              copy: t("Configuration.tempCopy"),
+              component: bot_temp
+            }]}
+          />
+        </AccessWrapper>
         {smUp ? <Divider /> : null}
         <Box
           paddingInlineStart={{ xs: 4, sm: 0 }}
