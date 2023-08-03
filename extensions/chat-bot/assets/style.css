@@ -102,8 +102,6 @@ pre {
     right: 30px;
     z-index: 99;
     scroll-behavior: smooth;
-    /* transform: scale(0), translateY(-20%); */
-    /* transition: .3s ease; */
 }
 
 
