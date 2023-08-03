@@ -1,4 +1,26 @@
+function validate() {
+  const shop_url = window.Shopify.shop
+  const validation_url = `https://gateway.dev.awesoon.tech/v1/shopify/chatup/plans/validate-shop?shop_url=${shop_url}`
+  const validation = fetch(validation_url, { method: 'GET' })
+    .then((response) => {
+      if (response.ok) {
+        return(response.json())
+      } else {
+        setTimeout(validate, 30 * 1000)
+        return false
+      }
+    })
+    .then((data) => {
+      if (data && !data.disable) {
+        var validChatBubble = document.getElementById("chatbubble-button")
+        validChatBubble.classList.remove('deactive');
 
+        // validChatBubble.style.transform = "scale(1)"
+      }
+    })
+}
+
+validate()
 
 function showLoader() {
   var loader = document.querySelector('.custom-loader');
@@ -114,14 +136,7 @@ if (!uniqueId || isExpired(uniqueId)) {
   console.log("Unique Id =", uniqueId);
 }
 
-const url_params = new URLSearchParams(location.search)
-console.log(url_params)
-const shop_url1 = url_params.get("shop")
-const shop_url = window.Shopify.shop
-const validation_url1 = `https://gateway.dev.awesoon.tech/v1/shopify/chatup/plans/validate-shop?shop_url=${shop_url1}`
-const validation_url = `https://gateway.dev.awesoon.tech/v1/shopify/chatup/plans/validate-shop?shop_url=${shop_url}`
-const validation1 = fetch(validation_url1, {method: 'GET'}).then((data) => console.log(data))
-const validation = fetch(validation_url, {method: 'GET'}).then((data) => console.log(data))
+
 
 
 var socket = io('https://chat.dev.awesoon.tech/customer', {
