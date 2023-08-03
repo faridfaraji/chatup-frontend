@@ -432,7 +432,7 @@ pre {
         bottom: -10px;
         left: -4px;
         height: 10px;
-        transform: skew(130deg);
+        transform: skew(115deg);
     }
 }
 
@@ -723,4 +723,15 @@ textarea {
     left: 107%;
     height: 0px;
     bottom: 9px;
+}
+
+.ai-disclaimer {
+    text-align: center;
+    position: absolute;
+    bottom: 68px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: x-small;
+    white-space: nowrap;
+    opacity: 0.7;
 }
