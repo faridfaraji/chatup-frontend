@@ -14,8 +14,6 @@ function validate() {
       if (data && !data.disable) {
         var validChatBubble = document.getElementById("chatbubble-button")
         validChatBubble.classList.remove('deactive');
-
-        // validChatBubble.style.transform = "scale(1)"
       }
     })
 }
