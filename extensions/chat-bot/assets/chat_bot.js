@@ -1,4 +1,24 @@
+function validate() {
+  const shop_url = window.Shopify.shop
+  const validation_url = `https://gateway.dev.awesoon.tech/v1/shopify/chatup/plans/validate-shop?shop_url=${shop_url}`
+  const validation = fetch(validation_url, { method: 'GET' })
+    .then((response) => {
+      if (response.ok) {
+        return(response.json())
+      } else {
+        setTimeout(validate, 30 * 1000)
+        return false
+      }
+    })
+    .then((data) => {
+      if (data && !data.disable) {
+        var validChatBubble = document.getElementById("chatbubble-button")
+        validChatBubble.classList.remove('deactive');
+      }
+    })
+}
 
+validate()
 
 function showLoader() {
   var loader = document.querySelector('.custom-loader');
@@ -113,6 +133,9 @@ if (!uniqueId || isExpired(uniqueId)) {
   setCookie('uniqueId', uniqueId, 24 * 60 * 60);
   console.log("Unique Id =", uniqueId);
 }
+
+
+
 
 var socket = io('https://chat.dev.awesoon.tech/customer', {
   transports: ['websocket', 'polling', 'xhr-polling'],
