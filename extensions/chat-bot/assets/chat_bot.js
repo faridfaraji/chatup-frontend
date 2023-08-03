@@ -39,7 +39,7 @@ function hyperlinkMarkdown(element) {
   const messageText = element.textContent;
   if (messageText !== null) {
     const originalText = messageText;
-    let modifiedText = originalText.replace(markdownLinkRegex, '<a href="$2">$1</a>');
+    let modifiedText = originalText.replace(markdownLinkRegex, '<a href="https://$2">$1</a>');
     element.childNodes.forEach(childNode => {
       if (!childNode.classList || !childNode.classList.contains('chatbubble-message-time')) {
         element.removeChild(childNode)
@@ -422,6 +422,7 @@ function handleIncomingMessage(message) {
   chatbubbleGptMessage.appendChild(messageText); // Append messageText to chatbubbleGptMessage before hyperlinking
 
   // hyperlinkText(messageText); // Apply hyperlinking to the message
+  hyperlinkMarkdown(messageText); // Apply hyperlinking to the message
 
   var timestamp = document.createElement('div');
   timestamp.classList.add('chatbubble-gpt-message-time');
@@ -540,6 +541,7 @@ function displayAiResponse(data, details) {
   var tempElement = document.createElement('div');
   tempElement.textContent = details.currentMessage;
   // hyperlinkText(tempElement);
+  hyperlinkMarkdown(tempElement);
 
   // Create a pre element
   var preElement = document.createElement('pre');
