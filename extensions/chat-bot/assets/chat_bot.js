@@ -34,6 +34,22 @@ function hideLoader() {
 }
 
 // Define regular expressions to match URLs, emails, and phone numbers
+const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+function hyperlinkMarkdown(element) {
+  const messageText = element.textContent;
+  if (messageText !== null) {
+    const originalText = messageText;
+    let modifiedText = originalText.replace(markdownLinkRegex, '<a href="$2">$1</a>');
+    element.childNodes.forEach(childNode => {
+      if (!childNode.classList || !childNode.classList.contains('chatbubble-message-time')) {
+        element.removeChild(childNode)
+      }
+    });
+    element.innerHTML = modifiedText;
+  }
+}
+
+
 const urlRegex = /\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/gi;
 const emailRegex = /(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/ig;
 const phoneRegex = /(\b(?:\+?1\s*\(?[2-9][0-8][0-9]\)?\s*|0?[2-9][0-8][0-9]\s*)(?:[.-]\s*)?(?:[2-9][0-9]{2}\s*)(?:[.-]\s*)?[0-9]{4}\b)/ig;
@@ -69,7 +85,7 @@ function hasChatBubbleGptMessageClass(element) {
 function processElement(element) {
   if (element.nodeType === 1 && hasChatBubbleGptMessageClass(element)) {
     if (!element.dataset.hyperlinked) {
-      hyperlinkText(element);
+      hyperlinkMarkdown(element);
       element.dataset.hyperlinked = true;
     }
   }
@@ -88,7 +104,7 @@ const observer = new MutationObserver(mutationsList => {
 });
 
 // Start observing the document with the configured parameters
-// observer.observe(document.body, { childList: true, subtree: true });
+observer.observe(document.body, { childList: true, subtree: true });
 
 // Function to generate a UUID
 function generateUUID() {
