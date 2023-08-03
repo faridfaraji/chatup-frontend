@@ -175,12 +175,12 @@ try {
 window.addEventListener('DOMContentLoaded', (event) => {
   // Check if opacity was set to 0 in a previous session
   if (sessionStorage.getItem('opacitySet') === 'true') {
-    document.querySelector('#initial_prompts').style.opacity = '0';
+    // document.querySelector('#initial_prompts').style.opacity = '0';
     document.querySelector('#chatbubble-messages').style.display = 'flex';
   }
   // Check if display was set to none in a previous session
   if (sessionStorage.getItem('displaySet') === 'true') {
-    document.querySelector('#initial_prompts').style.display = 'none';
+    // document.querySelector('#initial_prompts').style.display = 'none';
     document.querySelector('#chatbubble-messages').style.display = 'flex';
   }
   // Add event listeners to all .initial-message-boxes
@@ -188,7 +188,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     item.addEventListener('click', event => {
       setTimeout(() => {
         // Set the opacity of #initial_prompts to 0
-        document.querySelector('#initial_prompts').style.opacity = '0';
+        // document.querySelector('#initial_prompts').style.opacity = '0';
       }, 600);
 
       setTimeout(() => {
@@ -341,7 +341,7 @@ function sendMessage(messageText) {
 
     newMessage.appendChild(timestamp);
     messagesContainer.appendChild(newMessage);
-    document.querySelector('#initial_prompts').style.display = 'none';
+    // document.querySelector('#initial_prompts').style.display = 'none';
     messagesContainer.style.display = 'flex';
     // Use setTimeout to trigger the fade-in effect after a short delay
     setTimeout(function () {
