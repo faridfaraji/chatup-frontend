@@ -167,10 +167,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         // Set the opacity of #initial_prompts to 0
         document.querySelector('#initial_prompts').style.opacity = '0';
       }, 600);
-      // setTimeout(() => {
-      //   // Set the opacity of #initial_prompts to 0
-      //   document.querySelector('#initial_prompts').style.height = '0';
-      // }, 300);
+
       setTimeout(() => {
         // Set the opacity of #initial_prompts to 0
         document.querySelector('#initial_prompts').style.display = 'none';
