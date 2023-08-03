@@ -34,6 +34,22 @@ function hideLoader() {
 }
 
 // Define regular expressions to match URLs, emails, and phone numbers
+const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+function hyperlinkMarkdown(element) {
+  const messageText = element.textContent;
+  if (messageText !== null) {
+    const originalText = messageText;
+    let modifiedText = originalText.replace(markdownLinkRegex, '<a href="https://$2">$1</a>');
+    element.childNodes.forEach(childNode => {
+      if (!childNode.classList || !childNode.classList.contains('chatbubble-message-time')) {
+        element.removeChild(childNode)
+      }
+    });
+    element.innerHTML = modifiedText;
+  }
+}
+
+
 const urlRegex = /\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/gi;
 const emailRegex = /(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/ig;
 const phoneRegex = /(\b(?:\+?1\s*\(?[2-9][0-8][0-9]\)?\s*|0?[2-9][0-8][0-9]\s*)(?:[.-]\s*)?(?:[2-9][0-9]{2}\s*)(?:[.-]\s*)?[0-9]{4}\b)/ig;
@@ -69,7 +85,7 @@ function hasChatBubbleGptMessageClass(element) {
 function processElement(element) {
   if (element.nodeType === 1 && hasChatBubbleGptMessageClass(element)) {
     if (!element.dataset.hyperlinked) {
-      hyperlinkText(element);
+      hyperlinkMarkdown(element);
       element.dataset.hyperlinked = true;
     }
   }
@@ -88,7 +104,7 @@ const observer = new MutationObserver(mutationsList => {
 });
 
 // Start observing the document with the configured parameters
-// observer.observe(document.body, { childList: true, subtree: true });
+observer.observe(document.body, { childList: true, subtree: true });
 
 // Function to generate a UUID
 function generateUUID() {
@@ -175,12 +191,12 @@ try {
 window.addEventListener('DOMContentLoaded', (event) => {
   // Check if opacity was set to 0 in a previous session
   if (sessionStorage.getItem('opacitySet') === 'true') {
-    document.querySelector('#initial_prompts').style.opacity = '0';
+    // document.querySelector('#initial_prompts').style.opacity = '0';
     document.querySelector('#chatbubble-messages').style.display = 'flex';
   }
   // Check if display was set to none in a previous session
   if (sessionStorage.getItem('displaySet') === 'true') {
-    document.querySelector('#initial_prompts').style.display = 'none';
+    // document.querySelector('#initial_prompts').style.display = 'none';
     document.querySelector('#chatbubble-messages').style.display = 'flex';
   }
   // Add event listeners to all .initial-message-boxes
@@ -188,7 +204,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     item.addEventListener('click', event => {
       setTimeout(() => {
         // Set the opacity of #initial_prompts to 0
-        document.querySelector('#initial_prompts').style.opacity = '0';
+        // document.querySelector('#initial_prompts').style.opacity = '0';
       }, 600);
 
       setTimeout(() => {
@@ -341,7 +357,7 @@ function sendMessage(messageText) {
 
     newMessage.appendChild(timestamp);
     messagesContainer.appendChild(newMessage);
-    document.querySelector('#initial_prompts').style.display = 'none';
+    // document.querySelector('#initial_prompts').style.display = 'none';
     messagesContainer.style.display = 'flex';
     // Use setTimeout to trigger the fade-in effect after a short delay
     setTimeout(function () {
@@ -406,6 +422,7 @@ function handleIncomingMessage(message) {
   chatbubbleGptMessage.appendChild(messageText); // Append messageText to chatbubbleGptMessage before hyperlinking
 
   // hyperlinkText(messageText); // Apply hyperlinking to the message
+  hyperlinkMarkdown(messageText); // Apply hyperlinking to the message
 
   var timestamp = document.createElement('div');
   timestamp.classList.add('chatbubble-gpt-message-time');
@@ -524,6 +541,7 @@ function displayAiResponse(data, details) {
   var tempElement = document.createElement('div');
   tempElement.textContent = details.currentMessage;
   // hyperlinkText(tempElement);
+  hyperlinkMarkdown(tempElement);
 
   // Create a pre element
   var preElement = document.createElement('pre');
@@ -647,12 +665,12 @@ function loadChatHistory() {
       if (message.className === 'chatbubble-message') {
         chatbubbleMessage = document.createElement('div');
         chatbubbleMessage.className = 'chatbubble-message';
-        chatbubbleMessage.innerHTML = message.html; // Use the stored HTML
+        chatbubbleMessage.innerHTML = message.html; // Use the stored HTML as html. This is not a mistake.
         chatbubbleMessage.setAttribute('data-timestamp', message.timestamp);
       } else if (message.className === 'chatbubble-gpt-message') {
         chatbubbleMessage = document.createElement('div');
         chatbubbleMessage.className = 'chatbubble-gpt-message';
-        chatbubbleMessage.innerHTML = message.html; // Use the stored HTML
+        chatbubbleMessage.innerText = message.html; // Use the stored HTML as text. This is not a mistake.
         chatbubbleMessage.setAttribute('data-timestamp', message.timestamp);
       }
 
