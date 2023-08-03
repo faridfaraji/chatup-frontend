@@ -116,8 +116,11 @@ if (!uniqueId || isExpired(uniqueId)) {
 
 const url_params = new URLSearchParams(location.search)
 console.log(url_params)
-const shop_url = url_params.get("shop")
+const shop_url1 = url_params.get("shop")
+const shop_url = window.Shopify.shop
+const validation_url1 = `https://gateway.dev.awesoon.tech/v1/shopify/chatup/plans/validate-shop?shop_url=${shop_url1}`
 const validation_url = `https://gateway.dev.awesoon.tech/v1/shopify/chatup/plans/validate-shop?shop_url=${shop_url}`
+const validation1 = fetch(validation_url1, {method: 'GET'}).then((data) => console.log(data))
 const validation = fetch(validation_url, {method: 'GET'}).then((data) => console.log(data))
 
 
