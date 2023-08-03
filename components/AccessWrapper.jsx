@@ -7,7 +7,10 @@ import { LoremIpsum } from "./LoremIpsum";
 export const AccessWrapper = ({ minimum, copy, fullpage, children }) => {
     const getPlan = useActivePlan();
     const [accessLevel, setAccessLevel] = useState(100);
-    const loadAccess = () => getPlan().then((data) => setAccessLevel(parseInt(data.name.slice(1,3))))
+    const loadAccess = () => getPlan().then((data) => {
+        const intLevel = parseInt(data.name.slice(1,3))
+        setAccessLevel(intLevel === 0 ? 3 : intLevel)
+    })
     useEffect(() => loadAccess(), [])
 
     if (accessLevel >= minimum) {
