@@ -88,7 +88,7 @@ const observer = new MutationObserver(mutationsList => {
 });
 
 // Start observing the document with the configured parameters
-observer.observe(document.body, { childList: true, subtree: true });
+// observer.observe(document.body, { childList: true, subtree: true });
 
 // Function to generate a UUID
 function generateUUID() {
@@ -405,7 +405,7 @@ function handleIncomingMessage(message) {
   messageText.textContent = message; // Add the plain message text
   chatbubbleGptMessage.appendChild(messageText); // Append messageText to chatbubbleGptMessage before hyperlinking
 
-  hyperlinkText(messageText); // Apply hyperlinking to the message
+  // hyperlinkText(messageText); // Apply hyperlinking to the message
 
   var timestamp = document.createElement('div');
   timestamp.classList.add('chatbubble-gpt-message-time');
@@ -523,7 +523,7 @@ function displayAiResponse(data, details) {
   // Create a temporary element to apply hyperlinking
   var tempElement = document.createElement('div');
   tempElement.textContent = details.currentMessage;
-  hyperlinkText(tempElement);
+  // hyperlinkText(tempElement);
 
   // Create a pre element
   var preElement = document.createElement('pre');
