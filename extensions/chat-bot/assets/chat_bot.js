@@ -665,12 +665,12 @@ function loadChatHistory() {
       if (message.className === 'chatbubble-message') {
         chatbubbleMessage = document.createElement('div');
         chatbubbleMessage.className = 'chatbubble-message';
-        chatbubbleMessage.innerHTML = message.html; // Use the stored HTML
+        chatbubbleMessage.innerText = message.html; // Use the stored HTML as text. This is not a mistake.
         chatbubbleMessage.setAttribute('data-timestamp', message.timestamp);
       } else if (message.className === 'chatbubble-gpt-message') {
         chatbubbleMessage = document.createElement('div');
         chatbubbleMessage.className = 'chatbubble-gpt-message';
-        chatbubbleMessage.innerHTML = message.html; // Use the stored HTML
+        chatbubbleMessage.innerText = message.html; // Use the stored HTML as text. This is not a mistake.
         chatbubbleMessage.setAttribute('data-timestamp', message.timestamp);
       }
 
