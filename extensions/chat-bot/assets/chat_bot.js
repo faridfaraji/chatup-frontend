@@ -24,7 +24,8 @@ function showLoader() {
   var loader = document.querySelector('.custom-loader');
   var sendButton = document.querySelector('#chatbubble-send');
   sendButton.style.scale = '0';
-  loader.style.scale = '-.4';
+  loader.style.scale = '.4';
+  
 }
 function hideLoader() {
   var loader = document.querySelector('.custom-loader');
@@ -189,6 +190,9 @@ try {
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
+    if (event.keyCode === 27) {
+    toggleChat();
+  }
   // Check if opacity was set to 0 in a previous session
   if (sessionStorage.getItem('opacitySet') === 'true') {
     // document.querySelector('#initial_prompts').style.opacity = '0';
