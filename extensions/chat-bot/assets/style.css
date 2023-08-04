@@ -35,7 +35,7 @@ pre {
     align-self: center;
     position: absolute;
     scale: 0;
-    display: fixed !important;
+    display: flex;
     opacity: 1;
     transition: .3s ease-in-out;
     right: 25px;
