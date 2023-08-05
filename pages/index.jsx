@@ -26,7 +26,7 @@ export default function HomePage() {
       setActivePlan(data)
       setMoon(parseInt(data.name.slice(1, 3)) >= 80)
     })
-      .then(() => validateShop()).then((data) => {setValidity(data); console.log(data)})
+      .then(() => validateShop()).then((data) => setValidity(data))
       .then(() => getScan()).then((data) => refreshScan(data))
       .then(() => setLoading(false))
 
