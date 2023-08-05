@@ -13,7 +13,7 @@ export default function HomePage() {
   const getActivePlan = useActivePlan();
   const [activePlan, setActivePlan] = useState(false);
   const validateShop = useShopValidator();
-  const [validity, setValidity] = useState({});
+  const [validity, setValidity] = useState(false);
   const scanShop = useScanner();
   const getScan = useLatestScan();
   const [lastScanInfo, setLastScanInfo] = useState("")
@@ -21,17 +21,14 @@ export default function HomePage() {
   const [isMoon, setMoon] = useState(false)
   const [loading, setLoading] = useState(true)
 
-
-  // Scan State logic
-  // TODO: This was moved here because 2 components required scan info. Can it be containerized?
   const load =
-    () => getActivePlan().then((data) => { setActivePlan(data); return data })
-      .then((plan) => setMoon(parseInt(plan.name.slice(1, 3)) >= 4))
+    () => getActivePlan().then((data) => {
+      setActivePlan(data)
+      setMoon(parseInt(data.name.slice(1, 3)) >= 80)
+    })
       .then(() => validateShop()).then((data) => setValidity(data))
       .then(() => getScan()).then((data) => refreshScan(data))
       .then(() => setLoading(false))
-  // getMessages().then((data) => setMessages(data))
-  // getScan().then((scan) => refreshScan(scan))
 
 
   useEffect(() => load(), [])
@@ -84,7 +81,6 @@ export default function HomePage() {
   }
 
 
-
   const test = () => {
     // refreshScan({status: "ERROR", timestamp: "2023-07-07T23:19:12"})
     // refreshScan({status: "PENDING", timestamp: "2023-07-07T23:19:12"})
@@ -98,9 +94,11 @@ export default function HomePage() {
     console.log(lastScanInfo)
     console.log(activePlan?.name.slice(1, 3))
     console.log(parseInt(activePlan?.name.slice(1, 3)))
-    console.log(parseInt(activePlan?.name.slice(1, 3)) < 4)
+    console.log(parseInt(activePlan?.name.slice(1, 3)) < 80)
 
     // console.log(nextScanInfo)
+    setActivePlan({ name: "[00]" })
+    setValidity({ message: "", trial_ends_at: new Date() })
   }
   const testButton = <Button onClick={() => test()}>TEST</Button>
 
@@ -117,7 +115,7 @@ export default function HomePage() {
       <SkeletonHomePage /> :
       <Page
         title="Welcome to ChatUp"
-{/*         primaryAction={testButton} */}
+        primaryAction={testButton}
       >
         <Layout>
           <Layout.Section fullWidth>
@@ -170,7 +168,24 @@ export default function HomePage() {
                     <Box paddingBlockEnd={"20"}>
                       <List type="bullet">
                         <List.Item>{lastScanInfo}</List.Item>
-                        {activePlan ? <List.Item>{`${t("HomePage.currentPlan")}: ${t(`HomePage.${activePlan?.name.slice(0, 4)}`)}`}</List.Item> : null}
+                        {
+                          activePlan ?
+                            <List.Item>
+                              {`${t("HomePage.currentPlan")}: ${t(`HomePage.${activePlan?.name.slice(0, 4)}`)}`}
+                            </List.Item> :
+                            null
+                        }
+                        {
+                          activePlan && validity ?
+                            activePlan.name.slice(0, 4) === "[00]" ?
+                              <List.Item>
+                                {
+                                  validity.message === "Unscanned" ?
+                                    `${t("HomePage.unscannedTrial")}` :
+                                    `${t("HomePage.scannedTrial", { date: localizeTimestamp(validity.trial_ends_at) })}`
+                                }
+                              </List.Item> : null : null
+                        }
                         <List.Item>
                           {
                             isMoon ?

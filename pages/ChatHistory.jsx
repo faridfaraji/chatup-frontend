@@ -184,7 +184,7 @@ export default function ChatHistory() {
   const navButton = <Button icon={ConversationMinor} onClick={() => toggleNav()} size="slim">{t("ChatHistory.viewNav")}</Button>
 
   return (
-    <AccessWrapper minimum={4} copy={t("ChatHistory.upgrade")} fullpage={true}>
+    <AccessWrapper minimum={80} copy={t("ChatHistory.upgrade")} fullpage={true}>
       <Frame navigation={navMarkup} showMobileNavigation={navVis} onNavigationDismiss={() => toggleNav()}>
         <Page
           title={t("NavigationMenu.chatHistory")}

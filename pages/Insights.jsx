@@ -117,7 +117,7 @@ export default function Insights() {
   const CommonMinHeight = "250px"
 
   return (
-    <AccessWrapper minimum={3} copy={t("Insights.upgrade")} fullpage={true}>
+    <AccessWrapper minimum={60} copy={t("Insights.upgrade")} fullpage={true}>
       <Page
         title={t("NavigationMenu.insights")}
         primaryAction={
