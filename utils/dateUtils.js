@@ -38,7 +38,7 @@ export const zeroRange = (range) => {
     return newRange
 }
 
-export const compRange = (range) => {
+export const getCompDates = (range) => {
     return { since: new Date(2 * range.since - range.until), until: range.since }
 }
 

@@ -14,6 +14,7 @@
     "embedTitle": "Customize ChatUp",
     "embedCopy": "Unleash the power of customization! Discover a range of cosmetic options to seamlessly integrate ChatUp with your branding and existing theme. Check out our quick tutorial for a smooth customization journey.",
     "xMessagesRemaining": "{{ x }} messages left for today",
+    "xMessagesSent": "{{ x }} messages sent today",
     "currentPlan": "Current Plan",
     "[00]": "Free Trial",
     "[01]": "Emerging",
