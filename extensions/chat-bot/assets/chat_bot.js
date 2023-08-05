@@ -45,7 +45,7 @@ function hyperlinkText(element) {
   const messageText = element.textContent;
   if (messageText !== null) {
     let modifiedText = messageText;
-    if (!element.data?.hyperlinked) {
+    if (!element.dataset?.hyperlinked) {
       modifiedText = modifiedText.replace(markdownLinkRegex, '<a href="https://$2">$1</a>');
       modifiedText = modifiedText.replace(emailRegex, '<a href="mailto:$1">$1</a>');
       modifiedText = modifiedText.replace(phoneRegex, '<a href="tel:$1">$1</a>');
