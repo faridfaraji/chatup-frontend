@@ -134,7 +134,6 @@ export const formatValidationForDonut = (validation, names) => {
 
 
 export const formatChatDataForBar = (data) => {
-    console.log(data)
     const array = getTimeArray(data.barSince, data.barUntil, 4 * 60 * 60 * 1000)
     array.shift()
     const year = data.barSince.getFullYear()
