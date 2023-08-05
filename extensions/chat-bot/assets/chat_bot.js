@@ -4,7 +4,7 @@ function validate() {
   const validation = fetch(validation_url, { method: 'GET' })
     .then((response) => {
       if (response.ok) {
-        return(response.json())
+        return (response.json())
       } else {
         setTimeout(validate, 30 * 1000)
         return false
@@ -25,7 +25,7 @@ function showLoader() {
   var sendButton = document.querySelector('#chatbubble-send');
   sendButton.style.scale = '0';
   loader.style.scale = '.4';
-  
+
 }
 function hideLoader() {
   var loader = document.querySelector('.custom-loader');
@@ -36,36 +36,20 @@ function hideLoader() {
 
 // Define regular expressions to match URLs, emails, and phone numbers
 const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-function hyperlinkMarkdown(element) {
-  const messageText = element.textContent;
-  if (messageText !== null) {
-    const originalText = messageText;
-    let modifiedText = originalText.replace(markdownLinkRegex, '<a href="https://$2">$1</a>');
-    element.childNodes.forEach(childNode => {
-      if (!childNode.classList || !childNode.classList.contains('chatbubble-message-time')) {
-        element.removeChild(childNode)
-      }
-    });
-    element.innerHTML = modifiedText;
-  }
-}
+const emailRegex = /\b([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})\b/g;
+const phoneRegex = /\b((?:\+?1\s*\(?[2-9][0-8][0-9]\)?\s*|0?[2-9][0-8][0-9]\s*)(?:[.-]\s*)?(?:[2-9][0-9]{2}\s*)(?:[.-]\s*)?[0-9]{4})\b/g;
 
-
-const urlRegex = /\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/gi;
-const emailRegex = /(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/ig;
-const phoneRegex = /(\b(?:\+?1\s*\(?[2-9][0-8][0-9]\)?\s*|0?[2-9][0-8][0-9]\s*)(?:[.-]\s*)?(?:[2-9][0-9]{2}\s*)(?:[.-]\s*)?[0-9]{4}\b)/ig;
 
 // This function hyperlinks URLs, emails, and phone numbers and removes dots after hyperlinks
 function hyperlinkText(element) {
   const messageText = element.textContent;
   if (messageText !== null) {
-    const originalText = messageText;
-    let modifiedText = originalText.replace(urlRegex, '<a href="$1">$1</a>');
-    modifiedText = modifiedText.replace(emailRegex, '<a href="mailto:$1">$1</a>');
-    modifiedText = modifiedText.replace(phoneRegex, '<a href="tel:$1">$1</a>');
-
-    // Remove dots after hyperlinks
-    modifiedText = modifiedText.replace(/(<a[^>]+>)\.(<\/a>)/ig, '$1$2');
+    let modifiedText = messageText;
+    if (!element.data?.hyperlinked) {
+      modifiedText = modifiedText.replace(markdownLinkRegex, '<a href="https://$2">$1</a>');
+      modifiedText = modifiedText.replace(emailRegex, '<a href="mailto:$1">$1</a>');
+      modifiedText = modifiedText.replace(phoneRegex, '<a href="tel:$1">$1</a>');
+    }
 
     // Replace only the message content, excluding the timestamp div
     element.childNodes.forEach(childNode => {
@@ -85,10 +69,8 @@ function hasChatBubbleGptMessageClass(element) {
 // Function to process a single element and its descendants
 function processElement(element) {
   if (element.nodeType === 1 && hasChatBubbleGptMessageClass(element)) {
-    if (!element.dataset.hyperlinked) {
-      hyperlinkMarkdown(element);
-      element.dataset.hyperlinked = true;
-    }
+    hyperlinkText(element)
+    element.dataset.hyperlinked = true;
   }
   element.childNodes.forEach(childNode => processElement(childNode));
 }
@@ -190,7 +172,7 @@ try {
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    if (event.keyCode === 27) {
+  if (event.keyCode === 27) {
     toggleChat();
   }
   // Check if opacity was set to 0 in a previous session
@@ -425,8 +407,7 @@ function handleIncomingMessage(message) {
   messageText.textContent = message; // Add the plain message text
   chatbubbleGptMessage.appendChild(messageText); // Append messageText to chatbubbleGptMessage before hyperlinking
 
-  // hyperlinkText(messageText); // Apply hyperlinking to the message
-  hyperlinkMarkdown(messageText); // Apply hyperlinking to the message
+  hyperlinkText(messageText); // Apply hyperlinking to the message
 
   var timestamp = document.createElement('div');
   timestamp.classList.add('chatbubble-gpt-message-time');
@@ -544,8 +525,7 @@ function displayAiResponse(data, details) {
   // Create a temporary element to apply hyperlinking
   var tempElement = document.createElement('div');
   tempElement.textContent = details.currentMessage;
-  // hyperlinkText(tempElement);
-  hyperlinkMarkdown(tempElement);
+  hyperlinkText(tempElement);
 
   // Create a pre element
   var preElement = document.createElement('pre');
@@ -676,6 +656,7 @@ function loadChatHistory() {
         chatbubbleMessage.className = 'chatbubble-gpt-message';
         chatbubbleMessage.innerText = message.html; // Use the stored HTML as text. This is not a mistake.
         chatbubbleMessage.setAttribute('data-timestamp', message.timestamp);
+        chatbubbleMessage.setAttribute('data-hyperlinked', true);
       }
 
       if (chatbubbleMessage) {
