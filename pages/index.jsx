@@ -1,10 +1,11 @@
+import '@shopify/polaris-viz/build/esm/styles.css';
 import { Spinner, Page, Layout, Button, AlphaCard, HorizontalGrid, Box, HorizontalStack, VerticalStack, Text, List, Divider, useBreakpoints } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useState } from "react";
 import { RecentSearchesMajor, CircleTickMinor, DiamondAlertMinor } from '@shopify/polaris-icons';
 import { useActivePlan, useLatestScan, useScanner, useShopValidator } from "../hooks";
 import { dateFromUTC, getTimeSince, localizeDatestamp, localizeTimestamp } from "../utils";
-import { UpgradeButton, CardTitle, EmbedButton, MessageDonut, PaddedCell, Robot, SettingsButton, SkeletonHomePage, WelcomeCard } from "../components";
+import { UpgradeButton, CardTitle, EmbedButton, MessageDonut, PaddedCell, Robot, SettingsButton, SkeletonHomePage, WelcomeCard, InsightsButton, TopicsDonut } from "../components";
 
 export default function HomePage() {
   const { t } = useTranslation();
@@ -17,13 +18,15 @@ export default function HomePage() {
   const getScan = useLatestScan();
   const [lastScanInfo, setLastScanInfo] = useState("")
   const [scanButton, setScanButton] = useState(<Button disabled={true} />)
-  const [loading, setLoading] = useState(true);
+  const [isMoon, setMoon] = useState(false)
+  const [loading, setLoading] = useState(true)
 
 
   // Scan State logic
   // TODO: This was moved here because 2 components required scan info. Can it be containerized?
   const load =
-    () => getActivePlan().then((data) => setActivePlan(data))
+    () => getActivePlan().then((data) => { setActivePlan(data); return data })
+      .then((plan) => setMoon(parseInt(plan.name.slice(1, 3)) >= 4))
       .then(() => validateShop()).then((data) => setValidity(data))
       .then(() => getScan()).then((data) => refreshScan(data))
       .then(() => setLoading(false))
@@ -91,6 +94,12 @@ export default function HomePage() {
     // validateShop().then((data) => console.log(data))
     console.log(activePlan)
     console.log(validity)
+    console.log(t("HomePage.scannedNever"))
+    console.log(lastScanInfo)
+    console.log(activePlan?.name.slice(1, 3))
+    console.log(parseInt(activePlan?.name.slice(1, 3)))
+    console.log(parseInt(activePlan?.name.slice(1, 3)) < 4)
+
     // console.log(nextScanInfo)
   }
   const testButton = <Button onClick={() => test()}>TEST</Button>
@@ -108,8 +117,8 @@ export default function HomePage() {
       <SkeletonHomePage /> :
       <Page
         title="Welcome to ChatUp"
-        // primaryAction={testButton}
-        >
+        primaryAction={testButton}
+      >
         <Layout>
           <Layout.Section fullWidth>
             <Robot />
@@ -147,21 +156,32 @@ export default function HomePage() {
             <PaddedCell padding={["0", xsPadding, "5", xsPadding]}>
 
               <AlphaCard>
-                <CardTitle linebreak title={t("Insights.donutChartTitle")} />
+                <CardTitle linebreak title={isMoon ? t("Insights.donutTopicChartTitle") : t("Insights.donutChartTitle")} />
                 <Divider />
                 <br />
                 <HorizontalGrid columns={xsColumns}>
-                  <MessageDonut current_usage={validity ? validity.current_usage : 0} message_limit={validity ? validity.message_limit : false} />
+                  {isMoon ?
+                    <TopicsDonut /> :
+                    <MessageDonut
+                      current_usage={validity ? validity.current_usage : 0}
+                      message_limit={validity ? validity.message_limit : false} />
+                  }
                   <VerticalStack align="end">
                     <Box paddingBlockEnd={"20"}>
                       <List type="bullet">
                         <List.Item>{lastScanInfo}</List.Item>
                         {activePlan ? <List.Item>{`${t("HomePage.currentPlan")}: ${t(`HomePage.${activePlan?.name.slice(0, 4)}`)}`}</List.Item> : null}
-                        <List.Item>{t("HomePage.xMessagesRemaining", { x: validity ? validity.message_limit - validity.current_usage : "-" })}</List.Item>
+                        <List.Item>
+                          {
+                            isMoon ?
+                              t("HomePage.xMessagesSent", { x: validity ? validity.current_usage : "0" }) :
+                              t("HomePage.xMessagesRemaining", { x: validity ? validity.message_limit - validity.current_usage : "-" })
+                          }
+                        </List.Item>
                         {/* {activePlan & validity ? <List.Item>{generateUpgradeCopy(activePlan.name.slice(0, 4))}</List.Item> : null} */}
                       </List>
                     </Box>
-                    <UpgradeButton />
+                    {isMoon ? <InsightsButton /> : <UpgradeButton />}
                   </VerticalStack>
                 </HorizontalGrid>
               </AlphaCard>

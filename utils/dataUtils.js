@@ -67,17 +67,17 @@ const getTimeSeries = (timeArray, messages, name, isComparison) => {
 // list is split into before u after => (-infty, bp)u[bp, infty)
 const split = (obj, bp) => {
     const ba = { before: [], after: [] }
-    obj.forEach((obj) => obj < bp ? ba.before.push(obj) : ba.after.push(obj))
+    obj?.forEach((obj) => obj < bp ? ba.before.push(obj) : ba.after.push(obj))
     return ba
 }
 
-export const formatChatDataForTS = (messages, dates, comp, names) => {
+export const formatChatDataForTS = (data) => {
     const step = 1 * 60 * 60 * 1000
-    const splitMessages = split(messages, dates.since)
-    const primeArray = getTimeArray(dates.since, new Date(), step)
-    const compArray = getTimeArray(comp.since, comp.until, step)
-    const primeSeries = getTimeSeries(primeArray, splitMessages.after, names.prime, false)
-    const compSeries = getTimeSeries(compArray, splitMessages.before, names.comp, true)
+    const splitMessages = split(data.messages, data.primeSince)
+    const primeArray = getTimeArray(data.primeSince, new Date(), step)
+    const compArray = getTimeArray(data.compSince, data.compUntil, step)
+    const primeSeries = getTimeSeries(primeArray, splitMessages.after, data.primeRange, false)
+    const compSeries = getTimeSeries(compArray, splitMessages.before, data.compRange, true)
     return [...primeSeries, ...compSeries]
 }
 
@@ -133,17 +133,18 @@ export const formatValidationForDonut = (validation, names) => {
 }
 
 
-export const formatChatDataForBar = (messages, dates, bp, names) => {
-    const array = getTimeArray(dates.since, dates.until, 4 * 60 * 60 * 1000)
+export const formatChatDataForBar = (data) => {
+    console.log(data)
+    const array = getTimeArray(data.barSince, data.barUntil, 4 * 60 * 60 * 1000)
     array.shift()
-    const year = dates.since.getFullYear()
-    const month = dates.since.getMonth()
-    const day = dates.since.getDate()
-    const splitMessages = split(messages, bp)
+    const year = data.barSince.getFullYear()
+    const month = data.barSince.getMonth()
+    const day = data.barSince.getDate()
+    const splitMessages = split(data.messages, data.primeSince)
     splitMessages.before.forEach((msg) => setYMD(msg, year, month, day))
     splitMessages.after.forEach((msg) => setYMD(msg, year, month, day))
-    const primeSeries = getTimeSeries(array, splitMessages.after, names.prime, false)
-    const compSeries = getTimeSeries(array, splitMessages.before, names.comp, true)
+    const primeSeries = getTimeSeries(array, splitMessages.after, data.primeRange, false)
+    const compSeries = getTimeSeries(array, splitMessages.before, data.compRange, true)
     return [...primeSeries, ...compSeries]
 }
 

@@ -4,3 +4,4 @@ export { SkeletonMessages } from "./SkeletonMessages";
 export { SkeletonSection } from "./SkeletonSection";
 export { SkeletonCard } from "./SkeletonCard";
 export { SkeletonChats } from "./SkeletonChats";
+export { SkeletonDonut } from "./SkeletonDonut";
