@@ -115,7 +115,7 @@ export default function HomePage() {
       <SkeletonHomePage /> :
       <Page
         title="Welcome to ChatUp"
-        primaryAction={testButton}
+        // primaryAction={testButton}
       >
         <Layout>
           <Layout.Section fullWidth>
