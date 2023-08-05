@@ -15,11 +15,11 @@ export default function Billing() {
     useEffect(() => load(), [])
 
     const emrProps = {
-        plan: "[01]",
-        name: t("Billing.[01]"),
-        msgs: constants.messages["[01]"],
-        price: constants.prices["[01]"],
-        current: "[01]" == activePlan.name.slice(0, 4),
+        plan: "[20]",
+        name: t("Billing.[20]"),
+        msgs: constants.messages["[20]"],
+        price: constants.prices["[20]"],
+        current: "[20]" == activePlan.name.slice(0, 4),
         negKeys: true,
         languages: true,
         personality: false,
@@ -27,11 +27,11 @@ export default function Billing() {
         history: false,
     }
     const estProps = {
-        plan: "[02]",
-        name: t("Billing.[02]"),
-        msgs: constants.messages["[02]"],
-        price: constants.prices["[02]"],
-        current: "[02]" == activePlan.name.slice(0, 4),
+        plan: "[40]",
+        name: t("Billing.[40]"),
+        msgs: constants.messages["[40]"],
+        price: constants.prices["[40]"],
+        current: "[40]" == activePlan.name.slice(0, 4),
         negKeys: true,
         languages: true,
         personality: true,
@@ -39,11 +39,11 @@ export default function Billing() {
         history: false,
     }
     const expProps = {
-        plan: "[03]",
-        name: t("Billing.[03]"),
-        msgs: constants.messages["[03]"],
-        price: constants.prices["[03]"],
-        current: "[03]" == activePlan.name.slice(0, 4),
+        plan: "[60]",
+        name: t("Billing.[60]"),
+        msgs: constants.messages["[60]"],
+        price: constants.prices["[60]"],
+        current: "[60]" == activePlan.name.slice(0, 4),
         negKeys: true,
         languages: true,
         personality: true,
@@ -51,11 +51,11 @@ export default function Billing() {
         history: false,
     }
     const entProps = {
-        plan: "[04]",
-        name: t("Billing.[04]"),
-        msgs: constants.messages["[04]"],
-        price: constants.prices["[04]"],
-        current: "[04]" == activePlan.name.slice(0, 4),
+        plan: "[80]",
+        name: t("Billing.[80]"),
+        msgs: constants.messages["[80]"],
+        price: constants.prices["[80]"],
+        current: "[80]" == activePlan.name.slice(0, 4),
         negKeys: true,
         languages: true,
         personality: true,

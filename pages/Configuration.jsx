@@ -187,7 +187,7 @@ export default function Configuration() {
           }]}
         />
         {smUp ? <Divider /> : null}
-        <AccessWrapper minimum={2} copy={t("Configuration.upgrade")} fullpage={false}>
+        <AccessWrapper minimum={40} copy={t("Configuration.upgrade")} fullpage={false}>
           <Setting
             title={t("Configuration.tempTitle")}
             short={t("Configuration.tempShort")}
