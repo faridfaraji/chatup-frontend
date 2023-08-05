@@ -182,7 +182,7 @@ export default function HomePage() {
                                 {
                                   validity.message === "Unscanned" ?
                                     `${t("HomePage.unscannedTrial")}` :
-                                    `${t("HomePage.scannedTrial", { date: localizeTimestamp(validity.trial_ends_at) })}`
+                                    `${t("HomePage.scannedTrial", { date: localizeTimestamp(new Date(validity.trial_ends_at)) })}`
                                 }
                               </List.Item> : null : null
                         }
