@@ -1,16 +1,17 @@
-import { AlphaCard, Page, Layout, Text, HorizontalStack, Box, Checkbox, Tooltip, Icon, Divider } from "@shopify/polaris";
+import { AlphaCard, Page, Layout, HorizontalStack, Box, Checkbox, Tooltip, Icon, Divider } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
-import '@shopify/polaris-viz/build/esm/styles.css';
-import { BarChart, DonutChart, LineChart } from "@shopify/polaris-viz";
-import { CardTitle, DateRangePicker, CenteredSpinner, AccessWrapper } from "../components";
+import { CardTitle, DateRangePicker, AccessWrapper, MessageTimeSeries, MessageDensity, CenteredSpinner } from "../components";
 import { useCallback, useEffect, useState } from "react";
-import { getRaw, formatChatDataForTS, formatChatDataForBar, getTopics, makeTopicDonutData } from "../utils/dataUtils";
-import { zeroRange, compRange, formatRange } from "../utils/dateUtils"
+import { getRaw } from "../utils/dataUtils";
+import { zeroRange, getCompDates, formatRange } from "../utils/dateUtils"
 import { QuestionMarkInverseMinor } from '@shopify/polaris-icons';
-import { useChatHistory, useMessageCounts } from "../hooks";
+import { useMessageCounts } from "../hooks";
+import { TopicsDonut } from "../components/charts/TopicsDonut";
 
 
 export default function Insights() {
+  const { t } = useTranslation();
+
   // en: today
   const kyou = new Date();
   kyou.setHours(0, 0, 0, 0);
@@ -27,45 +28,29 @@ export default function Insights() {
   const ashita = new Date(kyou);
   ashita.setDate(kyou.getDate() + 1);
 
-  const { t, i18n } = useTranslation();
-
-  const translateTopics = (topics) => {
-    const fullTopicList = [
-      t("Insights.Product Information"),
-      t("Insights.Order Status and Tracking"),
-      t("Insights.Technical Support"),
-      t("Insights.Returns and Refunds"),
-      t("Insights.Account Management"),
-      t("Insights.Promotions and Discounts"),
-      t("Insights.General Inquiries and Complaints"),
-    ]
-
-    const topicList = topics.map((topic) => i18n.exists(`Insights.${topic}`) ? t(`Insights.${topic}`) : t("Insights.General Inquiries and Complaints"))
-    const topicData = {}
-
-    for (const topic of fullTopicList) {
-      topicData[topic] = 0
-    }
-
-    for (const topic of topicList) {
-      topicData[topic]++;
-    }
-
-    return topicData
+  // init
+  const initData = {
+    messages: [],
+    primeRange: formatRange({ since: kyou, until: ashita }),
+    primeSince: kyou,
+    primeUntil: ashita,
+    compRange: formatRange({ since: kinou, until: kyou }),
+    compSince: kinou,
+    compUntil: kyou,
+    barSince: kyou,
+    barUntil: ashita
   }
 
   // fetch data from dbs
   const getMessages = useMessageCounts();
-  const getChats = useChatHistory();
-  const [dates, setDates] = useState({});
-  const [compDates, setCompDates] = useState({});
+  const [dates, setDates] = useState({ since: kyou, until: ashita });
+
+   // the charts themselves
+   const [messageTimeSeries, setMessageTimeSeries] = useState(<CenteredSpinner />);
+   const [messageDensity, setMessageDensity] = useState(<CenteredSpinner />);
+   const [topicsDonut, setTopicsDonut] = useState(<CenteredSpinner />);
 
   // auto refresh
-  const fresh = () => {
-    resetCharts()
-    refreshCharts()
-  }
-
   const refreshable = !(dates?.since < kyou)
   const [checked, setChecked] = useState(false);
   const handleCheck = useCallback((newChecked) => setChecked(newChecked), [])
@@ -76,7 +61,7 @@ export default function Insights() {
   }, [checked, refreshable])
 
   const autoRefreshFun = () => {
-    if (refreshFlag) { fresh() }
+    if (refreshFlag) { freshen() }
   };
   useEffect(() => {
     let refreshInterval;
@@ -89,60 +74,44 @@ export default function Insights() {
     };
   }, [refreshFlag]);
 
-  // the charts themselves
-  const [ts, setTS] = useState(<CenteredSpinner />);
-  const [donut, setDonut] = useState(<CenteredSpinner />);
-  const [bar, setBar] = useState(<CenteredSpinner />);
-
-  // Update ts and bar when dates change
-  const handleDateChange = (range) => {
-    const formattedDates = zeroRange(range)
-    setDates(formattedDates)
-    setCompDates(compRange(formattedDates))
-  }
-
-  // reset all charts to spinnnnnnn
   const resetCharts = () => {
-    setTS(<CenteredSpinner />)
-    setBar(<CenteredSpinner />)
-    setDonut(<CenteredSpinner />)
+    setMessageTimeSeries(<CenteredSpinner />);
+    setMessageDensity(<CenteredSpinner />);
+    setTopicsDonut(<CenteredSpinner />);
   }
-  // Refresh the chart whenever the data changes
+
   const refreshCharts = () => {
-    const primeSince = dates.since ?? kyou
-    const primeUntil = dates.until ?? ashita
-    const compSince = compDates.since ?? kinou
-    const compUntil = compDates.until ?? kyou
-    const primeRange = { since: primeSince, until: primeUntil }
-    const compRange = { since: compSince, until: compUntil }
-    const barRange = { since: kyou, until: ashita }
-    const primeRangeName = formatRange(primeRange)
-    const compRangeName = formatRange(compRange)
-    const names = { prime: primeRangeName, comp: compRangeName }
-    // right now only supporting a single prime/comp range where prime.since = comp.until
-    getMessages(compSince, primeUntil)
-      .then((data) => getRaw(data))
-      .then((data) => {
-        return {
-          ts: formatChatDataForTS(data, primeRange, compRange, names),
-          bar: formatChatDataForBar(data, barRange, primeRange.since, names)
-        }
-      })
-      .then((data) => {
-        setTS(<LineChart data={data.ts} />)
-        setBar(<BarChart data={data.bar} xAxisOptions={{ "hide": true }} />)
-      })
+    const newPrimeDates = { since: dates.since ?? kyou, until: dates.until ?? ashita }
+    const newPrimeRange = formatRange(newPrimeDates)
+    const newCompDates = getCompDates(newPrimeDates)
+    const newCompRange = formatRange(newCompDates)
+    const newData = {
+      primeRange: newPrimeRange,
+      compRange: newCompRange,
+      primeSince: newPrimeDates.since,
+      primeUntil: newPrimeDates.until,
+      compSince: newCompDates.since,
+      compUntil: newCompDates.until,
+      barSince: kyou,
+      barUntil: ashita
+    }
 
-    getChats(primeSince, primeUntil)
-      .then((data) => getTopics(data))
-      .then((data) => translateTopics(data))
-      .then((data) => makeTopicDonutData(data))
-      .then((data) => {
-        setDonut(<DonutChart data={data} legendPosition="right" legendFullWidth={true} />)
-      })
+    // right now only supporting a single prime/comp range where prime.since = comp.until
+    getMessages(newData.compSince, newData.primeUntil).then((data) => getRaw(data)).then((data) => {
+      newData["messages"] = data
+      setMessageTimeSeries(<MessageTimeSeries data={newData} />)
+      setMessageDensity(<MessageDensity data={newData} />)
+      setTopicsDonut(<TopicsDonut since={dates.since ?? kyou} until={dates.until ?? ashita} />)
+    })
   }
 
-  useEffect(() => fresh(), [dates])
+  const freshen = () => {
+    resetCharts()
+    refreshCharts()
+  }
+
+  useEffect(() => freshen(), [dates])
+  const handleDateChange = (range) => setDates(zeroRange(range))
 
   // Common chart box height
   const CommonMinHeight = "250px"
@@ -158,9 +127,6 @@ export default function Insights() {
       >
         <Layout>
           <Layout.Section fullWidth>
-
-          </Layout.Section>
-          <Layout.Section fullWidth>
             <Box
               paddingInlineStart={{ xs: 4, sm: 0 }}
               paddingInlineEnd={{ xs: 4, sm: 0 }}
@@ -169,8 +135,15 @@ export default function Insights() {
                 <HorizontalStack align="space-between" blockAlign="center">
                   <CardTitle title={t("Insights.timeSeriesChartTitle")} />
                   <HorizontalStack gap="1">
-                    <Checkbox disabled={!refreshable} label={t("Button.autoRefresh")} checked={checked} onChange={handleCheck} />
-                    <Tooltip content={refreshable ? t("Button.validRefresh") : t("Insights.invalidRefresh")}>
+                    <Checkbox
+                      disabled={!refreshable}
+                      label={t("Button.autoRefresh")}
+                      checked={checked}
+                      onChange={handleCheck} />
+                    <Tooltip content={
+                      refreshable ?
+                        t("Button.validRefresh") :
+                        t("Insights.invalidRefresh")}>
                       <Icon source={QuestionMarkInverseMinor} />
                     </Tooltip>
                   </HorizontalStack>
@@ -179,7 +152,7 @@ export default function Insights() {
                 <Divider />
                 <br />
                 <Box minHeight={CommonMinHeight}>
-                  {ts}
+                  {messageTimeSeries}
                 </Box>
               </AlphaCard>
             </Box>
@@ -196,7 +169,7 @@ export default function Insights() {
                 <Divider />
                 <br />
                 <Box minHeight={CommonMinHeight}>
-                  {donut}
+                  {topicsDonut}
                 </Box>
               </AlphaCard>
             </Box>
@@ -213,7 +186,7 @@ export default function Insights() {
                 <Divider />
                 <br />
                 <Box minHeight={CommonMinHeight}>
-                  {bar}
+                  {messageDensity}
                 </Box>
               </AlphaCard>
             </Box>

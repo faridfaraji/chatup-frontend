@@ -654,7 +654,8 @@ function loadChatHistory() {
       } else if (message.className === 'chatbubble-gpt-message') {
         chatbubbleMessage = document.createElement('div');
         chatbubbleMessage.className = 'chatbubble-gpt-message';
-        chatbubbleMessage.innerText = message.html; // Use the stored HTML as text. This is not a mistake.
+        const textNode = document.createTextNode(message.html);
+        chatbubbleMessage.appendChild(textNode);
         chatbubbleMessage.setAttribute('data-timestamp', message.timestamp);
         chatbubbleMessage.setAttribute('data-hyperlinked', true);
       }
@@ -708,9 +709,6 @@ function autoResize() {
     this.style.height = '54px';
   }
 }
-
-
-chatHistory.push(message);
 
 
 function removeFocusAfterDelay() {

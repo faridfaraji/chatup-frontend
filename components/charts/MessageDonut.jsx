@@ -1,6 +1,7 @@
 import { Text } from "@shopify/polaris";
 import { DonutChart } from "@shopify/polaris-viz";
 import { useTranslation } from "react-i18next";
+import { SkeletonDonut } from "../closet";
 
 
 export const MessageDonut = ({ current_usage, message_limit }) => {
@@ -39,7 +40,7 @@ export const MessageDonut = ({ current_usage, message_limit }) => {
                 </div>
             }}
         />
-        : <DonutChart data={[]} legendPosition='right' />
+        : <SkeletonDonut />
 
     return donut
 }
