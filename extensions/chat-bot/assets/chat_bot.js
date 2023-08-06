@@ -161,34 +161,6 @@ var socket = io('https://chat.dev.awesoon.tech/customer', {
   autoConnect: false
 });
 
-// socket.on('connect', function () {
-//   // socket.emit('identification', uniqueId); // Emitting uniqueId on connection
-//   console.log('Connected to the server with ' + uniqueId);
-
-// });
-
-// socket.on('connect_error', function (err) {
-//   console.log('Connection Error: ' + err);
-// });
-
-// socket.on('connect_timeout', function () {
-//   console.log('Connection Timeout');
-// });
-
-// socket.on('error', function (err) {
-//   console.log('Error: ' + err);
-// });
-
-// socket.on('disconnect', function (reason) {
-//   console.log('Disconnected: ' + reason);
-// });
-
-// try {
-//   socket.connect();
-// } catch (err) {
-//   console.log('Error occurred while trying to connect: ' + err);
-// }
-
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -482,26 +454,6 @@ function sendMessageOnEnter(event) {
   }
 }
 
-// function init_conversation() {
-//   var conversationUniqueId = localStorage.getItem('conversationUniqueId');
-//   init_payload = {
-//     shop_id: window.shopId,
-//     conversation_id: conversationUniqueId
-//   }
-//   socket.emit("init", init_payload);
-
-//   // Setup a one-time event listener for the "init_response"
-//   socket.once("init_response", function (data) {
-//     conversationUniqueId = data;
-//     localStorage.setItem("conversationUniqueId", conversationUniqueId);
-//     resolve(conversationUniqueId); // Resolve the promise with the new conversationUniqueId
-//   });
-
-//   // If there is an error, we reject the promise
-//   socket.on('error', function (error) {
-//     reject(error);
-//   });
-// }
 
 function get_conversation_id() {
   var conversationUniqueId = localStorage.getItem('conversationUniqueId');
