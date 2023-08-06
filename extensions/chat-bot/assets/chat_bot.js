@@ -467,10 +467,11 @@ function get_conversation_id() {
     
       // Setup a one-time event listener for the "init_response"
       socket.once("init_response", function (data) {
+        connInitiated = true;
         conversationUniqueId = data;
         localStorage.setItem("conversationUniqueId", conversationUniqueId);
         resolve(conversationUniqueId); // Resolve the promise with the new conversationUniqueId
-      });    
+      });   
     } else {
       resolve(conversationUniqueId); // Resolve the promise with the existing conversationUniqueId
     }
