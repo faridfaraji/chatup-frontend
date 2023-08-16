@@ -4,13 +4,13 @@ import { useNavigate } from "@shopify/app-bridge-react";
 import { useEffect, useState } from "react";
 import { usePlanSetter } from "../../hooks";
 
-export const ChoosePlanButton = ({ current, price, plan, name }) => {
+export const ChoosePlanButton = ({ current, priceInfo, plan, name }) => {
     const { t } = useTranslation();
     const choosePlan = usePlanSetter();
     const navigate = useNavigate();
     const [button, setButton] = useState(<Button disabled={true} />);
 
-    const buttonCopy = current ? t("Billing.currentPlan") : t("Billing.pricePerMonth", { price: price })
+    const buttonCopy = current ? t("Billing.currentPlan") : t(`Billing.pricePer${priceInfo.duration}`, { price: priceInfo.price })
 
     const activeButton =
         <Button id="plan-button" onClick={() => handleChoice()} fullWidth primary disabled={current}>

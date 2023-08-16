@@ -95,6 +95,10 @@
     "[40]": "Established",
     "[60]": "Expanding",
     "[80]": "Enterprise plan",
+    "[25]": "Emerging",
+    "[45]": "Established",
+    "[65]": "Expanding",
+    "[85]": "Enterprise plan",
     "messages": "{{ n }} daily messages",
     "negKeys": "Negative Keywords",
     "languages": "All-Language Chat",
@@ -105,7 +109,10 @@
     "pricePerMessage": "{{ price }} per message",
     "enterpriseFeatures": "All features",
     "pricePerMonth": "{{ price }} per month",
-    "redirecting": "Redirecting"
+    "pricePerYear": "{{ price }} per year",
+    "redirecting": "Redirecting",
+    "monthly": "Monthly",
+    "yearly": "Yearly"
   },
   "Button": {
     "configuration": "Configure Settings",

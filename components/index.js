@@ -8,7 +8,7 @@ export { ChatSummary } from "./ChatSummary";
 export { Chat } from "./Chat";
 export { PlanFeature } from "./PlanFeature";
 export { PlanName } from "./PlanName";
-export { TallBillingCard, WideBillingCard, } from "./BillingCard"
+export { BillingCard } from "./BillingCard"
 
 export * from "./buttons";
 export * from "./providers";

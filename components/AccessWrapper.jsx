@@ -9,7 +9,7 @@ export const AccessWrapper = ({ minimum, copy, fullpage, children }) => {
     const [accessLevel, setAccessLevel] = useState(100);
     const loadAccess = () => getPlan().then((data) => {
         const intLevel = parseInt(data.name.slice(1,3))
-        setAccessLevel(intLevel === 0 ? 3 : intLevel)
+        setAccessLevel(intLevel === 0 ? 60 : intLevel)
     })
     useEffect(() => loadAccess(), [])
 

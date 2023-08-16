@@ -1,121 +1,89 @@
-import { Box, Grid, HorizontalStack, Layout, Page, VerticalStack, useBreakpoints } from "@shopify/polaris";
+import { Box, HorizontalStack, Layout, Page, Tabs, VerticalStack, useBreakpoints } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
-import { PaddedCell, TallBillingCard, WideBillingCard } from "../components";
-import constants from "../constants";
+import { PaddedCell, BillingCard } from "../components";
 import { useActivePlan } from "../hooks";
 import { useEffect, useState } from "react";
 
 export default function Billing() {
     const { t } = useTranslation();
     const bp = useBreakpoints();
+
+    // Active plan data
     const getActivePlan = useActivePlan();
     const [activePlan, setActivePlan] = useState({ name: "Free" });
-
     const load = () => getActivePlan().then((data) => setActivePlan(data))
     useEffect(() => load(), [])
 
-    const emrProps = {
-        plan: "[20]",
-        name: t("Billing.[20]"),
-        msgs: constants.messages["[20]"],
-        price: constants.prices["[20]"],
-        current: "[20]" == activePlan.name.slice(0, 4),
-        negKeys: true,
-        languages: true,
-        personality: false,
-        insights: false,
-        history: false,
-    }
-    const estProps = {
-        plan: "[40]",
-        name: t("Billing.[40]"),
-        msgs: constants.messages["[40]"],
-        price: constants.prices["[40]"],
-        current: "[40]" == activePlan.name.slice(0, 4),
-        negKeys: true,
-        languages: true,
-        personality: true,
-        insights: false,
-        history: false,
-    }
-    const expProps = {
-        plan: "[60]",
-        name: t("Billing.[60]"),
-        msgs: constants.messages["[60]"],
-        price: constants.prices["[60]"],
-        current: "[60]" == activePlan.name.slice(0, 4),
-        negKeys: true,
-        languages: true,
-        personality: true,
-        insights: true,
-        history: false,
-    }
-    const entProps = {
-        plan: "[80]",
-        name: t("Billing.[80]"),
-        msgs: constants.messages["[80]"],
-        price: constants.prices["[80]"],
-        current: "[80]" == activePlan.name.slice(0, 4),
-        negKeys: true,
-        languages: true,
-        personality: true,
-        insights: true,
-        history: true,
-    }
+    // Monthly/Yearly tabbing navigation
+    const [selected, setSelected] = useState(0);
+    const tabs = [
+        {
+            id: 'monthly-plans',
+            content: t("Billing.monthly"),
+        },
+        {
+            id: 'yearly-plans',
+            content: t("Billing.yearly"),
+        },
+    ];
+
+    const emergingPlan = selected === 0 ? "[20]" : "[25]"
+    const establishedPlan = selected === 0 ? "[40]" : "[45]"
+    const expandingPlan = selected === 0 ? "[60]" : "[65]"
+    const enterprisePlan = selected === 0 ? "[80]" : "[85]"
 
     // row of 3 tall with wide enterprise underneath
-    const lgPage = <Layout>
-        <Layout.Section fullWidth>
-            <HorizontalStack align="space-between">
-                <Box minWidth="30%" maxWidth="32%">
-                    <TallBillingCard props={emrProps} />
-                </Box>
-                <Box minWidth="30%" maxWidth="32%">
-                    <TallBillingCard props={estProps} />
-                </Box>
-                <Box minWidth="30%" maxWidth="32%">
-                    <TallBillingCard props={expProps} />
-                </Box>
-            </HorizontalStack>
-        </Layout.Section>
-        <Layout.Section fullWidth>
-            <WideBillingCard props={entProps} />
-        </Layout.Section>
-    </Layout>
+    const lgPage =
+        <Page>
+            <Tabs tabs={tabs} selected={selected} onSelect={(index) => setSelected(index)} >
+                <br />
+                <Layout>
+                    <Layout.Section fullWidth>
+                        <HorizontalStack align="space-between">
+                            <Box width="32%">
+                                <BillingCard plan={emergingPlan} activePlan={activePlan} wide={false} />
+                            </Box>
+                            <Box width="32%">
+                                <BillingCard plan={establishedPlan} activePlan={activePlan} wide={false} />
+                            </Box>
+                            <Box width="32%">
+                                <BillingCard plan={expandingPlan} activePlan={activePlan} wide={false} />
+                            </Box>
+                        </HorizontalStack>
+                    </Layout.Section>
+                    <Layout.Section fullWidth>
+                        <BillingCard plan={enterprisePlan} activePlan={activePlan} wide={true} />
+                    </Layout.Section>
+                </Layout>
+            </ Tabs>
+        </Page>
+
 
     // column of 4 wide cards 
     const smPage =
-        <PaddedCell padding={["0", "0", "0", "5",]}>
-            <VerticalStack>
-                <WideBillingCard props={emrProps} /> <br />
-                <WideBillingCard props={estProps} /> <br />
-                <WideBillingCard props={expProps} /> <br />
-                <WideBillingCard props={entProps} /> <br />
-            </VerticalStack>
-        </PaddedCell>
+        <Tabs tabs={tabs} selected={selected} onSelect={(index) => setSelected(index)} >
+            <PaddedCell padding={["5", "5", "0", "5",]}>
+                <VerticalStack>
+                    <BillingCard plan={emergingPlan} activePlan={activePlan} wide={true} /> <br />
+                    <BillingCard plan={establishedPlan} activePlan={activePlan} wide={true} /> <br />
+                    <BillingCard plan={expandingPlan} activePlan={activePlan} wide={true} /> <br />
+                    <BillingCard plan={enterprisePlan} activePlan={activePlan} wide={true} /> <br />
+                </VerticalStack>
+            </PaddedCell>
+        </ Tabs>
 
     // column of 4 tall cards
     const xsPage =
-        <PaddedCell padding={["0", "0", "0", "5",]}>
-            <VerticalStack>
-                <TallBillingCard props={emrProps} /> <br />
-                <TallBillingCard props={estProps} /> <br />
-                <TallBillingCard props={expProps} /> <br />
-                <TallBillingCard props={entProps} /> <br />
-            </VerticalStack>
-        </PaddedCell>
+        <Tabs tabs={tabs} selected={selected} onSelect={(index) => setSelected(index)} >
+            <PaddedCell padding={["5", "5", "0", "5",]}>
+                <VerticalStack>
+                    <BillingCard plan={emergingPlan} activePlan={activePlan} wide={false} /> <br />
+                    <BillingCard plan={establishedPlan} activePlan={activePlan} wide={false} /> <br />
+                    <BillingCard plan={expandingPlan} activePlan={activePlan} wide={false} /> <br />
+                    <BillingCard plan={enterprisePlan} activePlan={activePlan} wide={false} /> <br />
+                </VerticalStack>
+            </PaddedCell>
+        </ Tabs>
 
-    return (
-        <Page
-            title={t("NavigationMenu.billing")}
-            divider
-        >
-            <Layout>
-                <PaddedCell padding={["0", "0", "5", "0",]}>
-                    {bp.xsOnly ? xsPage : bp.smOnly ? smPage : lgPage}
-                </PaddedCell>
-            </Layout>
-        </Page>
-    )
-
+    return (bp.xsOnly ? xsPage : bp.smOnly ? smPage : lgPage)
 }
