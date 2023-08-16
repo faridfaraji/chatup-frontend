@@ -436,8 +436,8 @@ function getConversationUniqueId() {
       // Get the current time
       var currentTime = new Date().getTime();
       // Calculate the difference in hours
-      var hoursDifference = (currentTime - timestamp) / (1000 * 60 * 60);
-      if (hoursDifference > 3) {
+      var hrsDifference = (currentTime - timestamp) / (1000 * 60 * 60);
+      if (hrsDifference > 3) {
           // If more than 3 hours, clear the unique ID
           localStorage.removeItem('conversationUniqueId');
           localStorage.removeItem('conversationUniqueIdTimestamp');
@@ -461,7 +461,7 @@ function setConversationUniqueId(uniqueId) {
 function get_conversation_id() {
   var conversationUniqueId = getConversationUniqueId();
   return new Promise((resolve, reject) => {
-    if (connInitiated == false) {
+    if (connInitiated == false || !conversationUniqueId) {
       init_payload = {
         shop_id: window.shopId,
         conversation_id: conversationUniqueId
