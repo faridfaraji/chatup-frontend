@@ -19,6 +19,7 @@ pre {
     white-space: break-spaces !important;
     font-family: inherit;
     margin: 0 !important;
+    line-height: 1.5em;
 }
 
 .custom-loader {
@@ -100,7 +101,7 @@ pre {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    z-index: 99;
+    z-index: 899;
     scroll-behavior: smooth;
 }
 
@@ -372,13 +373,14 @@ pre {
     background-image: linear-gradient(rgba(255, 255, 255, 0) 84%, white, white);
     pointer-events: none;
     z-index: 22;
+    border-radius: inherit !important;
 }
 
 
 
 .chatbubble-message {
     background-color: var(--chatbubble-message-background-color);
-    padding: 7px 10px;
+    padding: 10px 10px 12px 10px;
     margin-bottom: 8.5px;
     border-radius: 15px;
     display: inline-block;
@@ -412,7 +414,7 @@ pre {
 
 .chatbubble-gpt-message {
     background-color: var(--chatbubble-gpt-message-background-color);
-    padding: 7px 7px 0px 12px;
+    padding: 10px 10px 10px 12px;
     margin-bottom: 8.5px;
     border-radius: 15px;
     max-width: 80%;
