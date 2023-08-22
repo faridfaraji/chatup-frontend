@@ -127,16 +127,6 @@ function getCookie(name) {
 }
 
 // Get the uniqueId from localStorage or generate a new one if expired or not found
-var uniqueId = localStorage.getItem('uniqueId');
-
-if (!uniqueId || isExpired(uniqueId)) {
-  uniqueId = 'UID_' + generateUUID();
-  localStorage.setItem('uniqueId', uniqueId);
-  setCookie('uniqueId', uniqueId, 24 * 60 * 60);
-  console.log("Unique Id =", uniqueId);
-}
-
-
 
 
 var socket = io('https://chat.dev.awesoon.tech/customer', {
@@ -402,9 +392,6 @@ function handleIncomingMessage(message) {
 }
 
 
-
-
-
 // Function to get the current timestamp
 function getCurrentTimestamp() {
   var now = new Date();
@@ -439,11 +426,42 @@ function sendMessageOnEnter(event) {
   }
 }
 
+function getConversationUniqueId() {
+  // Get the id from localStorage
+  var conversationUniqueId = localStorage.getItem('conversationUniqueId');
+  // Get the timestamp from localStorage
+  var timestamp = localStorage.getItem('conversationUniqueIdTimestamp');
+
+  if (conversationUniqueId && timestamp) {
+      // Get the current time
+      var currentTime = new Date().getTime();
+      // Calculate the difference in hours
+      var hrsDifference = (currentTime - timestamp) / (1000 * 60 * 60);
+      if (hrsDifference > 3) {
+          // If more than 3 hours, clear the unique ID
+          localStorage.removeItem('conversationUniqueId');
+          localStorage.removeItem('conversationUniqueIdTimestamp');
+          return null;
+      } else {
+          return conversationUniqueId;
+      }
+  } else {
+      return null;
+  }
+}
+
+function setConversationUniqueId(uniqueId) {
+  // Set the id to localStorage
+  localStorage.setItem('conversationUniqueId', uniqueId);
+  // Set the current timestamp to localStorage
+  localStorage.setItem('conversationUniqueIdTimestamp', new Date().getTime());
+}
+
 
 function get_conversation_id() {
-  var conversationUniqueId = localStorage.getItem('conversationUniqueId');
+  var conversationUniqueId = getConversationUniqueId();
   return new Promise((resolve, reject) => {
-    if (connInitiated == false) {
+    if (connInitiated == false || !conversationUniqueId) {
       init_payload = {
         shop_id: window.shopId,
         conversation_id: conversationUniqueId
@@ -454,7 +472,7 @@ function get_conversation_id() {
       socket.once("init_response", function (data) {
         connInitiated = true;
         conversationUniqueId = data;
-        localStorage.setItem("conversationUniqueId", conversationUniqueId);
+        setConversationUniqueId(conversationUniqueId);
         resolve(conversationUniqueId); // Resolve the promise with the new conversationUniqueId
       });   
     } else {
@@ -682,39 +700,3 @@ function autoResize() {
     this.style.height = '54px';
   }
 }
-
-
-function removeFocusAfterDelay() {
-  var chatBubble = document.querySelector('#chatbubble-send');
-  chatBubble.addEventListener('focus', function () {
-    setTimeout(function () {
-      chatBubble.classList.remove('focus');
-    }, 500);
-  });
-}
-
-
-function generateUniqueId() {
-
-  function generateUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = (Math.random() * 16) | 0,
-        v = c === 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
-  }
-
-  return generateUUID();
-}
-
-function setCookie(name, value, expirationSeconds) {
-  var expires = '';
-  if (expirationSeconds) {
-    var date = new Date();
-    date.setTime(date.getTime() + expirationSeconds * 1000);
-    expires = '; expires=' + date.toUTCString();
-  }
-  document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/';
-}
-
-
