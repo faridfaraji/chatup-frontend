@@ -276,11 +276,10 @@ pre {
 
 .chat-up-logo {
     display: flex;
-    /* height: 50px; */
+    width: 50px;
     align-items: center;
     padding-left: 0.6em;
     flex-direction: row;
-    width: 50px;
     align-self: center;
     position: relative;
     top: 0px;
