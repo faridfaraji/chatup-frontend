@@ -1,4 +1,4 @@
-import { Button, HorizontalStack, Icon, Spinner } from "@shopify/polaris"
+import { Button, HorizontalStack, Spinner } from "@shopify/polaris"
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@shopify/app-bridge-react";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ export const ChoosePlanButton = ({ current, priceInfo, plan, name }) => {
     const navigate = useNavigate();
     const [button, setButton] = useState(<Button disabled={true} />);
 
-    const buttonCopy = current ? t("Billing.currentPlan") : t(`Billing.pricePer${priceInfo.duration}`, { price: priceInfo.price })
+    const buttonCopy = current ? t("Billing.currentPlan") : t(`Billing.pricePer${priceInfo.duration}`, { planPrice: priceInfo.price })
 
     const activeButton =
         <Button id="plan-button" onClick={() => handleChoice()} fullWidth primary disabled={current}>

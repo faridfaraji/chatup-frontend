@@ -9,12 +9,13 @@ import constants from "../constants";
 
 export const BillingCard = ({ plan, activePlan, wide }) => {
     const { t } = useTranslation()
-    const name = t(`Billing.${plan}`)
-    const msgs = constants.messages[plan]
+    const planCopyId = plan.slice(0, 2)
+    const name = t(`Billing.${planCopyId}`)
+    const msgs = constants.messages[planCopyId]
     const accessLevel = parseInt(plan.slice(1, 3))
 
     // card components
-    const cardImage = <PlanImage plan={constants.plan_images[plan]} />
+    const cardImage = <PlanImage plan={constants.plan_images[planCopyId]} />
     const messagesFeature = <PlanFeature name={msgs ? t("Billing.messages", { n: msgs }) : t("Billing.enterpriseMessages")} include={true} />
     const negKeysFeature = <PlanFeature name={t("Billing.negKeys")} include={true} />
     const languagesFeature = <PlanFeature name={t("Billing.languages")} include={true} />
