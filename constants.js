@@ -24,7 +24,7 @@ export default {
         "[60]": {price: "$99", duration: "Month"},
         "[65]": {price: "$990", duration: "Year"},
         "[80]": {price: "$499", duration: "Month"},
-        "[85]": {price: "$4900", duration: "Year"}
+        "[85]": {price: "$4990", duration: "Year"}
     },
     messages: {
         "[2": 50,
