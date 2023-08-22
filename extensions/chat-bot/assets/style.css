@@ -276,7 +276,7 @@ pre {
 
 .chat-up-logo {
     display: flex;
-    height: 50px;
+    /* height: 50px; */
     align-items: center;
     padding-left: 0.6em;
     flex-direction: row;
@@ -285,6 +285,10 @@ pre {
     position: relative;
     top: 0px;
 
+}
+
+p:last-child {
+    margin: 0 0 1rem !important;
 }
 
 .chat-up-logo img {
