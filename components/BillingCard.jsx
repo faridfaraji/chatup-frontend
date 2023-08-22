@@ -1,41 +1,39 @@
-import { AlphaCard, Divider, HorizontalGrid, HorizontalStack, Layout, VerticalStack } from "@shopify/polaris"
+import { AlphaCard, Divider, HorizontalGrid, VerticalStack } from "@shopify/polaris"
 import { useTranslation } from "react-i18next";
 import { CardTitle } from "./CardTitle";
 import { ChoosePlanButton } from "./buttons";
 import { PlanFeature } from "./PlanFeature";
 import { PlanName } from "./PlanName";
 import { PlanImage } from "./images";
+import constants from "../constants";
 
-export const TallBillingCard = (props) => {
+export const BillingCard = ({ plan, activePlan, wide }) => {
     const { t } = useTranslation()
-    const { plan, name, msgs, negKeys, languages, personality, insights, history, current, price } = props.props
+    const planCopyId = plan.slice(0, 2)
+    const name = t(`Billing.${planCopyId}`)
+    const msgs = constants.messages[planCopyId]
+    const accessLevel = parseInt(plan.slice(1, 3))
 
-    return (
-        <AlphaCard>
-            <VerticalStack gap="4">
-                <PlanImage plan={plan} />
-                <PlanName name={name} />
-                <Divider />
-                <PlanFeature name={msgs ? t("Billing.messages", { n: msgs }) : t("Billing.enterpriseMessages")} include={true} />
-                <PlanFeature name={t("Billing.negKeys")} include={negKeys} />
-                <PlanFeature name={t("Billing.languages")} include={languages} />
-                <PlanFeature name={t("Billing.personality")} include={personality} />
-                <PlanFeature name={t("Billing.insights")} include={insights} />
-                <PlanFeature name={t("Billing.history")} include={history} />
-                <ChoosePlanButton current={current} price={price} plan={plan} name={name} />
-            </VerticalStack>
-        </AlphaCard>
-    )
-}
+    // card components
+    const cardImage = <PlanImage plan={constants.plan_images[planCopyId]} />
+    const messagesFeature = <PlanFeature name={msgs ? t("Billing.messages", { n: msgs }) : t("Billing.enterpriseMessages")} include={true} />
+    const negKeysFeature = <PlanFeature name={t("Billing.negKeys")} include={true} />
+    const languagesFeature = <PlanFeature name={t("Billing.languages")} include={true} />
+    const personalityFeature = <PlanFeature name={t("Billing.personality")} include={accessLevel >= 40} />
+    const insightsFeature = <PlanFeature name={t("Billing.insights")} include={accessLevel >= 60} />
+    const historyFeature = <PlanFeature name={t("Billing.history")} include={accessLevel >= 80} />
+    const chooseButton = <ChoosePlanButton
+        current={plan === activePlan.name.slice(0, 4)}
+        priceInfo={constants.prices[plan]}
+        plan={plan}
+        name={name}
+    />
 
-export const WideBillingCard = (props) => {
-    const { t } = useTranslation();
-    const { plan, name, msgs, negKeys, languages, personality, insights, history, current, price } = props.props
-
-    return (
+    // cards
+    const wideCard =
         <AlphaCard>
             <HorizontalGrid columns={{ sm: 1, md: ["oneThird", "twoThirds"] }}>
-                <PlanImage plan={plan} />
+                {cardImage}
                 <VerticalStack>
                     <CardTitle linebreak title={name} />
                     <Divider />
@@ -43,22 +41,39 @@ export const WideBillingCard = (props) => {
                     <VerticalStack gap="5">
                         <HorizontalGrid columns={2}>
                             <VerticalStack gap="4">
-                                <PlanFeature name={msgs ? t("Billing.messages", { n: msgs }) : t("Billing.enterpriseMessages")} include={true} />
-                                <PlanFeature name={t("Billing.negKeys")} include={negKeys} />
-                                <PlanFeature name={t("Billing.languages")} include={languages} />
+                                {messagesFeature}
+                                {negKeysFeature}
+                                {languagesFeature}
                             </VerticalStack>
                             <VerticalStack gap="4">
-                                <PlanFeature name={t("Billing.personality")} include={personality} />
-                                <PlanFeature name={t("Billing.insights")} include={insights} />
-                                <PlanFeature name={t("Billing.history")} include={history} />
+                                {personalityFeature}
+                                {insightsFeature}
+                                {historyFeature}
                             </VerticalStack>
                         </HorizontalGrid>
                         <div style={{ width: "75%", alignSelf: "center" }}>
-                            <ChoosePlanButton current={current} price={price} plan={plan} name={name}  />
+                            {chooseButton}
                         </div>
                     </VerticalStack>
                 </VerticalStack>
             </HorizontalGrid>
         </AlphaCard>
-    )
+
+    const tallCard =
+        <AlphaCard>
+            <VerticalStack gap="4">
+                {cardImage}
+                <PlanName name={name} />
+                <Divider />
+                {messagesFeature}
+                {negKeysFeature}
+                {languagesFeature}
+                {personalityFeature}
+                {insightsFeature}
+                {historyFeature}
+                {chooseButton}
+            </VerticalStack>
+        </AlphaCard>
+
+    return (wide ? wideCard : tallCard)
 }

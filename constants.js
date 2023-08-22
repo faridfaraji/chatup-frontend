@@ -17,23 +17,27 @@ export default {
     ext_id: VITE_SHOPIFY_CHAT_BOT_ID,
     ext_name: VITE_CHAT_BOT_EXT_NAME,
     prices: {
-        "[20]": "$19",
-        "[40]": "$49",
-        "[60]": "$99",
-        "[80]": "$499"
+        "[20]": {price: "$19", duration: "Month"},
+        "[25]": {price: "$190", duration: "Year"},
+        "[40]": {price: "$49", duration: "Month"},
+        "[45]": {price: "$490", duration: "Year"},
+        "[60]": {price: "$99", duration: "Month"},
+        "[65]": {price: "$990", duration: "Year"},
+        "[80]": {price: "$499", duration: "Month"},
+        "[85]": {price: "$4990", duration: "Year"}
     },
     messages: {
-        "[20]": 50,
-        "[40]": 200,
-        "[60]": 500,
-        "[80]": 0
+        "[2": 50,
+        "[4": 200,
+        "[6": 500,
+        "[8": 0
     },
-    plan_names: {
-        "[20]": "paper",
-        "[40]": "canvas",
-        "[60]": "steel",
-        "[80]": "mars"
-    },
+    plan_images: {
+        "[2": "2-paper",
+        "[4": "4-canvas",
+        "[6": "6-steel",
+        "[8": "8-moon"
+    }
 }
 
 

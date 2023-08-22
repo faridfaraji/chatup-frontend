@@ -49,6 +49,8 @@ export default function HomePage() {
       const nextScanTimestamp = localizeTimestamp(timestampUTC.setHours(timestampUTC.getHours() + 12))
       setLastScanInfo(t("HomePage.scanned", { localizedTimestamp: lastScanTimestamp }))
 
+      // Also check for timeout - if the last scan never completes or errors it will stay pending indefinitely
+      // Alternatively, correct on DB/shop-api side
       if (["PENDING", "IN_PROGRESS"].includes(scan.status)) {
         setScanButton(pendingScan)
         setTimeout(load, 2000)
@@ -77,7 +79,7 @@ export default function HomePage() {
     const formatted_date = localizeDatestamp(date)
     const key = `HomePage.upgrade${plan_id}`
     if (plan_id) return t(key)
-    else return t(key, { date: formatted_date })
+    else return t(key, { localizedTimestamp: formatted_date })
   }
 
 
@@ -171,18 +173,18 @@ export default function HomePage() {
                         {
                           activePlan ?
                             <List.Item>
-                              {`${t("HomePage.currentPlan")}: ${t(`HomePage.${activePlan?.name.slice(0, 4)}`)}`}
+                              {`${t("HomePage.currentPlan")}: ${t(`Billing.${activePlan?.name.slice(0, 2)}`)}`}
                             </List.Item> :
                             null
                         }
                         {
                           activePlan && validity ?
-                            activePlan.name.slice(0, 4) === "[00]" ?
+                            activePlan.name.slice(0, 2) === "[0" ?
                               <List.Item>
                                 {
                                   validity.message === "Unscanned" ?
                                     `${t("HomePage.unscannedTrial")}` :
-                                    `${t("HomePage.scannedTrial", { date: localizeTimestamp(new Date(validity.trial_ends_at)) })}`
+                                    `${t("HomePage.scannedTrial", { localizedTimestamp: localizeTimestamp(new Date(validity.trial_ends_at)) })}`
                                 }
                               </List.Item> : null : null
                         }
@@ -193,7 +195,7 @@ export default function HomePage() {
                               t("HomePage.xMessagesRemaining", { x: validity ? validity.message_limit - validity.current_usage : "-" })
                           }
                         </List.Item>
-                        {/* {activePlan & validity ? <List.Item>{generateUpgradeCopy(activePlan.name.slice(0, 4))}</List.Item> : null} */}
+                        {/* {activePlan & validity ? <List.Item>{generateUpgradeCopy(activePlan.name.slice(0, 2))}</List.Item> : null} */}
                       </List>
                     </Box>
                     {isMoon ? <InsightsButton /> : <UpgradeButton />}
