@@ -37,7 +37,9 @@ export default {
         "[4": "4-canvas",
         "[6": "6-steel",
         "[8": "8-moon"
-    }
+    },
+    base_plan: "[20]",
+    base_plan_copy_id: "[2"
 }
 
 

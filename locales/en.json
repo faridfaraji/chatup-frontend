@@ -14,13 +14,12 @@
     "xMessagesRemaining": "{{ x }} messages left for today",
     "xMessagesSent": "{{ x }} messages sent today",
     "unscannedTrial": "Your free trial of ChatUp lasts for 24 hours from your first scan",
-    "scannedTrial": "Your free trial of ChatUp ends at {{ localizedTimestamp }}", 
     "currentPlan": "Current Plan",
-    "upgrade[0": "Your trial period lasts until {{ localizedTimestamp }}",
+    "upgrade[0": "Your free trial of ChatUp ends on {{ localizedDatestamp }}",
     "upgrade[2": "Only $30 per month for 150 more daily messages!",
     "upgrade[4": "Only $50 per month for 300 more daily messages!",
     "upgrade[6": "Upgrade to Enterprise for unlimited messages!",
-    "upgrade[8": "Please contact us directly for additional services."
+    "upgrade[8": "Please contact us directly to inquire about additional services."
   },
   "Configuration": {
     "title": "App Configuration",
@@ -36,6 +35,8 @@
     "friendly": "Friendly",
     "professional": "Professional",
     "upgrade": "Upgrade now to unlock Personality!",
+    "freeTrialCopy": "Personality is available during your free trial",
+    "freeTrialButton": "Reveal Personality",
     "bottomCopy": "Now its time to make sure that ChatUp is visible on your store and your users can use it!"
   },
   "Insights": {
@@ -60,7 +61,9 @@
     "Account Management": "Accounts",
     "Promotions and Discounts": "Promotions",
     "General Inquiries and Complaints": "General",
-    "upgrade": "Upgrade now to unlock Insights!"
+    "upgrade": "Upgrade now to unlock Insights!",
+    "freeTrialCopy": "Insights are available during your free trial",
+    "freeTrialButton": "Reveal Insights"
   },
   "ChatHistory": {
     "untitled": "Untitled",
@@ -70,7 +73,9 @@
     "viewSummary": "View Summary",
     "viewNav": "View Chats",
     "noChats": "No chats found for selected time period",
-    "upgrade": "Upgrade now to unlock Chat History!"
+    "upgrade": "Upgrade now to unlock Chat History!",
+    "freeTrialCopy": "Chat History is available during your free trial",
+    "freeTrialButton": "Reveal Chat History"
   },
   "NavigationMenu": {
     "configuration": "Configuration",
