@@ -184,3 +184,10 @@ export const withUTC = (timestamp) => {
 export const dateFromUTC = (timestamp) => {
     return new Date(withUTC(timestamp))
 }
+
+export const freeTrialActive = (data) => {
+    const trialEnds = new Date(data?.trial_ends_on)
+    trialEnds.setDate(trialEnds.getDate() + data?.trial_days ?? 0)
+    const now = new Date()
+    return now < trialEnds
+}
