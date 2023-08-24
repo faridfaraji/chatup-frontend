@@ -31,7 +31,7 @@
         "humorous": "Hauska",
         "engaging": "Viehättävä",
         "informal": "Epävirallinen",
-        "friendly": "ystävällinen",
+        "friendly": "Ystävällinen",
         "professional": "Ammattimainen",
         "upgrade": "Päivitä nyt avataksesi Persoonallisuus!",
         "freeTrialCopy": "Henkilökohtaisuus on saatavilla kokeilujakson aikana.",
@@ -72,13 +72,13 @@
         "viewSummary": "Yhteenveto",
         "viewNav": "Katso keskustelut",
         "noChats": "Valitulle ajanjaksolle ei löytynyt keskusteluja.",
-        "upgrade": "Päivitä nyt avataksesi Chat History!",
+        "upgrade": "Päivitä nyt avataksesi Keskusteluhistoria!",
         "freeTrialCopy": "Keskusteluhistoria on saatavilla ilmaisen kokeilujakson aikana.",
-        "freeTrialButton": "Reveal Paljasta chat-historia"
+        "freeTrialButton": "Paljasta keskusteluhistoria"
     },
     "NavigationMenu": {
         "configuration": "Kokoonpano",
-        "insights": "Insights: Ymmärrys",
+        "insights": "Ymmärrys",
         "chatHistory": "Keskusteluhistoria",
         "billing": "Laskutus"
     },
