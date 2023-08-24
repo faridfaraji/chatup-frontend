@@ -186,6 +186,7 @@ export const dateFromUTC = (timestamp) => {
 }
 
 export const freeTrialActive = (data) => {
+    if (!data) return false
     const trialEnds = new Date(data?.trial_ends_on)
     trialEnds.setDate(trialEnds.getDate() + data?.trial_days ?? 0)
     const now = new Date()

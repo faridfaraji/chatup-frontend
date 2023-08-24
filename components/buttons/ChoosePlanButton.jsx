@@ -10,7 +10,7 @@ export const ChoosePlanButton = ({ current, priceInfo, plan, name }) => {
     const navigate = useNavigate();
     const [button, setButton] = useState(<Button disabled={true} />);
 
-    const buttonCopy = current ? t("Billing.currentPlan") : t(`Billing.pricePer${priceInfo.duration}`, { planPrice: priceInfo.price })
+    const buttonCopy = current ? t("Billing.currentPlan") : t(`Billing.pricePer${priceInfo.duration}`, { x: priceInfo.price })
 
     const activeButton =
         <Button id="plan-button" onClick={() => handleChoice()} fullWidth primary disabled={current}>

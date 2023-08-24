@@ -47,7 +47,7 @@ export default function Landing() {
       const timeSince = getTimeSince(timestampUTC)
       const lastScanTimestamp = localizeTimestamp(timestampUTC)
       const nextScanTimestamp = localizeTimestamp(timestampUTC.setHours(timestampUTC.getHours() + 12))
-      setLastScanInfo(t("HomePage.scanned", { localizedTimestamp: lastScanTimestamp }))
+      setLastScanInfo(t("HomePage.scanned", { x: lastScanTimestamp }))
 
       // Also check for timeout - if the last scan never completes or errors it will stay pending indefinitely
       // Alternatively, correct on DB/shop-api side
@@ -57,7 +57,7 @@ export default function Landing() {
       } else if (["ERROR"].includes(scan.status)) {
         setScanButton(errorScan)
       } else if (timeSince < 12) {
-        setScanButton(doneScanned(t("HomePage.scanAvailableIn", { localizedTimestamp: nextScanTimestamp })))
+        setScanButton(doneScanned(t("HomePage.scanAvailableIn", { x: nextScanTimestamp })))
       } else {
         setScanButton(primaryScan)
       }
@@ -75,15 +75,14 @@ export default function Landing() {
 
   // Generate upgrade copy
   const generateUpgradeCopy = useCallback(() => {
-    if (!activePlan) {
-      return ""
-    } else if (freeTrialActive(activePlan)) {
-      return t("HomePage.upgrade[0", { localizedDatestamp: localizeDatestamp(activePlan.trial_ends_on) })
-    } else {
-      return t(`HomePage.upgrade${activePlan.name.slice(0, 2)}`)
-    }
+    if (!activePlan) return ""
+    return t(`HomePage.upgrade${activePlan.name.slice(0, 2)}`)
   }, [activePlan])
 
+  const generateTrialCopy = useCallback(() => {
+    if (!activePlan) return ""
+    return t("HomePage.upgrade[0", { x: localizeDatestamp(activePlan.trial_ends_on) })
+  }, [activePlan])
 
   const test = () => {
     // refreshScan({status: "ERROR", timestamp: "2023-07-07T23:19:12"})
@@ -99,9 +98,14 @@ export default function Landing() {
     })
 
     console.log(activePlan)
+    console.log(validity)
     // console.log(validity)
-    // setActivePlan({ name: "[00]" })
-    // setValidity({ message: "", trial_ends_at: new Date() })
+    // setActivePlan({ name: "[0]" })
+    setValidity({
+      current_usage: 50,
+      disable: true,
+      message: "All systems operational",
+      message_limit: 50})
   }
   const testButton = <Button onClick={() => test()}>TEST</Button>
 
@@ -186,7 +190,10 @@ export default function Landing() {
                           }
                         </List.Item>
                         {
-                          activePlan ? <List.Item>{generateUpgradeCopy()}</List.Item> : null
+                          freeTrialActive(activePlan) ? <List.Item>{generateTrialCopy()}</List.Item> : null
+                        }
+                        {
+                          activePlan && validity?.disable ? <List.Item>{generateUpgradeCopy()}</List.Item> : null
                         }
                       </List>
                     </Box>
