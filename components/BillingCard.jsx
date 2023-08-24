@@ -16,7 +16,7 @@ export const BillingCard = ({ plan, activePlan, wide }) => {
 
     // card components
     const cardImage = <PlanImage plan={constants.plan_images[planCopyId]} />
-    const messagesFeature = <PlanFeature name={msgs ? t("Billing.messages", { n: msgs }) : t("Billing.enterpriseMessages")} include={true} />
+    const messagesFeature = <PlanFeature name={msgs ? t("Billing.messages", { x: msgs }) : t("Billing.enterpriseMessages")} include={true} />
     const negKeysFeature = <PlanFeature name={t("Billing.negKeys")} include={true} />
     const languagesFeature = <PlanFeature name={t("Billing.languages")} include={true} />
     const personalityFeature = <PlanFeature name={t("Billing.personality")} include={accessLevel >= 40} />
