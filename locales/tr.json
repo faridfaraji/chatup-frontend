@@ -97,10 +97,10 @@
         "monthly": "Aylık",
         "yearly": "Yıllık",
         "[0": "Ücretsiz Deneme",
-        "[2": "Çıkış Yapan",
+        "[2": "Ortaya Çıkıyor",
         "[4": "Kurulmuş",
-        "[6": "Genişleme",
-        "[8": "Kurumsal"
+        "[6": "Genişletme",
+        "[8": "Girişim"
     },
     "Button": {
         "configuration": "Ayarları Yapılandırma",

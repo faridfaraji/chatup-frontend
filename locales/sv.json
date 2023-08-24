@@ -98,9 +98,9 @@
         "yearly": "Årlig",
         "[0": "Gratisprov",
         "[2": "Uppstigande",
-        "[4": "etablerad",
-        "[6": "Utvidgning",
-        "[8": "Affärsverksamhet"
+        "[4": "Etablerad",
+        "[6": "Utvidgande",
+        "[8": "Företag"
     },
     "Button": {
         "configuration": "Konfigurera inställningar",
