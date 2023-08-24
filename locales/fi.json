@@ -97,9 +97,9 @@
         "monthly": "Kuukausittain",
         "yearly": "Vuosittain",
         "[0": "Ilmainen Kokeilu",
-        "[2": "Nouseva",
+        "[2": "Emergointi",
         "[4": "Perustettu",
-        "[6": "Laajentuva",
+        "[6": "Laajentaminen",
         "[8": "Yritys"
     },
     "Button": {
