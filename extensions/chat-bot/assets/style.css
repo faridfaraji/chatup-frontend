@@ -120,8 +120,8 @@ pre {
     transform: translateY(0);
     transform-origin: center;
     transition: 0.3s ease-in-out;
-    width: auto;
-    height: auto;
+    width: 60px;
+    height: 60px;
     font-size: 2em;
 }
 
@@ -276,15 +276,18 @@ pre {
 
 .chat-up-logo {
     display: flex;
-    height: 50px;
-    align-items: center;
-    padding-left: 0.6em;
-    flex-direction: row;
     width: 50px;
+    align-items: center;
+    margin-left: 0.6em;
+    flex-direction: row;
     align-self: center;
     position: relative;
     top: 0px;
 
+}
+
+p:last-child {
+    margin: 0 0 1rem !important;
 }
 
 .chat-up-logo img {
@@ -341,7 +344,7 @@ pre {
     position: absolute;
     right: 0px;
     transition: 0.3s ease;
-    bottom: calc(0% + -2px);
+    /* bottom: calc(0% + -2px); */
 }
 
 #chatbubble-send:focus,
@@ -453,7 +456,7 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 0.6em;
+    padding-left: 0.2em;
     transition: .7s ease-in-out;
     position: relative;
 }
@@ -728,12 +731,10 @@ textarea {
 
 .ai-disclaimer {
     text-align: center;
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
     font-size: x-small;
     white-space: nowrap;
     opacity: 0.7;
     z-index: 99;
+    margin-bottom: 4px;
 }
