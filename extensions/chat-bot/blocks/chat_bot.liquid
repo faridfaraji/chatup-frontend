@@ -59,7 +59,7 @@
 
           <div class="chat-up-logo" id="logo_image">
 
-            {% assign logoImage = block.settings.image_with_text_image | image_url: width: 50 | image_tag %}
+            {% assign logoImage = block.settings.image_with_text_image | image_url: width: 1080 | image_tag %}
             {% assign imageWidth = '50px' %}
 
             {% if logoImage %}
@@ -81,7 +81,7 @@
           <button
             id="chatbubble_close"
             class="close_button"
-            onclick="toggleChat()">X</button>
+            onclick="toggleChat()">X</button> 
         </div>
         <div class="snippet" data-title="dot-pulse">
           <div class="stage">
