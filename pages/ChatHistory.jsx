@@ -184,23 +184,25 @@ export default function ChatHistory() {
   const navButton = <Button icon={ConversationMinor} onClick={() => toggleNav()} size="slim">{t("ChatHistory.viewNav")}</Button>
 
   return (
-    <Frame navigation={navMarkup} showMobileNavigation={navVis} onNavigationDismiss={() => toggleNav()}>
-      <Page
-        title={t("NavigationMenu.chatHistory")}
-        divider
-        primaryAction={
-          <HorizontalStack gap="1">
-            {bp.mdDown ? navButton : null}
-            <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
-          </HorizontalStack>
-        }
-      >
-        <Layout>
-          <Layout.Section fullWidth>
-            {content}
-          </Layout.Section>
-        </Layout>
-      </Page>
-    </Frame>
+    <AccessWrapper minimum={40} copyDomain={"ChatHistory"} fullpage={true}>
+      <Frame navigation={navMarkup} showMobileNavigation={navVis} onNavigationDismiss={() => toggleNav()}>
+        <Page
+          title={t("NavigationMenu.chatHistory")}
+          divider
+          primaryAction={
+            <HorizontalStack gap="1">
+              {bp.mdDown ? navButton : null}
+              <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
+            </HorizontalStack>
+          }
+        >
+          <Layout>
+            <Layout.Section fullWidth>
+              {content}
+            </Layout.Section>
+          </Layout>
+        </Page>
+      </Frame>
+    </AccessWrapper>
   )
 }
