@@ -18,13 +18,13 @@ export default {
     ext_name: VITE_CHAT_BOT_EXT_NAME,
     prices: {
         "[20]": {price: "$19", duration: "Month"},
-        "[25]": {price: "$190", duration: "Year"},
+        "[25]": {price: "$205", duration: "Year"},
         "[40]": {price: "$49", duration: "Month"},
-        "[45]": {price: "$490", duration: "Year"},
+        "[45]": {price: "$500", duration: "Year"},
         "[60]": {price: "$99", duration: "Month"},
-        "[65]": {price: "$990", duration: "Year"},
+        "[65]": {price: "$950", duration: "Year"},
         "[80]": {price: "$499", duration: "Month"},
-        "[85]": {price: "$4990", duration: "Year"}
+        "[85]": {price: "$4490", duration: "Year"}
     },
     messages: {
         "[2": 50,
