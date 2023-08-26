@@ -121,7 +121,7 @@ export default function Landing() {
     loading ?
       <SkeletonHomePage /> :
       <Page
-        title="Welcome to ChatUp"
+        // title="Welcome to ChatUp"
         // primaryAction={testButton}
       >
         <Layout>
