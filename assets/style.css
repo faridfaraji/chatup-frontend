@@ -1,7 +1,7 @@
 :root {
-    --p-color-bg-primary: rgb(3, 32, 63) !important;
-    --p-color-bg-primary-hover: rgb(7, 54, 83) !important;
-    --p-color-bg-primary-active: rgb(4, 30, 49) !important;
+    --p-color-bg-primary: rgb(0, 0, 0) !important;
+    --p-color-bg-primary-hover: rgba(0, 0, 0, 0.5) !important;
+    --p-color-bg-primary-active: rgba(4, 30, 49, 0.5) !important;
     --a-color-bg-positive-message: rgba(4, 156, 216, 0.3);
     --a-color-bg-positive-message-hover: rgba(4, 156, 216, 0.7);
     --a-color-bg-negative-message: rgb(212, 94, 189, 0.3);
