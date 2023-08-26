@@ -125,9 +125,6 @@ export default function Landing() {
         // primaryAction={testButton}
       >
         <Layout>
-          <Layout.Section fullWidth>
-            <Robot />
-          </Layout.Section>
           <Layout.Section oneThird>
             <WelcomeCard
               padding={[xsPadding, xsPadding, "0", xsPadding]}
