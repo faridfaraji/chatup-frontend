@@ -10,7 +10,6 @@ export function SkeletonHomePage() {
     return (
         <Page>
             <Layout>
-                <Layout.Section fullWidth><Robot /></Layout.Section>
                 <Layout.Section oneThird><SkeletonCard size="small" lines={lines} /></Layout.Section>
                 <Layout.Section oneThird><SkeletonCard size="small" lines={lines} /></Layout.Section>
                 <Layout.Section oneThird><SkeletonCard size="small" lines={lines} /></Layout.Section>
