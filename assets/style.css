@@ -118,6 +118,10 @@
     display: inline-flex;
 }
 
+.live-dot {
+    background-color: #278f38;
+}
+
 .happy-dot {
     background-color: #278f38;
 }
