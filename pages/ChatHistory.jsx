@@ -93,17 +93,17 @@ export default function ChatHistory() {
 
   const handleLiveMessage = (data) => {
     // Handle the incoming live message data here
-    console.log('New live message received:', data);
+    // console.log('New live message received:', data);
   }
 
   const handleLiveChats = (data) => {
     setLiveChats(data)
     // Handle the incoming live message data here
-    console.log('New live message received:', data);
+    // console.log('New live message received:', data);
   }
 
   const handleOffChats = (data) => {
-    console.log('New live message received:', data);
+    // console.log('New live message received:', data);
     setLiveChats(prevLiveChats => prevLiveChats.filter(chatId => chatId !== data));
     // Handle the incoming live message data here
   }

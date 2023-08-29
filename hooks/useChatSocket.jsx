@@ -5,7 +5,7 @@ let socket;
 
 export const useSocketInitializer = async (onLiveMessageReceived, onLiveChats, onOffChats, sessionTokenPromise) => {
   const sessionToken = await sessionTokenPromise;
-  console.log('sessionToken', sessionToken);
+  // console.log('sessionToken', sessionToken);
   socket = io.connect(`${constants.chat_url}/admin`, {
     extraHeaders: {
         Authorization: `Bearer ${sessionToken}`
@@ -18,11 +18,11 @@ export const useSocketInitializer = async (onLiveMessageReceived, onLiveChats, o
 
   socket.on('live_conversations', (data) => {
     onLiveChats(data);
-    console.log('live_conversations', data);
+    // console.log('live_conversations', data);
   });
   socket.on('off_conversations', (data) => {
     onOffChats(data);
-    console.log('off_conversations', data);
+    // console.log('off_conversations', data);
   });
 
   return socket;
