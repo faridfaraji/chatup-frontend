@@ -1,12 +1,10 @@
 import {
   Frame,
   Navigation,
-  AlphaCard,
   Page,
   Button,
   Layout,
   HorizontalStack,
-  TopBar,
   useBreakpoints,
 } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
@@ -14,13 +12,18 @@ import { useCallback, useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { AccessWrapper, Chat, ChatSummary, Robot, SkeletonCard, SkeletonChats } from "../components";
 import { dateFromUTC, localizeDatestamp, localizeTime, zeroRange } from "../utils";
-import { useChatHistory, useMessageHistory } from "../hooks";
+import { useChatHistory, useMessageHistory, useSocketInitializer, useDisconnectSocket } from "../hooks";
 import { ConversationMinor } from '@shopify/polaris-icons';
+import { useAppBridge } from "@shopify/app-bridge-react";
+import { getSessionToken } from "@shopify/app-bridge/utilities";
 
 
 export default function ChatHistory() {
   //  broad imports for accessibility
   const { t } = useTranslation();
+  const app = useAppBridge();
+  const sessionToken = getSessionToken(app);
+
   const bp = useBreakpoints();
   const [navVis, setNavVis] = useState(bp.mdDown)
 
@@ -62,6 +65,7 @@ export default function ChatHistory() {
   const [chatsById, setChatsById] = useState([])
   const getChats = useChatHistory();
   const [chatsLoading, setChatsLoading] = useState(true);
+  const [liveChats, setLiveChats] = useState([]);
 
   const refreshChats = () => {
     setChatsLoading(true)
@@ -77,6 +81,33 @@ export default function ChatHistory() {
   }
 
   useEffect(() => refreshChats(), [dates])
+
+
+  useEffect(() => {
+    const socket = useSocketInitializer(handleLiveMessage, handleLiveChats, handleOffChats, sessionToken);
+    return () => {
+      // Disconnect socket when component unmounts
+      useDisconnectSocket();
+    }
+  }, []);
+
+  const handleLiveMessage = (data) => {
+    // Handle the incoming live message data here
+    // console.log('New live message received:', data);
+  }
+
+  const handleLiveChats = (data) => {
+    setLiveChats(data)
+    // Handle the incoming live message data here
+    // console.log('New live message received:', data);
+  }
+
+  const handleOffChats = (data) => {
+    // console.log('New live message received:', data);
+    setLiveChats(prevLiveChats => prevLiveChats.filter(chatId => chatId !== data));
+    // Handle the incoming live message data here
+  }
+
 
   const test = () => {
     console.log(chats)
@@ -138,6 +169,9 @@ export default function ChatHistory() {
             key: currentChat.id,
             label:
               <div className={chatClass(currentChat.conversation_summary.satisfaction)}>
+                {
+                  liveChats.includes(currentChat.id) && <div class="dot live-dot" />
+                }
                 {` ${currentChat.time}: ` +
                   (
                     currentChat.conversation_summary.title ??
@@ -184,7 +218,7 @@ export default function ChatHistory() {
   const navButton = <Button icon={ConversationMinor} onClick={() => toggleNav()} size="slim">{t("ChatHistory.viewNav")}</Button>
 
   return (
-    <AccessWrapper minimum={80} copyDomain={"ChatHistory"} fullpage={true}>
+    <AccessWrapper minimum={40} copyDomain={"ChatHistory"} fullpage={true}>
       <Frame navigation={navMarkup} showMobileNavigation={navVis} onNavigationDismiss={() => toggleNav()}>
         <Page
           title={t("NavigationMenu.chatHistory")}
@@ -204,6 +238,5 @@ export default function ChatHistory() {
         </Page>
       </Frame>
     </AccessWrapper>
-
   )
 }

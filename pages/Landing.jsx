@@ -121,13 +121,10 @@ export default function Landing() {
     loading ?
       <SkeletonHomePage /> :
       <Page
-        title="Welcome to ChatUp"
+        // title="Welcome to ChatUp"
         // primaryAction={testButton}
       >
         <Layout>
-          <Layout.Section fullWidth>
-            <Robot />
-          </Layout.Section>
           <Layout.Section oneThird>
             <WelcomeCard
               padding={[xsPadding, xsPadding, "0", xsPadding]}

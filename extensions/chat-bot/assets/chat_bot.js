@@ -444,20 +444,20 @@ function getConversationUniqueId() {
   var timestamp = localStorage.getItem('conversationUniqueIdTimestamp');
 
   if (conversationUniqueId && timestamp) {
-      // Get the current time
-      var currentTime = new Date().getTime();
-      // Calculate the difference in hours
-      var hrsDifference = (currentTime - timestamp) / (1000 * 60 * 60);
-      if (hrsDifference > 3) {
-          // If more than 3 hours, clear the unique ID
-          localStorage.removeItem('conversationUniqueId');
-          localStorage.removeItem('conversationUniqueIdTimestamp');
-          return null;
-      } else {
-          return conversationUniqueId;
-      }
-  } else {
+    // Get the current time
+    var currentTime = new Date().getTime();
+    // Calculate the difference in hours
+    var hrsDifference = (currentTime - timestamp) / (1000 * 60 * 60);
+    if (hrsDifference > 3) {
+      // If more than 3 hours, clear the unique ID
+      localStorage.removeItem('conversationUniqueId');
+      localStorage.removeItem('conversationUniqueIdTimestamp');
       return null;
+    } else {
+      return conversationUniqueId;
+    }
+  } else {
+    return null;
   }
 }
 
@@ -485,7 +485,7 @@ function get_conversation_id() {
         conversationUniqueId = data;
         setConversationUniqueId(conversationUniqueId);
         resolve(conversationUniqueId); // Resolve the promise with the new conversationUniqueId
-      });   
+      });
     } else {
       resolve(conversationUniqueId); // Resolve the promise with the existing conversationUniqueId
     }

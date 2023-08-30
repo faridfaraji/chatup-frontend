@@ -21,7 +21,7 @@ export const BillingCard = ({ plan, activePlan, wide }) => {
     const languagesFeature = <PlanFeature name={t("Billing.languages")} include={true} />
     const personalityFeature = <PlanFeature name={t("Billing.personality")} include={accessLevel >= 40} />
     const insightsFeature = <PlanFeature name={t("Billing.insights")} include={accessLevel >= 60} />
-    const historyFeature = <PlanFeature name={t("Billing.history")} include={accessLevel >= 80} />
+    const historyFeature = <PlanFeature name={t("Billing.history")} include={accessLevel >= 40} />
     const chooseButton = <ChoosePlanButton
         current={plan === activePlan.name.slice(0, 4)}
         priceInfo={constants.prices[plan]}
@@ -46,9 +46,9 @@ export const BillingCard = ({ plan, activePlan, wide }) => {
                                 {languagesFeature}
                             </VerticalStack>
                             <VerticalStack gap="4">
+                                {historyFeature}
                                 {personalityFeature}
                                 {insightsFeature}
-                                {historyFeature}
                             </VerticalStack>
                         </HorizontalGrid>
                         <div style={{ width: "75%", alignSelf: "center" }}>
@@ -68,9 +68,9 @@ export const BillingCard = ({ plan, activePlan, wide }) => {
                 {messagesFeature}
                 {negKeysFeature}
                 {languagesFeature}
+                {historyFeature}
                 {personalityFeature}
                 {insightsFeature}
-                {historyFeature}
                 {chooseButton}
             </VerticalStack>
         </AlphaCard>

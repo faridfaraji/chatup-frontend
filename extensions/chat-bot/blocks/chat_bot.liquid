@@ -60,7 +60,7 @@
           <div class="chat-up-logo" id="logo_image">
 
             {% assign logoImage = block.settings.image_with_text_image | image_url: width: 1080 | image_tag %}
-            {% assign imageWidth = '1080px' %}
+            {% assign imageWidth = '50px' %}
 
             {% if logoImage %}
               {{ logoImage }}
@@ -81,7 +81,7 @@
           <button
             id="chatbubble_close"
             class="close_button"
-            onclick="toggleChat()">X</button>
+            onclick="toggleChat()">X</button> 
         </div>
         <div class="snippet" data-title="dot-pulse">
           <div class="stage">
@@ -114,7 +114,7 @@
           </div>
         </div>
         <div class="ai-disclaimer">
-          <p>This chat is powered by GPT's artifical intelligence!</p>
+          <p>This chat is powered by GPT's artifical intelligence</p>
         </div>
       </div>
     </div>
