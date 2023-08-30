@@ -1,6 +1,8 @@
-import { AlphaCard, Button, Divider, HorizontalStack, Text } from "@shopify/polaris"
+import { AlphaCard, Button, Divider, Form, FormLayout, HorizontalStack, Icon, Text, TextField } from "@shopify/polaris"
 import { dateFromUTC, localizeTime } from "../utils"
 import { t } from "i18next"
+import { SendMajor } from '@shopify/polaris-icons';
+import { useState } from "react";
 
 const msgMarkup = (message, index) => {
     const aiMessage = message.message_type === "AI"
@@ -18,15 +20,63 @@ const msgMarkup = (message, index) => {
 }
 
 
-export const Chat = ({ chat, callback }) => {
+export const LiveChat = ({ chat, socket, forfeit }) => {
+    const [value, setValue] = useState('');
+    const handleValueChange = (newValue) => { setValue(newValue) };
+
+    const sendMessage = async (message) => {
+        // send the admin message through the socket
+        console.log(message)
+        setValue('')
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        sendMessage(value)
+    }
+
     return (
         <AlphaCard>
-            {chat.reverse().map((msg, i) => msgMarkup(msg, i))}
+            {chat.map((msg, i) => msgMarkup(msg, i))}
             <br />
             <Divider />
             <br />
+            <Form onSubmit={handleSubmit}>
+                <FormLayout>
+                    <TextField
+                        value={value}
+                        onChange={handleValueChange}
+                        label="label"
+                        connectedRight={
+                            <Button submit>
+                                <Icon
+                                    source={SendMajor}
+                                    color="base"
+                                />
+                            </Button>
+                        }
+                    />
+                </FormLayout>
+            </Form>
+            <Divider />
+            <br />
             <HorizontalStack align="end">
-                <Button primary onClick={() => callback()}>{t("ChatHistory.viewSummary")}</Button>
+                <Button primary onClick={() => forfeit()}>{t("ChatHistory.forfeit")}</Button>
+            </HorizontalStack>
+        </AlphaCard>
+    )
+}
+
+export const Chat = ({ chat, viewSummary, takeOver }) => {
+    return (
+        <AlphaCard>
+            {chat.map((msg, i) => msgMarkup(msg, i))}
+            <br />
+            <Divider />
+            <br />
+            <HorizontalStack align="end" gap="5">
+                <Button primary onClick={() => takeOver()}>{t("ChatHistory.takeOver")}</Button>
+                <Button primary onClick={() => viewSummary()}>{t("ChatHistory.viewSummary")}</Button>
             </HorizontalStack>
         </AlphaCard>
     )

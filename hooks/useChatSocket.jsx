@@ -13,16 +13,17 @@ export const useSocketInitializer = async (onLiveMessageReceived, onLiveChats, o
   });
   // Set up the event listener for 'live_message' event
   socket.on('customer_response', (data) => {
+    console.log("Invoke the Customer Response Handler with data: ", data)
     onLiveMessageReceived(data);
   });
 
   socket.on('live_conversations', (data) => {
     onLiveChats(data);
-    // console.log('live_conversations', data);
+    console.log('live_conversations', data);
   });
   socket.on('off_conversations', (data) => {
     onOffChats(data);
-    // console.log('off_conversations', data);
+    console.log('off_conversations', data);
   });
 
   return socket;

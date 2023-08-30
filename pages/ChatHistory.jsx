@@ -6,6 +6,8 @@ import {
   Layout,
   HorizontalStack,
   useBreakpoints,
+  Badge,
+  VerticalStack,
 } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useState } from "react";
@@ -16,6 +18,7 @@ import { useChatHistory, useMessageHistory, useSocketInitializer, useDisconnectS
 import { ConversationMinor } from '@shopify/polaris-icons';
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { getSessionToken } from "@shopify/app-bridge/utilities";
+import { LiveChat } from "../components/Chat";
 
 
 export default function ChatHistory() {
@@ -66,6 +69,7 @@ export default function ChatHistory() {
   const getChats = useChatHistory();
   const [chatsLoading, setChatsLoading] = useState(true);
   const [liveChats, setLiveChats] = useState([]);
+  const [socket, setSocket] = useState(false)
 
   const refreshChats = () => {
     setChatsLoading(true)
@@ -84,7 +88,11 @@ export default function ChatHistory() {
 
 
   useEffect(() => {
-    const socket = useSocketInitializer(handleLiveMessage, handleLiveChats, handleOffChats, sessionToken);
+    useSocketInitializer(
+      handleLiveMessage,
+      handleLiveChats,
+      handleOffChats,
+      sessionToken).then((data) => setSocket(data))
     return () => {
       // Disconnect socket when component unmounts
       useDisconnectSocket();
@@ -93,23 +101,27 @@ export default function ChatHistory() {
 
   const handleLiveMessage = (data) => {
     // Handle the incoming live message data here
-    // console.log('New live message received:', data);
+    console.log("Live Message Handler invoked with data:", data)
+    console.log('New live message received:', data);
   }
 
   const handleLiveChats = (data) => {
     setLiveChats(data)
     // Handle the incoming live message data here
-    // console.log('New live message received:', data);
+    console.log('New live message received:', data);
   }
 
   const handleOffChats = (data) => {
-    // console.log('New live message received:', data);
+    console.log('New live message received:', data);
     setLiveChats(prevLiveChats => prevLiveChats.filter(chatId => chatId !== data));
     // Handle the incoming live message data here
   }
 
 
   const test = () => {
+    console.log(socket)
+    socket.emit("message", { conversation_id: selected, message: "hello socket" })
+    console.log(selected)
     console.log(chats)
     console.log(chatsByDate)
     console.log(chatsById)
@@ -169,15 +181,20 @@ export default function ChatHistory() {
             key: currentChat.id,
             label:
               <div className={chatClass(currentChat.conversation_summary.satisfaction)}>
-                {
-                  liveChats.includes(currentChat.id) && <div class="dot live-dot" />
-                }
-                {` ${currentChat.time}: ` +
-                  (
-                    currentChat.conversation_summary.title ??
-                    `${currentChat.user_message_count + currentChat.ai_message_count} ${t("Insights.messages")}`
-                  )
-                }
+                {(
+                  currentChat.conversation_summary.title ??
+                  `${currentChat.user_message_count + currentChat.ai_message_count} ${t("Insights.messages")}`
+                )}
+                <div className="nav-timestamp">
+                  {liveChats.includes(currentChat.id) ?
+                    <div className="badge live-badge">
+                      <span className="dot live-dot" />
+                      {" "}
+                      {t("ChatHistory.live")}
+                    </div> :
+                    currentChat.time
+                  }
+                </div>
               </div>,
 
             selected: selected === currentChat.id,
@@ -200,11 +217,25 @@ export default function ChatHistory() {
     resetChat()
   }
 
+  const takeOver = useCallback(() => {
+    const data = {
+      conversation_id: selected,
+      message: "Admin Connected"
+    }
+    console.log("emitting data: ", data)
+    socket.emit("message", data)
+    resetChat()
+    getMessages(selected)
+      .then((data) => {
+        setChat(<LiveChat chat={data.reverse()} socket={socket} forfeit={viewChat} />)
+      })
+  }, [selected])
+
   const viewChat = useCallback(() => {
     resetChat()
     getMessages(selected)
       .then((data) => {
-        setChat(<Chat chat={data} callback={viewSummary} />)
+        setChat(<Chat chat={data.reverse()} viewSummary={viewSummary} takeOver={takeOver} />)
       })
       .then(() => setChatView(true))
   }, [selected])
@@ -225,6 +256,7 @@ export default function ChatHistory() {
           divider
           primaryAction={
             <HorizontalStack gap="1">
+              <Button onClick={() => test()}>TEST</Button>
               {bp.mdDown ? navButton : null}
               <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
             </HorizontalStack>

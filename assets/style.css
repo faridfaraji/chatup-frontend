@@ -62,6 +62,14 @@
     max-width: 70%;
 }
 
+.nav-timestamp {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    font-size: .7em;
+    opacity: .7;
+}
+
 .timestamp {
     display: inline-block;
     font-size: 12px;
@@ -109,7 +117,15 @@
     background-color: var(--a-color-bg-neutral-message-hover);
 }
 
+.badge {
+    padding: 0rem 0.25rem;
+    align-items: center;
+    border-radius: .75rem;
+}
 
+.live-badge {
+    background-color: rgba(39, 143, 56, 0.3);
+}
 
 .dot {
     height: 8px;
@@ -119,7 +135,7 @@
 }
 
 .live-dot {
-    background-color: #278f38;
+    background-color: rgb(39, 143, 56);
 }
 
 .happy-dot {
