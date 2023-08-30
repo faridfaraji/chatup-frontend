@@ -1,7 +1,18 @@
 
 var connInitiated = false;
 
-function validate() {
+var metaData = null;
+
+fetch('https://ipinfo.io/json')
+  .then(response => response.json())
+  .then(data => {
+    metaData = data;
+  })
+  .catch(error => {
+    console.error('Error fetching IP', error);
+  });
+
+  function validate() {
   const shop_url = window.Shopify.shop
   const validation_url = `https://gateway.dev.awesoon.tech/v1/shopify/chatup/plans/validate-shop?shop_url=${shop_url}`
   const validation = fetch(validation_url, { method: 'GET' })
@@ -464,10 +475,10 @@ function get_conversation_id() {
     if (connInitiated == false || !conversationUniqueId) {
       init_payload = {
         shop_id: window.shopId,
-        conversation_id: conversationUniqueId
+        conversation_id: conversationUniqueId,
+        metadata: metaData
       }
       socket.emit("init", init_payload);
-
       // Setup a one-time event listener for the "init_response"
       socket.once("init_response", function (data) {
         connInitiated = true;
