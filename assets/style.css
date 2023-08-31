@@ -8,6 +8,8 @@
     --a-color-bg-negative-message-hover: rgb(212, 94, 189, 0.7);
     --a-color-bg-neutral-message: rgb(241, 242, 244, 0.3);
     --a-color-bg-neutral-message-hover: rgb(241, 242, 244, 1);
+    --a-color-bg-live-message: rgba(33, 165, 53, 0.3);
+    --a-color-bg-live-message-hover: rgba(33, 165, 53, 0.7);
     --a-color-bg-check-mark: rgb(3, 32, 63);
     --a-color-bg-x-mark: rgb(105, 27, 27);
 }
@@ -65,8 +67,8 @@
 .nav-timestamp {
     position: absolute;
     right: 10px;
-    bottom: 5px;
-    font-size: .7em;
+    bottom: 0.7rem;
+    font-size: .7rem;
     opacity: .7;
 }
 
@@ -89,7 +91,7 @@
 
 .chat {
     transition: 0.3s;
-    padding: 0.7em 1em;
+    padding: 0.7em 1em 1.4em;
     border-radius: 0 7px 7px 0;
 }
 
@@ -117,13 +119,36 @@
     background-color: var(--a-color-bg-neutral-message-hover);
 }
 
+.live-chat {
+    background-color: var(--a-color-bg-live-message);
+}
+
+.live-chat:hover {
+    background-color: var(--a-color-bg-live-message-hover);
+}
+
+.live-chat-info {
+    font-size: 0.7em;
+    opacity: 0.7;
+}
+
+.live-chat-meta {
+    padding: 0rem 0.3rem 0 0;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
+}
+
 .badge {
-    padding: 0rem 0.25rem;
+    width: auto;
+    display: inline-flex;
+    padding: 0rem 0.3rem;
     align-items: center;
     border-radius: .75rem;
+    font-style: normal;
 }
 
 .live-badge {
+    margin: 0 0.1rem 0 0;
     background-color: rgba(39, 143, 56, 0.3);
 }
 
@@ -136,6 +161,7 @@
 
 .live-dot {
     background-color: rgb(39, 143, 56);
+    margin: 0 0.25rem 0 0;
 }
 
 .happy-dot {

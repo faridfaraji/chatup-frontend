@@ -19,6 +19,7 @@ import { ConversationMinor } from '@shopify/polaris-icons';
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { getSessionToken } from "@shopify/app-bridge/utilities";
 import { LiveChat } from "../components/Chat";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 
 export default function ChatHistory() {
@@ -120,11 +121,12 @@ export default function ChatHistory() {
 
   const test = () => {
     console.log(socket)
-    socket.emit("message", { conversation_id: selected, message: "hello socket" })
+    // socket.emit("message", { conversation_id: selected, message: "hello socket" })
     console.log(selected)
     console.log(chats)
     console.log(chatsByDate)
     console.log(chatsById)
+    console.log(liveChats)
   }
 
   const reduceByDate = (result, item) => {
@@ -154,8 +156,8 @@ export default function ChatHistory() {
   // building nav from chat data
   const [selected, setSelected] = useState(null)
 
-  const chatClass = (sentiment) => {
-    return sentiment ? `chat ${sentiment.toLowerCase()}-chat` : "chat neutral-chat"
+  const chatClass = (sentiment, isLive) => {
+    return `chat ${isLive ? "live" : sentiment ? sentiment.toLowerCase() : "neutral"}-chat`
   }
 
   // const [chatLoading, setChatLoading] = useState(true)
@@ -165,43 +167,63 @@ export default function ChatHistory() {
     if (bp.mdDown) toggleNav()
     setSelected(chatId)
   }
-  const navSections = []
-  Object
-    .entries(chatsByDate)
-    .sort((x, y) => {
-      return new Date(y[0]) - new Date(x[0])
-    })
-    .forEach(([date, list]) => {
-      navSections.push(<Navigation.Section
-        key={date}
-        title={date}
-        items={list
-          .sort((x, y) => { return y.fulldate - x.fulldate })
-          .map((currentChat) => ({
-            key: currentChat.id,
-            label:
-              <div className={chatClass(currentChat.conversation_summary.satisfaction)}>
-                {(
-                  currentChat.conversation_summary.title ??
-                  `${currentChat.user_message_count + currentChat.ai_message_count} ${t("Insights.messages")}`
-                )}
-                <div className="nav-timestamp">
-                  {liveChats.includes(currentChat.id) ?
-                    <div className="badge live-badge">
-                      <span className="dot live-dot" />
-                      {" "}
-                      {t("ChatHistory.live")}
-                    </div> :
-                    currentChat.time
-                  }
-                </div>
-              </div>,
 
-            selected: selected === currentChat.id,
-            onClick: () => handleSelect(currentChat.id)
-          }))}
-      />)
-    })
+  const [navSections, setNavSections] = useState([]);
+  useEffect(() => {
+    const tempSections = []
+    Object
+      .entries(chatsByDate)
+      .sort((x, y) => {
+        return new Date(y[0]) - new Date(x[0])
+      })
+      .forEach(([date, list]) => {
+        tempSections.push(<Navigation.Section
+          key={date}
+          title={date}
+          items={list
+            .sort((x, y) => { return y.fulldate - x.fulldate })
+            .map((currentChat) => ({
+              key: currentChat.id,
+              label:
+                <div className={chatClass(currentChat.conversation_summary.satisfaction, liveChats.includes(currentChat.id))}>
+                  <VerticalStack gap="1">
+
+                    {(
+                      currentChat.conversation_summary.title ??
+                      `${currentChat.user_message_count + currentChat.ai_message_count} ${t("Insights.messages")}`
+                    )}
+                    {
+                      liveChats.includes(currentChat.id) &&
+                      <div className="live-chat-info">
+                        <div style={{ display: "inline-flex" }}>
+                          <div className="badge live-badge">
+                            <span className="dot live-dot" />
+                            {t("ChatHistory.live")}
+                          </div>
+                          <div className="live-chat-meta">
+                            {` - ${currentChat.metadata.city}, ${currentChat.metadata.country}`}
+                          </div>
+                          <span className={`fi fi-${currentChat.metadata.country.toLowerCase()} fis`}></span>
+                        </div>
+                        <div className="live-chat-meta">
+                          {`IP: ${currentChat.metadata.ip}`}
+                        </div>
+                      </div>
+                    }
+                  </VerticalStack>
+                  <div className="nav-timestamp">
+                    {currentChat.time}
+                  </div>
+                </div>,
+
+              selected: selected === currentChat.id,
+              onClick: () => handleSelect(currentChat.id)
+            }))}
+        />)
+      })
+    setNavSections(tempSections)
+  }, [liveChats, chatsByDate, selected])
+
 
   const navLoading = <SkeletonChats />
   const noChats = <Navigation.Section key={"noChats"} title={t("ChatHistory.noChats")} items={[]} />
