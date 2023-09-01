@@ -65,11 +65,14 @@
         "freeTrialButton": "Afslør indsigter"
     },
     "ChatHistory": {
+        "live": "Lev",
         "untitled": "Uden titel",
         "summary": "Resumé",
         "topics": "Emner",
         "viewChat": "Se Chat",
         "viewSummary": "Se oversigt",
+        "takeOver": "Overtag",
+        "forfeit": "Afbryd",
         "viewNav": "Se Chats",
         "noChats": "Ingen chats fundet for det valgte tidsrum",
         "upgrade": "Opgrader nu for at låse Chat Historik op!",
@@ -126,5 +129,9 @@
         "yesterday": "I går",
         "pastWeek": "Sidste uge",
         "pastMonth": "Sidste måned"
+    },
+    "MetaData": {
+        "location": "Placering",
+        "ip": "IP-adresse"
     }
 }

@@ -566,6 +566,10 @@ function listenForAiResponse(details) {
     console.log(data);
     displayAiResponse(data, details);
   });
+  // socket.on("admin_response", function (data) {
+  //   console.log(data);
+  //   displayAiResponse(data, details);
+  // });
 }
 
 

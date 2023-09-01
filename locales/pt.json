@@ -65,11 +65,14 @@
         "freeTrialButton": "Revelar Insights"
     },
     "ChatHistory": {
+        "live": "Viver",
         "untitled": "Sem título",
         "summary": "Resumo",
         "topics": "Tópicos",
         "viewChat": "Ver bate-papo",
         "viewSummary": "Ver Resumo",
+        "takeOver": "Tomar Controle",
+        "forfeit": "Desconectar",
         "viewNav": "Ver conversas",
         "noChats": "Nenhuma conversa encontrada para o período de tempo selecionado",
         "upgrade": "Atualize agora para desbloquear o Histórico de Chat!",
@@ -126,5 +129,9 @@
         "yesterday": "Ontem",
         "pastWeek": "Semana Passada",
         "pastMonth": "Último mês"
+    },
+    "MetaData": {
+        "location": "Localização",
+        "ip": "Endereço IP"
     }
 }

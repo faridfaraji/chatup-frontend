@@ -65,11 +65,14 @@
         "freeTrialButton": "揭示见解"
     },
     "ChatHistory": {
+        "live": "活着",
         "untitled": "无题",
         "summary": "摘要",
         "topics": "话题",
         "viewChat": "查看聊天",
         "viewSummary": "查看摘要",
+        "takeOver": "接管",
+        "forfeit": "断开连接",
         "viewNav": "查看聊天",
         "noChats": "所选时间段未找到聊天记录",
         "upgrade": "立即升级解锁聊天记录！",
@@ -126,5 +129,9 @@
         "yesterday": "昨天",
         "pastWeek": "过去一周",
         "pastMonth": "上个月"
+    },
+    "MetaData": {
+        "location": "位置",
+        "ip": "IP地址"
     }
 }

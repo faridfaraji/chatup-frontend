@@ -65,11 +65,14 @@
         "freeTrialButton": "Reveal Gözlemleri"
     },
     "ChatHistory": {
+        "live": "Yaşamak",
         "untitled": "Başlıksız",
         "summary": "Özet",
         "topics": "Konular",
         "viewChat": "Sohbeti Gör",
         "viewSummary": "Özeti Görüntüle",
+        "takeOver": "Devral",
+        "forfeit": "Bağlantıyı Kes",
         "viewNav": " Sohbetleri Gör",
         "noChats": "Seçilen zaman aralığı için ChatUp için hiçbir sohbet bulunamadı.",
         "upgrade": "Şimdi Chat History'yi açmak için yükseltin!",
@@ -126,5 +129,9 @@
         "yesterday": "Dün",
         "pastWeek": "Geçen Hafta",
         "pastMonth": "Geçen Ay"
+    },
+    "MetaData": {
+        "location": "Konum",
+        "ip": "IP Adresi"
     }
 }

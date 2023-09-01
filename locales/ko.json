@@ -65,11 +65,14 @@
         "freeTrialButton": "감사할 사실 밝히기"
     },
     "ChatHistory": {
+        "live": "생생하게",
         "untitled": "무제",
         "summary": "요약",
         "topics": "주제",
         "viewChat": "채팅 보기",
         "viewSummary": "보기 요약",
+        "takeOver": "가져가다",
+        "forfeit": "연결 끊기",
         "viewNav": "채팅 보기",
         "noChats": "선택한 시간 동안 채팅이 없습니다",
         "upgrade": "지금 업그레이드하여 채팅 기록을 잠금해제하세요!",
@@ -126,5 +129,9 @@
         "yesterday": "어제",
         "pastWeek": "지난 주",
         "pastMonth": "지난 달"
+    },
+    "MetaData": {
+        "location": "위치",
+        "ip": "IP 주소"
     }
 }

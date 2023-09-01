@@ -65,11 +65,14 @@
         "freeTrialButton": "Odhalit Poznatky"
     },
     "ChatHistory": {
+        "live": "Žít",
         "untitled": "Nepojmenovaný",
         "summary": "Shrnutí",
         "topics": "Témata",
         "viewChat": "Zobrazit Chat",
         "viewSummary": "Zobrazit shrnutí",
+        "takeOver": "Převzít",
+        "forfeit": "Odpojit",
         "viewNav": "Zobrazit Chats",
         "noChats": "Pro vybrané období nebyly nalezeny žádné chaty",
         "upgrade": "Aktualizujte nyní, abyste odemkli historii chatu!",
@@ -126,5 +129,9 @@
         "yesterday": "Včera",
         "pastWeek": "Minulý týden",
         "pastMonth": "Poslední měsíc"
+    },
+    "MetaData": {
+        "location": "Umístění",
+        "ip": "IP adresa"
     }
 }

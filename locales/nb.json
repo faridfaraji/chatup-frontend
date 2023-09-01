@@ -65,11 +65,14 @@
         "freeTrialButton": "Avslør innsikter"
     },
     "ChatHistory": {
+        "live": "Lev",
         "untitled": "Uten tittel",
         "summary": "Sammendrag",
         "topics": "Emner",
         "viewChat": "Vis Chat",
         "viewSummary": "Vis sammendrag",
+        "takeOver": "Ta over",
+        "forfeit": "Koble fra",
         "viewNav": "Se samtaler",
         "noChats": "Ingen chatter funnet for den valgte tidsperioden",
         "upgrade": "Oppgrader nå for å låse opp ChatHistorie!",
@@ -126,5 +129,9 @@
         "yesterday": "I går",
         "pastWeek": "Siste uke",
         "pastMonth": "Forrige måned"
+    },
+    "MetaData": {
+        "location": "Beliggenhet",
+        "ip": "IP-adresse"
     }
 }

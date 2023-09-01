@@ -65,11 +65,14 @@
     "freeTrialButton": "Reveal Insights"
   },
   "ChatHistory": {
+    "live": "Live",
     "untitled": "Untitled",
     "summary": "Summary",
     "topics": "Topics",
     "viewChat": "View Chat",
     "viewSummary": "View Summary",
+    "takeOver": "Take Over",
+    "forfeit": "Disconnect", 
     "viewNav": "View Chats",
     "noChats": "No chats found for selected time period",
     "upgrade": "Upgrade now to unlock Chat History!",
@@ -126,5 +129,9 @@
     "yesterday": "Yesterday",
     "pastWeek": "Past Week",
     "pastMonth": "Past Month"
+  },
+  "MetaData": {
+    "location": "Location",
+    "ip": "IP Address"
   }
 }

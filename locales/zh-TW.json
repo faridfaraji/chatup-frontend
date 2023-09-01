@@ -65,11 +65,14 @@
         "freeTrialButton": "揭示洞察"
     },
     "ChatHistory": {
+        "live": "活著",
         "untitled": "無標題",
         "summary": "摘要",
         "topics": "話題",
         "viewChat": "檢視聊天",
         "viewSummary": "檢視摘要",
+        "takeOver": "接管",
+        "forfeit": "斷開連接",
         "viewNav": "查看聊天",
         "noChats": "選定的時間段內沒有ChatUp的聊天記錄。",
         "upgrade": "即刻升級以解鎖聊天歷史！",
@@ -126,5 +129,9 @@
         "yesterday": "昨天",
         "pastWeek": "過去一週",
         "pastMonth": "過去一個月"
+    },
+    "MetaData": {
+        "location": "位置",
+        "ip": "IP位址"
     }
 }
