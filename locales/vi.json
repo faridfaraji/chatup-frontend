@@ -65,11 +65,14 @@
         "freeTrialButton": "Mở rộng Khám phá"
     },
     "ChatHistory": {
+        "live": "Sống",
         "untitled": "Không có tiêu đề",
         "summary": "Tóm tắt",
         "topics": "Chủ đề",
         "viewChat": "Xem trò chuyện",
         "viewSummary": "Xem tóm tắt",
+        "takeOver": "Nhận lập",
+        "forfeit": "Ngắt kết nối",
         "viewNav": "Xem cuộc trò chuyện",
         "noChats": "Không có cuộc trò chuyện nào được tìm thấy cho khoảng thời gian đã chọn",
         "upgrade": "Nâng cấp ngay để mở khoá Lịch sử Trò chuyện!",
@@ -126,5 +129,9 @@
         "yesterday": "Hôm qua",
         "pastWeek": "Tuần qua",
         "pastMonth": "Tháng qua"
+    },
+    "MetaData": {
+        "location": "Vị trí",
+        "ip": "Địa chỉ IP"
     }
 }

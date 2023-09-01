@@ -1,3 +1,4 @@
+/* Variable definition */
 :root {
     --p-color-bg-primary: rgb(0, 0, 0) !important;
     --p-color-bg-primary-hover: rgba(0, 0, 0, 0.5) !important;
@@ -28,10 +29,19 @@
     height: auto;
 }
 
+/* Add transition to Polaris button hover animations */
 .Polaris-Button:hover {
     transition: 0.4s !important;
 }
 
+/*
+* ========================================================
+* Chat History
+* ========================================================
+*/
+
+
+/* Messages and message containers */
 .human-message-container {
     display: flex;
     justify-content: flex-start;
@@ -46,6 +56,22 @@
     margin-bottom: 10px;
     margin-left: "0px";
     margin-right: "10px";
+}
+
+.admin-message-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    margin-left: "0px";
+    margin-right: "10px";
+}
+
+.admin-message {
+    background-color: #00bfff;
+    color: #000;
+    border-radius: 10px 10px 0px 10px;
+    padding: 10px;
+    max-width: 70%;
 }
 
 .human-message {
@@ -64,9 +90,151 @@
     max-width: 70%;
 }
 
+/* Admin Message Input for Live Chats */
+#chatbubble-input {
+    padding: 0px 0px 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-self: flex-end;
+    width: 90%;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+#chatbubble-input-field {
+    flex: 1;
+    padding: 5px;
+    margin-right: 5px;
+    overflow: hidden;
+    transition: height 0.2s;
+    transition: .3s ease;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+#chatbubble-input-field::-webkit-scrollbar {
+    display: none;
+}
+
+#chatbubble-input-field:hover,
+#chatbubble-input-field:active,
+#chatbubble-input-field:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+#chatbubble-send {
+    background-color: transparent;
+    border: none;
+    padding: 5px 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+    transition: 0.3s ease;
+    /* bottom: calc(0% + -2px); */
+}
+
+#chatbubble-send:focus,
+#chatbubble-send:active {
+    transform: scale(1.25);
+}
+
+
+
+input {
+    max-width: 80%;
+    padding: 5px;
+    overflow-y: auto;
+    transition: .7s ease-in-out;
+}
+
+textarea {
+    align-self: center;
+    position: relative;
+    resize: none !important;
+    padding: 0 20px 0 0 !important;
+    border: none;
+    background-color: transparent;
+    font-family: inherit;
+    line-height: inherit;
+    outline: none;
+    width: 75%;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    max-height: 150px;
+    transform-origin: 0 0;
+    transition: .7s ease-in-out;
+}
+
+#input-round-box {
+    width: 100%;
+    color: black;
+    margin: 1em 0;
+    position: relative;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, .19);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 54px;
+    HEIGHT: auto;
+    max-height: 200px;
+    overflow-y: auto;
+    align-self: center;
+    z-index: 25;
+    bottom: 15px;
+    background: white;
+    animation: resizeInputBox 0.3s ease;
+    transition: .7s ease-in-out;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    padding: 0.1em;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+}
+
+#input-round-box::-webkit-scrollbar {
+    display: none;
+}
+
+@keyframes resizeInputBox {
+    0% {
+        height: 0;
+    }
+
+    100% {
+        height: auto;
+    }
+}
+
+#chatbubble-input-field:focus+#input-round-box {
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, .3);
+}
+
+#input-round-box,
+#chatbubble-input-field {
+    box-sizing: content-box;
+    transition: .7s ease-in-out;
+}
+/*
+* =============================================================================
+* Navigation
+* =============================================================================
+*/
 .nav-timestamp {
     position: absolute;
     right: 10px;
+    margin: 0.3rem 0 0 0;
     bottom: 0.7rem;
     font-size: .7rem;
     opacity: .7;

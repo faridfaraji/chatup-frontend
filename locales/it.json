@@ -65,11 +65,14 @@
         "freeTrialButton": "Revelare Insight"
     },
     "ChatHistory": {
+        "live": "Vivere",
         "untitled": "Senza titolo",
         "summary": "Riassunto",
         "topics": "Argomenti",
         "viewChat": "Vedi Chat",
         "viewSummary": "Visualizza riepilogo",
+        "takeOver": "Prendere il controllo",
+        "forfeit": "Scollegare",
         "viewNav": "Visualizza Chat",
         "noChats": "Nessuna chat trovata per il periodo di tempo selezionato",
         "upgrade": "Aggiorna ora per sbloccare la Cronologia Chat!",
@@ -126,5 +129,9 @@
         "yesterday": "Ieri",
         "pastWeek": "Scorsa settimana",
         "pastMonth": "Ultimo mese"
+    },
+    "MetaData": {
+        "location": "Posizione",
+        "ip": "Indirizzo IP"
     }
 }

@@ -65,11 +65,14 @@
         "freeTrialButton": "Revelar Insights"
     },
     "ChatHistory": {
+        "live": "Vivir",
         "untitled": "Sin título",
         "summary": "Resumen",
         "topics": "Temas",
         "viewChat": "Ver Chat",
         "viewSummary": "Ver Resumen",
+        "takeOver": "Tomar el control",
+        "forfeit": "Desconectar",
         "viewNav": "Ver conversaciones",
         "noChats": "No se encontraron chats para el período de tiempo seleccionado.",
         "upgrade": "Actualiza ahora para desbloquear el historial de ChatUp.",
@@ -126,5 +129,9 @@
         "yesterday": "Ayer",
         "pastWeek": "Semana pasada",
         "pastMonth": "Mes pasado"
+    },
+    "MetaData": {
+        "location": "Ubicación",
+        "ip": "Dirección IP"
     }
 }

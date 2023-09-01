@@ -65,11 +65,14 @@
         "freeTrialButton": "Avslöja insikter"
     },
     "ChatHistory": {
+        "live": "Leva",
         "untitled": "Otitulerad",
         "summary": "Sammanfattning",
         "topics": "Ämnen",
         "viewChat": "Visa chatt",
         "viewSummary": "Visa sammanfattning",
+        "takeOver": "Ta över",
+        "forfeit": "Koppla från",
         "viewNav": "Visa chattar",
         "noChats": "Inga chattar hittades för den valda tidsperioden",
         "upgrade": "Uppgradera nu för att låsa upp ChatUp-historik!",
@@ -126,5 +129,9 @@
         "yesterday": "Igår",
         "pastWeek": "Förra veckan",
         "pastMonth": "Förra månaden"
+    },
+    "MetaData": {
+        "location": "Plats",
+        "ip": "IP-adress"
     }
 }

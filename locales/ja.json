@@ -65,11 +65,14 @@
         "freeTrialButton": "インサイトを明らかにする"
     },
     "ChatHistory": {
+        "live": "ライブ",
         "untitled": "無題",
         "summary": "要約",
         "topics": "トピックス",
         "viewChat": "チャットを見る",
         "viewSummary": "要約を見る",
+        "takeOver": "支配する",
+        "forfeit": "切断",
         "viewNav": "チャットを見る",
         "noChats": "選択した期間にChatUpに関するチャットが見つかりません",
         "upgrade": "今すぐアップグレードしてチャット履歴をロック解除しよう！",
@@ -126,5 +129,9 @@
         "yesterday": "昨日",
         "pastWeek": "先週",
         "pastMonth": "先月"
+    },
+    "MetaData": {
+        "location": "場所",
+        "ip": "IPアドレス"
     }
 }

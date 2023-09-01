@@ -65,11 +65,14 @@
         "freeTrialButton": "Odkryj wgląd"
     },
     "ChatHistory": {
+        "live": "Żyć",
         "untitled": "Bez tytułu",
         "summary": "Podsumowanie",
         "topics": "Tematy",
         "viewChat": "Zobacz czat",
         "viewSummary": "Podsumowanie",
+        "takeOver": "Przejąć",
+        "forfeit": "Odłączyć",
         "viewNav": "Zobacz Czaty",
         "noChats": "Nie znaleziono czatów dla wybranego okresu czasu",
         "upgrade": "Zaktualizuj teraz, aby odblokować historię czatów!",
@@ -126,5 +129,9 @@
         "yesterday": "Wczoraj",
         "pastWeek": "Ostatni tydzień",
         "pastMonth": "Ostatni miesiąc"
+    },
+    "MetaData": {
+        "location": "Lokalizacja",
+        "ip": "Adres IP"
     }
 }

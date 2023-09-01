@@ -65,11 +65,14 @@
         "freeTrialButton": "Paljasta syväluotaavia tuloksia"
     },
     "ChatHistory": {
+        "live": "Elää",
         "untitled": "Nimetön",
         "summary": "Yhteenveto",
         "topics": "Aiheita",
         "viewChat": "Katso Keskustelu",
         "viewSummary": "Yhteenveto",
+        "takeOver": "Ota hallintaansa",
+        "forfeit": "Katkaise yhteys",
         "viewNav": "Katso keskustelut",
         "noChats": "Valitulle ajanjaksolle ei löytynyt keskusteluja.",
         "upgrade": "Päivitä nyt avataksesi Keskusteluhistoria!",
@@ -126,5 +129,9 @@
         "yesterday": "Eilen",
         "pastWeek": "Viime viikko",
         "pastMonth": "Viime kuussa"
+    },
+    "MetaData": {
+        "location": "Sijainti",
+        "ip": "IP-osoite"
     }
 }

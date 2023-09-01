@@ -192,3 +192,4 @@ export const freeTrialActive = (data) => {
     const now = new Date()
     return now < trialEnds
 }
+

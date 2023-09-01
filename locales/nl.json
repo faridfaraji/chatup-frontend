@@ -65,11 +65,14 @@
         "freeTrialButton": "Inzichten onthullen"
     },
     "ChatHistory": {
+        "live": "Leven",
         "untitled": "Ongetiteld",
         "summary": "Samenvatting",
         "topics": "Onderwerpen",
         "viewChat": "Chat bekijken",
         "viewSummary": "Overzicht bekijken",
+        "takeOver": "Overnemen",
+        "forfeit": "Verbreek de verbinding",
         "viewNav": "Chats bekijken",
         "noChats": "Geen chats gevonden voor geselecteerde tijdsperiode",
         "upgrade": "Nu upgraden om Chat History te ontgrendelen!",
@@ -126,5 +129,9 @@
         "yesterday": "Gisteren",
         "pastWeek": "Afgelopen Week",
         "pastMonth": "Vorige maand"
+    },
+    "MetaData": {
+        "location": "Locatie",
+        "ip": "IP adres"
     }
 }

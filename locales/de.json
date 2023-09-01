@@ -65,11 +65,14 @@
         "freeTrialButton": "Einblicke enthüllen"
     },
     "ChatHistory": {
+        "live": "Leben",
         "untitled": "Unbenannt",
         "summary": "Zusammenfassung",
         "topics": "Themen",
         "viewChat": "Chat ansehen",
         "viewSummary": "Zusammenfassung anzeigen",
+        "takeOver": "Übernehmen",
+        "forfeit": "Trennen",
         "viewNav": "Chats ansehen",
         "noChats": "Keine Chats für den ausgewählten Zeitraum gefunden",
         "upgrade": "Jetzt upgraden, um Chat Verlauf freizuschalten!",
@@ -126,5 +129,9 @@
         "yesterday": "Gestern",
         "pastWeek": "Letzte Woche",
         "pastMonth": "Voriger Monat"
+    },
+    "MetaData": {
+        "location": "Ort",
+        "ip": "IP-Adresse"
     }
 }

@@ -129,5 +129,9 @@
     "yesterday": "Yesterday",
     "pastWeek": "Past Week",
     "pastMonth": "Past Month"
+  },
+  "MetaData": {
+    "location": "Location",
+    "ip": "IP Address"
   }
 }
