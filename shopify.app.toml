@@ -1,8 +1,8 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-name = "chat-up-admin-testing"
-client_id = "458cc16d11790e3d38fccbfb0c77e4f2"
-application_url = "https://8abc-104-142-118-153.ngrok-free.app"
+name = "ChatUp - AI Powered Live Chat"
+client_id = "4f557f94db2cdedc6caed7ad9cea4492"
+application_url = "https://chatup.dev.awesoon.tech"
 embedded = true
 
 [access_scopes]
@@ -11,14 +11,19 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://gateway.test.awesoon.tech/v1/shopify/chat-up-admin-testing/auth-callback"
+  "https://gateway.dev.awesoon.tech/v1/shopify/chatup/auth-callback"
 ]
 
 [webhooks]
 api_version = "2023-04"
 
+  [webhooks.privacy_compliance]
+  customer_deletion_url = "https://gateway.dev.awesoon.tech/v1/shopify/chatup/webhook"
+  customer_data_request_url = "https://gateway.dev.awesoon.tech/v1/shopify/chatup/webhook"
+  shop_deletion_url = "https://gateway.dev.awesoon.tech/v1/shopify/chatup/webhook"
+
 [pos]
 embedded = false
 
 [build]
-dev_store_url = "ship131290.myshopify.com"
+dev_store_url = "chatup-demo.myshopify.com"
