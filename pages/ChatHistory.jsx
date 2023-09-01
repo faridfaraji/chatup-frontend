@@ -197,7 +197,7 @@ export default function ChatHistory() {
                               </div>
                             }
                             {
-                              currentChat.metadata &&
+                              metadata && metadata.country &&
                               <span className={`fi fi-${currentChat.metadata.country.toLowerCase()} fis`}></span>
                             }
                           </div>
