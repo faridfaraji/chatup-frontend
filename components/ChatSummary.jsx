@@ -34,7 +34,7 @@ export const ChatSummary = ({ summary, metadata, callback }) => {
                     : null
             }
             {
-                metadata ?
+                metadata &&
                     <div>
                         <Text variant="headingSm">{t("MetaData.location")}</Text>
                         <Text>
@@ -54,7 +54,6 @@ export const ChatSummary = ({ summary, metadata, callback }) => {
                         </Text>
                         <br />
                     </div>
-                    : null
             }
             <Divider />
             <br />

@@ -184,23 +184,32 @@ export default function ChatHistory() {
                     )}
                     {
                       liveChats.includes(currentChat.id) ?
-                      <div className="live-chat-info">
-                        <div style={{ display: "inline-flex" }}>
-                          <div className="badge live-badge">
-                            <span className="dot live-dot" />
-                            {t("ChatHistory.live")}
+                        <div className="live-chat-info">
+                          <div style={{ display: "inline-flex" }}>
+                            <div className="badge live-badge">
+                              <span className="dot live-dot" />
+                              {t("ChatHistory.live")}
+                            </div>
+                            {
+                              currentChat.metadata.country &&
+                              <div className="live-chat-meta">
+                                {` - ${currentChat.metadata.city}, ${currentChat.metadata.country}`}
+                              </div>
+                            }
+                            {
+                              currentChat.metadata &&
+                              <span className={`fi fi-${currentChat.metadata.country.toLowerCase()} fis`}></span>
+                            }
                           </div>
-                          <div className="live-chat-meta">
-                            {` - ${currentChat.metadata.city}, ${currentChat.metadata.country}`}
-                          </div>
-                          <span className={`fi fi-${currentChat.metadata.country.toLowerCase()} fis`}></span>
+                          {
+                            currentChat.metadata &&
+                            <div className="live-chat-meta">
+                              {`IP: ${currentChat.metadata.ip}`}
+                            </div>
+                          }
                         </div>
-                        <div className="live-chat-meta">
-                          {`IP: ${currentChat.metadata.ip}`}
-                        </div>
-                      </div>
-                      :
-                      <div />
+                        :
+                        <div />
                     }
                   </VerticalStack>
                   <div className="nav-timestamp">
