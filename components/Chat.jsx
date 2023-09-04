@@ -23,7 +23,7 @@ const msgMarkup = (message, index) => {
     )
 }
 
-export const LiveChat = ({ chat, sendAdminMessage, forfeit }) => {
+export const LiveChat = ({ chat, summary, sendAdminMessage, forfeit }) => {
     useEffect(() => window.scrollTo({
         top: document.body.scrollHeight,
         behavior: 'smooth'
