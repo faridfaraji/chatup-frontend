@@ -20,6 +20,9 @@
     font-family: inherit !important;
     margin: 0 !important;
     line-height: 1.5em !important;
+    background: transparent;
+    color: black;
+    padding: 3px !important;
 }
 
 .custom-loader {
