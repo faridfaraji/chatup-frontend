@@ -326,7 +326,12 @@ export default function ChatHistory() {
   }, [selected])
 
   const chat = messages.length ?
-    <Chat chat={messages} summary={chatsById[selected]?.conversation_summary} viewSummary={viewSummary} /> :
+    <Chat
+      chat={messages}
+      summary={chatsById[selected]?.conversation_summary}
+      viewSummary={viewSummary}
+      takeOver={takeOver}
+    /> :
     <SkeletonCard lines={10} />
 
   //===========================================================================
