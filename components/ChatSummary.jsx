@@ -9,8 +9,6 @@ export const ChatSummary = ({ summary, metadata, callback }) => {
     const tags = summary?.classifications ? summary.classifications.split(', ') : []
     const tagMarkup = tags.map((tag) => <Tag key={tag}>{tag}</Tag>)
 
-    useEffect(() => console.log(metadata))
-
     return (
         <AlphaCard>
             <CardTitle linebreak title={summary?.title ?? t("ChatHistory.untitled")} />

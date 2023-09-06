@@ -13,7 +13,7 @@ import { useCallback, useEffect, useState } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { AccessWrapper, Chat, ChatSummary, Robot, SkeletonCard, SkeletonChats, SkeletonMessages } from "../components";
 import { dateFromUTC, localizeDatestamp, localizeTime, zeroRange } from "../utils";
-import { useChatHistory, useMessageHistory, useSocketInitializer, useDisconnectSocket } from "../hooks";
+import { useChatHistory, useMessageHistory, useSocketInitializer, useDisconnectSocket, useChatFetch } from "../hooks";
 import { ConversationMinor } from '@shopify/polaris-icons';
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { getSessionToken } from "@shopify/app-bridge/utilities";
@@ -56,8 +56,25 @@ export default function ChatHistory() {
   // Initialization of state variables
   //===========================================================================
 
+  // Dates constants for date picking
+  // en: today
+  const kyou = new Date();
+  kyou.setHours(0, 0, 0, 0);
+
+  // en: yesterday
+  const kinou = new Date(kyou)
+  kinou.setDate(kyou.getDate() - 1)
+
+  // en: the day before yesterday
+  const ototoi = new Date(kyou)
+  ototoi.setDate(kyou.getDate() - 2)
+
+  // en: tomorrow
+  const ashita = new Date(kyou);
+  ashita.setDate(kyou.getDate() + 1);
+
   // Dates for requesting chats
-  const [dates, setDates] = useState({});
+  const [dates, setDates] = useState({since: kyou, until: ashita});
 
   // Lists of chats currently in view indexed by flavor
   const [chats, setChats] = useState([]);
@@ -65,12 +82,14 @@ export default function ChatHistory() {
   const [chatsById, setChatsById] = useState([])
   const [chatsLoading, setChatsLoading] = useState(true);
   const getChats = useChatHistory();
+  const getChat = useChatFetch();
 
   // Navigation sections
   const [navSections, setNavSections] = useState([]);
 
   // Socket and live chat information
   const [liveChats, setLiveChats] = useState([]);
+  const [firstLiveCheck, setFirstLiveCheck] = useState(true);
   const [socket, setSocket] = useState(false)
   const app = useAppBridge();
   const sessionToken = getSessionToken(app);
@@ -107,24 +126,6 @@ export default function ChatHistory() {
   const toggleNavButton = <Button icon={ConversationMinor} onClick={() => toggleNav()} size={"slim"}>{t("ChatHistory.viewNav")}</Button>
 
 
-  // Dates constants for date picking
-  // en: today
-  const kyou = new Date();
-  kyou.setHours(0, 0, 0, 0);
-
-  // en: yesterday
-  const kinou = new Date(kyou)
-  kinou.setDate(kyou.getDate() - 1)
-
-  // en: the day before yesterday
-  const ototoi = new Date(kyou)
-  ototoi.setDate(kyou.getDate() - 2)
-
-  // en: tomorrow
-  const ashita = new Date(kyou);
-  ashita.setDate(kyou.getDate() + 1);
-
-
   // date picking
   const handleDateChange = (range) => {
     setChatsLoading(true)
@@ -151,6 +152,49 @@ export default function ChatHistory() {
 
   useEffect(() => refreshChats(), [dates])
 
+  // Live chat refresher
+  const refreshLiveChats = useCallback(() => {
+    console.log(dates.until, ashita, dates.until >= ashita)
+    if (dates.until >= ashita) {
+      // Filter out chat IDs that are not already in chatsById
+      const newChatIds = liveChats.filter((chatId) => !chatsById[chatId]);
+      console.log("liv:", liveChats)
+      console.log("ids:", chatsById)
+      console.log("new:", newChatIds)
+
+      // Fetch chat information for new chat IDs and update chatsById
+      const fetchAndAddNewChats = async () => {
+        for (const chatId of newChatIds) {
+          const chatInfo = await getChat(chatId);
+          console.log("fetching id:", chatId)
+          console.log("result:", chatInfo)
+          setChats((prevChats) => ([
+            chatInfo,
+            ...prevChats,
+          ]));
+        }
+      };
+
+      fetchAndAddNewChats().then(() => {
+        console.log(chats)
+        setChatsByDate(chats.reduce(reduceByDate, {}))
+        setChatsById(chats.reduce(reduceById, {}))
+      });
+
+    }
+  }, [liveChats, chatsById])
+
+  useEffect(() => {
+    if (firstLiveCheck) {
+      setFirstLiveCheck(false);
+      return;
+    }
+
+    refreshLiveChats()
+  }, [liveChats])
+
+
+
   const handleSelect = (chatId) => {
     setChatView(false)
     setLiveView(false)
@@ -160,6 +204,7 @@ export default function ChatHistory() {
 
   // Build the nav out of the chats in our selection
   useEffect(() => {
+    console.log(chatsByDate)
     const tempSections = []
     Object
       .entries(chatsByDate)
@@ -191,7 +236,7 @@ export default function ChatHistory() {
                               {t("ChatHistory.live")}
                             </div>
                             {
-                              currentChat.metadata.country &&
+                              currentChat.metadata && currentChat.metadata.city && currentChat.metadata.country &&
                               <div className="live-chat-meta">
                                 {` - ${currentChat.metadata.city}, ${currentChat.metadata.country}`}
                               </div>
@@ -372,13 +417,15 @@ export default function ChatHistory() {
   // Test button function
   //===========================================================================
   const test = () => {
+    setLiveChats(["5d5ba14b-bd6e-4fc6-aa61-b4fb24c38884"])
+    // refreshLiveChats()
     // console.log(socket)
     // socket.emit("message", { conversation_id: selected, message: "hello socket" })
     // console.log(selected)
-    // console.log(chats)
-    // console.log(chatsByDate)
+    console.log(chats)
+    console.log(chatsByDate)
     console.log(chatsById)
-    // console.log(liveChats)
+    console.log(liveChats)
   }
 
   //===========================================================================
@@ -392,7 +439,7 @@ export default function ChatHistory() {
           divider
           primaryAction={
             <HorizontalStack gap="1">
-              {/* <Button size="slim" onClick={() => test()}>TEST</Button> */}
+              <Button size="slim" onClick={() => test()}>TEST</Button>
               {bp.mdDown ? toggleNavButton : null}
               <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
             </HorizontalStack>

@@ -2,6 +2,7 @@ export { useAppQuery } from "./useAppQuery";
 export { useAuthenticatedFetch } from "./useAuthenticatedFetch";
 export { useShopValidator, useActivePlan, usePlanSetter } from "./useActivePlan";
 export { useChatHistory } from "./useChatHistory";
+export { useChatFetch } from "./useChatFetch";
 export { useMessageHistory } from "./useMessageHistory";
 export { useNegativeKeywordGetter, useNegativeKeywordSetter } from "./useNegativeKeywords";
 export { useScanner, useLatestScan } from "./useScan";
