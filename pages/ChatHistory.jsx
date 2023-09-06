@@ -9,7 +9,7 @@ import {
   VerticalStack,
 } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { AccessWrapper, Chat, ChatSummary, Robot, SkeletonCard, SkeletonChats, SkeletonMessages } from "../components";
 import { dateFromUTC, localizeDatestamp, localizeTime, zeroRange } from "../utils";
@@ -17,8 +17,7 @@ import { useChatHistory, useMessageHistory, useSocketInitializer, useDisconnectS
 import { ConversationMinor } from '@shopify/polaris-icons';
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { getSessionToken } from "@shopify/app-bridge/utilities";
-import { LiveChat } from "../components/Chat";
-import "/node_modules/flag-icons/css/flag-icons.min.css";
+import { ChatNavLabel, LiveChat } from "../components/chats";
 
 
 // reduction functions
@@ -168,18 +167,18 @@ export default function ChatHistory() {
           const chatInfo = await getChat(chatId);
           console.log("fetching id:", chatId)
           console.log("result:", chatInfo)
-          setChats((prevChats) => ([
-            chatInfo,
-            ...prevChats,
-          ]));
+          setChatsByDate(() => ([chatInfo, ...chats,].reduce(reduceByDate, {})));
+          setChatsById(() => ([chatInfo, ...chats,].reduce(reduceById, {})));
+          setChats((prevChats) => ([chatInfo, ...prevChats,]));
         }
       };
 
-      fetchAndAddNewChats().then(() => {
-        console.log(chats)
-        setChatsByDate(chats.reduce(reduceByDate, {}))
-        setChatsById(chats.reduce(reduceById, {}))
-      });
+      fetchAndAddNewChats()
+      // .then(() => {
+      //   console.log(chats)
+      //   setChatsByDate(chats.reduce(reduceByDate, {}))
+      //   setChatsById(chats.reduce(reduceById, {}))
+      // });
 
     }
   }, [liveChats, chatsById])
@@ -219,49 +218,7 @@ export default function ChatHistory() {
             .sort((x, y) => { return y.fulldate - x.fulldate })
             .map((currentChat) => ({
               key: currentChat.id,
-              label:
-                <div className={chatClass(currentChat.conversation_summary.satisfaction, liveChats.includes(currentChat.id))}>
-                  <VerticalStack gap="1">
-
-                    {(
-                      currentChat.conversation_summary.title ??
-                      `${currentChat.user_message_count + currentChat.ai_message_count} ${t("Insights.messages")}`
-                    )}
-                    {
-                      liveChats.includes(currentChat.id) ?
-                        <div className="live-chat-info">
-                          <div style={{ display: "inline-flex" }}>
-                            <div className="badge live-badge">
-                              <span className="dot live-dot" />
-                              {t("ChatHistory.live")}
-                            </div>
-                            {
-                              currentChat.metadata && currentChat.metadata.city && currentChat.metadata.country &&
-                              <div className="live-chat-meta">
-                                {` - ${currentChat.metadata.city}, ${currentChat.metadata.country}`}
-                              </div>
-                            }
-                            {
-                              currentChat.metadata && currentChat.metadata.country &&
-                              <span className={`fi fi-${currentChat.metadata.country.toLowerCase()} fis`}></span>
-                            }
-                          </div>
-                          {
-                            currentChat.metadata &&
-                            <div className="live-chat-meta">
-                              {`IP: ${currentChat.metadata.ip}`}
-                            </div>
-                          }
-                        </div>
-                        :
-                        <div />
-                    }
-                  </VerticalStack>
-                  <div className="nav-timestamp">
-                    {currentChat.time}
-                  </div>
-                </div>,
-
+              label: <ChatNavLabel chat={chat} isLive={liveChats.includes(currentChat.id)} />,
               selected: selected === currentChat.id,
               onClick: () => handleSelect(currentChat.id)
             }))}
@@ -417,7 +374,7 @@ export default function ChatHistory() {
   // Test button function
   //===========================================================================
   const test = () => {
-    setLiveChats(["5d5ba14b-bd6e-4fc6-aa61-b4fb24c38884"])
+    setLiveChats((previousChats) => ["5d5ba14b-bd6e-4fc6-aa61-b4fb24c38884", ...previousChats])
     // refreshLiveChats()
     // console.log(socket)
     // socket.emit("message", { conversation_id: selected, message: "hello socket" })

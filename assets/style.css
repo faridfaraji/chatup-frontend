@@ -91,7 +91,7 @@
 }
 
 /* Admin Message Input for Live Chats */
-#chatbubble-input {
+.chatbubble-input {
     padding: 0px 0px 0 10px;
     display: flex;
     justify-content: space-between;
@@ -102,7 +102,7 @@
     scrollbar-color: transparent transparent;
 }
 
-#chatbubble-input-field {
+.chatbubble-input-field {
     flex: 1;
     padding: 5px;
     margin-right: 5px;
@@ -117,19 +117,19 @@
     /* Firefox */
 }
 
-#chatbubble-input-field::-webkit-scrollbar {
+.chatbubble-input-field::-webkit-scrollbar {
     display: none;
 }
 
-#chatbubble-input-field:hover,
-#chatbubble-input-field:active,
-#chatbubble-input-field:focus {
+.chatbubble-input-field:hover,
+.chatbubble-input-field:active,
+.chatbubble-input-field:focus {
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
 }
 
-#chatbubble-send {
+.chatbubble-send {
     background-color: transparent;
     border: none;
     padding: 5px 2px;
@@ -141,8 +141,8 @@
     /* bottom: calc(0% + -2px); */
 }
 
-#chatbubble-send:focus,
-#chatbubble-send:active {
+.chatbubble-send:focus,
+.chatbubble-send:active {
     transform: scale(1.25);
 }
 
@@ -176,7 +176,7 @@ textarea {
     transition: .7s ease-in-out;
 }
 
-#input-round-box {
+.input-round-box {
     width: 100%;
     color: black;
     margin: 1em 0;
@@ -203,7 +203,7 @@ textarea {
 
 }
 
-#input-round-box::-webkit-scrollbar {
+.input-round-box::-webkit-scrollbar {
     display: none;
 }
 
@@ -217,12 +217,12 @@ textarea {
     }
 }
 
-#chatbubble-input-field:focus+#input-round-box {
+.chatbubble-input-field:focus+#input-round-box {
     box-shadow: 0px 0px 7px rgba(0, 0, 0, .3);
 }
 
-#input-round-box,
-#chatbubble-input-field {
+.input-round-box,
+.chatbubble-input-field {
     box-sizing: content-box;
     transition: .7s ease-in-out;
 }
@@ -255,6 +255,10 @@ textarea {
 .timestamp-right {
     float: right;
     margin-left: 5px;
+}
+
+.new-live-chat {
+    max-height: 0;
 }
 
 .chat {
