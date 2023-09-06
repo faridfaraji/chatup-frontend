@@ -1,7 +1,7 @@
 import constants from "../constants"
 import { useAuthenticatedFetch } from ".";
 
-export const useMessageHistory = () => {
+export const useMessagesFetch = () => {
     const fetch = useAuthenticatedFetch();
 
     return async (chatId) => {

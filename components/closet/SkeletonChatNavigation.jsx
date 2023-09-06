@@ -1,6 +1,6 @@
 import { HorizontalStack, Navigation, SkeletonBodyText, SkeletonDisplayText, SkeletonThumbnail } from "@shopify/polaris"
 
-export const SkeletonChats = () => {
+export const SkeletonChatNavigation = () => {
     const title = <span className="dot loading nav-date" />
     const label =
         <HorizontalStack gap="1">

@@ -1,7 +1,7 @@
 import constants from "../constants"
 import { useAuthenticatedFetch } from ".";
 
-export const useChatHistory = () => {
+export const useChatsFetch = () => {
     const fetch = useAuthenticatedFetch();
     return (since, until) => {
         const fetch_url = `${constants.gateway_url}/database/${constants.app_name}/conversations`

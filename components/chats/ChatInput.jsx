@@ -9,7 +9,7 @@ export const autoResizeTextarea = (elementId) => {
     textarea.style.height = `${textarea.scrollHeight}px`; // Set height based on scroll height
 }
 
-export const ChatInput = ({ id, chat, handleSend }) => {
+export const ChatInput = ({ id, handleSend }) => {
     const { t } = useTranslation();
     const [value, setValue] = useState('');
 
