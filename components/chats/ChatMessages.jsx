@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { ChatMessage } from "./ChatMessage"
-import { Button } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 
-export const ChatMessages = ({ messages }) => {
+export const ChatMessages = ({ messages, joined }) => {
     const { t } = useTranslation()
     const messagesRef = useRef(null);
     const buttonRef = useRef(null);
     const [flag, setFlag] = useState(false);
+    const [justJoined, setJustJoined] = useState(joined)
 
     const scrollToLatest = () => {
         if (messagesRef.current) {
@@ -21,7 +21,10 @@ export const ChatMessages = ({ messages }) => {
     // Scroll to the bottom when messages change
     useEffect(() => {
         if (messagesRef.current) {
-            if (2*messagesRef.current.clientHeight + messagesRef.current.scrollTop < messagesRef.current.scrollHeight) {
+            if (justJoined) {
+                scrollToLatest()
+                setJustJoined(false)
+            } else if (2 * messagesRef.current.clientHeight + messagesRef.current.scrollTop < messagesRef.current.scrollHeight) {
                 setFlag(true)
             } else {
                 scrollToLatest()
@@ -33,8 +36,8 @@ export const ChatMessages = ({ messages }) => {
         <button
             className="new-messages-btn"
             ref={buttonRef}
-            onClick={() => {scrollToLatest(); setFlag(false)}}>
-            { t("ChatHistory.newMessage") }
+            onClick={() => { scrollToLatest(); setFlag(false) }}>
+            {t("ChatHistory.newMessage")}
         </button>
 
 

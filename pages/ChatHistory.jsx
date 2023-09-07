@@ -113,7 +113,7 @@ export default function ChatHistory() {
         .then(data => {
           const sortedData = data.sort((a, b) => new Date(a?.timestamp) - new Date(b?.timestamp))
           const newDiff = new Date(sortedData[sortedData.length - 1]?.timestamp) - new Date(sortedData[0]?.timestamp);
-          if(newDiff > diff) {
+          if (newDiff > diff) {
             setDiff(newDiff)
             setMessages(sortedData)
           }
@@ -125,7 +125,7 @@ export default function ChatHistory() {
     let refreshInterval;
     if (liveView && chatView && !joinView) {
       // If viewing a live chat but not joined, check for new messages every 10 seconds
-      refreshInterval = setInterval(refreshMessages, 10000); 
+      refreshInterval = setInterval(refreshMessages, 10000);
     }
 
     return () => {
@@ -138,6 +138,120 @@ export default function ChatHistory() {
   const addMessage = (newMsg) => { setMessages(prevMsgs => [...prevMsgs, newMsg]) }
 
   //===========================================================================
+  // Live socket connection for live chats
+  //===========================================================================
+
+  const handleLiveMessage = useCallback((data) => {
+    const customerMsg = {
+      message_type: "USER",
+      metadata: ["customer"],
+      message: data.message,
+      timestamp: new Date()
+    }
+
+    if (selected === data.conversation_id) { addMessage(customerMsg) }
+  }, [selected, addMessage])
+
+  const handleLiveChats = (data) => {
+    setLiveChats(data)
+  }
+
+  const handleOffChats = (data) => {
+    setLiveChats(prevLiveChats => prevLiveChats.filter(chatId => chatId !== data));
+  }
+
+  useEffect(() => {
+    useSocketInitializer(handleLiveChats, handleOffChats, sessionToken).then((data) => setSocket(data))
+    return () => useDisconnectSocket();
+  }, [])
+
+  useEffect(() => {
+    if (typeof socket?.on === 'function') {
+      socket.off('customer_response');
+      socket.on('customer_response', (data) => { handleLiveMessage(data) });
+    }
+  }, [socket, handleLiveMessage])
+
+  useEffect(() => {
+    setLiveView(liveChats.includes(selected))
+  }, [liveChats])
+
+  //===========================================================================
+  // Main Content Event Handlers
+  //===========================================================================
+
+  const viewChat = () => {
+    setChatView(true)
+  }
+
+  const viewSummary = () => {
+    leaveChat()
+  }
+
+  const joinChat = () => {
+    setChatView(true)
+    setJoinView(true)
+  }
+
+  const leaveChat = () => {
+    setChatView(false)
+    setJoinView(false)
+  }
+
+  const handleAdminMessage = useCallback((messageText) => {
+    socket.emit("message", {
+      conversation_id: selected,
+      message: messageText
+    })
+
+    const adminMsg = {
+      message_type: "USER",
+      metadata: ["admin"],
+      message: messageText,
+      timestamp: new Date()
+    }
+    addMessage(adminMsg)
+  }, [selected])
+
+  //===========================================================================
+  // Main Content
+  //===========================================================================
+
+  const selectedChat = chats.find(item => item.id === selected)
+
+  const content = !selected ? <Robot /> :
+    <AlphaCard>
+      <CardTitle linebreak title={selectedChat?.conversation_summary?.title ?? t("ChatHistory.untitled")} />
+      <Divider />
+      <br />
+      {!chatView && <ChatSummary chat={selectedChat} />}
+      {chatView && <ChatMessages messages={messages} joined={joinView} />}
+      <Divider />
+      <br />
+      {joinView &&
+        <ChatInput
+          id="chatbubble-input-field"
+          handleSend={handleAdminMessage}
+          conversation_id={selected}
+          socket={socket}
+          // handleRender={}
+          // handle
+          />}
+      <HorizontalStack align="end" gap="5">
+        {liveView && !joinView &&
+          <Button primary onClick={() => joinChat()}>{t("ChatHistory.joinChat")}</Button>}
+        {joinView &&
+          <Button primary onClick={() => leaveChat()}>{t("ChatHistory.leaveChat")}</Button>}
+        {chatView && !joinView &&
+          <Button onClick={() => viewSummary()}>{t("ChatHistory.viewSummary")}</Button>}
+        {!chatView &&
+          <Button onClick={() => viewChat()}>{t("ChatHistory.viewChat")}</Button>}
+      </HorizontalStack>
+    </AlphaCard>
+
+
+
+  //===========================================================================
   // Navigation Event Handlers
   //===========================================================================
 
@@ -146,18 +260,18 @@ export default function ChatHistory() {
   const handleDateChange = (range) => {
     setChatsLoading(true)
     setDates(zeroRange(range))
-    setNavVis(bp.mdDown)
-    setSelected(false)
-    setChatView(false)
+    if (bp.mdDown) setNavVis(true)
     setLiveView(false)
     setJoinView(false)
+    setChatView(false)
+    setSelected(false)
   }
 
   const handleSelect = (chatId) => {
     if (bp.mdDown) setNavVis(false)
-    setChatView(false)
     setLiveView(liveChats.includes(chatId))
     setJoinView(false)
+    setChatView(false)
     setSelected(chatId)
     refreshMessages()
   }
@@ -187,138 +301,6 @@ export default function ChatHistory() {
       <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
     </HorizontalStack>
 
-
-  //===========================================================================
-  // Live socket connection for live chats
-  //===========================================================================
-
-  const handleLiveMessage = useCallback((data) => {
-    const customerMsg = {
-      message_type: "USER",
-      metadata: ["customer"],
-      message: data.message,
-      timestamp: new Date()
-    }
-
-    if (selected === data.conversation_id) { addMessage(customerMsg) }
-
-    // Handle the incoming live message data here
-    // console.log("Live Message Handler invoked with data:", data)
-  }, [selected, addMessage])
-
-  const handleLiveChats = (data) => {
-    setLiveChats(data)
-
-    // Handle the incoming live message data here
-    // console.log('Chat born:', data);
-  }
-
-  const handleOffChats = (data) => {
-    setLiveChats(prevLiveChats => prevLiveChats.filter(chatId => chatId !== data));
-
-    // Handle the incoming live message data here
-    // console.log('Chat died:', data);
-  }
-
-
-  useEffect(() => {
-    useSocketInitializer(handleLiveChats, handleOffChats, sessionToken).then((data) => setSocket(data))
-    return () => {
-      // Disconnect socket when component unmounts
-      useDisconnectSocket();
-    }
-  }, [])
-
-  useEffect(() => {
-    if (typeof socket?.on === 'function') {
-      socket.off('customer_response');
-      socket.on('customer_response', (data) => { handleLiveMessage(data) });
-    }
-  }, [socket, handleLiveMessage])
-
-  useEffect(() => {
-    setLiveView(liveChats.includes(selected))
-  }, [liveChats])
-
-  //===========================================================================
-  // Main Content Event Handlers
-  //===========================================================================
-
-  const viewChat = () => {
-    setChatView(true)
-  }
-
-  const viewSummary = () => {
-    setChatView(false)
-    setJoinView(false)
-  }
-
-  const joinChat = useCallback(() => {
-    const data = {
-      conversation_id: selected,
-      message: "Admin Connected"
-    }
-    socket.emit("message", data)
-    setChatView(true)
-    setJoinView(true)
-    setTimeout(() => scrollToBottom(), 69)
-  }, [selected])
-
-  const leaveChat = useCallback(() => {
-    const data = {
-      conversation_id: selected,
-      message: ""
-    }
-    socket.emit("forfeit", data)
-    setJoinView(false)
-  }, [selected])
-
-  const handleAdminMessage = useCallback((messageText) => {
-    const data = {
-      conversation_id: selected,
-      message: messageText
-    }
-    // console.log("emitting data: ", data)
-    socket.emit("message", data)
-
-    const adminMsg = {
-      message_type: "USER",
-      metadata: ["admin"],
-      message: messageText,
-      timestamp: new Date()
-    }
-
-    addMessage(adminMsg)
-
-  }, [selected])
-
-  //===========================================================================
-  // Main Content
-  //===========================================================================
-
-  const selectedChat = chats.find(item => item.id === selected)
-
-  const content = !selected ? <Robot /> :
-    <AlphaCard>
-      <CardTitle linebreak title={selectedChat?.conversation_summary?.title ?? t("ChatHistory.untitled")} />
-      <Divider />
-      <br />
-      {!chatView && <ChatSummary chat={selectedChat} />}
-      {chatView && <ChatMessages messages={messages} />}
-      <Divider />
-      <br />
-      {joinView && <ChatInput id="chatbubble-input-field" handleSend={handleAdminMessage} />}
-      <HorizontalStack align="end" gap="5">
-        {liveView && !joinView &&
-          <Button primary onClick={() => joinChat()}>{t("ChatHistory.joinChat")}</Button>}
-        {joinView &&
-          <Button primary onClick={() => leaveChat()}>{t("ChatHistory.leaveChat")}</Button>}
-        {chatView && !joinView &&
-          <Button onClick={() => viewSummary()}>{t("ChatHistory.viewSummary")}</Button>}
-        {!chatView &&
-          <Button onClick={() => viewChat()}>{t("ChatHistory.viewChat")}</Button>}
-      </HorizontalStack>
-    </AlphaCard>
 
 
 

@@ -65,9 +65,6 @@ export const ChatMessage = ({ message }) => {
     const messageClass = `${aiMessage ? "ai" : adminMessage ? "admin" : "human"}-message`
     const message_digested = hyperlinkText(message.message)
 
-    console.log(adminMessage)
-    console.log(message_digested)
-    console.log(adminMessage && message.message === "Admin Connected")
     const messageDiv = adminMessage && message.message === "Admin Connected" ?
         <div className="admin-connected-message">
             <div className="admin-connected-divider" />
