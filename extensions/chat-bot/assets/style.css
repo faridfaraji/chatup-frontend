@@ -103,7 +103,7 @@
 #chatbubble {
     position: fixed;
     bottom: 30px;
-    right: 30px;
+    /* right: 30px; */
     z-index: 899;
     scroll-behavior: smooth;
 }
@@ -141,7 +141,7 @@
     display: none;
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    /* right: 20px; */
     background-color: var(--chatbubble-window-backround);
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
