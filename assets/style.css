@@ -59,27 +59,27 @@
     overflow-y: scroll;
 }
 
-.human-message-container {
+.message-container {
     display: flex;
-    justify-content: flex-start;
     margin-bottom: 10px;
-    margin-left: "10px";
-    margin-right: "0px";
+    white-space: pre-wrap;
+}
+
+.human-message-container {
+    justify-content: flex-start;
+    margin-left: 10px;
+    margin-right: 0px;
 }
 
 .ai-message-container {
-    display: flex;
     justify-content: flex-end;
-    margin-bottom: 10px;
     margin-left: 0px;
     margin-right: 10px;
     padding-right: 10px;
 }
 
 .admin-message-container {
-    display: flex;
     justify-content: flex-end;
-    margin-bottom: 10px;
     margin-left: 0px;
     margin-right: 10px;
     padding-right: 10px;

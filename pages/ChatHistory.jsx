@@ -137,7 +137,7 @@ export default function ChatHistory() {
     };
   }, [liveView, chatView, joinView, selected, diff]);
 
-  useEffect(() => refreshMessages(), [selected])
+  useEffect(() => refreshMessages(), [selected, joinView, chatView])
 
   const addMessage = (newMsg) => { setMessages(prevMsgs => [...prevMsgs, newMsg]) }
 
@@ -343,9 +343,9 @@ export default function ChatHistory() {
     // console.log(selected)
     // console.log(chats)
     // console.log(liveChats)
-    // console.log(messages)
+    console.log(messages)
     // console.log(socket)
-    console.log(socket)
+    // console.log(socket)
   }
 
   //===========================================================================
