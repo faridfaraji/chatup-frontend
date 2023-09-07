@@ -74,6 +74,7 @@
     "joinChat": "Join Chat",
     "reply": "Reply to customer...",
     "newMessage": "Scroll to new messages",
+    "adminConnected": "Admin Connected",
     "leaveChat": "Disconnect", 
     "viewNav": "View Chats",
     "noChats": "No chats found for selected time period",

@@ -108,15 +108,11 @@ export default function ChatHistory() {
   const [diff, setDiff] = useState(0);
 
   const refreshMessages = useCallback(() => {
-    console.log("refreshing!")
     if (selected) {
       getMessages(selected)
         .then(data => {
-          console.log(data)
           const sortedData = data.sort((a, b) => new Date(a?.timestamp) - new Date(b?.timestamp))
           const newDiff = new Date(sortedData[sortedData.length - 1]?.timestamp) - new Date(sortedData[0]?.timestamp);
-          console.log(diff)
-          console.log(newDiff)
           if(newDiff > diff) {
             setDiff(newDiff)
             setMessages(sortedData)
@@ -204,30 +200,24 @@ export default function ChatHistory() {
       timestamp: new Date()
     }
 
-    console.log(customerMsg)
-    console.log(selected)
-    console.log(data)
-    console.log(data.conversation_id)
-
-
     if (selected === data.conversation_id) { addMessage(customerMsg) }
 
     // Handle the incoming live message data here
-    console.log("Live Message Handler invoked with data:", data)
+    // console.log("Live Message Handler invoked with data:", data)
   }, [selected, addMessage])
 
   const handleLiveChats = (data) => {
     setLiveChats(data)
 
     // Handle the incoming live message data here
-    console.log('Chat born:', data);
+    // console.log('Chat born:', data);
   }
 
   const handleOffChats = (data) => {
     setLiveChats(prevLiveChats => prevLiveChats.filter(chatId => chatId !== data));
 
     // Handle the incoming live message data here
-    console.log('Chat died:', data);
+    // console.log('Chat died:', data);
   }
 
 
@@ -288,7 +278,7 @@ export default function ChatHistory() {
       conversation_id: selected,
       message: messageText
     }
-    console.log("emitting data: ", data)
+    // console.log("emitting data: ", data)
     socket.emit("message", data)
 
     const adminMsg = {

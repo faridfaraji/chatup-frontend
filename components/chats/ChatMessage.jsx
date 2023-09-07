@@ -1,10 +1,11 @@
+import { useTranslation } from "react-i18next";
 import { dateFromUTC, localizeTime } from "../../utils"
 import { Link } from "@shopify/polaris";
 
 const hyperlinkText = (messageText) => {
     const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/;
     const emailRegex = /\b([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})\b/;
-    const phoneRegex = /\+?(\d{1,4}[-.\s]?)?(\(\d+\)[-.\s]?)?\d+(?:[-.\s]?\d+)+/;
+    const phoneRegex = /\+?(\d{1,4}[-.\s]?)?(\(\d+\)[-.\s]?)?(\d{3,})(?:[-.\s]?\d{4,})+/;
 
     if (messageText !== null) {
         const components = [];
@@ -14,14 +15,13 @@ const hyperlinkText = (messageText) => {
             const markdownLinkMatch = markdownLinkRegex.exec(remainingText);
             const emailMatch = emailRegex.exec(remainingText);
             const phoneMatch = phoneRegex.exec(remainingText);
-            console.log(phoneMatch)
 
             const match = [markdownLinkMatch, emailMatch, phoneMatch].filter(match => match !== null).reduce((minMatch, currentMatch) => {
                 if (minMatch === null || (currentMatch.index !== null && currentMatch.index < minMatch.index)) {
-                  return currentMatch;
+                    return currentMatch;
                 }
                 return minMatch;
-              }, null);
+            }, null);
 
             // Add the remaining text as text
             if (!match) {
@@ -55,16 +55,24 @@ const hyperlinkText = (messageText) => {
 }
 
 export const ChatMessage = ({ message }) => {
+    const { t } = useTranslation();
+
     const adminMessage = message.metadata && message.metadata[0] === "admin"
     const aiMessage = message.message_type === "AI"
     const time = localizeTime(dateFromUTC(message.timestamp))
 
     const containerClass = `message-container ${aiMessage ? "ai" : adminMessage ? "admin" : "human"}-message-container`
     const messageClass = `${aiMessage ? "ai" : adminMessage ? "admin" : "human"}-message`
-
     const message_digested = hyperlinkText(message.message)
 
-    return (
+    console.log(adminMessage)
+    console.log(message_digested)
+    console.log(adminMessage && message.message === "Admin Connected")
+    const messageDiv = adminMessage && message.message === "Admin Connected" ?
+        <div className="admin-connected-message">
+            <div className="admin-connected-divider" />
+            <div className="admin-connected-text">{t("ChatHistory.adminConnected")}</div>
+        </div> :
         <div className={containerClass}>
             {aiMessage || adminMessage ? <div className="timestamp timestamp-left">{time}</div> : null}
             <div className={messageClass}>
@@ -74,5 +82,6 @@ export const ChatMessage = ({ message }) => {
             </div>
             {!(aiMessage || adminMessage) ? <div className="timestamp timestamp-right">{time}</div> : null}
         </div>
-    )
+
+    return messageDiv
 }
