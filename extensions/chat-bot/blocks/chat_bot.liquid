@@ -17,9 +17,7 @@
       .initial-message-boxes {
         border-radius: {{ block.settings.border_radius_range }}px;
       }
-      #chatbubble {
-        font-family: {{ block.settings.heading_font.family }}, sans serif; 
-      }
+
       #chatbubble-header {
         color: {{ block.settings.icon_fill }};
         background: {{ block.settings.icon_background_color }};
@@ -30,10 +28,16 @@
       #chatbubble-button {
         background: {{ block.settings.icon_background_color }};
         border-radius: {{ block.settings.border_radius_range }}px;
-        
       }
       #chatbubble-button svg {
         fill: {{ block.settings.icon_fill }};
+      }
+      #chatbubble {
+        font-family: {{ block.settings.heading_font.family }}, sans serif; 
+        {{ block.settings.icon_alignment }} : 30px;
+      }
+      #chatbubble-window {
+        {{ block.settings.icon_alignment }} : 20px;
       }
     {% endstyle %}
   </head>
@@ -160,6 +164,22 @@
             "id": "inline",
             "default": "How can I help you today?",
             "label": "ChatUp Header Text"
+          },
+          {
+            "type": "select",
+            "id": "icon_alignment",
+            "label": "Icon Alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "right"
           }
         ]
       }
