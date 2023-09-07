@@ -1,7 +1,8 @@
 import { Navigation } from "@shopify/polaris"
 import { dateFromUTC, localizeDatestamp, localizeTime } from "../../utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChatNavLabel } from "./ChatNavLabel";
+import { useTranslation } from "react-i18next";
 
 
 // reduction functions
@@ -24,6 +25,7 @@ const reduceByDate = (result, item) => {
 }
 
 export const ChatNavigation = ({ chats, selected, liveChats, handleSelect }) => {
+    const { t } = useTranslation();
     const [navSections, setNavSections] = useState([])
 
     // Build the nav out of the chats in our selection

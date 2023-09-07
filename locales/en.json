@@ -73,6 +73,7 @@
     "viewSummary": "View Summary",
     "joinChat": "Join Chat",
     "reply": "Reply to customer...",
+    "newMessage": "Scroll to new messages",
     "leaveChat": "Disconnect", 
     "viewNav": "View Chats",
     "noChats": "No chats found for selected time period",

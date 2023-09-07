@@ -1,11 +1,12 @@
 import { AlphaCard, Button, Divider, Frame, HorizontalStack, Layout, Page, useBreakpoints } from "@shopify/polaris";
 import { useCallback, useEffect, useState } from "react";
-import { AccessWrapper, CardTitle, ChatInput, ChatMessages, ChatNavigation, ChatSummary, DateRangePicker, SkeletonChatNavigation } from "../components";
-import { useChatFetch, useChatsFetch, useMessagesFetch, useSocketInitializer } from "../hooks";
+import { AccessWrapper, CardTitle, ChatInput, ChatMessages, ChatNavigation, ChatSummary, DateRangePicker, Robot, SkeletonChatNavigation } from "../components";
+import { useChatFetch, useChatsFetch, useDisconnectSocket, useMessagesFetch, useSocketInitializer } from "../hooks";
 import { getSessionToken } from "@shopify/app-bridge/utilities";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
-
+import { scrollToBottom, zeroRange } from "../utils";
+import { ConversationMinor } from "@shopify/polaris-icons"
 
 export default function ChatHistory() {
   //===========================================================================
@@ -102,17 +103,43 @@ export default function ChatHistory() {
     }
   }, [liveChats])
 
+
   // Whenever a chat is selected, fetch the messages for that chat
-  const refreshMessages = () => {
+  const [diff, setDiff] = useState(0);
+
+  const refreshMessages = useCallback(() => {
+    console.log("refreshing!")
     if (selected) {
       getMessages(selected)
-        .then((data) => setMessages(data.reverse()))
+        .then(data => {
+          console.log(data)
+          const sortedData = data.sort((a, b) => new Date(a?.timestamp) - new Date(b?.timestamp))
+          const newDiff = new Date(sortedData[sortedData.length - 1]?.timestamp) - new Date(sortedData[0]?.timestamp);
+          console.log(diff)
+          console.log(newDiff)
+          if(newDiff > diff) {
+            setDiff(newDiff)
+            setMessages(sortedData)
+          }
+        })
     }
-  }
+  }, [selected, diff])
+
+  useEffect(() => {
+    let refreshInterval;
+    if (liveView && chatView && !joinView) {
+      // If viewing a live chat but not joined, check for new messages every 10 seconds
+      refreshInterval = setInterval(refreshMessages, 10000); 
+    }
+
+    return () => {
+      clearInterval(refreshInterval);
+    };
+  }, [liveView, chatView, joinView, selected, diff]);
 
   useEffect(() => refreshMessages(), [selected])
 
-  const addMessage = (message) => { setMessages(prevMessages => [...prevMessages, message]) }
+  const addMessage = (newMsg) => { setMessages(prevMsgs => [...prevMsgs, newMsg]) }
 
   //===========================================================================
   // Navigation Event Handlers
@@ -131,12 +158,12 @@ export default function ChatHistory() {
   }
 
   const handleSelect = (chatId) => {
-    if (bp.mdDown) handleNavToggle()
+    if (bp.mdDown) setNavVis(false)
     setChatView(false)
     setLiveView(liveChats.includes(chatId))
     setJoinView(false)
     setSelected(chatId)
-    getMessages(chatId).then((data) => setMessages(data))
+    refreshMessages()
   }
 
   //===========================================================================
@@ -169,24 +196,25 @@ export default function ChatHistory() {
   // Live socket connection for live chats
   //===========================================================================
 
-  useEffect(() => {
-    useSocketInitializer(
-      handleLiveMessage,
-      handleLiveChats,
-      handleOffChats,
-      sessionToken).then((data) => setSocket(data))
-    return () => {
-      // Disconnect socket when component unmounts
-      useDisconnectSocket();
+  const handleLiveMessage = useCallback((data) => {
+    const customerMsg = {
+      message_type: "USER",
+      metadata: ["customer"],
+      message: data.message,
+      timestamp: new Date()
     }
-  }, [])
 
-  const handleLiveMessage = (data) => {
-    setMessageQueue(prevQueue => [...prevQueue, data])
+    console.log(customerMsg)
+    console.log(selected)
+    console.log(data)
+    console.log(data.conversation_id)
+
+
+    if (selected === data.conversation_id) { addMessage(customerMsg) }
 
     // Handle the incoming live message data here
     console.log("Live Message Handler invoked with data:", data)
-  }
+  }, [selected, addMessage])
 
   const handleLiveChats = (data) => {
     setLiveChats(data)
@@ -202,26 +230,25 @@ export default function ChatHistory() {
     console.log('Chat died:', data);
   }
 
+
+  useEffect(() => {
+    useSocketInitializer(handleLiveChats, handleOffChats, sessionToken).then((data) => setSocket(data))
+    return () => {
+      // Disconnect socket when component unmounts
+      useDisconnectSocket();
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof socket?.on === 'function') {
+      socket.off('customer_response');
+      socket.on('customer_response', (data) => { handleLiveMessage(data) });
+    }
+  }, [socket, handleLiveMessage])
+
   useEffect(() => {
     setLiveView(liveChats.includes(selected))
   }, [liveChats])
-
-  useEffect(() => {
-    while (messageQueue.length > 0) {
-      const message = messageQueue[0];
-      if (message.conversation_id === selected) {
-        addMessage({
-          message_type: "USER",
-          metadata: ["customer"],
-          message: message.message,
-          timestamp: new Date()
-        })
-      }
-
-      // Remove the processed message from the queue
-      setMessageQueue((prevQueue) => prevQueue.slice(1));
-    }
-  }, [messageQueue])
 
   //===========================================================================
   // Main Content Event Handlers
@@ -242,7 +269,9 @@ export default function ChatHistory() {
       message: "Admin Connected"
     }
     socket.emit("message", data)
+    setChatView(true)
     setJoinView(true)
+    setTimeout(() => scrollToBottom(), 69)
   }, [selected])
 
   const leaveChat = useCallback(() => {
@@ -251,7 +280,7 @@ export default function ChatHistory() {
       message: ""
     }
     socket.emit("forfeit", data)
-    setJoinView(true)
+    setJoinView(false)
   }, [selected])
 
   const handleAdminMessage = useCallback((messageText) => {
@@ -262,12 +291,14 @@ export default function ChatHistory() {
     console.log("emitting data: ", data)
     socket.emit("message", data)
 
-    addMessage({
+    const adminMsg = {
       message_type: "USER",
       metadata: ["admin"],
       message: messageText,
       timestamp: new Date()
-    })
+    }
+
+    addMessage(adminMsg)
 
   }, [selected])
 
@@ -284,15 +315,15 @@ export default function ChatHistory() {
       <br />
       {!chatView && <ChatSummary chat={selectedChat} />}
       {chatView && <ChatMessages messages={messages} />}
-      {joinView && <ChatInput id="chatbubble-input-field" handleSend={handleAdminMessage} />}
       <Divider />
       <br />
+      {joinView && <ChatInput id="chatbubble-input-field" handleSend={handleAdminMessage} />}
       <HorizontalStack align="end" gap="5">
         {liveView && !joinView &&
           <Button primary onClick={() => joinChat()}>{t("ChatHistory.joinChat")}</Button>}
         {joinView &&
           <Button primary onClick={() => leaveChat()}>{t("ChatHistory.leaveChat")}</Button>}
-        {!joinView &&
+        {chatView && !joinView &&
           <Button onClick={() => viewSummary()}>{t("ChatHistory.viewSummary")}</Button>}
         {!chatView &&
           <Button onClick={() => viewChat()}>{t("ChatHistory.viewChat")}</Button>}
@@ -300,19 +331,21 @@ export default function ChatHistory() {
     </AlphaCard>
 
 
+
   //===========================================================================
   // Test button function
   //===========================================================================
   const test = () => {
-    setLiveChats((prevChats) => ["5d5ba14b-bd6e-4fc6-aa61-b4fb24c38884", ...prevChats])
+    // setLiveChats((prevChats) => ["5d5ba14b-bd6e-4fc6-aa61-b4fb24c38884", ...prevChats])
     // refreshLiveChats()
     // console.log(socket)
     // socket.emit("message", { conversation_id: selected, message: "hello socket" })
     // console.log(selected)
-    console.log(chats)
-    console.log(chatsByDate)
-    console.log(chatsById)
-    console.log(liveChats)
+    // console.log(chats)
+    // console.log(liveChats)
+    // console.log(messages)
+    // console.log(socket)
+    console.log(socket)
   }
 
   //===========================================================================

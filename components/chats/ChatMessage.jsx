@@ -5,6 +5,7 @@ import { Link, Text } from "@shopify/polaris";
 // This function hyperlinks URLs, emails, and phone numbers and removes dots after hyperlinks
 const hyperlinkText = (messageText) => {
     // Define regular expressions to match URLs, emails, and phone numbers
+
     const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
     const emailRegex = /\b([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})\b/g;
     const phoneRegex = /\b((?:\+?1\s*\(?[2-9][0-8][0-9]\)?\s*|0?[2-9][0-8][0-9]\s*)(?:[.-]\s*)?(?:[2-9][0-9]{2}\s*)(?:[.-]\s*)?[0-9]{4})\b/g;
@@ -19,7 +20,7 @@ const hyperlinkText = (messageText) => {
             //   const emailMatch = emailRegex.exec(remainingText);
             //   const phoneMatch = phoneRegex.exec(remainingText);
 
-            console.log(markdownLinkMatch)
+            // console.log(markdownLinkMatch)
             // Find the earliest match
             //   const earliestMatch = [
             //     markdownLinkMatch,
@@ -30,13 +31,13 @@ const hyperlinkText = (messageText) => {
 
             if (!markdownLinkMatch) {
                 // No more matches found, add the remaining text as a Text component
-                components.push(<Text key={components.length}>{remainingText}</Text>);
+                components.push(<p>{remainingText}</p>);
                 break;
             }
 
             // Add the text before the match as a Text component
             if (markdownLinkMatch.index > 0) {
-                components.push(<Text key={components.length}>{remainingText.substring(0, markdownLinkMatch.index)}</Text>);
+                components.push(<p>{remainingText.substring(0, markdownLinkMatch.index)}</p>);
             }
 
             // Add the matched content as a Link component
@@ -55,7 +56,7 @@ const hyperlinkText = (messageText) => {
     return messageText
 }
 
-export const ChatMessage = (message, index) => {
+export const ChatMessage = ({ message }) => {
     const adminMessage = message.metadata && message.metadata[0] === "admin"
     const aiMessage = message.message_type === "AI"
     const time = localizeTime(dateFromUTC(message.timestamp))
@@ -63,7 +64,7 @@ export const ChatMessage = (message, index) => {
     const message_digested = hyperlinkText(message.message)
 
     return (
-        <div key={index} className={`${aiMessage ? "ai" : adminMessage ? "admin" : "human"}-message-container`}>
+        <div className={`${aiMessage ? "ai" : adminMessage ? "admin" : "human"}-message-container`}>
             {aiMessage || adminMessage ? <div className="timestamp timestamp-left">{time}</div> : null}
             <div className={`${aiMessage ? "ai" : adminMessage ? "admin" : "human"}-message`}>
                 {message_digested}

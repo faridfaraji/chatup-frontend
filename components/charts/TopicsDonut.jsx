@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useChatHistory } from "../../hooks"
+import { useChatsFetch } from "../../hooks"
 import { getTopics, makeTopicDonutData } from "../../utils";
 import { SkeletonDonut } from "../closet";
 import { useTranslation } from "react-i18next";
 import { DonutChart } from "@shopify/polaris-viz";
 
 export const TopicsDonut = ({ since, until }) => {
-    const getChats = useChatHistory()
+    const getChats = useChatsFetch()
     const [donut, setDonut] = useState(<SkeletonDonut />)
     const { t, i18n } = useTranslation();
 

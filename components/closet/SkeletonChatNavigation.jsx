@@ -17,5 +17,5 @@ export const SkeletonChatNavigation = () => {
         }
         return <Navigation.Section key={sectionKey} title={title} items={items} />
     })
-    return chats
+    return <Navigation key="skeletonNav" location="/" >{chats}</Navigation>
 }

@@ -3,6 +3,7 @@
     --p-color-bg-primary: rgb(0, 0, 0) !important;
     --p-color-bg-primary-hover: rgba(0, 0, 0, 0.5) !important;
     --p-color-bg-primary-active: rgba(4, 30, 49, 0.5) !important;
+    --a-color-bg-new-message: rgb(11, 46, 116);
     --a-color-bg-positive-message: rgba(4, 156, 216, 0.3);
     --a-color-bg-positive-message-hover: rgba(4, 156, 216, 0.7);
     --a-color-bg-negative-message: rgb(212, 94, 189, 0.3);
@@ -42,6 +43,22 @@
 
 
 /* Messages and message containers */
+
+.new-messages-btn {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    border-radius: 20px 20px 0 0;
+    background-color:rgb(5, 79, 157);
+    color: #fff;
+}
+
+.chat-messages {
+    max-height: 70vh;
+    overflow-y: scroll;
+}
+
 .human-message-container {
     display: flex;
     justify-content: flex-start;
@@ -54,16 +71,18 @@
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
-    margin-left: "0px";
-    margin-right: "10px";
+    margin-left: 0px;
+    margin-right: 10px;
+    padding-right: 10px;
 }
 
 .admin-message-container {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
-    margin-left: "0px";
-    margin-right: "10px";
+    margin-left: 0px;
+    margin-right: 10px;
+    padding-right: 10px;
 }
 
 .admin-message {

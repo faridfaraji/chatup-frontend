@@ -28,16 +28,15 @@ export const ChatSummary = ({ chat }) => {
                 (metadata?.city || metadata?.region || metadata?.country) &&
                 <div>
                     <Text variant="headingSm">{t("MetaData.location")}</Text>
-                    <Text>
-                        <div style={{ display: "inline-flex" }}>
-                            <div className="live-chat-meta">
-                                {metadata?.city && <span>{metadata.city}, </span>}
-                                {metadata?.region && <span>{metadata.region}, </span>}
-                                {metadata?.country && <span>{metadata.country} </span>}
-                                {metadata?.country && <span className={`fi fi-${metadata.country?.toLowerCase()} fis`} />}
-                            </div>
+                    <div style={{ display: "inline-flex" }}>
+                        <div className="live-chat-meta">
+                            {metadata?.city && <span>{metadata.city}, </span>}
+                            {metadata?.region && <span>{metadata.region}, </span>}
+                            {metadata?.country && <span>{metadata.country} </span>}
+                            {metadata?.country && <span className={`fi fi-${metadata.country?.toLowerCase()} fis`} />}
                         </div>
-                    </Text>
+                    </div>
+                    <br />
                     <br />
                 </div>
             }
@@ -45,11 +44,9 @@ export const ChatSummary = ({ chat }) => {
                 metadata?.ip &&
                 <div>
                     <Text variant="headingSm">{t("MetaData.ip")}</Text>
-                    <Text>
-                        <div className="live-chat-meta">
-                            {`${metadata.ip}`}
-                        </div>
-                    </Text>
+                    <div className="live-chat-meta">
+                        {`${metadata.ip}`}
+                    </div>
                     <br />
                 </div>
             }

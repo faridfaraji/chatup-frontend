@@ -31,6 +31,16 @@ export const ChatInput = ({ id, handleSend }) => {
         setValue(event.target.value);
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          // Prevent the default Enter key behavior (line break)
+          e.preventDefault();
+    
+          // Call a function to handle the "Enter" action (e.g., activate a button)
+          sendMessage();
+        }
+      };
+
     return (
         <div className="input-round-box">
             <div className="chatbubble-input">
@@ -38,6 +48,7 @@ export const ChatInput = ({ id, handleSend }) => {
                     id={id}
                     placeholder={t("ChatHistory.reply")}
                     onChange={handleTextareaChange}
+                    onKeyDown={handleKeyDown}
                     rows="1"></textarea>
                 <button
                     id={`${id}-button`}
