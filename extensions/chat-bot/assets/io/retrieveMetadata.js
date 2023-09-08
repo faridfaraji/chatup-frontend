@@ -1,5 +1,5 @@
 
-export const retrieveCustomerMetadata = async () => {
+export const retrieveMetadata = async () => {
     return fetch('https://ipinfo.io/json')
       .then(response => {
         if (!response.ok) {

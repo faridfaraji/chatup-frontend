@@ -1,4 +1,4 @@
-import constants from "../chat_bot_constants";
+import { id_selector, locations } from "../constants";
 
 let validationInterval; // Store the interval ID
 
@@ -14,7 +14,7 @@ const fetchValidation = (validation_url) => {
     })
     .then((data) => {
       if (data && !data.disable) {
-        const validChatBubble = document.getElementById("chatbubble-button");
+        const validChatBubble = document.querySelector(id_selector.open_chat_button_id);
         validChatBubble.classList.remove('deactive');
       }
     })
@@ -23,8 +23,8 @@ const fetchValidation = (validation_url) => {
     });
 };
 
-export const validate = () => {
-  const fetch_url = constants.validation_endpoint;
+const beginValidation = () => {
+  const fetch_url = locations.validation_endpoint;
   const shop_url = window.Shopify.shop;
   const queryParams = new URLSearchParams();
   queryParams.append("shop_url", shop_url);
@@ -40,3 +40,9 @@ export const validate = () => {
   // Initial validation attempt
   fetchValidation(validation_url);
 };
+
+export const validate = () => {
+  document.addEventListener("DOMContentLoaded", () => {
+    beginValidation()
+  })
+}
