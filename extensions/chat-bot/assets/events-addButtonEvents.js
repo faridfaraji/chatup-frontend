@@ -1,6 +1,6 @@
-import { id_selector } from "../constants";
-import { sendMessage } from "../io";
-import { toggleChat } from "../ui";
+import { id_selector } from "./constants";
+import { sendMessage } from "./io";
+import { toggleChat } from "./ui";
 
 export const addButtonEvents = () => {
     // open&close chat buttons

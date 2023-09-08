@@ -1,4 +1,4 @@
-import { class_selector, id_selector, sessionKey } from "../constants";
+import { class_selector, id_selector, sessionKey } from "./constants";
 
 export const loadChatHistory = () => {
   var chatHistory = JSON.localStorage.getItem(sessionKey.chat_history);

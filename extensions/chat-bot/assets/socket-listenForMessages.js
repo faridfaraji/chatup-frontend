@@ -1,5 +1,5 @@
-import { handleAdminMessage, handleAiMessage } from "../../events";
-import { hideLoader } from "../../ui";
+import { handleAdminMessage, handleAiMessage } from "./events";
+import { hideLoader } from "./ui";
 
 let admin_managed = false;
 

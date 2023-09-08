@@ -1,6 +1,6 @@
-import { loadChatHistory } from "../caching";
-import { id_selector } from "../constants";
-import { scrollToLatestMessage } from "../utilities";
+import { loadChatHistory } from "./caching";
+import { id_selector } from "./constants";
+import { scrollToLatestMessage } from "./utilities";
 
 export const toggleChat = () => {
     const chatbubbleWindow = document.querySelector(id_selector.chat_div_id);

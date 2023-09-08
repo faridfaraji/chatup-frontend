@@ -1,7 +1,7 @@
-import { class_selector, id_selector } from "../constants"
-import { addMessage, createAiMessage } from "../ui"
-import { processText, scrollToLatestMessage } from "../utilities"
-import { aiTimeout } from "./handleInputTimeout"
+import { class_selector, id_selector } from "./constants"
+import { addMessage, createAiMessage } from "./ui"
+import { processText, scrollToLatestMessage } from "./utilities"
+import { aiTimeout } from "./events"
 
 let accumulatedText = ""
 

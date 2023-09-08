@@ -1,4 +1,4 @@
-import { id_selector } from "../constants";
+import { id_selector } from "./constants";
 
 function debounce(func, wait) {
   let timeout;

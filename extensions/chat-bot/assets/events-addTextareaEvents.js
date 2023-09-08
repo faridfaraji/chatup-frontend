@@ -1,5 +1,5 @@
-import { id_selector } from "../constants";
-import { autoResizeTextarea, sendMessageOnEnter } from "../utilities";
+import { id_selector } from "./constants";
+import { autoResizeTextarea, sendMessageOnEnter } from "./utilities";
 
 export const addTextareaEvents = () => {
   const textarea = document.querySelector(id_selector.input_textarea_id);

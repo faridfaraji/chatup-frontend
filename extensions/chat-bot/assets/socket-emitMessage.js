@@ -1,5 +1,5 @@
-import { getConversationUniqueId } from "../../caching"
-import { socket } from "./establishSocket"
+import { getConversationUniqueId } from "./caching"
+import { socket } from "./socket"
 
 export const emitMessage = (message) => {
     getConversationUniqueId().then((conversation_id) => {

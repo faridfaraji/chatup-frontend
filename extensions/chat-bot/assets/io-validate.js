@@ -1,4 +1,4 @@
-import { id_selector, locations } from "../constants";
+import { id_selector, locations } from "./constants";
 
 let validationInterval; // Store the interval ID
 
