@@ -1,7 +1,5 @@
-import { handleAdminMessage } from "../../events/handleAdminMessage";
-import { handleAiMessage } from "../../events/handleAiMessage";
-import { hideLoader } from "../../ui/displayResponse";
-import { socket } from "./establishSocket"
+import { handleAdminMessage, handleAiMessage } from "../../events";
+import { hideLoader } from "../../ui";
 
 let admin_managed = false;
 

@@ -8,3 +8,5 @@ export const addEventListeners = () => {
     })
 }
 
+export { handleAiMessage } from "./handleAiMessage"
+export { handleAdminMessage } from "./handleAdminMessage"

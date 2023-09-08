@@ -29,8 +29,6 @@ function throttle(func, limit) {
   };
 }
 
-
-
 export const scrollToLatestMessage = () => {
   var messagesContainer = document.querySelector(id_selector.messages_div_id);
   var latestMessage = messagesContainer.lastElementChild;
@@ -53,4 +51,3 @@ export const scrollToLatestMessage = () => {
   // Initially call the function to scroll to the latest message
   scrollSmoothly();
 }
-

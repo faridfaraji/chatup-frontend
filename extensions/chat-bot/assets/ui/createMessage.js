@@ -1,4 +1,5 @@
 import { class_selector, id_selector } from "../constants"
+import { createTimestamp } from "../utilities"
 
 export const createCustomerMessage = () => {
   const textarea = document.querySelector(id_selector.input_textarea_id)
@@ -19,10 +20,12 @@ export const createCustomerMessage = () => {
   customerMessage.classList.add(class_selector.message_div_class)
   customerMessage.classList.add(class_selector.customer_message_div_class)
 
-  // Add content
-  customerMessage.textContent = messageText
+  // Add data
   customerMessage.setAttribute("data-timestamp", Date.now())
   customerMessage.style.opacity = "0"
+
+  // Add content
+  customerMessage.textContent = messageText
 
   // Add timestamp
   var timestamp = document.createElement("div")
@@ -43,10 +46,12 @@ export const createAdminMessage = (message) => {
   adminMessage.classList.add(class_selector.message_div_class)
   adminMessage.classList.add(class_selector.admin_message_div_class)
 
-  // Add content
-  adminMessage.textContent = message
+  // Add data
   adminMessage.setAttribute("data-timestamp", Date.now())
   adminMessage.style.opacity = "0"
+
+  // Add content
+  adminMessage.textContent = message
 
   // Add timestamp
   var timestamp = document.createElement("div")
@@ -64,8 +69,8 @@ export const createAiMessage = () => {
     // Add classes
     aiMessage.classList.add(class_selector.message_div_class)
     aiMessage.classList.add(class_selector.ai_message_div_class)
-  
-    // Add content
+
+    // Add data
     aiMessage.setAttribute("data-timestamp", Date.now())
     aiMessage.style.opacity = "0"
     

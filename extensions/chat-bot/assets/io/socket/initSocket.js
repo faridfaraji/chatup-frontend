@@ -1,3 +1,4 @@
+import { getConversationUniqueId } from "../../caching";
 import { sessionKey } from "../../constants";
 import { retrieveMetadata } from "../retrieveMetadata";
 import { socket } from "./establishSocket";
@@ -20,4 +21,3 @@ export const initSocket = () => {
 
     initPayload().then(data => socket.emit("init", data));
 };
-

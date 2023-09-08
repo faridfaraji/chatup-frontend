@@ -1,8 +1,7 @@
-import { addMessage } from "../ui/addMessage";
-import { createCustomerMessage } from "../ui/createMessage";
-import { showLoader } from "../ui/toggleLoader";
-import { emitMessage } from "./socket/emitMessage";
-import { admin_managed } from "./socket/listenForMessages";
+import { storeChatHistory } from "../caching";
+import { addMessage, createCustomerMessage, showLoader } from "../ui";
+import { scrollToLatestMessage } from "../utilities";
+import { admin_managed, emitMessage } from "./socket";
 
 export const sendMessage = () => {
     const { customerMessage, messageText} = createCustomerMessage()

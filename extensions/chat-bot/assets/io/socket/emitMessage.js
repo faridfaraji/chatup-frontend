@@ -1,4 +1,4 @@
-import { getConversationUniqueId } from "../../caching/getConversationUniqueId"
+import { getConversationUniqueId } from "../../caching"
 import { socket } from "./establishSocket"
 
 export const emitMessage = (message) => {
@@ -9,4 +9,3 @@ export const emitMessage = (message) => {
         })
     })
 }
-

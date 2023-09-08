@@ -8,7 +8,6 @@ export const addTextareaEvents = () => {
   textarea.addEventListener("input", () => autoResizeTextarea(id_selector.input_textarea_id))
   textarea.addEventListener("keydown", () => sendMessageOnEnter())
 
-
   // Touch events
   let touchMoved = false;
 
