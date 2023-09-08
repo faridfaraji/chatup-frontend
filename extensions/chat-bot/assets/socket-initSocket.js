@@ -1,7 +1,7 @@
-import { getConversationUniqueId } from "./caching";
-import { sessionKey } from "./constants";
-import { retrieveMetadata } from "./io";
-import { socket } from "./socket";
+import { getConversationUniqueId } from "./caching.js";
+import { sessionKey } from "./constants.js";
+import { retrieveMetadata } from "./io.js";
+import { socket } from "./socket.js";
 
 
 const initPayload = async () => {

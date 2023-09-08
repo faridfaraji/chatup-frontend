@@ -1,5 +1,5 @@
-import { id_selector } from "./constants";
-import { hideLoader } from "./ui";
+import { id_selector } from "./constants.js";
+import { hideLoader } from "./ui.js";
 
 const handleInputTimeout = (inputSelectors, timeout, onTimeout) => {
   const { textareaSelector, buttonSelector } = inputSelectors;

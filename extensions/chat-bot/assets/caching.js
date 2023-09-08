@@ -1,3 +1,3 @@
-export { getConversationUniqueId } from "./getConversationUniqueId"
-export { loadChatHistory } from "./loadChatHistory"
-export { storeChatHistory } from "./storeChatHistory"
+export { getConversationUniqueId } from "./caching-getConversationUniqueId.js"
+export { loadChatHistory } from "./caching-loadChatHistory.js"
+export { storeChatHistory } from "./caching-storeChatHistory.js"

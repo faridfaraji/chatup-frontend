@@ -1,4 +1,4 @@
-import { class_selector, id_selector } from "./constants";
+import { class_selector, id_selector } from "./constants.js";
 
 export function hideLoader() {
     var loader = document.querySelector(class_selector.custom_loader_class);

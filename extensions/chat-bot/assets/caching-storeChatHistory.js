@@ -1,4 +1,4 @@
-import { class_selector } from "./constants";
+import { class_selector } from "./constants.js";
 
 export const storeChatHistory = () => {
     var chatHistory = [];

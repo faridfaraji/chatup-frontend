@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ 'extensions/chat-bot/assets/style.css' | asset_url }}">
     <link href="https://fonts.googleapis.com/css2?family=Alfa" rel="stylesheet">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js" defer></script>
-    <script src="{{ 'main.js' | asset_url }}" defer></script>
+    <script src="{{ 'main.js' | asset_url }}" defer type="module"></script>
     {% style %}
       {{ block.settings.heading_font | font_face }}#chatbubble-window,
       #chatbubble-messages,

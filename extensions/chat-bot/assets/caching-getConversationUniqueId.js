@@ -1,5 +1,5 @@
-import { sessionKey } from "./constants";
-import { initSocket } from "./socket";
+import { sessionKey } from "./constants.js";
+import { initSocket } from "./socket.js";
 
 export const getConversationUniqueId = async () => {
     var timestamp = localStorage.getItem(sessionKey.conversation_id_timestamp);

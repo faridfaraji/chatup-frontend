@@ -1,5 +1,5 @@
-import { addEventListeners } from "./events";
-import { establishSocket, initSocket, listenForMessages, validate } from "./io";
+import { addEventListeners } from "./events.js";
+import { establishSocket, initSocket, listenForMessages, validate } from "./io.js";
 
 validate();
 addEventListeners();

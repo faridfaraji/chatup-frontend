@@ -1,5 +1,5 @@
-import { class_selector, id_selector } from "./constants"
-import { createTimestamp } from "./utilities"
+import { class_selector, id_selector } from "./constants.js"
+import { createTimestamp } from "./utilities.js"
 
 export const createCustomerMessage = () => {
   const textarea = document.querySelector(id_selector.input_textarea_id)

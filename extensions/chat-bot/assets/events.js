@@ -1,5 +1,5 @@
-import { addButtonEvents } from "./events-addButtonEvents"
-import { addTextareaEvents } from "./events-addTextareaEvents"
+import { addButtonEvents } from "./events-addButtonEvents.js"
+import { addTextareaEvents } from "./events-addTextareaEvents.js"
 
 export const addEventListeners = () => {
     document.addEventListener("DOMContentLoaded", () => {
@@ -8,6 +8,6 @@ export const addEventListeners = () => {
     })
 }
 
-export { handleAiMessage } from "./events-handleAiMessage"
-export { handleAdminMessage } from "./events-handleAdminMessage"
-export { aiTimeout } from "./events-handleInputTimeout"
+export { handleAiMessage } from "./events-handleAiMessage.js"
+export { handleAdminMessage } from "./events-handleAdminMessage.js"
+export { aiTimeout } from "./events-handleInputTimeout.js"

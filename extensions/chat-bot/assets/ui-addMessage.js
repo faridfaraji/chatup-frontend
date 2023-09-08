@@ -1,4 +1,4 @@
-import { id_selector } from "../constants";
+import { id_selector } from "./constants.js";
 
 export const addMessage = (message) => {
     var messagesContainer = document.querySelector(id_selector.messages_div_id);
