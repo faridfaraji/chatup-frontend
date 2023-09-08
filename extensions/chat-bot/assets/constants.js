@@ -11,7 +11,7 @@ export const class_selector = {
     message_div_class: ".chatbubble-message",
     timestamp_div_class: ".chatbubble-message-time",
     customer_message_div_class: "chatbubble-customer-message",
-    gpt_message_div_class: "chatbubble-gpt-message",
+    ai_message_div_class: "chatbubble-ai-message",
     admin_message_div_class: "chatbubble-admin-message",
 }
 

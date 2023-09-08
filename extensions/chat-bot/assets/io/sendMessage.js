@@ -1,4 +1,4 @@
-import { addHumanMessage } from "../ui/addMessage";
+import { addMessage } from "../ui/addMessage";
 import { createCustomerMessage } from "../ui/createMessage";
 import { showLoader } from "../ui/toggleLoader";
 import { emitMessage } from "./socket/emitMessage";
@@ -10,7 +10,7 @@ export const sendMessage = () => {
     
     if (!admin_managed) showLoader()
     emitMessage(messageText)
-    addHumanMessage(customerMessage)
+    addMessage(customerMessage)
     storeChatHistory();
     scrollToLatestMessage();
 }

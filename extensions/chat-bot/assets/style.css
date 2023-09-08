@@ -9,12 +9,12 @@
     --chatbubble-window-backround: white;
     --inverse-button-color: white;
     --chatbubble-message-background-color: #f2f2f2b6;
-    --chatbubble-gpt-message-background-color: #579dff81;
+    --chatbubble-ai-message-background-color: #579dff81;
     --general-initial-prompt-box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     --general-initial-prompt-box-shadow-onHover: rgba(0, 0, 0, 0.3) 0px 4px 12px;
 }
 
-.chatbubble-gpt-message pre {
+.chatbubble-ai-message pre {
     text-wrap: wrap !important;
     white-space: break-spaces !important;
     font-family: inherit !important;
@@ -257,7 +257,7 @@
 }
 
 
-.close_button {
+.close-button {
     background: transparent;
     border: none;
     transition: 0.3s ease;
@@ -269,7 +269,7 @@
 }
 
 
-.close_button:hover {
+.close-button:hover {
 
     scale: .9;
 }
@@ -379,7 +379,7 @@
 
 
 
-.chatbubble-message {
+.chatbubble-customer-message {
     background-color: var(--chatbubble-message-background-color);
     padding: 10px 10px 12px 10px;
     margin-bottom: 8.5px;
@@ -413,8 +413,8 @@
 
 
 
-.chatbubble-gpt-message {
-    background-color: var(--chatbubble-gpt-message-background-color);
+.chatbubble-ai-message {
+    background-color: var(--chatbubble-ai-message-background-color);
     padding: 10px 10px 0px 12px;
     margin-bottom: 8.5px;
     border-radius: 15px;
@@ -428,7 +428,7 @@
 
     &::after {
         content: "";
-        background-color: var(--chatbubble-gpt-message-background-color);
+        background-color: var(--chatbubble-ai-message-background-color);
         border-bottom-right-radius: 16px 14px;
         position: relative;
         display: flex;
@@ -704,7 +704,7 @@ input {
 
 } */
 
-.chatbubble-message-time {
+.chatbubble-customer-message-time {
     font-size: 8px;
     display: flex;
     color: #888;
@@ -717,7 +717,7 @@ input {
 
 
 
-.chatbubble-gpt-message-time {
+.chatbubble-ai-message-time {
     font-size: 8px;
     color: #888;
     margin-top: 3px;

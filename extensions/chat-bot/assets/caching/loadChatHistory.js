@@ -23,7 +23,7 @@ export const loadChatHistory = () => {
       messageClassList = message.className.split(" ")
 
       // GPT messages get hyperlinked, hence are treated differently
-      if (messageClassList.includes(class_selector.gpt_message_div_class)) {
+      if (messageClassList.includes(class_selector.ai_message_div_class)) {
         chatbubbleMessage = document.createElement('div');
         chatbubbleMessage.className = message.className;
         const textNode = document.createTextNode(message.html);

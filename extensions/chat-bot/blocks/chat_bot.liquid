@@ -15,33 +15,26 @@
       #chatbubble-messages,
       #input-round-box,
       .initial-message-boxes {
-        border-radius: {{ block.settings.border_radius_range }}
-        px;
+        border-radius: {{ block.settings.border_radius_range }}px;
       }
       #chatbubble {
-        font-family: {{ block.settings.heading_font.family }}
-        , sans serif;
+        font-family: {{ block.settings.heading_font.family }}, sans serif;
       }
       #chatbubble-header {
-        color: {{ block.settings.icon_fill }}
-        ;
-        background: {{ block.settings.icon_background_color }}
-        ;
+        color: {{ block.settings.icon_fill }};
+        background: {{ block.settings.icon_background_color }};
       }
       .close_button {
-        color: {{ block.settings.icon_fill }}
-        ;
+        color: {{ block.settings.icon_fill }};
       }
       #chatbubble-button {
-        background: {{ block.settings.icon_background_color }}
-        ;
+        background: {{ block.settings.icon_background_color }};
         border-radius: {{ block.settings.border_radius_range }}
         px;
 
       }
       #chatbubble-button svg {
-        fill: {{ block.settings.icon_fill }}
-        ;
+        fill: {{ block.settings.icon_fill }};
       }
     {% endstyle %}
   </head>

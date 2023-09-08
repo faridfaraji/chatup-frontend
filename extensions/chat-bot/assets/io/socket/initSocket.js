@@ -1,10 +1,7 @@
 import { sessionKey } from "../../constants";
-import { retrieveMetadata } from "../retreiveMetadata";
+import { retrieveMetadata } from "../retrieveMetadata";
 import { socket } from "./establishSocket";
 
-function setConversationUniqueId(uniqueId) {
-
-}
 
 const initPayload = async () => {
     return {
