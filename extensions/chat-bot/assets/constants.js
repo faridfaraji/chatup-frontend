@@ -1,8 +1,7 @@
 
 export const locations = {
     validation_endpoint: `https://gateway.dev.awesoon.tech/v1/shopify/chatup/plans/validate-shop`,
-    // socket_endpoint: "https://chat.dev.awesoon.tech/customer",
-    socket_endpoint: "https://39fb-104-142-118-153.ngrok-free.app/customer",
+    socket_endpoint: "https://chat.dev.awesoon.tech/customer",
 }
 
 export const class_selector = {
