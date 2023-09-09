@@ -290,7 +290,7 @@ export default function ChatHistory() {
 
   const primaryActions =
     <HorizontalStack gap="1">
-      <Button size="slim" onClick={() => test()}>TEST</Button>
+      {/* <Button size="slim" onClick={() => test()}>TEST</Button> */}
       {bp.mdDown &&
         <Button
           icon={ConversationMinor}
