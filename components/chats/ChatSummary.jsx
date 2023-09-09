@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next"
 export const ChatSummary = ({ chat }) => {
     const { t } = useTranslation();
 
-
     const tags = chat?.conversation_summary?.classifications ? chat.conversation_summary.classifications.split(', ') : []
     const tagMarkup = tags.map((tag) => <Tag key={tag}>{tag}</Tag>)
     const tagDiv = tagMarkup.length > 0 &&
@@ -13,9 +12,6 @@ export const ChatSummary = ({ chat }) => {
             <HorizontalStack gap="1">{tagMarkup}</HorizontalStack>
             <br />
         </div>
-
-    console.log(tagMarkup)
-    console.log(tagDiv)
 
     const summary = chat?.conversation_summary?.summary
     const summaryDiv = summary &&
