@@ -59,7 +59,7 @@ export const ChatMessage = ({ message }) => {
 
     const adminMessage = message.metadata && message.metadata[0] === "admin"
     const aiMessage = message.message_type === "AI"
-    const time = localizeTime(dateFromUTC(message.timestamp))
+    const time = message.timestamp ? localizeTime(dateFromUTC(message.timestamp)) : localizeTime(new Date())
 
     const containerClass = `message-container ${aiMessage ? "ai" : adminMessage ? "admin" : "human"}-message-container`
     const messageClass = `${aiMessage ? "ai" : adminMessage ? "admin" : "human"}-message`

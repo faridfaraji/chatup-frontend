@@ -29,7 +29,7 @@ export const createCustomerMessage = () => {
 
   // Add timestamp
   var timestamp = document.createElement("div")
-  timestamp.classList.add(class_name.timestamp_div_class)
+  timestamp.classList.add(class_name.customer_timestamp_div_class)
   timestamp.innerText = createTimestamp()
   customerMessage.appendChild(timestamp)
 
@@ -55,7 +55,7 @@ export const createAdminMessage = (message) => {
 
   // Add timestamp
   var timestamp = document.createElement("div")
-  timestamp.classList.add(class_name.timestamp_div_class)
+  timestamp.classList.add(class_name.admin_timestamp_div_class)
   timestamp.innerText = createTimestamp()
   adminMessage.appendChild(timestamp)
 
@@ -65,9 +65,11 @@ export const createAdminMessage = (message) => {
 export const createAdminPartMessage = (messageText) => {
   var message = document.createElement("div")
   var divider = document.createElement("div")
+  var subDivider = document.createElement("div")
   var text = document.createElement("div")
   message.classList.add(class_name.admin_part_message_class)
   divider.classList.add(class_name.admin_part_divider_class)
+  divider.appendChild(subDivider)
   text.classList.add(class_name.admin_part_text_class)
   text.innerText = messageText
   message.appendChild(divider)

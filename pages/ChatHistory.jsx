@@ -146,7 +146,7 @@ export default function ChatHistory() {
       message_type: "USER",
       metadata: ["customer"],
       message: data.message,
-      timestamp: new Date()
+      timestamp: null
     }
 
     if (selected === data.conversation_id) { addMessage(customerMsg) }
@@ -208,7 +208,7 @@ export default function ChatHistory() {
       message_type: "USER",
       metadata: ["admin"],
       message: messageText,
-      timestamp: new Date()
+      timestamp: null
     }
     addMessage(adminMsg)
   }, [selected])

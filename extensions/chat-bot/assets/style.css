@@ -13,6 +13,7 @@
     --chatbubble-admin-message-background-color: #57d5ff81;
     --general-initial-prompt-box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     --general-initial-prompt-box-shadow-onHover: rgba(0, 0, 0, 0.3) 0px 4px 12px;
+    --a-color-text-logging: rgb(153, 153, 153);
 }
 
 .chatbubble-ai-message pre {
@@ -486,7 +487,6 @@
     position: absolute;
     top: 50%;
     left: 7%;
-    z-index: 1;
     /* transform: translateY(-100%); */
 }
 
@@ -495,7 +495,6 @@
     background-color: white;
     padding: 0 10px;
     position: relative;
-    z-index: 2;
     color: var(--a-color-text-logging);
     display: inline-block;
 }
@@ -769,12 +768,20 @@ input {
     display: flex;
     color: #888;
     position: absolute;
-    left: -30px;
+    left: -40px;
     height: 0px;
     bottom: 15px;
-
 }
 
+
+.chatbubble-admin-message-time {
+    font-size: 8px;
+    display: flex;
+    color: #888;
+    position: absolute;
+    left: 315px;
+    height: 0px;
+}
 
 
 .chatbubble-ai-message-time {
