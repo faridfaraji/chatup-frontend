@@ -1,12 +1,12 @@
 import { id_selector } from "./constants.js";
 import { autoResizeTextarea, sendMessageOnEnter } from "./utilities.js";
 
-export const addTextareaEvents = () => {
+export const addTextareaEvents = (socket) => {
   const textarea = document.querySelector(id_selector.input_textarea_id);
 
   // Typing/sending events
   textarea.addEventListener("input", () => autoResizeTextarea(id_selector.input_textarea_id))
-  textarea.addEventListener("keydown", () => sendMessageOnEnter())
+  textarea.addEventListener("keydown", (e) => sendMessageOnEnter(e, socket))
 
   // Touch events
   let touchMoved = false;

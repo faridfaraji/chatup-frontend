@@ -1,23 +1,25 @@
-import { getConversationUniqueId } from "./caching.js";
 import { sessionKey } from "./constants.js";
 import { retrieveMetadata } from "./io.js";
-import { socket } from "./socket.js";
 
+let connInitiated = false;
 
-const initPayload = async () => {
-    return {
-        shop_id: window.shopId,
-        conversation_id: getConversationUniqueId(),
-        metadata: retrieveMetadata()
-    }
-}
+export const initSocket = (socket) => {
+    return new Promise((resolve) => {
+        socket.once("init_response", data => {
+            localStorage.setItem(sessionKey.conversation_id, data);
+            localStorage.setItem(sessionKey.conversation_id_timestamp, new Date());
+            connInitiated = true;
+            resolve(data)
+        });
 
-export const initSocket = () => {
-    // Setup a one-time event listener for the "init_response"
-    socket.once("init_response", data => {
-        localStorage.setItem(sessionKey.conversation_id, data);
-        localStorage.setItem(sessionKey.conversation_id_timestamp, new Date());
-    });
-
-    initPayload().then(data => socket.emit("init", data));
+        retrieveMetadata()
+            .then(metadata => {
+                socket.emit("init", {
+                    shop_id: window.shopId,
+                    metadata: metadata
+                })
+            });
+    })
 };
+
+export { connInitiated }

@@ -1,4 +1,4 @@
-import { class_selector, id_selector } from "./constants.js"
+import { class_name, id_selector } from "./constants.js"
 import { addMessage, createAiMessage } from "./ui.js"
 import { processText, scrollToLatestMessage } from "./utilities.js"
 import { aiTimeout } from "./events.js"
@@ -15,10 +15,9 @@ export const handleAiMessage = (message) => {
 
   // Append a new message container and reset the accumulated text if AI is not
   // the latest message
-  if (!latestMessage.classList.includes(class_selector.ai_message_div_class)) {
+  if (!latestMessage.classList.contains(class_name.ai_message_div_class)) {
     const aiMessage = createAiMessage()
     addMessage(aiMessage)
-    scrollToLatestMessage()
     accumulatedText = ""
     handleAiMessage(message)
     // Otherwise we're spittin', so keep spittin'

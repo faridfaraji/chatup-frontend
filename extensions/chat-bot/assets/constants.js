@@ -10,9 +10,25 @@ export const class_selector = {
     custom_loader_class: ".custom-loader",
     message_div_class: ".chatbubble-message",
     timestamp_div_class: ".chatbubble-message-time",
+    customer_message_div_class: ".chatbubble-customer-message",
+    ai_message_div_class: ".chatbubble-ai-message",
+    admin_message_div_class: ".chatbubble-admin-message",
+    admin_part_message_class: ".admin-part-message",
+    admin_part_divider_class: ".admin-part-divider",
+    admin_part_text_class: ".admin-part-text",
+}
+
+export const class_name = {
+    // Class selectors
+    custom_loader_class: "custom-loader",
+    message_div_class: "chatbubble-message",
+    timestamp_div_class: "chatbubble-message-time",
     customer_message_div_class: "chatbubble-customer-message",
     ai_message_div_class: "chatbubble-ai-message",
     admin_message_div_class: "chatbubble-admin-message",
+    admin_part_message_class: "admin-part-message",
+    admin_part_divider_class: "admin-part-divider",
+    admin_part_text_class: "admin-part-text",
 }
 
 export const id_selector = {

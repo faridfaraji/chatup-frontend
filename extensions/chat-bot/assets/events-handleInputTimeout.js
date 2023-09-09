@@ -1,3 +1,4 @@
+import { storeChatHistory } from "./caching.js";
 import { id_selector } from "./constants.js";
 import { hideLoader } from "./ui.js";
 
@@ -7,14 +8,14 @@ const handleInputTimeout = (inputSelectors, timeout, onTimeout) => {
   const textarea = document.querySelector(textareaSelector);
   const button = document.querySelector(buttonSelector);
 
-  textarea?.disabled = true;
-  button?.disabled = true;
+  textarea?.setAttribute("disabled", "disabled")
+  button?.setAttribute("disabled", "disabled")
 
   clearTimeout(handleInputTimeout.timeout);
 
   handleInputTimeout.timeout = setTimeout(() => {
-    textarea?.disabled = false;
-    button?.disabled = false;
+    textarea?.removeAttribute("disabled")
+    button?.removeAttribute("disabled")
 
     if (typeof onTimeout === "function") {
       onTimeout();

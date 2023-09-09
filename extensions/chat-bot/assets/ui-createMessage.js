@@ -1,4 +1,4 @@
-import { class_selector, id_selector } from "./constants.js"
+import { class_name, id_selector } from "./constants.js"
 import { createTimestamp } from "./utilities.js"
 
 export const createCustomerMessage = () => {
@@ -10,15 +10,15 @@ export const createCustomerMessage = () => {
 
   // If there was no message to speak of, we get out of here
   if (!messageText || messageText === "") {
-    return null
+    return { customerMessage: null, messageText }
   }
 
   // Create the div 
   var customerMessage = document.createElement("div")
 
   // Add classes
-  customerMessage.classList.add(class_selector.message_div_class)
-  customerMessage.classList.add(class_selector.customer_message_div_class)
+  customerMessage.classList.add(class_name.message_div_class)
+  customerMessage.classList.add(class_name.customer_message_div_class)
 
   // Add data
   customerMessage.setAttribute("data-timestamp", Date.now())
@@ -29,7 +29,7 @@ export const createCustomerMessage = () => {
 
   // Add timestamp
   var timestamp = document.createElement("div")
-  timestamp.classList.add(class_selector.timestamp_div_class)
+  timestamp.classList.add(class_name.timestamp_div_class)
   timestamp.innerText = createTimestamp()
   customerMessage.appendChild(timestamp)
 
@@ -43,8 +43,8 @@ export const createAdminMessage = (message) => {
   var adminMessage = document.createElement("div")
 
   // Add classes
-  adminMessage.classList.add(class_selector.message_div_class)
-  adminMessage.classList.add(class_selector.admin_message_div_class)
+  adminMessage.classList.add(class_name.message_div_class)
+  adminMessage.classList.add(class_name.admin_message_div_class)
 
   // Add data
   adminMessage.setAttribute("data-timestamp", Date.now())
@@ -55,11 +55,28 @@ export const createAdminMessage = (message) => {
 
   // Add timestamp
   var timestamp = document.createElement("div")
-  timestamp.classList.add(class_selector.timestamp_div_class)
+  timestamp.classList.add(class_name.timestamp_div_class)
   timestamp.innerText = createTimestamp()
   adminMessage.appendChild(timestamp)
 
   return adminMessage
+}
+
+export const createAdminPartMessage = (messageText) => {
+  var message = document.createElement("div")
+  var divider = document.createElement("div")
+  var text = document.createElement("div")
+  message.classList.add(class_name.admin_part_message_class)
+  divider.classList.add(class_name.admin_part_divider_class)
+  text.classList.add(class_name.admin_part_text_class)
+  text.innerText = messageText
+  message.appendChild(divider)
+  message.appendChild(text)
+  return message
+}
+
+export const createAdminForfeitMessage = () => {
+
 }
 
 export const createAiMessage = () => {
@@ -67,8 +84,8 @@ export const createAiMessage = () => {
     var aiMessage = document.createElement("div")
 
     // Add classes
-    aiMessage.classList.add(class_selector.message_div_class)
-    aiMessage.classList.add(class_selector.ai_message_div_class)
+    aiMessage.classList.add(class_name.message_div_class)
+    aiMessage.classList.add(class_name.ai_message_div_class)
 
     // Add data
     aiMessage.setAttribute("data-timestamp", Date.now())

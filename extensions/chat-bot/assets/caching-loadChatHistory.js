@@ -1,7 +1,8 @@
-import { class_selector, id_selector, sessionKey } from "./constants.js";
+import { class_name, id_selector, sessionKey } from "./constants.js";
+import { scrollToLatestMessage } from "./utilities.js";
 
 export const loadChatHistory = () => {
-  var chatHistory = JSON.localStorage.getItem(sessionKey.chat_history);
+  var chatHistory = JSON.parse(localStorage.getItem(sessionKey.chat_history))
   var currentTime = Date.now();
 
   // Clear existing messages
@@ -23,7 +24,7 @@ export const loadChatHistory = () => {
       messageClassList = message.className.split(" ")
 
       // GPT messages get hyperlinked, hence are treated differently
-      if (messageClassList.includes(class_selector.ai_message_div_class)) {
+      if (messageClassList.contains(class_name.ai_message_div_class)) {
         chatbubbleMessage = document.createElement('div');
         chatbubbleMessage.className = message.className;
         const textNode = document.createTextNode(message.html);

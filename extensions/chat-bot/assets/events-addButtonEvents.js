@@ -12,5 +12,5 @@ export const addButtonEvents = () => {
 
     // send message
     const sendButton = document.querySelector(id_selector.send_button_id)
-    sendButton.addEventListener("click", () => sendMessage())
+    sendButton.addEventListener("click", () => sendMessage(socket))
 }
