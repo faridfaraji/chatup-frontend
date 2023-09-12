@@ -16,7 +16,8 @@ export const initSocket = (socket) => {
             .then(metadata => {
                 socket.emit("init", {
                     shop_id: window.shopId,
-                    metadata: metadata
+                    conversation_id: localStorage.getItem(sessionKey.conversation_id) ?? "",
+                    metadata: metadata,
                 })
             });
     })

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChatMessage } from "./ChatMessage"
 import { useTranslation } from "react-i18next";
+import { CenteredSpinner } from "../misc";
 
 export const ChatMessages = ({ messages, joined }) => {
     const { t } = useTranslation()
@@ -41,10 +42,10 @@ export const ChatMessages = ({ messages, joined }) => {
         </button>
 
 
-    return (
+    return messages.length ?
         <div className="chat-messages" ref={messagesRef} >
             {messages?.map((message, index) => <ChatMessage message={message} index={index} />)}
             {scrollButton}
-        </div>
-    )
+        </div> :
+        <CenteredSpinner />
 }

@@ -33,7 +33,7 @@ export const ChatSummary = ({ chat }) => {
                             {metadata?.city && <span>{metadata.city}, </span>}
                             {metadata?.region && <span>{metadata.region}, </span>}
                             {metadata?.country && <span>{metadata.country} </span>}
-                            {metadata?.country && <span className={`fi fi-${metadata.country?.toLowerCase()} fis`} />}
+                            {metadata?.country && <span className={`fi fi-${metadata.country?.toLowerCase()}`} />}
                         </div>
                     </div>
                     <br />

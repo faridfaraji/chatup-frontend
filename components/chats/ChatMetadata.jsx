@@ -18,7 +18,7 @@ export const ChatMetadata = ({ metadata }) => {
                 }
                 {
                     metadata && metadata.country &&
-                    <span className={`fi fi-${metadata.country.toLowerCase()} fis`}></span>
+                    <span className={`fi fi-${metadata.country.toLowerCase()} fi`}></span>
                 }
             </div>
             {

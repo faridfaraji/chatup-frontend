@@ -113,7 +113,7 @@ export default function ChatHistory() {
         .then(data => {
           const sortedData = data.sort((a, b) => new Date(a?.timestamp) - new Date(b?.timestamp))
           const newDiff = new Date(sortedData[sortedData.length - 1]?.timestamp) - new Date(sortedData[0]?.timestamp);
-          if (newDiff > diff) {
+          if (newDiff != diff) {
             setDiff(newDiff)
             setMessages(sortedData)
           }
@@ -234,8 +234,6 @@ export default function ChatHistory() {
           handleSend={handleAdminMessage}
           conversation_id={selected}
           socket={socket}
-          // handleRender={}
-          // handle
           />}
       <HorizontalStack align="end" gap="5">
         {liveView && !joinView &&
