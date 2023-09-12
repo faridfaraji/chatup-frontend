@@ -1,6 +1,6 @@
 import { HorizontalStack, Navigation, SkeletonBodyText, SkeletonDisplayText, SkeletonThumbnail } from "@shopify/polaris"
 
-export const SkeletonChats = () => {
+export const SkeletonChatNavigation = () => {
     const title = <span className="dot loading nav-date" />
     const label =
         <HorizontalStack gap="1">
@@ -17,5 +17,5 @@ export const SkeletonChats = () => {
         }
         return <Navigation.Section key={sectionKey} title={title} items={items} />
     })
-    return chats
+    return <Navigation key="skeletonNav" location="/" >{chats}</Navigation>
 }

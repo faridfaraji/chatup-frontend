@@ -9,12 +9,14 @@
     --chatbubble-window-backround: white;
     --inverse-button-color: white;
     --chatbubble-message-background-color: #f2f2f2b6;
-    --chatbubble-gpt-message-background-color: #579dff81;
+    --chatbubble-ai-message-background-color: #579dff81;
+    --chatbubble-admin-message-background-color: #57d5ff81;
     --general-initial-prompt-box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     --general-initial-prompt-box-shadow-onHover: rgba(0, 0, 0, 0.3) 0px 4px 12px;
+    --a-color-text-logging: rgb(153, 153, 153);
 }
 
-.chatbubble-gpt-message pre {
+.chatbubble-ai-message pre {
     text-wrap: wrap !important;
     white-space: break-spaces !important;
     font-family: inherit !important;
@@ -260,7 +262,7 @@
 }
 
 
-.close_button {
+.close-button {
     background: transparent;
     border: none;
     transition: 0.3s ease;
@@ -272,7 +274,7 @@
 }
 
 
-.close_button:hover {
+.close-button:hover {
 
     scale: .9;
 }
@@ -382,7 +384,7 @@
 
 
 
-.chatbubble-message {
+.chatbubble-customer-message {
     background-color: var(--chatbubble-message-background-color);
     padding: 10px 10px 12px 10px;
     margin-bottom: 8.5px;
@@ -416,8 +418,8 @@
 
 
 
-.chatbubble-gpt-message {
-    background-color: var(--chatbubble-gpt-message-background-color);
+.chatbubble-ai-message {
+    background-color: var(--chatbubble-ai-message-background-color);
     padding: 10px 10px 0px 12px;
     margin-bottom: 8.5px;
     border-radius: 15px;
@@ -431,7 +433,7 @@
 
     &::after {
         content: "";
-        background-color: var(--chatbubble-gpt-message-background-color);
+        background-color: var(--chatbubble-ai-message-background-color);
         border-bottom-right-radius: 16px 14px;
         position: relative;
         display: flex;
@@ -441,6 +443,63 @@
         height: 10px;
         transform: skew(115deg);
     }
+}
+
+
+.chatbubble-admin-message {
+    background-color: var(--chatbubble-admin-message-background-color);
+    padding: 10px 10px 0px 12px;
+    margin-bottom: 8.5px;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+    transition: .7s ease-in-out;
+    display: inline !important;
+    flex-direction: column;
+
+
+
+    &::after {
+        content: "";
+        background-color: var(--chatbubble-admin-message-background-color);
+        border-bottom-right-radius: 16px 14px;
+        position: relative;
+        display: flex;
+        width: 10px;
+        bottom: -10px;
+        left: -4px;
+        height: 10px;
+        transform: skew(115deg);
+    }
+}
+
+
+
+/* Admin join/forfeit message */
+.admin-part-message {
+    padding: 1em 0;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+.admin-part-divider {
+    width: 86%;
+    height: 1px;
+    background-color: var(--a-color-text-logging);
+    position: absolute;
+    top: 50%;
+    left: 7%;
+    /* transform: translateY(-100%); */
+}
+
+.admin-part-text {
+    width: auto;
+    background-color: white;
+    padding: 0 10px;
+    position: relative;
+    color: var(--a-color-text-logging);
+    display: inline-block;
 }
 
 
@@ -707,20 +766,28 @@ input {
 
 } */
 
-.chatbubble-message-time {
+.chatbubble-customer-message-time {
     font-size: 8px;
     display: flex;
     color: #888;
     position: absolute;
-    left: -30px;
+    left: -40px;
     height: 0px;
     bottom: 15px;
-
 }
 
 
+.chatbubble-admin-message-time {
+    font-size: 8px;
+    display: flex;
+    color: #888;
+    position: absolute;
+    left: 315px;
+    height: 0px;
+}
 
-.chatbubble-gpt-message-time {
+
+.chatbubble-ai-message-time {
     font-size: 8px;
     color: #888;
     margin-top: 3px;
