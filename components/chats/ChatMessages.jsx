@@ -10,6 +10,24 @@ export const ChatMessages = ({ messages, joined }) => {
     const [flag, setFlag] = useState(false);
     const [justJoined, setJustJoined] = useState(joined)
 
+    useEffect(() => {
+        const messagesContainer = messagesRef.current;
+
+        if (messagesContainer) {
+            const handleScroll = () => {
+                if (messagesContainer.scrollHeight - messagesContainer.scrollTop < messagesContainer.clientHeight) {
+                    setFlag(false)
+                }
+            };
+
+            messagesContainer.addEventListener('scroll', handleScroll);
+
+            return () => {
+                messagesContainer.removeEventListener('scroll', handleScroll);
+            };
+        }
+    }, []);
+
     const scrollToLatest = () => {
         if (messagesRef.current) {
             messagesRef.current.scrollTo({

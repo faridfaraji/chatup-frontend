@@ -1,3 +1,4 @@
+import { checkConversationHealth } from "./caching.js";
 import { sessionKey } from "./constants.js";
 import { retrieveMetadata } from "./io.js";
 
@@ -16,7 +17,7 @@ export const initSocket = (socket) => {
             .then(metadata => {
                 socket.emit("init", {
                     shop_id: window.shopId,
-                    conversation_id: localStorage.getItem(sessionKey.conversation_id) ?? "",
+                    conversation_id: checkConversationHealth() ?? null,
                     metadata: metadata,
                 })
             });
