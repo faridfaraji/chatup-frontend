@@ -14,6 +14,7 @@ import { PolarisVizLightTheme, PolarisVizProvider } from "@shopify/polaris-viz";
 export default function App() {
   // Any .tsx or .jsx files in /pages will become a route
   // See documentation for <Routes /> for more info
+  const index_page = import.meta.globEager("./pages/index.jsx");
   const pages = import.meta.globEager("./pages/**/!(*.test.[jt]sx)*.([jt]sx)");
   const { t } = useTranslation();
 
@@ -30,21 +31,25 @@ export default function App() {
                 <NavigationMenu
                   navigationLinks={[
                     {
+                      label: t("NavigationMenu.home"),
+                      destination: "/Home",
+                    },
+                    {
                       label: t("NavigationMenu.configuration"),
-                      destination: "/Configuration",
+                      destination: "/Settings",
                     },
                     {
                       label: t("NavigationMenu.chatHistory"),
                       destination: "/ChatHistory",
                     },
-                    {
-                      label: t("NavigationMenu.insights"),
-                      destination: "/Insights",
-                    },
-                    {
-                      label: t("NavigationMenu.billing"),
-                      destination: "/Billing",
-                    },
+                    // {
+                    //   label: t("NavigationMenu.insights"),
+                    //   destination: "/Insights",
+                    // },
+                    // {
+                    //   label: t("NavigationMenu.billing"),
+                    //   destination: "/Billing",
+                    // },
                   ]}
                   matcher={(link, location) => link.destination === location.pathname}
                 />

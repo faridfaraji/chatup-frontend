@@ -1,7 +1,9 @@
+import constants from "../../constants"
+
 export const PlanImage = ({ plan }) => {
     return (
         <div className="img-container">
-            <img src={`/assets/${plan}.svg`} className="plan-img" />
+            <img src={constants[`${plan}_src`]} className="plan-img" />
         </div>
     )
 }

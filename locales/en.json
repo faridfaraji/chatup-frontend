@@ -1,4 +1,24 @@
 {
+  "Welcome": {
+    "title": "Welcome to ChatUp!",
+    "onboard": "Get Started",
+    "dashboard": "View Dashboard"
+  },
+  "Onboard": {
+    "title": "Getting Started With ChatUp",
+    "back": "Back",
+    "skip": "Skip",
+    "next": "Next step",
+    "step1": "Step 1 of 3",
+    "step2": "Step 2 of 3",
+    "step3": "Step 3 of 3",
+    "step1action": "Embed ChatUp",
+    "step1copy": "Adding ChatUp to your store is simple. Click the button below, then click <strong>save</strong> in your theme settings.",
+    "step2action": "Customize ChatUp",
+    "step2copy": "Customizing ChatUp helps it fit with your store's style. You can change fonts, colors, images, and greetings in your theme settings.",
+    "step3action": "Test ChatUp",
+    "step3copy": "You're all set to give ChatUp a try! Click the button below to explore how it works on your store!"
+  },
   "HomePage": {
     "title": "Welcome to ChatUp",
     "scanTitle": "Scan Your Store",
@@ -83,6 +103,7 @@
     "freeTrialButton": "Reveal Chat History"
   },
   "NavigationMenu": {
+    "home": "Home",
     "configuration": "Configuration",
     "insights": "Insights",
     "chatHistory": "Chat History",

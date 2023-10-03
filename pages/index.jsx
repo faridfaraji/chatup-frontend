@@ -1,33 +1,31 @@
-import { useEffect, useState } from "react";
-import { useActivePlan, usePlanSetter } from "../hooks";
-import Landing from "./Landing";
-import constants from "../constants";
 import { useTranslation } from "react-i18next";
-import ExitIframe from "./ExitIframe";
-import { SkeletonHomePage } from "../components";
+import { useNavigate } from "react-router-dom";
+import { Button, Page } from "@shopify/polaris"
+import { Robot } from "../components";
+import {
+  AnalyticsDonutMinor,
+  MagicMinor
+} from '@shopify/polaris-icons';
 
-export default function HomePage() {
+export default function index() {
   const { t } = useTranslation();
-  const getActivePlan = useActivePlan();
-  const setPlan = usePlanSetter();
-  const [redirectUri, setUri] = useState(false);
-  const [landing, setLanding] = useState(<SkeletonHomePage />)
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    getActivePlan()
-      .then((data) => {
-        // Plan IDs are of the form [XX]
-        // [00] is the non-plan (unbilled) so we redirect them to billing pages
-        if (!parseInt(data?.name.slice(1, 3))) {
-          setPlan(constants.base_plan, t(`Billing.${constants.base_plan_copy_id}`))
-            .then((data) => {
-              setUri(data?.confirmation_page_url)
-            })
-        } else {
-          setLanding(<Landing />)
-        }
-      })
-  }, [])
-
-  return redirectUri ? <ExitIframe redirectUri={redirectUri} /> : landing
+  return (
+    <Page
+      title={t("Welcome.title")}
+      primaryAction={
+        <Button icon={MagicMinor} onClick={() => navigate("/Onboard?step=1&count=0")} >
+          {t("Welcome.onboard")}
+        </Button>
+      }
+      secondaryActions={
+        <Button icon={AnalyticsDonutMinor} onClick={() => navigate("/Dashboard")} >
+          {t("Welcome.dashboard")}
+        </Button>
+      }
+    >
+      <Robot />
+    </Page>
+  )
 }
