@@ -58,7 +58,7 @@ export default function Settings() {
           <TextField
             value={value}
             onChange={handleValueChange}
-            label={t("Configuration.negKeysTitle")}
+            label={t("Boundaries.boundariesTitle")}
             connectedRight={<Button submit>{t("Button.submit")}</Button>}
           />
         </FormLayout>
@@ -73,41 +73,47 @@ export default function Settings() {
   // TODO can this be containerized?
 
   // Initialize state vars
-  const [tempLoading, setTempLoading] = useState(true);
-  const [temp, setTemp] = useState("");
-  const handleTempChange = useCallback((value) => setTemp(value), [],);
-  const [compTemp, setCompTemp] = useState("");
   const putTemp = useTemperature();
   const getShop = useShop();
+  const [temp, setTemp] = useState("")
+  const [compTemp, setCompTemp] = useState("");
+  const handleTempChange = useCallback((value) => setTemp(value), [],);
+
 
   // Initialize with db data
   // We use init logic again later
   const initTemp = () => {
     getShop().then((data) => {
-      const shopTemp = data ? tempString(data.bot_temperature) : "0.0"
+      const shopTemp = data ? tempString(data.bot_temperature) : "0.00"
       setTemp(shopTemp)
       setCompTemp(shopTemp)
-    }).then(() => setTempLoading(false))
+    })
   }
   useEffect(() => initTemp(), [])
 
-
-
   // Define the temp select component
+  const tempDict = {
+    "0.00": "professional",
+    "0.25": "friendly",
+    "0.50": "informal",
+    "0.75": "engaging",
+    "1.00": "humorous",
+  }
+
   const bot_temp = (
-      <Select
-        contentEditable={false}
-        label={t("Configuration.tempTitle")}
-        options={[
-          { label: t("Configuration.professional"), value: "0.00" },
-          { label: t("Configuration.friendly"), value: "0.25" },
-          { label: t("Configuration.informal"), value: "0.50" },
-          { label: t("Configuration.engaging"), value: "0.75" },
-          { label: t("Configuration.humorous"), value: "1.00" },
-        ]}
-        onChange={handleTempChange}
-        value={temp}
-      />
+    <Select
+      contentEditable={false}
+      label={t("Personality.personalityTitle")}
+      options={[
+        { label: t("Personality.professional"), value: "0.00" },
+        { label: t("Personality.friendly"), value: "0.25" },
+        { label: t("Personality.informal"), value: "0.50" },
+        { label: t("Personality.engaging"), value: "0.75" },
+        { label: t("Personality.humorous"), value: "1.00" },
+      ]}
+      onChange={handleTempChange}
+      value={temp}
+    />
   )
 
   // Contextual Save Bar State Logic
@@ -161,9 +167,9 @@ export default function Settings() {
   }
 
   // Check whether the save bar is needed every time something changes.
-  useEffect(() => checkSave(), [keysLoading, tempLoading, keys, compKeys, temp, compTemp])
+  useEffect(() => checkSave(), [keysLoading, keys, compKeys, temp, compTemp])
   const checkSave = () => {
-    if (keysLoading || tempLoading) {
+    if (keysLoading) {
       hide()
     } else if (keys == compKeys && temp == compTemp) {
       hide()
@@ -174,42 +180,32 @@ export default function Settings() {
 
   return (
     <Page
-      title={t("NavigationMenu.configuration")}
+      title={t("NavigationMenu.settings")}
       divider
     >
       <VerticalStack gap={{ xs: "8", sm: "4" }}>
         <Setting
-          title={t("Configuration.negKeysTitle")}
-          short={t("Configuration.negKeysShort")}
+          title={t("Boundaries.boundariesTitle")}
+          short={t("Boundaries.boundariesShort")}
           inputs={[{
-            copy: t("Configuration.negKeysCopy"),
-            component: negKeys
+            component: negKeys,
+            copy: t("Boundaries.boundariesCopy"),
           }]}
         />
         {smUp ? <Divider /> : null}
-        <AccessWrapper minimum={40} copyDomain={"Configuration"} fullpage={false}>
-          <Setting
-            title={t("Configuration.tempTitle")}
-            short={t("Configuration.tempShort")}
-            inputs={[{
-              copy: t("Configuration.tempCopy"),
-              component: bot_temp
-            }]}
-          />
-        </AccessWrapper>
+        <Setting
+          title={t("Personality.personalityTitle")}
+          short={t("Personality.personalityShort")}
+          inputs={[{
+            component: bot_temp,
+            copy: t(`Personality.${tempDict[temp]}Desc`),
+          }]}
+        />
         {smUp ? <Divider /> : null}
         <Box
           paddingInlineStart={{ xs: 4, sm: 0 }}
           paddingInlineEnd={{ xs: 4, sm: 0 }}
         >
-          <PaddedCell padding={["0", "0", "4", "0"]}>
-            <AlphaCard bg="--p-color-bg-inverse-active">
-              <HorizontalGrid columns={{ xs: "1fr", md: "5fr 2fr" }} gap="4" alignItems="center">
-                <LoremIpsum content={t("Configuration.bottomCopy")} />
-                <EmbedButton />
-              </HorizontalGrid>
-            </AlphaCard>
-          </PaddedCell>
         </Box>
       </VerticalStack>
     </Page>

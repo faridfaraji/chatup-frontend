@@ -102,7 +102,10 @@ export default function Onboard() {
                             {t(`Onboard.step${step}action`)}
                         </Text>
                         <Text variant="bodyLg" as="p">
-                            <Trans i18nKey={`Onboard.step${step}copy`} />
+                            <Trans
+                                i18nKey={`Onboard.step${step}copy`}
+                                components={[<strong />]}
+                            />
                         </Text>
                         {actionButton}
                     </VerticalStack>

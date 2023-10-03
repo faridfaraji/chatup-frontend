@@ -19,7 +19,7 @@ export default function App() {
   const { t } = useTranslation();
 
   PolarisVizLightTheme["arc"]["thickness"] = 50
-  PolarisVizLightTheme["chartContainer"]["minHeight"] = 250
+  PolarisVizLightTheme["chartContainer"]["minHeight"] = 300
 
   return (
     <AwesoonProvider>
@@ -31,25 +31,25 @@ export default function App() {
                 <NavigationMenu
                   navigationLinks={[
                     {
-                      label: t("NavigationMenu.home"),
-                      destination: "/Home",
+                      label: t("NavigationMenu.dashboard"),
+                      destination: "/Dashboard",
                     },
                     {
-                      label: t("NavigationMenu.configuration"),
+                      label: t("NavigationMenu.inbox"),
+                      destination: "/Inbox",
+                    },
+                    {
+                      label: t("NavigationMenu.analytics"),
+                      destination: "/Analytics",
+                    },
+                    {
+                      label: t("NavigationMenu.settings"),
                       destination: "/Settings",
                     },
                     {
-                      label: t("NavigationMenu.chatHistory"),
-                      destination: "/ChatHistory",
+                      label: t("NavigationMenu.plan"),
+                      destination: "/Plan",
                     },
-                    // {
-                    //   label: t("NavigationMenu.insights"),
-                    //   destination: "/Insights",
-                    // },
-                    // {
-                    //   label: t("NavigationMenu.billing"),
-                    //   destination: "/Billing",
-                    // },
                   ]}
                   matcher={(link, location) => link.destination === location.pathname}
                 />

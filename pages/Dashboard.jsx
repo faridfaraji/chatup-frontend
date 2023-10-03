@@ -1,29 +1,25 @@
-import { AlphaCard, Divider, Layout, Page } from "@shopify/polaris"
-import { CardTitle } from "../components"
-import { useTranslation } from "react-i18next"
-
+import { Layout, Page, VerticalStack, useBreakpoints } from "@shopify/polaris"
+import { CustomizeCard, DailyCard, SettingsCard, TopicsCard } from "../components"
 
 export default function Dashboard() {
-    const { t } = useTranslation();
-
-
-    const scanCard = <AlphaCard>
-        <CardTitle title={t("HomePage.scanTitle")} alignment="left" linebreak />
-        <Divider/>
-    </AlphaCard>
-
-    const embedCard = <AlphaCard />
-
-    const homePage = <Page narrowWidth>
-        <Layout>
-            <Layout.Section>
-                {scanCard}
-            </Layout.Section>
-            <Layout.Section>
-                {embedCard}
-            </Layout.Section>
-        </Layout>
-    </Page>
-
-    return (homePage)
+    const bp = useBreakpoints();
+    
+    return (
+        <Page>
+            <Layout>
+                <Layout.Section oneHalf>
+                    <VerticalStack gap={{ xs: 2, sm: 4 }}>
+                        <DailyCard />
+                        {bp.mdUp ? <TopicsCard /> : <CustomizeCard />}
+                    </VerticalStack>
+                </Layout.Section>
+                <Layout.Section oneHalf>
+                    <VerticalStack gap={{ xs: 2, sm: 4 }}>
+                        {bp.mdUp ? <CustomizeCard /> : <TopicsCard />}
+                        <SettingsCard />
+                    </VerticalStack>
+                </Layout.Section>
+            </Layout>
+        </Page>
+    )
 }

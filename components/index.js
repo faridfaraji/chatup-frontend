@@ -15,3 +15,4 @@ export * from "./misc";
 export * from "./charts";
 export * from "./images";
 export * from "./chats";
+export * from "./dash";

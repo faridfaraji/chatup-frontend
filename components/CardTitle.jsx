@@ -1,4 +1,4 @@
-import { Text } from "@shopify/polaris"
+import { Divider, Text } from "@shopify/polaris"
 
 export const CardTitle = (props) => {
     return (
@@ -6,7 +6,13 @@ export const CardTitle = (props) => {
             <Text variant="headingLg" alignment={props.alignment}>
                 {props.title}
             </Text>
-            {(props.linebreak ? <br /> : null)}
+            {(props.divider && (
+                <>
+                    <br />
+                    <Divider />
+                </>
+            ))}
+            {(props.linebreak && <br />)}
         </div>
     )
 }

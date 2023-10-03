@@ -84,7 +84,7 @@ export default function Configuration() {
   // We use init logic again later
   const initTemp = () => {
     getShop().then((data) => {
-      const shopTemp = data ? tempString(data.bot_temperature) : "0.0"
+      const shopTemp = data ? tempString(data.bot_temperature) : "0.00"
       setTemp(shopTemp)
       setCompTemp(shopTemp)
     }).then(() => setTempLoading(false))
