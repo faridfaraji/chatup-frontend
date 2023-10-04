@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { scrollToBottom, zeroRange } from "../utils";
 import { ConversationMinor } from "@shopify/polaris-icons"
 
-export default function Inbox() {
+export default function Messages() {
   //===========================================================================
   // Initialization of state variables
   //===========================================================================

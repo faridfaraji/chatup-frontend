@@ -35,8 +35,8 @@ export default function App() {
                       destination: "/Dashboard",
                     },
                     {
-                      label: t("NavigationMenu.inbox"),
-                      destination: "/Inbox",
+                      label: t("NavigationMenu.messages"),
+                      destination: "/Messages",
                     },
                     {
                       label: t("NavigationMenu.analytics"),

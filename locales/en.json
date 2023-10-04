@@ -1,7 +1,7 @@
 {
   "NavigationMenu": {
     "dashboard": "Dashboard",
-    "inbox": "Inbox",
+    "messages": "Messages",
     "settings": "Settings",
     "analytics": "Analytics",
     "plan": "Plan"
@@ -102,11 +102,11 @@
     "free3": "Try before you buy",
     "free4": "Upgrade anytime",
     "free5": "Free forever",
-    "[2Customers": "Up to 25 daily chats",
+    "[2Customers": "Help up to 25 customers a day",
     "[2Messages": "50 daily messages",
-    "[4Customers": "Up to 100 daily chats",
+    "[4Customers": "Help up to 100 customers a day",
     "[4Messages": "200 daily messages",
-    "[6Customers": "Up to 250 daily chats",
+    "[6Customers": "Help up to 250 customers a day",
     "[6Messages": "500 daily messages",
     "[8Customers": "Unlimited chats",
     "[8Messages": "Unlimited messages",

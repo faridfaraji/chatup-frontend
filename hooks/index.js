@@ -1,6 +1,6 @@
 export { useAppQuery } from "./useAppQuery";
 export { useAuthenticatedFetch } from "./useAuthenticatedFetch";
-export { useShopValidator, useActivePlan, usePlanSetter } from "./useActivePlan";
+export { useShopValidator, useActivePlan, usePlanSetter, usePlanCanceller } from "./useActivePlan";
 export { useChatsFetch } from "./useChatsFetch";
 export { useChatFetch } from "./useChatFetch";
 export { useMessagesFetch } from "./useMessagesFetch";

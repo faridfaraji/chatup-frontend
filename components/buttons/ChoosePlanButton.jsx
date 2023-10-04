@@ -34,7 +34,6 @@ export const ChoosePlanButton = ({ current, priceInfo, plan, name }) => {
         setButton(fetchingButton)
         choosePlan(plan, name).then((data) => {
             const url = data?.confirmation_page_url
-            console.log(data)
             if (url) {
                 navigate(url)
             } else {

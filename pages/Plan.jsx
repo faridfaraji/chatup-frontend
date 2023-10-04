@@ -1,7 +1,7 @@
 import { AlphaCard, Divider, HorizontalGrid, Link, Page, Tabs, Text, VerticalStack } from "@shopify/polaris";
 import { Trans, useTranslation } from "react-i18next";
 import { PaddedCell, CardTitle, PlanFeature, PlanImage, ChoosePlanButton } from "../components";
-import { useActivePlan } from "../hooks";
+import { useActivePlan, usePlanCanceller } from "../hooks";
 import { useEffect, useState } from "react";
 import constants from "../constants";
 
@@ -14,6 +14,18 @@ const planIds = {
 
 export default function Plan() {
     const { t } = useTranslation();
+    const cancelPlan = usePlanCanceller();
+
+    // Returning to Free Plan:
+    const handleFreeWill = () => {
+        setPlan("[00]", t("Plan.[0")).then((data) => {
+            const url = data?.confirmation_page_url
+            console.log(data)
+            if (url) {
+                navigate(url)
+            }
+        })
+    }
 
     // Active plan data
     const getActivePlan = useActivePlan();
@@ -52,7 +64,7 @@ export default function Plan() {
     const page = <Page>
         <HorizontalGrid columns={onFree ? { sm: 1, md: "2fr 1fr" } : 1} gap="4">
             <AlphaCard>
-                <Tabs tabs={planTabs} selected={planTab} onSelect={index => setPlanTab(index)}>
+                <Tabs fitted tabs={planTabs} selected={planTab} onSelect={index => setPlanTab(index)}>
                     <br />
                     <PlanImage plan={planName} />
                     <br />
@@ -68,49 +80,61 @@ export default function Plan() {
                         <PlanFeature name={t("Plan.paid5")} />
                         <PlanFeature name={t("Plan.paid6")} />
                         {
-                            enterpriseTab ?
-                                <Text as="p" color="subdued">
-                                    <Trans
-                                        i18nKey={"Plan.enterpriseContact"}
-                                        components={[<Link url={"mailto:care@awesoon.tech"} />]}
-                                    />
-                                </Text> :
-                                <>
-                                    <ChoosePlanButton
-                                        current={planIdMonthly === activePlan.name.slice(0, 4)}
-                                        priceInfo={constants.prices[planIdMonthly]}
-                                        plan={planIdMonthly}
-                                        name={t(`Plan.${planId}`)}
-                                    />
-                                    <ChoosePlanButton
-                                        current={planIdYearly === activePlan.name.slice(0, 4)}
-                                        priceInfo={constants.prices[planIdYearly]}
-                                        plan={planIdYearly}
-                                        name={t(`Plan.${planId}`)}
-                                    />
-                                </>
+                            !enterpriseTab &&
+                            <>
+                                <ChoosePlanButton
+                                    current={planIdMonthly === activePlan.name.slice(0, 4)}
+                                    priceInfo={constants.prices[planIdMonthly]}
+                                    plan={planIdMonthly}
+                                    name={t(`Plan.${planId}`)}
+                                />
+                                <ChoosePlanButton
+                                    current={planIdYearly === activePlan.name.slice(0, 4)}
+                                    priceInfo={constants.prices[planIdYearly]}
+                                    plan={planIdYearly}
+                                    name={t(`Plan.${planId}`)}
+                                />
+                            </>
                         }
                     </HorizontalGrid>
+                    {
+                        enterpriseTab &&
+                        <>
+                            <br />
+                            <Text as="p" color="subdued">
+                                <Trans
+                                    i18nKey={"Plan.enterpriseContact"}
+                                    components={[<Link url={"mailto:care@awesoon.tech"} />]}
+                                />
+                            </Text>
+                        </>
+                    }
                 </Tabs>
             </AlphaCard>
-            {
-                onFree &&
-                <AlphaCard>
-                    <PaddedCell padding={["0", "5", "0", "5"]}>
-                        <Text as="p" color="subdued">
-                            {t("Plan.currentPlan")}
-                        </Text>
-                        <CardTitle title={t("Plan.free")} linebreak />
-                    </PaddedCell>
-                    <VerticalStack gap="4">
-                        <PlanFeature name={t("Plan.free1")} />
-                        <PlanFeature name={t("Plan.free2")} />
-                        <PlanFeature name={t("Plan.free3")} />
-                        <PlanFeature name={t("Plan.free4")} />
-                        <PlanFeature name={t("Plan.free5")} />
-                    </VerticalStack>
-                </AlphaCard>
-            }
+            <AlphaCard>
+                {
+                    onFree ?
+                        <>
+                            <PaddedCell padding={["0", "5", "0", "5"]}>
+                                <Text as="p" color="subdued">
+                                    {t("Plan.currentPlan")}
+                                </Text>
+                                <CardTitle title={t("Plan.free")} linebreak />
+                            </PaddedCell>
+                            <VerticalStack gap="4">
+                                <PlanFeature name={t("Plan.free1")} />
+                                <PlanFeature name={t("Plan.free2")} />
+                                <PlanFeature name={t("Plan.free3")} />
+                                <PlanFeature name={t("Plan.free4")} />
+                                <PlanFeature name={t("Plan.free5")} />
+                            </VerticalStack>
+                        </> :
+                        <>
+                            <Text>We're trying something here</Text>
+                            <Link onClick={() => handleFreeWill()}>Regain Free Will</Link>
+                        </>
+                }
+            </AlphaCard>
         </HorizontalGrid>
     </Page>
 
