@@ -1,8 +1,8 @@
-import { Box, Button, Page, useBreakpoints, VerticalStack, Divider, HorizontalStack, HorizontalGrid, AlphaCard, Tag, Form, FormLayout, TextField, Select } from "@shopify/polaris";
-import { AccessWrapper, EmbedButton, LoremIpsum, PaddedCell, Setting } from "../components";
+import { Box, Button, Page, useBreakpoints, VerticalStack, Divider, HorizontalStack, Tag, Form, FormLayout, TextField, Select } from "@shopify/polaris";
+import { Setting } from "../components";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, useCallback } from "react";
-import { useActivePlan, useNegativeKeywordGetter, useNegativeKeywordSetter, useShop, useTemperature } from "../hooks";
+import { useNegativeKeywordGetter, useNegativeKeywordSetter, useShop, useTemperature } from "../hooks";
 import { useContextualSaveBar } from "@shopify/app-bridge-react";
 import { tempString } from "../utils/dataUtils";
 
@@ -93,6 +93,7 @@ export default function Settings() {
 
   // Define the temp select component
   const tempDict = {
+    "": "loading",
     "0.00": "professional",
     "0.25": "friendly",
     "0.50": "informal",

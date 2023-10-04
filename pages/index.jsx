@@ -1,3 +1,4 @@
+import '@shopify/polaris-viz/build/esm/styles.css';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Button, Page } from "@shopify/polaris"

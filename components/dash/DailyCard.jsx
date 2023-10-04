@@ -1,25 +1,33 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { MessageDonut } from "../charts";
 import { Trans, useTranslation } from "react-i18next";
 import { AlphaCard, Link, List, VerticalStack } from "@shopify/polaris";
 import { useNavigate } from "@shopify/app-bridge-react";
 import { CardTitle } from "../CardTitle";
+import { useActivePlan, useShopValidator } from "../../hooks";
 
 export const DailyCard = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const getActivePlan = useActivePlan();
+    const validatePlan = useShopValidator()
 
-    const [usage, setUsage] = useState(6);
-    const [limit, setLimit] = useState(9);
+    const [validation, setValidation] = useState({ current_usage: 0, message_limit: 0 });
+    const usage = validation.current_usage
+    const limit = validation.message_limit
     const remaining = limit - usage
-    const xMessagesRemaining = remaining > 0 ?
-        t("Dashboard.xMessagesRemaining", { x: remaining }) :
-        t("Dashboard.outOfMessages")
+    const xMessagesRemaining = limit === 0 ?
+        t("Dashboard.loadingMessages") :
+        remaining > 0 ?
+            t("Dashboard.xMessagesRemaining", { x: remaining }) :
+            t("Dashboard.outOfMessages")
     const messageDonut = <MessageDonut current_usage={usage} message_limit={limit} />
 
+    const [plan, setPlan] = useState(false);
+    const currentPlan = plan ? `${t("Dashboard.currentPlan", { x: plan?.name?.slice(5) })}` : t("Dashboard.loadingPlan")
 
-    const [plan, setPlan] = useState("Free");
-    const currentPlan = `${t("Dashboard.currentPlan", { x: plan })}`
+    useEffect(() => getActivePlan().then(data => setPlan(data)), [])
+    useEffect(() => validatePlan().then(data => setValidation(data)), [])
 
     const planCall = <Trans
         i18nKey={`Dashboard.planCall`}

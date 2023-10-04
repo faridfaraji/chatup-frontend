@@ -1,8 +1,10 @@
 /* Variable definition */
 :root {
-    --p-color-bg-primary: rgb(0, 0, 0) !important;
-    --p-color-bg-primary-hover: rgba(0, 0, 0, 0.5) !important;
-    --p-color-bg-primary-active: rgba(4, 30, 49, 0.5) !important;
+    /* --p-color-bg-primary: rgb(0, 0, 0) !important;
+    --p-color-bg-primary-hover: rgba(0, 0, 0, 0.5) !important; */
+    --p-color-bg-primary: rgb(16, 76, 115)!important;
+    --p-color-bg-primary-hover: rgba(16, 76, 115, 0.5) !important;
+    --p-color-bg-primary-active: rgba(11, 58, 91, 0.5) !important;
     --a-color-bg-new-message: rgb(11, 46, 116);
     --a-color-bg-positive-message: rgba(4, 156, 216, 0.3);
     --a-color-bg-positive-message-hover: rgba(4, 156, 216, 0.7);
@@ -428,6 +430,7 @@ textarea {
     display: flex;
     justify-content: center;
     max-width: 100%;
+    min-height: 10rem;
 }
 
 .plan-img {
@@ -547,10 +550,10 @@ textarea {
 /* Billing Page: Choose Plan button decoration */
 #plan-button {
     border-radius: 10px 10px 10px 0px;
-    transition: 0.3s ease-in;
 }
 
 #plan-button:hover {
+    transition: 0.3s ease-in;
     border-radius: 10px 10px 0px 10px;
 }
 

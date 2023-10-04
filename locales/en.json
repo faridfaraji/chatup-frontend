@@ -1,20 +1,10 @@
 {
-  "Misc": {
-    "loading": "Loading..."
-  },
-
   "NavigationMenu": {
     "dashboard": "Dashboard",
     "inbox": "Inbox",
     "settings": "Settings",
     "analytics": "Analytics",
-    "plan": "Plan",
-
-
-    "home": "Home",
-    "configuration": "Configuration",
-    "insights": "Insights",
-    "billing": "Billing"
+    "plan": "Plan"
   },
 
   "Welcome": {
@@ -22,7 +12,6 @@
     "onboard": "Get Started",
     "dashboard": "View Dashboard"
   },
-
 
   "Onboard": {
     "title": "Getting Started With ChatUp",
@@ -43,6 +32,8 @@
   "Dashboard": {
     "dailyTitle": "Daily Messages",
     "xMessagesRemaining": "You have {{ x }} messages remaining today",
+    "loadingMessages": "Loading your message usage",
+    "loadingPlan": "Loading your plan details",
     "outOfMessages": "You have no messages remaining today",
     "currentPlan": "You are currently on our {{ x }} plan",
     "planCall": "Upgrade your <0>Plan</0> for more daily messages!",
@@ -52,9 +43,9 @@
     "analyticsCall": "Check your usage for any timeframe on your <0>Analytics</0> page",
     "customizeTitle": "Customization",
     "embedCall1": "Have you customized ChatUp's look yet? Here are three reasons why you should!",
-    "embedCall2": "<0>Boost Brand Appeal:</0> Tailoring the chatbot's appearance, greeting, and color scheme to match your brand increases its appeal, making customers more likely to trust your store and buy products",
-    "embedCall3": "<0>Enhance Engagement:</0> A personalized chatbot engages customers effectively, encouraging them to ask questions and explore your products, ultimately leading to more purchases",
-    "embedCall4": "<0>Create a Memorable Experience:</0> Customizing your chatbot ensures it stands out, leaving a lasting impression on customers and increasing the chances of repeat purchases",
+    "embedCall2": "<0>Boost Brand Appeal:</0> Tailoring ChatUp's appearance, greeting, and color scheme to match your brand increases its appeal, making customers more likely to trust your store and buy products",
+    "embedCall3": "<0>Enhance Engagement:</0> A personalized ChatUp engages customers effectively, encouraging them to ask questions and explore your products, ultimately leading to more purchases",
+    "embedCall4": "<0>Create a Memorable Experience:</0> Customizing ChatUp ensures it stands out, leaving a lasting impression on customers and increasing the chances of repeat purchases",
     "embedCall5": "Customize ChatUp in your <0>Theme<0>",
     "settingsTitle": "Configuration",
     "settingsCall": "Have you configured ChatUp's advanced options yet?"
@@ -96,46 +87,41 @@
     "bottomCopy": "Now its time to make sure that ChatUp is visible on your store and your users can use it!"
   },
 
-
-  "HomePage": {
-    "title": "Welcome to ChatUp",
-    "scanTitle": "Scan Your Store",
-    "scanCopy": "ChatUp delves deep into your store's policies, pages, products, contact info, and order data, enabling it to provide highly accurate answers to a visitor's queries.",
-    "scannedNever": "Scan your store to get started",
-    "scanned": "Last scan of your store occured on {{ x }}",
-    "scanAvailable": "Scan available now",
-    "scanAvailableIn": "Scan again at {{ x }}",
-    "settingsTitle": "Personalize the User Experience",
-    "settingsCopy": "Align ChatUp with your shop's vibe and preferences. Visit the settings dashboard to shape ChatUp's personality and boundaries.",
-    "embedTitle": "Customize ChatUp",
-    "embedCopy": "Unleash the power of customization! Discover a range of cosmetic options to seamlessly integrate ChatUp with your branding and existing theme. Check out our quick tutorial for a smooth customization journey.",
-    "xMessagesRemaining": "{{ x }} messages left for today",
-    "xMessagesSent": "{{ x }} messages sent today",
+  "Plan": {
     "currentPlan": "Current Plan",
-    "upgrade[0": "Your free trial of ChatUp ends on {{ x }}",
-    "upgrade[2": "Unlock Personality and 150 more messages per day by upgrading your plan!",
-    "upgrade[4": "Unlock Insights and 300 more messages per day by upgrading your plan!",
-    "upgrade[6": "Unlock Chat History and unlimited messages by upgrading your plan!",
-    "upgrade[8": "Please contact us directly to inquire about additional services."
+    "recommendedPlan": "Recommended Plans",
+    "free": "Free",
+    "[0": "Free",
+    "[2": "Emerging",
+    "[4": "Established",
+    "[6": "Expanding",
+    "[8": "Enterprise",
+    "dailyMessages": "Daily Messages",
+    "free1": "Help up to 5 customers per day",
+    "free2": "10 daily messages",
+    "free3": "Try before you buy",
+    "free4": "Upgrade anytime",
+    "free5": "Free forever",
+    "[2Customers": "Up to 25 daily chats",
+    "[2Messages": "50 daily messages",
+    "[4Customers": "Up to 100 daily chats",
+    "[4Messages": "200 daily messages",
+    "[6Customers": "Up to 250 daily chats",
+    "[6Messages": "500 daily messages",
+    "[8Customers": "Unlimited chats",
+    "[8Messages": "Unlimited messages",
+    "paid1": "Chat in all languages",
+    "paid2": "Join live conversations",
+    "paid3": "View analytics",
+    "paid4": "Customize ChatUp's look",
+    "paid5": "Define boundaries",
+    "paid6": "Imbue personality",
+    "pricePerMonth": "{{ x }} per month",
+    "pricePerYear": "{{ x }} per year",
+    "redirecting": "Redirecting",
+    "enterpriseContact": "Please contact us <0>directly</0> to inquire about Enterprise solutions"
   },
-  "Configuration": {
-    "title": "App Configuration",
-    "negKeysTitle": "Negative Keywords",
-    "negKeysShort": "Tailor ChatUp's AI engine to perfection. Set boundaries using negative keywords to eliminate irrelevant conversations. If visitors mention any of these keywords, ChatUp will respond: (I'm a support agent for our website. The topic you mentioned is outside my scope, but how else can I assist you?)",
-    "negKeysCopy": "Add individual negative keywords or phrases for optimal results. Save them separately to enhance ChatUp's performance.",
-    "tempTitle": "Define the Personality",
-    "tempShort": "Infuse ChatUp with your brand's essence. Choose a personality that resonates best with your unique selling proposition.",
-    "tempCopy": "Your personality choice should reflect the essence of what you sell.",
-    "humorous": "Humorous",
-    "engaging": "Engaging",
-    "informal": "Informal",
-    "friendly": "Friendly",
-    "professional": "Professional",
-    "upgrade": "Upgrade now to unlock Personality!",
-    "freeTrialCopy": "Personality is available during your free trial",
-    "freeTrialButton": "Reveal Personality",
-    "bottomCopy": "Now its time to make sure that ChatUp is visible on your store and your users can use it!"
-  },
+
   "Insights": {
     "timeSeriesChartTitle": "Messaging Trends Over Time",
     "funnelChartTitle": "Conversion Insights",
@@ -162,6 +148,7 @@
     "freeTrialCopy": "Insights are available during your free trial",
     "freeTrialButton": "Reveal Insights"
   },
+
   "ChatHistory": {
     "live": "Live",
     "untitled": "Untitled",
@@ -180,6 +167,7 @@
     "freeTrialCopy": "Chat History is available during your free trial",
     "freeTrialButton": "Reveal Chat History"
   },
+
   "Billing": {
     "currentPlan": "Current Plan",
     "messages": "{{ x }} daily messages",
@@ -200,6 +188,7 @@
     "[6": "Expanding",
     "[8": "Enterprise"
   },
+
   "Button": {
     "configuration": "Configure Settings",
     "insights": "View Insights",
@@ -214,10 +203,12 @@
     "billing": "Billing",
     "upgrade": "Upgrade & Save"
   },
+
   "NotFound": {
     "description": "Oops! The page you're looking for seems to be missing. Double-check the URL or use the search bar to find what you need.",
     "heading": "Page Not Found"
   },
+
   "Dates": {
     "pastTwo": "Past Two Days",
     "today": "Today",
@@ -225,8 +216,13 @@
     "pastWeek": "Past Week",
     "pastMonth": "Past Month"
   },
+
   "MetaData": {
     "location": "Location",
     "ip": "IP Address"
+  },
+
+  "Misc": {
+    "loading": "Loading..."
   }
 }
