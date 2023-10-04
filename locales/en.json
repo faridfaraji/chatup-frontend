@@ -168,27 +168,6 @@
     "freeTrialButton": "Reveal Chat History"
   },
 
-  "Billing": {
-    "currentPlan": "Current Plan",
-    "messages": "{{ x }} daily messages",
-    "negKeys": "Negative Keywords",
-    "languages": "All-Language Chat",
-    "personality": "Personality",
-    "insights": "Insights & Analytics",
-    "history": "Chat History",
-    "enterpriseMessages": "Unlimited messages",
-    "pricePerMonth": "{{ x }} per month",
-    "pricePerYear": "{{ x }} per year",
-    "redirecting": "Redirecting",
-    "monthly": "Monthly",
-    "yearly": "Yearly",
-    "[0": "Free Trial",
-    "[2": "Emerging",
-    "[4": "Established",
-    "[6": "Expanding",
-    "[8": "Enterprise"
-  },
-
   "Button": {
     "configuration": "Configure Settings",
     "insights": "View Insights",

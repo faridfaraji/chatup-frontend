@@ -26,7 +26,7 @@ export const ChoosePlanButton = ({ current, priceInfo, plan, name }) => {
         <Button id="plan-button" disabled fullWidth>
             <HorizontalStack gap="1" blockAlign="center">
                 <Spinner size="small" />
-                {t("Billing.redirecting")}
+                {t("Plan.redirecting")}
             </HorizontalStack>
         </Button>
 
