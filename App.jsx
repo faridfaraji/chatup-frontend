@@ -14,7 +14,6 @@ import { PolarisVizLightTheme, PolarisVizProvider } from "@shopify/polaris-viz";
 export default function App() {
   // Any .tsx or .jsx files in /pages will become a route
   // See documentation for <Routes /> for more info
-  const index_page = import.meta.globEager("./pages/index.jsx");
   const pages = import.meta.globEager("./pages/**/!(*.test.[jt]sx)*.([jt]sx)");
   const { t } = useTranslation();
 

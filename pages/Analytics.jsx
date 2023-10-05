@@ -118,7 +118,7 @@ export default function Analytics() {
 
   return (
     <Page
-      title={t("NavigationMenu.insights")}
+      title={t("NavigationMenu.analytics")}
       primaryAction={
         <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
       }

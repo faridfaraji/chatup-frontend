@@ -1,9 +1,10 @@
-import { AlphaCard, Divider, HorizontalGrid, Link, Page, Tabs, Text, VerticalStack } from "@shopify/polaris";
+import { AlphaCard, Box, Divider, HorizontalGrid, Link, Page, Tabs, Text, VerticalStack } from "@shopify/polaris";
 import { Trans, useTranslation } from "react-i18next";
 import { PaddedCell, CardTitle, PlanFeature, PlanImage, ChoosePlanButton } from "../components";
 import { useActivePlan, usePlanCanceller } from "../hooks";
 import { useEffect, useState } from "react";
 import constants from "../constants";
+import { useNavigate } from "@shopify/app-bridge-react";
 
 const planIds = {
     'emerging': '[2',
@@ -15,16 +16,18 @@ const planIds = {
 export default function Plan() {
     const { t } = useTranslation();
     const cancelPlan = usePlanCanceller();
+    const navigate = useNavigate();
 
     // Returning to Free Plan:
     const handleFreeWill = () => {
-        setPlan("[00]", t("Plan.[0")).then((data) => {
-            const url = data?.confirmation_page_url
-            console.log(data)
-            if (url) {
-                navigate(url)
-            }
-        })
+        cancelPlan().then(() => navigate("/Dashboard"))
+        // setPlan("[00]", t("Plan.[0")).then((data) => {
+        //     const url = data?.confirmation_page_url
+        //     console.log(data)
+        //     if (url) {
+        //         navigate(url)
+        //     }
+        // })
     }
 
     // Active plan data
@@ -62,7 +65,7 @@ export default function Plan() {
     const planIdYearly = `${planId}5]`
 
     const page = <Page>
-        <HorizontalGrid columns={onFree ? { sm: 1, md: "2fr 1fr" } : 1} gap="4">
+        <HorizontalGrid columns={{ sm: 1, md: "2fr 1fr" }} gap="4">
             <AlphaCard>
                 <Tabs fitted tabs={planTabs} selected={planTab} onSelect={index => setPlanTab(index)}>
                     <br />
@@ -112,28 +115,44 @@ export default function Plan() {
                 </Tabs>
             </AlphaCard>
             <AlphaCard>
-                {
-                    onFree ?
-                        <>
-                            <PaddedCell padding={["0", "5", "0", "5"]}>
-                                <Text as="p" color="subdued">
-                                    {t("Plan.currentPlan")}
-                                </Text>
-                                <CardTitle title={t("Plan.free")} linebreak />
-                            </PaddedCell>
-                            <VerticalStack gap="4">
-                                <PlanFeature name={t("Plan.free1")} />
-                                <PlanFeature name={t("Plan.free2")} />
-                                <PlanFeature name={t("Plan.free3")} />
-                                <PlanFeature name={t("Plan.free4")} />
-                                <PlanFeature name={t("Plan.free5")} />
-                            </VerticalStack>
-                        </> :
-                        <>
-                            <Text>We're trying something here</Text>
-                            <Link onClick={() => handleFreeWill()}>Regain Free Will</Link>
-                        </>
-                }
+                <div>
+                    {
+                        onFree ?
+                            <>
+                                <PaddedCell padding={["0", "5", "0", "5"]}>
+                                    <Text as="p" color="subdued">
+                                        {t("Plan.currentPlan")}
+                                    </Text>
+                                    <CardTitle title={t("Plan.free")} linebreak />
+                                </PaddedCell>
+                                <VerticalStack gap="4">
+                                    <PlanFeature name={t("Plan.free1")} />
+                                    <PlanFeature name={t("Plan.free2")} />
+                                    <PlanFeature name={t("Plan.free3")} />
+                                    <PlanFeature name={t("Plan.free4")} />
+                                    <PlanFeature name={t("Plan.free5")} />
+                                    <PlanFeature name={t("Plan.free6")} />
+                                </VerticalStack>
+                            </> :
+                            <>
+                                <>
+                                    <PaddedCell padding={["0", "5", "0", "5"]}>
+                                        <CardTitle title={t("Plan.free")} linebreak />
+                                    </PaddedCell>
+                                    <VerticalStack gap="4">
+                                        <PlanFeature name={t("Plan.free1")} />
+                                        <PlanFeature name={t("Plan.free2")} />
+                                        <PlanFeature name={t("Plan.free3")} />
+                                        <PlanFeature name={t("Plan.free4")} />
+                                        <PlanFeature name={t("Plan.free5")} />
+                                        <PlanFeature name={t("Plan.free6")} />
+                                    </VerticalStack>
+                                </>
+                                <div />
+                                    <Link onClick={() => handleFreeWill()}>Regain Free Will</Link>
+                            </>
+                    }
+                </div>
             </AlphaCard>
         </HorizontalGrid>
     </Page>

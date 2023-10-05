@@ -238,6 +238,7 @@ export default function Messages() {
           socket={socket}
         />}
       <HorizontalStack align="end" gap="5">
+        {/* <Button onClick={() => setLiveChats(prev => [...prev, selected])}>Add to Live</Button> */}
         {liveView && !joinView &&
           <Button primary onClick={() => joinChat()}>{t("ChatHistory.joinChat")}</Button>}
         {joinView &&
@@ -271,9 +272,9 @@ export default function Messages() {
     if (bp.mdDown) setNavVis(false)
     setLiveView(liveChats.includes(chatId))
     setJoinView(false)
-    setChatView(false)
+    setChatView(liveChats.includes(chatId))
+    setMessages([])
     setSelected(chatId)
-    refreshMessages()
   }
 
   //===========================================================================
@@ -308,16 +309,7 @@ export default function Messages() {
   // Test button function
   //===========================================================================
   const test = () => {
-    // setLiveChats((prevChats) => ["5d5ba14b-bd6e-4fc6-aa61-b4fb24c38884", ...prevChats])
-    // refreshLiveChats()
-    // console.log(socket)
-    // socket.emit("message", { conversation_id: selected, message: "hello socket" })
-    // console.log(selected)
-    // console.log(chats)
-    // console.log(liveChats)
     console.log(messages)
-    // console.log(socket)
-    // console.log(socket)
   }
 
   //===========================================================================
@@ -325,7 +317,7 @@ export default function Messages() {
   //===========================================================================
   return (
     <Frame navigation={chatNavigation} showMobileNavigation={navVis} onNavigationDismiss={() => handleNavToggle()}>
-      <Page primaryAction={primaryActions} title={t("NavigationMenu.inbox")} divider>
+      <Page primaryAction={primaryActions} title={t("NavigationMenu.messages")} divider>
         <Layout>
           <Layout.Section fullWidth>
             {content}
