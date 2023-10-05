@@ -2,7 +2,7 @@ import { useNavigate } from "@shopify/app-bridge-react"
 import { AlphaCard, Link, List, Text, VerticalStack } from "@shopify/polaris"
 import { Trans, useTranslation } from "react-i18next"
 import cache from "../../cache";
-import { CardTitle } from "../CardTitle";
+import { CardTitle } from "../misc";
 
 export const CustomizeCard = () => {
     const { t } = useTranslation();

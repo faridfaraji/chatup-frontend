@@ -1,12 +1,10 @@
 import { useNavigate } from "@shopify/app-bridge-react"
-import { AlphaCard, Badge, HorizontalStack, Link, List, Tag, Text, VerticalStack } from "@shopify/polaris"
+import { AlphaCard, Badge, HorizontalStack, Link, Text, VerticalStack } from "@shopify/polaris"
 import { Trans, useTranslation } from "react-i18next"
-import cache from "../../cache";
-import { CardTitle } from "../CardTitle";
 import { useEffect, useState } from "react";
 import { useNegativeKeywordGetter, useShop } from "../../hooks";
 import { tempString } from "../../utils";
-import { PaddedCell } from "../misc";
+import { CardTitle, PaddedCell } from "../misc";
 
 export const SettingsCard = () => {
     const { t } = useTranslation();

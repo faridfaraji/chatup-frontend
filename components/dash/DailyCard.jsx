@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { MessageDonut } from "../charts";
 import { Trans, useTranslation } from "react-i18next";
-import { AlphaCard, Button, Link, List, VerticalStack } from "@shopify/polaris";
+import { AlphaCard, Link, List, VerticalStack } from "@shopify/polaris";
 import { useNavigate } from "@shopify/app-bridge-react";
-import { CardTitle } from "../CardTitle";
 import { useActivePlan, useShopValidator } from "../../hooks";
+import { CardTitle } from "../misc";
 
 export const DailyCard = () => {
     const { t } = useTranslation();

@@ -3,7 +3,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { AlphaCard, Link, List, VerticalStack } from "@shopify/polaris";
 import { useNavigate } from "@shopify/app-bridge-react";
 import { localizeDatestamp } from "../../utils";
-import { CardTitle } from "../CardTitle";
+import { CardTitle } from "../misc";
 
 export const TopicsCard = () => {
     const { t } = useTranslation();
