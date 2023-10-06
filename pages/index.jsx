@@ -3,11 +3,23 @@ import { Trans, useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { AlphaCard, HorizontalGrid, Link, Page, Text, VerticalStack, useBreakpoints } from "@shopify/polaris"
 import { CardTitle, PaddedCell, Robot } from "../components";
+import { useLatestScan, useScanner } from '../hooks';
+import { useEffect } from 'react';
 
 export default function index() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const bp = useBreakpoints();
+  const getLatestScan = useLatestScan();
+  const scan = useScanner();
+
+  useEffect(() => {
+    getLatestScan().then(data => {
+      if(!["COMPLETED", "PENDING", "IN_PROGRESS"].includes(data?.status)) {
+        scan()
+      }
+    })
+  })
 
   return (
     <Page>
