@@ -34,10 +34,10 @@ export const TopicsCard = () => {
             {topicsDonut}
             <List type="bullet">
                 <List.Item>
-                    {messagesCall}
+                    {analyticsCall}
                 </List.Item>
                 <List.Item>
-                    {analyticsCall}
+                    {messagesCall}
                 </List.Item>
             </List>
         </VerticalStack>

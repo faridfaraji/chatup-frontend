@@ -38,7 +38,7 @@
         "planCall": "Aktualisieren Sie Ihren <0>Plan</0> für mehr tägliche Nachrichten!",
         "topicsTitle": "Chat-Themen",
         "dataFrom": "Daten von {{ x }} bis {{ y }}",
-        "inboxCall": "Sehen Sie sich vergangene Chats an und nehmen Sie an Live-Gesprächen in Ihrem <0>Posteingang</0> teil",
+        "messages": "Sehen Sie sich vergangene Chats an und nehmen Sie an Live-Gesprächen in Ihrem <0>Nachrichten</0> teil",
         "analyticsCall": "Überprüfen Sie Ihre Nutzung für jeden Zeitraum auf Ihrer <0>Analytik</0>-Seite",
         "customizeTitle": "Anpassung",
         "embedCall1": "Haben Sie das Aussehen von ChatUp schon angepasst? Hier sind drei Gründe, warum Sie es tun sollten!",

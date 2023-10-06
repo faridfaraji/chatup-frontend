@@ -38,7 +38,7 @@
         "planCall": "Mettez à jour votre <0>Plan</0> pour plus de messages quotidiens !",
         "topicsTitle": "Sujets de Discussion",
         "dataFrom": "Données de {{ x }} à {{ y }}",
-        "inboxCall": "Consultez les conversations passées et participez aux discussions en direct dans votre <0>Boîte de réception</0>",
+        "messagesCall": "Consultez les conversations passées et participez aux discussions en direct dans votre <0>Messages</0>",
         "analyticsCall": "Consultez votre utilisation pour n'importe quelle période sur votre page <0>Analytiques</0>",
         "customizeTitle": "Personnalisation",
         "embedCall1": "Avez-vous déjà personnalisé l'apparence de ChatUp ? Voici trois raisons pour lesquelles vous devriez le faire !",
