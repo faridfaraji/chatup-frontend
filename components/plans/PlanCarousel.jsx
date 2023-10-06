@@ -1,9 +1,8 @@
-import { AlphaCard, Button, Divider, HorizontalGrid, HorizontalStack, Link, Tabs, Text } from "@shopify/polaris"
+import { AlphaCard, Button, Divider, HorizontalGrid, HorizontalStack, Link, Text } from "@shopify/polaris"
 import { PlanImage } from "../images"
 import { PlanFeature } from "./PlanFeature"
 import { PlanButton } from "./PlanButton"
 import { Trans, useTranslation } from "react-i18next"
-import { useEffect, useRef, useState } from "react"
 import constants from "../../constants"
 import { CardTitle } from "../misc"
 import {
@@ -15,11 +14,11 @@ const PlanContent = ({ planId, activePlan, left, right }) => {
     const { t } = useTranslation();
 
     const handleLeft = () => {
-        document.getElementById(`plan-${left}`).scrollIntoView()
+        document.getElementById(`plan-${left}`).scrollIntoView({block: "center", inline: "center"})
     }
     
     const handleRight= () => {
-        document.getElementById(`plan-${right}`).scrollIntoView()
+        document.getElementById(`plan-${right}`).scrollIntoView({block: "center", inline: "center"})
     }
 
     const enterpriseTab = planId === "[8"
@@ -77,14 +76,6 @@ const PlanContent = ({ planId, activePlan, left, right }) => {
                     </Text>
                 </>
             }
-        </div>
-    )
-}
-
-const PlanLink = ({ planId, planName }) => {
-    return (
-        <div className="plan-link">
-            <a href={`#plan-${planId}`}>{planName}</a>
         </div>
     )
 }
