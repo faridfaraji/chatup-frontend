@@ -651,3 +651,9 @@ textarea {
     transition: transform 0.5s;
     position: relative;
 }
+
+.plan-link>a {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}

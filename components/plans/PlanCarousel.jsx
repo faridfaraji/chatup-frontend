@@ -1,22 +1,40 @@
-import { AlphaCard, Divider, HorizontalGrid, Link, Tabs, Text } from "@shopify/polaris"
+import { AlphaCard, Button, Divider, HorizontalGrid, HorizontalStack, Link, Tabs, Text } from "@shopify/polaris"
 import { PlanImage } from "../images"
 import { PlanFeature } from "./PlanFeature"
 import { PlanButton } from "./PlanButton"
 import { Trans, useTranslation } from "react-i18next"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import constants from "../../constants"
+import { CardTitle } from "../misc"
+import {
+    ChevronLeftMinor,
+    ChevronRightMinor
+  } from '@shopify/polaris-icons';
 
-const PlanContent = ({ planId, activePlan }) => {
+const PlanContent = ({ planId, activePlan, left, right }) => {
     const { t } = useTranslation();
+
+    const handleLeft = () => {
+        document.getElementById(`plan-${left}`).scrollIntoView()
+    }
+    
+    const handleRight= () => {
+        document.getElementById(`plan-${right}`).scrollIntoView()
+    }
 
     const enterpriseTab = planId === "[8"
     const planIdMonthly = `${planId}0]`
     const planIdYearly = `${planId}5]`
 
     return (
-        <div style={{ width: "100%" }}>
-            <br />
+        <div style={{ width: "100%" }} id={`plan-${planId}`}>
+
             <PlanImage plan={planId} />
+            <HorizontalStack align="space-between" blockAlign="center">
+                <Button disabled={!left} icon={left ? ChevronLeftMinor : false} onClick={() => handleLeft()}></Button>
+                <CardTitle title={t(`Plan.${planId}`)} />
+                <Button disabled={!right} icon={right ? ChevronRightMinor : false} onClick={() => handleRight()}></Button>
+            </HorizontalStack>
             <br />
             <Divider />
             <br />
@@ -63,52 +81,24 @@ const PlanContent = ({ planId, activePlan }) => {
     )
 }
 
+const PlanLink = ({ planId, planName }) => {
+    return (
+        <div className="plan-link">
+            <a href={`#plan-${planId}`}>{planName}</a>
+        </div>
+    )
+}
+
 export const PlanCarousel = ({ activePlan }) => {
     const { t } = useTranslation();
-
-    const [planTab, setPlanTab] = useState(0)
-    const planTabs = [
-        {
-            id: 'emerging',
-            content: t("Plan.[2"),
-        },
-        {
-            id: 'expanding',
-            content: t("Plan.[4"),
-        },
-        {
-            id: 'established',
-            content: t("Plan.[6"),
-        },
-        {
-            id: 'enterprise',
-            content: t("Plan.[8"),
-        },
-    ]
-
-    const handleSelect = (index) => {
-        setPlanTab(index)
-        document.getElementById(`plan-${index}`).scrollIntoView()
-    }
-
     const planCard = (
         <AlphaCard>
             <div className="slider">
-                <Tabs fitted tabs={planTabs} selected={planTab} onSelect={index => handleSelect(index)} />
-                <br />
-                <div className="plans">
-                    <div id="plan-0">
-                        <PlanContent planId={'[2'} activePlan={activePlan} />
-                    </div>
-                    <div id="plan-1">
-                        <PlanContent planId={'[4'} activePlan={activePlan} />
-                    </div>
-                    <div id="plan-2">
-                        <PlanContent planId={'[6'} activePlan={activePlan} />
-                    </div>
-                    <div id="plan-3">
-                        <PlanContent planId={'[8'} activePlan={activePlan} />
-                    </div>
+                <div id="plan-carousel" className="plans">
+                    <PlanContent planId={'[2'} activePlan={activePlan} right={"[4"} />
+                    <PlanContent planId={'[4'} activePlan={activePlan} left={"[2"} right={"[6"} />
+                    <PlanContent planId={'[6'} activePlan={activePlan} left={"[4"} right={"[8"} />
+                    <PlanContent planId={'[8'} activePlan={activePlan} left={"[6"} />
                 </div>
             </div>
         </AlphaCard>
