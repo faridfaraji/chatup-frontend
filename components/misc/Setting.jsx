@@ -4,10 +4,10 @@ export const Setting = (props) => {
     const inputs = props.inputs.map((input) => {
         return (
             <VerticalStack gap="4">
+                {input.component}
                 <Text as="p" variant="bodyMd">
                     {input.copy}
                 </Text>
-                {input.component}
             </VerticalStack>
         )
     })

@@ -1,33 +1,51 @@
-import { useEffect, useState } from "react";
-import { useActivePlan, usePlanSetter } from "../hooks";
-import Landing from "./Landing";
-import constants from "../constants";
-import { useTranslation } from "react-i18next";
-import ExitIframe from "./ExitIframe";
-import { SkeletonHomePage } from "../components";
+import '@shopify/polaris-viz/build/esm/styles.css';
+import { Trans, useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { AlphaCard, HorizontalGrid, Link, Page, Text, VerticalStack, useBreakpoints } from "@shopify/polaris"
+import { CardTitle, PaddedCell, Robot } from "../components";
+import { useLatestScan, useScanner } from '../hooks';
+import { useEffect } from 'react';
 
-export default function HomePage() {
+export default function index() {
   const { t } = useTranslation();
-  const getActivePlan = useActivePlan();
-  const setPlan = usePlanSetter();
-  const [redirectUri, setUri] = useState(false);
-  const [landing, setLanding] = useState(<SkeletonHomePage />)
+  const navigate = useNavigate();
+  const bp = useBreakpoints();
+  const getLatestScan = useLatestScan();
+  const scan = useScanner();
 
   useEffect(() => {
-    getActivePlan()
-      .then((data) => {
-        // Plan IDs are of the form [XX]
-        // [00] is the non-plan (unbilled) so we redirect them to billing pages
-        if (!parseInt(data?.name.slice(1, 3))) {
-          setPlan(constants.base_plan, t(`Billing.${constants.base_plan_copy_id}`))
-            .then((data) => {
-              setUri(data?.confirmation_page_url)
-            })
-        } else {
-          setLanding(<Landing />)
-        }
-      })
-  }, [])
+    getLatestScan().then(data => {
+      if(!["COMPLETED", "PENDING", "IN_PROGRESS"].includes(data?.status)) {
+        scan()
+      }
+    })
+  })
 
-  return redirectUri ? <ExitIframe redirectUri={redirectUri} /> : landing
+  return (
+    <Page>
+      <AlphaCard>
+        <HorizontalGrid columns={{ sm: 1, md: "1fr 1fr" }} gap="10">
+          <VerticalStack>
+            <PaddedCell padding={["0", "5", "0", "5"]}>
+              <CardTitle title={t("Welcome.title")} size={"Lg"} alignment={"start"} linebreak />
+              <Text
+                as="p"
+                variant="bodyMd"
+                fontWeight={bp.mdUp ? "medium" : "regular"} >
+                <Trans
+                  i18nKey={"Welcome.onboardCallout"}
+                  components={[<Link onClick={() => navigate("/Onboard?step=1&count=0")} />]} />
+                <br />
+                <br />
+                <Trans
+                  i18nKey={"Welcome.dashboardCallout"}
+                  components={[<Link onClick={() => navigate("/Dashboard")} />]} />
+              </Text>
+            </PaddedCell>
+          </VerticalStack>
+          <Robot />
+        </HorizontalGrid>
+      </AlphaCard>
+    </Page>
+  )
 }

@@ -2,7 +2,7 @@
 
 name = "chat-up-admin-testing"
 client_id = "458cc16d11790e3d38fccbfb0c77e4f2"
-application_url = "https://8564-104-142-118-153.ngrok-free.app"
+application_url = "https://cc5d-104-142-118-153.ngrok-free.app"
 embedded = true
 
 [access_scopes]

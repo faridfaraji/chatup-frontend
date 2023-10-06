@@ -1,6 +1,6 @@
 import { AlphaCard, Page, Layout, HorizontalStack, Box, Checkbox, Tooltip, Icon, Divider } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
-import { CardTitle, DateRangePicker, AccessWrapper, MessageTimeSeries, MessageDensity, CenteredSpinner } from "../components";
+import { CardTitle, DateRangePicker, MessageTimeSeries, MessageDensity, CenteredSpinner } from "../components";
 import { useCallback, useEffect, useState } from "react";
 import { getRaw } from "../utils/dataUtils";
 import { zeroRange, getCompDates, formatRange } from "../utils/dateUtils"
@@ -9,7 +9,7 @@ import { useMessageCounts } from "../hooks";
 import { TopicsDonut } from "../components/charts/TopicsDonut";
 
 
-export default function Insights() {
+export default function Analytics() {
   const { t } = useTranslation();
 
   // en: today
@@ -45,10 +45,10 @@ export default function Insights() {
   const getMessages = useMessageCounts();
   const [dates, setDates] = useState({ since: kyou, until: ashita });
 
-   // the charts themselves
-   const [messageTimeSeries, setMessageTimeSeries] = useState(<CenteredSpinner />);
-   const [messageDensity, setMessageDensity] = useState(<CenteredSpinner />);
-   const [topicsDonut, setTopicsDonut] = useState(<CenteredSpinner />);
+  // the charts themselves
+  const [messageTimeSeries, setMessageTimeSeries] = useState(<CenteredSpinner />);
+  const [messageDensity, setMessageDensity] = useState(<CenteredSpinner />);
+  const [topicsDonut, setTopicsDonut] = useState(<CenteredSpinner />);
 
   // auto refresh
   const refreshable = !(dates?.since < kyou)
@@ -117,82 +117,80 @@ export default function Insights() {
   const CommonMinHeight = "250px"
 
   return (
-    <AccessWrapper minimum={60} copyDomain={"Insights"} fullpage={true}>
-      <Page
-        title={t("NavigationMenu.insights")}
-        primaryAction={
-          <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
-        }
-        divider
-      >
-        <Layout>
-          <Layout.Section fullWidth>
-            <Box
-              paddingInlineStart={{ xs: 4, sm: 0 }}
-              paddingInlineEnd={{ xs: 4, sm: 0 }}
-            >
-              <AlphaCard>
-                <HorizontalStack align="space-between" blockAlign="center">
-                  <CardTitle title={t("Insights.timeSeriesChartTitle")} />
-                  <HorizontalStack gap="1">
-                    <Checkbox
-                      disabled={!refreshable}
-                      label={t("Button.autoRefresh")}
-                      checked={checked}
-                      onChange={handleCheck} />
-                    <Tooltip content={
-                      refreshable ?
-                        t("Button.validRefresh") :
-                        t("Insights.invalidRefresh")}>
-                      <Icon source={QuestionMarkInverseMinor} />
-                    </Tooltip>
-                  </HorizontalStack>
+    <Page
+      title={t("NavigationMenu.analytics")}
+      primaryAction={
+        <DateRangePicker activatorSize="slim" onDateRangeChange={handleDateChange} />
+      }
+      divider
+    >
+      <Layout>
+        <Layout.Section fullWidth>
+          <Box
+            paddingInlineStart={{ xs: 4, sm: 0 }}
+            paddingInlineEnd={{ xs: 4, sm: 0 }}
+          >
+            <AlphaCard>
+              <HorizontalStack align="space-between" blockAlign="center">
+                <CardTitle title={t("Insights.timeSeriesChartTitle")} />
+                <HorizontalStack gap="1">
+                  <Checkbox
+                    disabled={!refreshable}
+                    label={t("Button.autoRefresh")}
+                    checked={checked}
+                    onChange={handleCheck} />
+                  <Tooltip content={
+                    refreshable ?
+                      t("Button.validRefresh") :
+                      t("Insights.invalidRefresh")}>
+                    <Icon source={QuestionMarkInverseMinor} />
+                  </Tooltip>
                 </HorizontalStack>
-                <br />
-                <Divider />
-                <br />
-                <Box minHeight={CommonMinHeight}>
-                  {messageTimeSeries}
-                </Box>
-              </AlphaCard>
-            </Box>
-          </Layout.Section>
-          <Layout.Section oneHalf>
-            <Box
-              paddingInlineStart={{ xs: 4, sm: 0 }}
-              paddingInlineEnd={{ xs: 4, sm: 0 }}
-              paddingBlockEnd={{ sm: 0, md: 4 }}
-            >
-              <AlphaCard>
-                <CardTitle title={t("Insights.donutTopicChartTitle")}></CardTitle>
-                <br />
-                <Divider />
-                <br />
-                <Box minHeight={CommonMinHeight}>
-                  {topicsDonut}
-                </Box>
-              </AlphaCard>
-            </Box>
-          </Layout.Section>
-          <Layout.Section oneHalf>
-            <Box
-              paddingInlineStart={{ xs: 4, sm: 0 }}
-              paddingInlineEnd={{ xs: 4, sm: 0 }}
-              paddingBlockEnd="4"
-            >
-              <AlphaCard>
-                <CardTitle title={t("Insights.distributionChartTitle")} />
-                <br />
-                <Divider />
-                <br />
-                <Box minHeight={CommonMinHeight}>
-                  {messageDensity}
-                </Box>
-              </AlphaCard>
-            </Box>
-          </Layout.Section>
-        </Layout>
-      </Page>
-    </AccessWrapper>
+              </HorizontalStack>
+              <br />
+              <Divider />
+              <br />
+              <Box minHeight={CommonMinHeight}>
+                {messageTimeSeries}
+              </Box>
+            </AlphaCard>
+          </Box>
+        </Layout.Section>
+        <Layout.Section oneHalf>
+          <Box
+            paddingInlineStart={{ xs: 4, sm: 0 }}
+            paddingInlineEnd={{ xs: 4, sm: 0 }}
+            paddingBlockEnd={{ sm: 0, md: 4 }}
+          >
+            <AlphaCard>
+              <CardTitle title={t("Insights.donutTopicChartTitle")}></CardTitle>
+              <br />
+              <Divider />
+              <br />
+              <Box minHeight={CommonMinHeight}>
+                {topicsDonut}
+              </Box>
+            </AlphaCard>
+          </Box>
+        </Layout.Section>
+        <Layout.Section oneHalf>
+          <Box
+            paddingInlineStart={{ xs: 4, sm: 0 }}
+            paddingInlineEnd={{ xs: 4, sm: 0 }}
+            paddingBlockEnd="4"
+          >
+            <AlphaCard>
+              <CardTitle title={t("Insights.distributionChartTitle")} />
+              <br />
+              <Divider />
+              <br />
+              <Box minHeight={CommonMinHeight}>
+                {messageDensity}
+              </Box>
+            </AlphaCard>
+          </Box>
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 }

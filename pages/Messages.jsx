@@ -1,14 +1,14 @@
 import { AlphaCard, Button, Divider, Frame, HorizontalStack, Layout, Page, useBreakpoints } from "@shopify/polaris";
 import { useCallback, useEffect, useState } from "react";
-import { AccessWrapper, CardTitle, ChatInput, ChatMessages, ChatNavigation, ChatSummary, DateRangePicker, Robot, SkeletonChatNavigation } from "../components";
+import { CardTitle, ChatInput, ChatMessages, ChatNavigation, ChatSummary, DateRangePicker, Robot, SkeletonChatNavigation } from "../components";
 import { useChatFetch, useChatsFetch, useDisconnectSocket, useMessagesFetch, useSocketInitializer } from "../hooks";
 import { getSessionToken } from "@shopify/app-bridge/utilities";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
-import { scrollToBottom, zeroRange } from "../utils";
+import { zeroRange } from "../utils";
 import { ConversationMinor } from "@shopify/polaris-icons"
 
-export default function ChatHistory() {
+export default function Messages() {
   //===========================================================================
   // Initialization of state variables
   //===========================================================================
@@ -26,19 +26,21 @@ export default function ChatHistory() {
   const ototoi = new Date(kyou)
   ototoi.setDate(kyou.getDate() - 2)
 
+  const oneWeekAgo = new Date(kyou)
+  oneWeekAgo.setDate(kyou.getDate() - 7)
+
   // en: tomorrow
   const ashita = new Date(kyou);
   ashita.setDate(kyou.getDate() + 1);
 
   // Dates for requesting chats
-  const [dates, setDates] = useState({ since: kyou, until: ashita });
+  const [dates, setDates] = useState({ since: oneWeekAgo, until: ashita });
 
   // Store chat and message data
   const [chats, setChats] = useState([]);
   const [chatsLoading, setChatsLoading] = useState([]);
   const [liveChats, setLiveChats] = useState([]);
   const [messages, setMessages] = useState([]);
-  const [messageQueue, setMessageQueue] = useState([])
 
   // Get chat and message data
   const getChats = useChatsFetch();
@@ -234,8 +236,9 @@ export default function ChatHistory() {
           handleSend={handleAdminMessage}
           conversation_id={selected}
           socket={socket}
-          />}
+        />}
       <HorizontalStack align="end" gap="5">
+        {/* <Button onClick={() => setLiveChats(prev => [...prev, selected])}>Add to Live</Button> */}
         {liveView && !joinView &&
           <Button primary onClick={() => joinChat()}>{t("ChatHistory.joinChat")}</Button>}
         {joinView &&
@@ -269,9 +272,9 @@ export default function ChatHistory() {
     if (bp.mdDown) setNavVis(false)
     setLiveView(liveChats.includes(chatId))
     setJoinView(false)
-    setChatView(false)
+    setChatView(liveChats.includes(chatId))
+    setMessages([])
     setSelected(chatId)
-    refreshMessages()
   }
 
   //===========================================================================
@@ -306,33 +309,22 @@ export default function ChatHistory() {
   // Test button function
   //===========================================================================
   const test = () => {
-    // setLiveChats((prevChats) => ["5d5ba14b-bd6e-4fc6-aa61-b4fb24c38884", ...prevChats])
-    // refreshLiveChats()
-    // console.log(socket)
-    // socket.emit("message", { conversation_id: selected, message: "hello socket" })
-    // console.log(selected)
-    // console.log(chats)
-    // console.log(liveChats)
     console.log(messages)
-    // console.log(socket)
-    // console.log(socket)
   }
 
   //===========================================================================
   // Build the page out of the above created components
   //===========================================================================
   return (
-    <AccessWrapper minimum={40} copyDomain={"ChatHistory"} fullpage={true}>
-      <Frame navigation={chatNavigation} showMobileNavigation={navVis} onNavigationDismiss={() => handleNavToggle()}>
-        <Page primaryAction={primaryActions} title={t("NavigationMenu.chatHistory")} divider>
-          <Layout>
-            <Layout.Section fullWidth>
-              {content}
-              <br />
-            </Layout.Section>
-          </Layout>
-        </Page>
-      </Frame>
-    </AccessWrapper>
+    <Frame navigation={chatNavigation} showMobileNavigation={navVis} onNavigationDismiss={() => handleNavToggle()}>
+      <Page primaryAction={primaryActions} title={t("NavigationMenu.messages")} divider>
+        <Layout>
+          <Layout.Section fullWidth>
+            {content}
+            <br />
+          </Layout.Section>
+        </Layout>
+      </Page>
+    </Frame>
   )
 }

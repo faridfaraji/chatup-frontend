@@ -37,3 +37,15 @@ export const usePlanSetter = () => {
         }).then((response) => response.json())
     }
 }
+
+export const usePlanCanceller = () => {
+    const fetch = useAuthenticatedFetch();
+    return () => {
+        const fetch_url = `${constants.gateway_url}/${constants.api_version}/shopify/${constants.app_name}/plans/cancel`
+        return fetch(fetch_url, {
+            method: 'GET',
+            credentials: constants.credentials,
+            headers: constants.headers
+        }).then((response) => response.json())
+    }
+}

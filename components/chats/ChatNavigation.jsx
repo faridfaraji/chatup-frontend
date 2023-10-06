@@ -66,9 +66,9 @@ export const ChatNavigation = ({ chats, selected, liveChats, handleSelect }) => 
         <Navigation
             key="chatNavigation"
             location="/">
-            {navSections}
+            {chats.length ? navSections : noChats}
         </Navigation>
 
 
-    return chats.length ? chatNavigation : noChats
+    return chatNavigation
 }

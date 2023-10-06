@@ -41,7 +41,16 @@ export default {
         "[8": "8-moon"
     },
     base_plan: "[20]",
-    base_plan_copy_id: "[2"
+    base_plan_copy_id: "[2",
+    robot_src: "https://cdn.shopify.com/s/files/1/0789/8870/6084/files/robot.svg",
+    "[2_src": "https://cdn.shopify.com/s/files/1/0789/8870/6084/files/2-paper.svg",
+    "[4_src":"https://cdn.shopify.com/s/files/1/0789/8870/6084/files/4-canvas.svg",
+    "[6_src":"https://cdn.shopify.com/s/files/1/0789/8870/6084/files/6-steel.svg",
+    "[8_src":"https://cdn.shopify.com/s/files/1/0789/8870/6084/files/8-moon.svg",
+    "onboard-step1_src":"https://cdn.shopify.com/s/files/1/0789/8870/6084/files/2-paper.svg",
+    "onboard-step2_src":"https://cdn.shopify.com/s/files/1/0789/8870/6084/files/4-canvas.svg",
+    // "onboard-step3_src":"https://cdn.shopify.com/s/files/1/0789/8870/6084/files/6-steel.svg",
+    "onboard-step3_src":"https://cdn.shopify.com/s/files/1/0789/8870/6084/files/8-moon.svg",
 }
 
 
