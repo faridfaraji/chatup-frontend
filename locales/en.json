@@ -6,14 +6,12 @@
     "analytics": "Analytics",
     "plan": "Plan"
   },
-
   "Welcome": {
     "title": "Welcome to ChatUp!",
     "getStarted": "Get Started",
     "onboardCallout": "Thank you for installing ChatUp! If this is your first time here, please complete your installation through the <0>Embed App</0> process.",
     "dashboardCallout": "If you've been here before and have already embedded ChatUp, please proceed to your <0>Dashboard</0>"
   },
-  
   "Onboard": {
     "title": "Getting Started With ChatUp",
     "back": "Back",
@@ -30,7 +28,6 @@
     "step3copy": "You're all set to give ChatUp a try! Click the button below to explore how it works on your store!",
     "dashboard": "View Dashboard"
   },
-
   "Dashboard": {
     "dailyTitle": "Daily Messages",
     "xMessagesRemaining": "You have {{ x }} messages remaining today",
@@ -41,7 +38,7 @@
     "planCall": "Upgrade your <0>Plan</0> for more daily messages!",
     "topicsTitle": "Chat Topics",
     "dataFrom": "Data from {{ x }} to {{ y }}",
-    "inboxCall": "View past chats and join live conversations in your <0>Inbox</0>",
+    "messagesCall": "View past chats and join live conversations in your <0>Messages</0>",
     "analyticsCall": "Check your usage for any timeframe on your <0>Analytics</0> page",
     "customizeTitle": "Customization",
     "embedCall1": "Have you customized ChatUp's look yet? Here are three reasons why you should!",
@@ -52,7 +49,6 @@
     "settingsTitle": "Configuration",
     "settingsCall": "Have you configured ChatUp's advanced options yet?"
   },
-  
   "Boundaries": {
     "boundariesTitle": "Boundaries",
     "currentBoundaries": "Your current boundaries are:",
@@ -61,7 +57,6 @@
     "boundariesShort": "Set boundaries to avoid unproductive conversations.",
     "boundariesCopy": "Keep boundaries to one or two keywords for optimal results. If visitors approach the topics you define here, ChatUp will respond: \"I'm a support agent for our website. The topic you mentioned is outside my scope, but how else can I assist you?\""
   },
-
   "Personality": {
     "personalityTitle": "Personality",
     "currentPersonality": "Your current personality is: ",
@@ -79,57 +74,6 @@
     "personalityCall": "Update your personality in your <0>Settings<0>",
     "personalityShort": "Choose a personality that resonates best with your unique selling proposition."
   },
-
-  "Settings": {
-    "title": "App Configuration",
-    "tempTitle": "Define the Personality",
-    "upgrade": "Upgrade now to unlock Personality!",
-    "freeTrialCopy": "Personality is available during your free trial",
-    "freeTrialButton": "Reveal Personality",
-    "bottomCopy": "Now its time to make sure that ChatUp is visible on your store and your users can use it!"
-  },
-
-  "Plan": {
-    "currentPlan": "Current Plan",
-    "recommendedPlan": "Recommended Plans",
-    "free": "Free",
-    "[0": "Free",
-    "[2": "Emerging",
-    "[4": "Established",
-    "[6": "Expanding",
-    "[8": "Enterprise",
-    "dailyMessages": "Daily Messages",
-    "free1": "Help up to 5 customers per day",
-    "free2": "10 daily messages",
-    "free3": "All features",
-    "free4": "Try before you buy",
-    "free5": "Upgrade anytime",
-    "free6": "Free forever",
-    "freeWill": "Switch back to Free",
-    "xCustomers": "Help up to {{ x }} customers a day",
-    "xMessages": "{{ x }} daily messages",
-    "infCustomers": "Unlimited chats",
-    "infMessages": "Unlimited messages",
-    "[2Customers": "Help up to 25 customers a day",
-    "[2Messages": "50 daily messages",
-    "[4Customers": "Help up to 100 customers a day",
-    "[4Messages": "200 daily messages",
-    "[6Customers": "Help up to 250 customers a day",
-    "[6Messages": "500 daily messages",
-    "[8Customers": "Unlimited chats",
-    "[8Messages": "Unlimited messages",
-    "paid1": "Chat in all languages",
-    "paid2": "Join live conversations",
-    "paid3": "View analytics",
-    "paid4": "Customize ChatUp's look",
-    "paid5": "Create boundaries",
-    "paid6": "Define personality",
-    "pricePerMonth": "{{ x }} per month",
-    "pricePerYear": "{{ x }} per year",
-    "redirecting": "Redirecting",
-    "enterpriseContact": "Please contact us <0>directly</0> to inquire about Enterprise solutions"
-  },
-
   "Insights": {
     "timeSeriesChartTitle": "Messaging Trends Over Time",
     "funnelChartTitle": "Conversion Insights",
@@ -151,12 +95,8 @@
     "Returns and Refunds": "Returns",
     "Account Management": "Accounts",
     "Promotions and Discounts": "Promotions",
-    "General Inquiries and Complaints": "General",
-    "upgrade": "Upgrade now to unlock Insights!",
-    "freeTrialCopy": "Insights are available during your free trial",
-    "freeTrialButton": "Reveal Insights"
+    "General Inquiries and Complaints": "General"
   },
-
   "ChatHistory": {
     "live": "Live",
     "untitled": "Untitled",
@@ -169,26 +109,20 @@
     "reply": "Reply to customer...",
     "newMessage": "Scroll to new messages",
     "adminConnected": "Admin Connected",
-    "leaveChat": "Disconnect", 
+    "leaveChat": "Disconnect",
     "viewNav": "View Chats",
-    "noChats": "No chats found for selected time period",
-    "upgrade": "Upgrade now to unlock Chat History!",
-    "freeTrialCopy": "Chat History is available during your free trial",
-    "freeTrialButton": "Reveal Chat History"
+    "noChats": "No chats found for selected time period"
   },
-
   "Button": {
     "fetchError": "Fetch error - please retry",
     "submit": "Submit",
     "autoRefresh": "Auto-refresh",
     "validRefresh": "Data will refresh every 60 seconds"
   },
-
   "NotFound": {
     "description": "Oops! The page you're looking for seems to be missing. Double-check the URL or use the search bar to find what you need.",
     "heading": "Page Not Found"
   },
-
   "Dates": {
     "pastTwo": "Past Two Days",
     "today": "Today",
@@ -196,13 +130,46 @@
     "pastWeek": "Past Week",
     "pastMonth": "Past Month"
   },
-
   "MetaData": {
     "location": "Location",
     "ip": "IP Address"
   },
-
   "Misc": {
     "loading": "Loading..."
+  },
+  "Plan": {
+    "currentPlan": "Current Plan",
+    "free": "Free",
+    "[0": "Free",
+    "[2": "Emerging",
+    "[4": "Established",
+    "[6": "Expanding",
+    "[8": "Enterprise",
+    "dailyMessages": "Daily Messages",
+    "free1": "Help up to 5 customers per day",
+    "free2": "10 daily messages",
+    "free3": "All features",
+    "free4": "Try before you buy",
+    "free5": "Upgrade anytime",
+    "free6": "Free forever",
+    "freeWill": "Switch back to Free",
+    "[2Customers": "Help up to 25 customers a day",
+    "[2Messages": "50 daily messages",
+    "[4Customers": "Help up to 100 customers a day",
+    "[4Messages": "200 daily messages",
+    "[6Customers": "Help up to 250 customers a day",
+    "[6Messages": "500 daily messages",
+    "[8Customers": "Unlimited chats",
+    "[8Messages": "Unlimited messages",
+    "paid1": "Chat in all languages",
+    "paid2": "Join live conversations",
+    "paid3": "View analytics",
+    "paid4": "Customize ChatUp's look",
+    "paid5": "Create boundaries",
+    "paid6": "Define personality",
+    "pricePerMonth": "{{ x }} per month",
+    "pricePerYear": "{{ x }} per year",
+    "redirecting": "Redirecting",
+    "enterpriseContact": "Please contact us <0>directly</0> to inquire about Enterprise solutions"
   }
 }

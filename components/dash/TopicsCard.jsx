@@ -18,9 +18,9 @@ export const TopicsCard = () => {
     const localOneWeekAgo = localizeDatestamp(oneWeekAgo)
     const dataFrom = `${t("Dashboard.dataFrom", { x: localOneWeekAgo, y: localToday, })}`
 
-    const inboxCall = <Trans
-        i18nKey={`Dashboard.inboxCall`}
-        components={[<Link onClick={() => navigate("/Inbox")} />]}
+    const messagesCall = <Trans
+        i18nKey={`Dashboard.messagesCall`}
+        components={[<Link onClick={() => navigate("/Messages")} />]}
     />
     const analyticsCall = <Trans
         i18nKey={`Dashboard.analyticsCall`}
@@ -34,7 +34,7 @@ export const TopicsCard = () => {
             {topicsDonut}
             <List type="bullet">
                 <List.Item>
-                    {inboxCall}
+                    {messagesCall}
                 </List.Item>
                 <List.Item>
                     {analyticsCall}

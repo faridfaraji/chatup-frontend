@@ -455,6 +455,7 @@ textarea {
     display: flex;
     align-items: center;
 
+    /* justify-items: flex-start; */
     /* white-space: nowrap; */
     /* overflow: auto; */
 }
@@ -624,7 +625,7 @@ textarea {
 
 .slider {
     width: 100%;
-    text-align: center;
+    /* text-align: center; */
     overflow: hidden;
 }
 
