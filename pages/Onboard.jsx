@@ -32,7 +32,8 @@ export default function Onboard() {
 
     const handleBack = () => {
         const intStep = parseInt(step)
-        navigate(`/Onboard?step=${intStep - 1}&count=${count}`)
+        if(step > 1) navigate(`/Onboard?step=${intStep - 1}&count=${count}`)
+        else navigate("/")
     }
 
     const handleNext = () => {
@@ -79,7 +80,7 @@ export default function Onboard() {
         primary
         icon={AnalyticsDonutMinor}
         onClick={() => navigate("/Dashboard")} >
-        {t("Welcome.dashboard")}
+        {t("Onboard.dashboard")}
     </Button>
 
     //=========================================================================
@@ -111,12 +112,11 @@ export default function Onboard() {
                     </VerticalStack>
                 </HorizontalGrid>
                 <br />
-                <HorizontalStack align={step > minStep ? "space-between" : "end"}>
+                <HorizontalStack align="space-between">
                     {
-                        step > minStep &&
                         <HorizontalStack gap="5">
                             {backButton}
-                            {step < maxStep && skipLink}
+                            {minStep < step && step < maxStep && skipLink}
                         </HorizontalStack>
                     }
                     {step < maxStep && nextButton}

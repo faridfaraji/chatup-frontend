@@ -9,10 +9,11 @@
 
   "Welcome": {
     "title": "Welcome to ChatUp!",
-    "onboard": "Get Started",
-    "dashboard": "View Dashboard"
+    "getStarted": "Get Started",
+    "onboardCallout": "Thank you for installing ChatUp! If this is your first time here, please complete your installation through the <0>Embed App</0> process.",
+    "dashboardCallout": "If you've been here before and have already embedded ChatUp, please proceed to your <0>Dashboard</0>"
   },
-
+  
   "Onboard": {
     "title": "Getting Started With ChatUp",
     "back": "Back",
@@ -26,7 +27,8 @@
     "step2action": "Customize ChatUp",
     "step2copy": "Customizing ChatUp helps it fit with your store's style. You can change fonts, colors, images, and greetings in your theme settings.",
     "step3action": "Test ChatUp",
-    "step3copy": "You're all set to give ChatUp a try! Click the button below to explore how it works on your store!"
+    "step3copy": "You're all set to give ChatUp a try! Click the button below to explore how it works on your store!",
+    "dashboard": "View Dashboard"
   },
 
   "Dashboard": {
@@ -176,18 +178,10 @@
   },
 
   "Button": {
-    "configuration": "Configure Settings",
-    "insights": "View Insights",
-    "embed": "Embed Extension",
-    "scan": "Scan My Store",
-    "scanPending": "Scanning",
-    "scanError": "Scan error - please retry",
     "fetchError": "Fetch error - please retry",
     "submit": "Submit",
     "autoRefresh": "Auto-refresh",
-    "validRefresh": "Data will refresh every 60 seconds",
-    "billing": "Billing",
-    "upgrade": "Upgrade & Save"
+    "validRefresh": "Data will refresh every 60 seconds"
   },
 
   "NotFound": {
