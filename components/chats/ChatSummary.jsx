@@ -17,7 +17,7 @@ export const ChatSummary = ({ chat }) => {
     const summaryDiv =
         <div>
             <Text variant="headingSm">{t("ChatHistory.summary")}</Text>
-            <Text>{summary ?? "ChatHistory.noSummary"}</Text>
+            <Text>{summary ?? t("ChatHistory.noSummary")}</Text>
             <br />
         </div>
 
