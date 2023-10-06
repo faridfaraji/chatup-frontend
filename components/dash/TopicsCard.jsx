@@ -29,7 +29,7 @@ export const TopicsCard = () => {
 
     const topicsCard = <AlphaCard>
         <CardTitle title={t("Dashboard.topicsTitle")} linebreak />
-        <VerticalStack>
+        <VerticalStack gap="2">
             {dataFrom}
             {topicsDonut}
             <List type="bullet">

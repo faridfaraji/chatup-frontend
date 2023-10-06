@@ -17,6 +17,7 @@
     --a-color-bg-check-mark: rgb(3, 32, 63);
     --a-color-bg-x-mark: rgb(105, 27, 27);
     --a-color-text-logging: rgb(153, 153, 153);
+    --a-color-spinner: rgb(56, 103, 143);
 }
 
 /* Robot styling */
@@ -473,6 +474,10 @@ textarea {
 
 .subdued svg {
     fill: var(--p-icon-subdued);
+}
+
+.Polaris-Spinner svg {
+    fill: var(--a-color-spinner);
 }
 
 .not-included {

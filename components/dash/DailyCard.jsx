@@ -40,7 +40,7 @@ export const DailyCard = () => {
 
     const dailyCard = <AlphaCard>
         <CardTitle title={t("Dashboard.dailyTitle")} linebreak />
-        <VerticalStack>
+        <VerticalStack gap="2">
             {xMessagesRemaining}
             {messageDonut}
             <List type="bullet">
