@@ -43,6 +43,7 @@ export default {
     base_plan: "[20]",
     base_plan_copy_id: "[2",
     robot_src: "https://cdn.shopify.com/s/files/1/0789/8870/6084/files/robot.svg",
+    robot_png: "https://cdn.shopify.com/s/files/1/0789/8870/6084/files/robot.png",
     "[2_src": "https://cdn.shopify.com/s/files/1/0789/8870/6084/files/2-paper.svg",
     "[4_src":"https://cdn.shopify.com/s/files/1/0789/8870/6084/files/4-canvas.svg",
     "[6_src":"https://cdn.shopify.com/s/files/1/0789/8870/6084/files/6-steel.svg",
