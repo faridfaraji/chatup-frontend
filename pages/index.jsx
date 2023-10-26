@@ -2,7 +2,7 @@ import '@shopify/polaris-viz/build/esm/styles.css';
 import { Trans, useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { AlphaCard, HorizontalGrid, Link, Page, Text, VerticalStack, useBreakpoints } from "@shopify/polaris"
-import { CardTitle, PaddedCell, Robot } from "../components";
+import { CardTitle, PaddedCell, SmallRobot } from "../components";
 import { useLatestScan, useScanner } from '../hooks';
 import { useEffect } from 'react';
 
@@ -43,7 +43,7 @@ export default function index() {
               </Text>
             </PaddedCell>
           </VerticalStack>
-          <Robot />
+          <SmallRobot />
         </HorizontalGrid>
       </AlphaCard>
     </Page>
