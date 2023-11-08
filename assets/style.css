@@ -27,6 +27,12 @@
     width: 100%;
 }
 
+.small-robot-box {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
 .robot {
     max-width: 75%;
     max-height: 50vh;

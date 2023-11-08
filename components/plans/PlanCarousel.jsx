@@ -8,17 +8,17 @@ import { CardTitle } from "../misc"
 import {
     ChevronLeftMinor,
     ChevronRightMinor
-  } from '@shopify/polaris-icons';
+} from '@shopify/polaris-icons';
 
 const PlanContent = ({ planId, activePlan, left, right }) => {
     const { t } = useTranslation();
 
     const handleLeft = () => {
-        document.getElementById(`plan-${left}`).scrollIntoView({block: "center", inline: "center"})
+        document.getElementById(`plan-${left}`).scrollIntoView({ block: "center", inline: "center" })
     }
-    
-    const handleRight= () => {
-        document.getElementById(`plan-${right}`).scrollIntoView({block: "center", inline: "center"})
+
+    const handleRight = () => {
+        document.getElementById(`plan-${right}`).scrollIntoView({ block: "center", inline: "center" })
     }
 
     const enterpriseTab = planId === "[8"
@@ -40,12 +40,21 @@ const PlanContent = ({ planId, activePlan, left, right }) => {
             <HorizontalGrid columns="2" gap="4">
                 <PlanFeature name={t(`Plan.${planId}Messages`)} />
                 <PlanFeature name={t(`Plan.${planId}Customers`)} />
-                <PlanFeature name={t("Plan.paid1")} />
-                <PlanFeature name={t("Plan.paid2")} />
-                <PlanFeature name={t("Plan.paid3")} />
-                <PlanFeature name={t("Plan.paid4")} />
-                <PlanFeature name={t("Plan.paid5")} />
-                <PlanFeature name={t("Plan.paid6")} />
+                <PlanFeature name={t(`Plan.${planId}Features`)} />
+                <PlanFeature name={t(`Plan.${planId}Support`)} />
+            </HorizontalGrid>
+            <br />
+            <br />
+            <CardTitle title={t("Plan.standard")} alignment="center" size="Md" />
+            <Divider />
+            <br />
+            <HorizontalGrid columns="2" gap="4">
+                <PlanFeature name={t(`Plan.paid1`)} />
+                <PlanFeature name={t(`Plan.paid2`)} />
+                <PlanFeature name={t(`Plan.paid3`)} />
+                <PlanFeature name={t(`Plan.paid4`)} />
+                <PlanFeature name={t(`Plan.paid5`)} />
+                <PlanFeature name={t(`Plan.paid6`)} />
                 {
                     !enterpriseTab &&
                     <>
@@ -67,13 +76,13 @@ const PlanContent = ({ planId, activePlan, left, right }) => {
             {
                 enterpriseTab &&
                 <>
-                    <br />
-                    <Text as="p" color="subdued">
-                        <Trans
-                            i18nKey={"Plan.enterpriseContact"}
-                            components={[<Link url={"mailto:care@awesoon.tech"} />]}
-                        />
-                    </Text>
+                    <div style={{height: "1.5rem"}} />
+                        <Text as="p" color="subdued">
+                            <Trans
+                                i18nKey={"Plan.enterpriseContact"}
+                                components={[<Link url={"mailto:care@awesoon.tech"} />]}
+                            />
+                        </Text>
                 </>
             }
         </div>
@@ -81,7 +90,6 @@ const PlanContent = ({ planId, activePlan, left, right }) => {
 }
 
 export const PlanCarousel = ({ activePlan }) => {
-    const { t } = useTranslation();
     const planCard = (
         <AlphaCard>
             <div className="slider">

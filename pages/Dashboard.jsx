@@ -1,5 +1,5 @@
 import { Layout, Page, VerticalStack, useBreakpoints } from "@shopify/polaris"
-import { CustomizeCard, DailyCard, SettingsCard, TopicsCard } from "../components"
+import { CustomizeCard, DailyCard, FreeModal, SettingsCard, TopicsCard } from "../components"
 
 export default function Dashboard() {
     const bp = useBreakpoints();
@@ -9,7 +9,7 @@ export default function Dashboard() {
             <Layout>
                 <Layout.Section oneHalf>
                     <VerticalStack gap={{ xs: 2, sm: 4 }}>
-                        <DailyCard />
+                        {/* <DailyCard /> */}
                         {bp.mdUp ? <TopicsCard /> : <CustomizeCard />}
                     </VerticalStack>
                 </Layout.Section>
@@ -20,6 +20,7 @@ export default function Dashboard() {
                     </VerticalStack>
                 </Layout.Section>
             </Layout>
+            <FreeModal />
         </Page>
     )
 }

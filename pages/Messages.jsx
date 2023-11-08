@@ -1,6 +1,6 @@
 import { AlphaCard, Button, Divider, Frame, HorizontalStack, Layout, Page, useBreakpoints } from "@shopify/polaris";
 import { useCallback, useEffect, useState } from "react";
-import { CardTitle, ChatInput, ChatMessages, ChatNavigation, ChatSummary, DateRangePicker, Robot, SkeletonChatNavigation } from "../components";
+import { CardTitle, ChatInput, ChatMessages, ChatNavigation, ChatSummary, DateRangePicker, FreeModal, Robot, SkeletonChatNavigation } from "../components";
 import { useChatFetch, useChatsFetch, useDisconnectSocket, useMessagesFetch, useSocketInitializer } from "../hooks";
 import { getSessionToken } from "@shopify/app-bridge/utilities";
 import { useAppBridge } from "@shopify/app-bridge-react";
@@ -316,15 +316,18 @@ export default function Messages() {
   // Build the page out of the above created components
   //===========================================================================
   return (
-    <Frame navigation={chatNavigation} showMobileNavigation={navVis} onNavigationDismiss={() => handleNavToggle()}>
-      <Page primaryAction={primaryActions} title={t("NavigationMenu.messages")} divider>
-        <Layout>
-          <Layout.Section fullWidth>
-            {content}
-            <br />
-          </Layout.Section>
-        </Layout>
-      </Page>
-    </Frame>
+    <>
+      <Frame navigation={chatNavigation} showMobileNavigation={navVis} onNavigationDismiss={() => handleNavToggle()}>
+        <Page primaryAction={primaryActions} title={t("NavigationMenu.messages")} divider>
+          <Layout>
+            <Layout.Section fullWidth>
+              {content}
+              <br />
+            </Layout.Section>
+          </Layout>
+        </Page>
+      </Frame>
+      <FreeModal />
+    </>
   )
 }

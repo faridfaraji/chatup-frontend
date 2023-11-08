@@ -1,6 +1,6 @@
 import { AlphaCard, Page, Layout, HorizontalStack, Box, Checkbox, Tooltip, Icon, Divider } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
-import { CardTitle, DateRangePicker, MessageTimeSeries, MessageDensity, CenteredSpinner } from "../components";
+import { CardTitle, DateRangePicker, MessageTimeSeries, MessageDensity, CenteredSpinner, FreeModal } from "../components";
 import { useCallback, useEffect, useState } from "react";
 import { getRaw } from "../utils/dataUtils";
 import { zeroRange, getCompDates, formatRange } from "../utils/dateUtils"
@@ -191,6 +191,7 @@ export default function Analytics() {
           </Box>
         </Layout.Section>
       </Layout>
+      <FreeModal />
     </Page>
   );
 }
