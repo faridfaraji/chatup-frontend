@@ -2,7 +2,7 @@
 
 name = "chat-up-admin-testing"
 client_id = "458cc16d11790e3d38fccbfb0c77e4f2"
-application_url = "https://cc5d-104-142-118-153.ngrok-free.app"
+application_url = "https://07c2-104-142-118-153.ngrok-free.app"
 embedded = true
 
 [access_scopes]
@@ -11,6 +11,8 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
+  "https://gateway.awesoon.tech/v1/shopify/chat-up-admin-testing/auth-callback",
+  "https://gateway.dev.awesoon.tech/v1/shopify/chat-up-admin-testing/auth-callback",
   "https://gateway.test.awesoon.tech/v1/shopify/chat-up-admin-testing/auth-callback"
 ]
 

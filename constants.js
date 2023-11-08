@@ -19,12 +19,12 @@ export default {
     ext_id: VITE_SHOPIFY_CHAT_BOT_ID,
     ext_name: VITE_CHAT_BOT_EXT_NAME,
     prices: {
-        "[20]": {price: "$19", duration: "Month"},
-        "[25]": {price: "$205", duration: "Year"},
-        "[40]": {price: "$49", duration: "Month"},
-        "[45]": {price: "$500", duration: "Year"},
-        "[60]": {price: "$99", duration: "Month"},
-        "[65]": {price: "$950", duration: "Year"},
+        "[20]": {price: "$30", duration: "Month"},
+        "[25]": {price: "$325", duration: "Year"},
+        "[40]": {price: "$75", duration: "Month"},
+        "[45]": {price: "$765", duration: "Year"},
+        "[60]": {price: "$200", duration: "Month"},
+        "[65]": {price: "$1920", duration: "Year"},
         "[80]": {price: "$499", duration: "Month"},
         "[85]": {price: "$4490", duration: "Year"}
     },

@@ -1,4 +1,4 @@
-import { AlphaCard, Link, Spinner, Text, VerticalStack } from "@shopify/polaris"
+import { AlphaCard, HorizontalGrid, Link, Spinner, Text, VerticalStack } from "@shopify/polaris"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "@shopify/app-bridge-react";
 import { useState } from "react";
@@ -33,15 +33,13 @@ export const PlanFreeCard = ({ loading = true, onFree }) => {
                         </div>
                         <CardTitle title={t("Plan.free")} linebreak />
                     </PaddedCell>
-                    <VerticalStack gap="4">
-                        <PlanFeature name={t("Plan.free1")} />
-                        <PlanFeature name={t("Plan.free2")} />
-                        <PlanFeature name={t("Plan.free3")} />
-                        <PlanFeature name={t("Plan.free4")} />
-                        <PlanFeature name={t("Plan.free5")} />
-                        <PlanFeature name={t("Plan.free6")} />
-                    </VerticalStack>
-                    <div style={{ height: "7rem" }} />
+                    <HorizontalGrid columns="2" gap="4">
+                        <PlanFeature name={t("Plan.freeCustomers")} />
+                        <PlanFeature name={t("Plan.freeMessages")} />
+                        <PlanFeature name={t("Plan.freeFeatures")} />
+                        <PlanFeature name={t("Plan.freeSupport")} />
+                    </HorizontalGrid>
+                    {/* <div style={{ height: "3rem" }} /> */}
                     <div style={{ height: "1.5rem" }}>
                         {
                             !loading && !onFree &&

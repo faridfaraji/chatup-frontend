@@ -1,5 +1,5 @@
 import { Box, Button, Page, useBreakpoints, VerticalStack, Divider, HorizontalStack, Tag, Form, FormLayout, TextField, Select } from "@shopify/polaris";
-import { Setting } from "../components";
+import { FreeModal, Setting } from "../components";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, useCallback } from "react";
 import { useNegativeKeywordGetter, useNegativeKeywordSetter, useShop, useTemperature } from "../hooks";
@@ -209,6 +209,7 @@ export default function Settings() {
         >
         </Box>
       </VerticalStack>
+      <FreeModal />
     </Page>
   )
 }

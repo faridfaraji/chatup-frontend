@@ -10,7 +10,7 @@ export const Robot = () => {
 
 export const SmallRobot = () => {
     return (
-        <div className="robot-box" >
+        <div className="small-robot-box" >
             <img className="robot" src={constants.robot_png} />
         </div>
     )
