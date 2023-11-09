@@ -119,7 +119,7 @@
         "autoRefresh": "Actualisation Automatique",
         "validRefresh": "Les données seront actualisées toutes les 60 secondes",
         "plans": "Voir les plans",
-        "upgrade": "Mise à niveau maintenant"
+        "upgrade": "Commencer l'essai gratuit"
     },
     "NotFound": {
         "description": "Oups ! La page que vous recherchez semble manquer. Vérifiez à nouveau l'URL ou utilisez la barre de recherche pour trouver ce dont vous avez besoin.",
@@ -139,7 +139,7 @@
     "Misc": {
         "loading": "Chargement...",
         "freeTitle": "Attendez une seconde",
-        "freeCall": "Nous voyons que vous n'avez pas encore souscrit - avant d'explorer toutes les fonctionnalités de ChatUp, passons à l'un de nos plans. Découvrez vos options ou passez à notre plan Émergent dès maintenant !"
+        "freeCall": "Nous voyons que vous n'avez pas encore de souscription - avant d'explorer toutes les fonctionnalités de ChatUp, passons à l'un de nos plans. Découvrez vos options ou lancez votre essai gratuit de 15 jours sur notre plan Émergent maintenant !"
     },
     "Plan": {
         "currentPlan": "Plan Actuel",
@@ -181,8 +181,8 @@
         "paid2": "Rejoignez des conversations en direct",
         "paid3": "Analysez le comportement",
         "paid4": "Personnalisez l'apparence de ChatUp",
-        "paid5": "Créez des limites",
-        "paid6": "Définissez la personnalité",
+        "paid5": "Définir des limites",
+        "paid6": "Essai gratuit de 15 jours",
         "pricePerMonth": "{{ x }} par mois",
         "pricePerYear": "{{ x }} par an",
         "redirecting": "Redirection en cours",

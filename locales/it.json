@@ -115,7 +115,7 @@
     },
     "Button": {
         "plans": "Visualizza i Piani",
-        "upgrade": "Aggiorna Ora",
+        "upgrade": "Inizia la prova gratuita",
         "fetchError": "Errore nel Recupero - Riprova",
         "submit": "Invia",
         "autoRefresh": "Aggiornamento Automatico",
@@ -134,7 +134,7 @@
     },
     "Misc": {
         "freeTitle": "Aspetta un attimo",
-        "freeCall": "Vediamo che non hai ancora un abbonamento: prima di esplorare tutte le funzionalità di ChatUp, lasciaci aiutarti a scegliere uno dei nostri piani. Scopri le tue opzioni o effettua l'upgrade al nostro piano Emerging ora!",
+        "freeCall": "Vediamo che non hai ancora un abbonamento: prima di esplorare tutte le funzionalità di ChatUp, facciamo scegliere uno dei nostri piani. Scopri le tue opzioni o inizia la tua prova gratuita di 15 giorni sul nostro piano Emerging ora!",
         "loading": "Caricamento..."
     },
     "Plan": {
@@ -177,8 +177,8 @@
         "paid2": "Partecipa a conversazioni in diretta",
         "paid3": "Analizza il comportamento",
         "paid4": "Personalizza l'aspetto di ChatUp",
-        "paid5": "Crea dei limiti",
-        "paid6": "Definisci la personalità",
+        "paid5": "Definire limiti",
+        "paid6": "Prova gratuita di 15 giorni",        
         "pricePerMonth": "{{ x }} al mese",
         "pricePerYear": "{{ x }} all'anno",
         "redirecting": "Reindirizzamento",
