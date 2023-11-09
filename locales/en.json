@@ -139,7 +139,7 @@
   "Misc": {
     "loading": "Loading...",
     "freeTitle": "Hold on a second",
-    "freeCall": "We see you don't have a subscription yet - before we can explore all of ChatUp's features, let's get you on to one of our plans. Check out your options or start your free trial on our Emerging plan now!"
+    "freeCall": "We see you don't have a subscription yet - before we can explore all of ChatUp's features, let's get you on to one of our plans. Check out your options or start your 15-day free trial on our Emerging plan now!"
   },
   "Plan": {
     "currentPlan": "Current Plan",
@@ -176,7 +176,7 @@
     "paid2": "Join live conversations",
     "paid3": "Analyze behavior",
     "paid4": "Customize ChatUp's look",
-    "paid5": "Create boundaries",
+    "paid5": "Define boundaries",
     "paid6": "15-day free trial",
     "pricePerMonth": "{{ x }} per month",
     "pricePerYear": "{{ x }} per year",
