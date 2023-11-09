@@ -115,7 +115,7 @@
     },
     "Button": {
         "plans": "Bekijk Plannen",
-        "upgrade": "Nu Upgraden",
+        "upgrade": "Start gratis proefperiode",
         "fetchError": "Fout bij ophalen - probeer opnieuw",
         "submit": "Verzenden",
         "autoRefresh": "Automatisch vernieuwen",
@@ -134,7 +134,7 @@
     },
     "Misc": {
         "freeTitle": "Even wachten",
-        "freeCall": "We zien dat je nog geen abonnement hebt - voordat je alle functies van ChatUp verkent, laten we je graag kennismaken met een van onze plannen. Bekijk je opties of upgrade nu naar ons Emerging-plan!",
+        "freeCall": "We zien dat je nog geen abonnement hebt - voordat we alle functies van ChatUp kunnen verkennen, laten we je kennis maken met een van onze plannen. Bekijk je opties of start je gratis proefperiode op ons Opkomend-plan nu!",
         "loading": "Laden..."
     },
     "Plan": {
@@ -177,8 +177,8 @@
         "paid2": "Deelname aan live gesprekken",
         "paid3": "Gedrag analyseren",
         "paid4": "Pas de uitstraling van ChatUp aan",
-        "paid5": "Stel grenzen in",
-        "paid6": "Definieer persoonlijkheid",
+        "paid5": "Grenzen stellen",
+        "paid6": "Gratis proefperiode van 15 dagen",        
         "pricePerMonth": "{{ x }} per maand",
         "pricePerYear": "{{ x }} per jaar",
         "redirecting": "Doorverwijzen",
